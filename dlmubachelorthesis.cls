@@ -379,24 +379,32 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \RequirePackage{array} %【与表格相关】
 %% ============================================================ %
 
-
 %% -------------------- 变量预定义 -------------------- %
+
+%%% ---------- 本科论文专用 ---------- %
 \newcommand{\dlmuthesis@tokens@cntitle}{~} %【中文标题】
 \newcommand{\dlmuthesis@tokens@entitle}{~} %【英文标题】
 \newcommand{\dlmuthesis@tokens@aauthor}{~} %【作者姓名】
 \newcommand{\dlmuthesis@tokens@sdtID}{~} %【学号】
 \newcommand{\dlmuthesis@tokens@faculty}{~} %【学院】
 \newcommand{\dlmuthesis@tokens@majorinCOVERPAGE}{~} %【专业年级班级(coverpage专用)】
-\newcommand{\dlmuthesis@tokens@majorinTITLEPAGE}{~} %【专业班级(titlepage专用)】
 \newcommand{\dlmuthesis@tokens@mentorONE}{~} %【指导教师(及其职称)】
-\newcommand{\dlmuthesis@tokens@mentorONEinTITLEPAGE}{~} %【指导教师（无职称，标题页专用）】
 \newcommand{\dlmuthesis@tokens@mentorTWO}{~} %【第二指导教师(及其职称)】
 \newcommand{\dlmuthesis@tokens@completiondateinCOVERPAGE}{XXXX 年 X 月} %【完成日期（年、月），coverpage专用】
-\newcommand{\dlmuthesis@tokens@completiondateinBINDINGPAGE}{XXXX 年 X 月} %【完成日期（年、月），bindingpage专用】
+%%% ======================================== %
+
+%%% ---------- 硕士论文专用 ---------- %
+%%% ======================================== %
+
+%%% ---------- 博士论文专用 ---------- %
+%%% ======================================== %
+
 %% ============================================================ %
 
 
 %% -------------------- 正式变量定义 -------------------- %
+
+%%% ---------- 本科论文专用 ---------- %
 \newcommand{\cntitle}[1]{
 \renewcommand{\dlmuthesis@tokens@cntitle}{#1}
 \newcommand{\cntitleinMAINBODY}{\vspace*{1ex}{}\begin{center}{\zihao{3}\bfseries #1}\end{center}{}\vspace*{1ex}{}} %【正文第1页顶部的中文标题】
@@ -406,9 +414,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \newcommand{\sdtID}[1]{\renewcommand{\dlmuthesis@tokens@sdtID}{#1}} %【学号】
 \newcommand{\faculty}[1]{\renewcommand{\dlmuthesis@tokens@faculty}{#1}} %【学院】
 \newcommand{\majorinCOVERPAGE}[1]{\renewcommand{\dlmuthesis@tokens@majorinCOVERPAGE}{#1}} %【专业年级班级(coverpage专用)】
-\newcommand{\majorinTITLEPAGE}[1]{\renewcommand{\dlmuthesis@tokens@majorinTITLEPAGE}{#1}} %【专业班级（titlepage专用）】
 \newcommand{\mentorONE}[2]{
-  \renewcommand{\dlmuthesis@tokens@mentorONEinTITLEPAGE}{#1} %【指导教师（无职称，标题页专用）】
   \renewcommand{\dlmuthesis@tokens@mentorONE}{#1（#2）}
 } %【指导教师(及其职称)】
 \newcommand{\mentorTWO}[2]{
@@ -420,8 +426,15 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 } %【第二指导教师(及其职称)】【若无，则第一个变量填“无”，第二个填0】
 \newcommand{\completiondate}[2]{
   \renewcommand{\dlmuthesis@tokens@completiondateinCOVERPAGE}{{#1}~年~{#2}~月} %【完成日期（年、月），coverpage专用】
-  \renewcommand{\dlmuthesis@tokens@completiondateinBINDINGPAGE}{\zhdigits{#1}~年~\zhdigits{#2}~月} %【完成日期（年、月），bindingpage专用
 }
+%%% ======================================== %
+
+%%% ---------- 硕士论文专用 ---------- %
+%%% ======================================== %
+
+%%% ---------- 博士论文专用 ---------- %
+%%% ======================================== %
+
 %% ============================================================ %
 
 % ================================================================================ %
