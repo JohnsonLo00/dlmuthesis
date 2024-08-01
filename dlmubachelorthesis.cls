@@ -1,5 +1,5 @@
 %
-% This is file "dlmubachelorthesis.cls"
+% This is file "dlmuthesis.cls"
 %
 % Copyright (C) 2023-2024 by JL <yhlaozero2@163.com>
 %
@@ -15,7 +15,7 @@
 
 % --------------- 全局设置 --------------- %
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{dlmubachelorthesis}[2024/07/10 v2.0 Unofficial LaTeX Template for DLMU Bachelor Thesis]
+\ProvidesClass{dlmuthesis}[2024/07/10 v3.0.0 Unofficial Thesis LaTeX Template for DLMU]
 % ======================================== %
 
 
@@ -23,7 +23,7 @@
 \RequirePackage{ifxetex}
 \RequireXeTeX
 \ifxetex\else
-\ClassError{dlmubachelorthesis}{You must use the `xelatex' driver\MessageBreak Please choose `xelatex'}{%
+\ClassError{dlmuthesis}{You must use the `xelatex' driver\MessageBreak Please choose `xelatex'}{%
 Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \fi
 % ======================================== %
@@ -31,11 +31,11 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 % ---------- 文档类声明命令的可选参数初始化 ---------- %
 \RequirePackage{zhnumber} %【中文数字】
-\newif\if@dlmuthesis@bachelors %【理工科模式，初始值为真，下同】
-\newif\if@dlmuthesis@bachelorh %【文科模式，初始值为真，下同】
+\newif\if@dlmuthesis@BAstem %【理工科模式，初始值为真，下同】
+\newif\if@dlmuthesis@BAhumanities %【文科模式，初始值为真，下同】
 
-\DeclareOption{bachelors}{\@dlmuthesis@bachelorstrue}
-\DeclareOption{bachelorh}{\@dlmuthesis@bachelorhtrue}
+\DeclareOption{BAstem}{\@dlmuthesis@BAstemtrue}
+\DeclareOption{BAhumanities}{\@dlmuthesis@BAhumanitiestrue}
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{article}}
 \ProcessOptions\relax %【这句万万不可改动】
 \LoadClass[a4paper, 12pt]{article} %【导入正规文档类】
@@ -46,7 +46,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \RequirePackage[UTF8, heading=true, zihao = -4]{ctex}
 \RequirePackage{totcount}
 
-\if@dlmuthesis@bachelors
+\if@dlmuthesis@BAstem
 \ctexset{
   abstractname = {\zihao{3}摘\hspace{2em}要},
   contentsname = \hfill{\zihao{3}目\hspace{2em}录}\hfill,
@@ -68,7 +68,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     afterskip=6.75pt,
   }
 }
-\else\if@dlmuthesis@bachelorh
+\else\if@dlmuthesis@BAhumanities
 \renewcommand\thesubsection{\arabic{subsection}} %重设二级标题计数器格式
 \renewcommand\thesubsubsection{\arabic{subsubsection}} %重设三级标题计数器格式
 \renewcommand\theparagraph{\arabic{paragraph}} %重设四级标题计数器格式
@@ -158,7 +158,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 {\titlerule*[8pt]{.}\contentspage}
 %% =================================== %
 %% ---------- 二级标题样式 ---------- %
-\if@dlmuthesis@bachelorh
+\if@dlmuthesis@BAhumanities
 \titlecontents{subsubsection}
 [5em]
 {}
@@ -182,9 +182,9 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 % --------------- 列表环境 --------------- %
 \RequirePackage[inline]{enumitem}
-\if@dlmuthesis@bachelors
+\if@dlmuthesis@BAstem
 \setlist{leftmargin=0pt, itemindent=2\parindent, itemsep=0pt, parsep=0pt}
-\else\if@dlmuthesis@bachelorh
+\else\if@dlmuthesis@BAhumanities
 \setlist{leftmargin=0pt, itemindent=2\parindent, itemsep=0pt, nosep}
 \fi\fi
 % ======================================== %
@@ -259,13 +259,13 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \RequirePackage{titlesec}
 \setcounter{secnumdepth}{4}
 
-\if@dlmuthesis@bachelors
+\if@dlmuthesis@BAstem
 \titleformat{\paragraph}
   {\normalsize\bfseries} %字体
   {\theparagraph} %标题前的标签
   {1em} %标题和标签之间的间距
   {} %标题前没有额外的命令或内容
-\else\if@dlmuthesis@bachelorh
+\else\if@dlmuthesis@BAhumanities
 \titleformat{\paragraph}
   {\normalsize\bfseries} %字体
   {（\theparagraph）} %标题前的标签
