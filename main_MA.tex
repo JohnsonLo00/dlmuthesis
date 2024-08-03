@@ -1,11 +1,17 @@
 % !Mode:: "TeX:UTF-8"
 
 % ---------- 声明文档类 ---------- %
-% 有两个可选参数：bachelors、BAhumanities
-%% bachelors：理工科模式
-%% BAhumanities：文科模式
-% 添加哪个参数即表示选择哪种模式
-\documentclass[BAhumanities]{dlmubachelorthesis}
+\documentclass[bachelors]{dlmubachelorthesis}
+% 有如下类型的可选参数：
+%% 1. 学位类别：
+%% 注：i.添加哪个参数即表示选择哪种模式；ii.只能添加一个
+%%% BAstem：本科-理工科
+%%% BAhumanities：本科-文科类
+%%% MA：硕士
+%%% PhD：博士
+%% 2. 输出模式：
+%% 注：默认为电子版模式，即不添加任何空白页
+%%% ：打印模式
 % ================================================== %
 
 
@@ -18,25 +24,16 @@
 
 
 % -------------------- 填写论文信息 -------------------- %
-\cntitle{提高我国医疗保障水平问题研究} %【中文标题】
-\entitle{Study on the Issue of Improving the Level of Medical Insurance in China} %【英文标题】
+\cntitle{基于低分辨率视频的手势运动方向检测} %【中文标题】
+\entitle{Detection of Gesture Motion Direction based on Low-Resolution Video} %【英文标题】
 \aauthor{海哥} %【作者姓名】
 \sdtID{222020xxxx} %【学号】
-\faculty{公共管理与人文艺术学院} %【学院】
-\majorinCOVERPAGE{公共事业管理2020-1} %【专业年级班级(coverpage专用)】
+\faculty{理学院} %【学院】
+\majorinCOVERPAGE{数学与应用数学2020-1} %【专业年级班级(coverpage专用)】
 \mentorONE{海老}{教授} %【指导教师(及其职称)】
 \mentorTWO{无}{0} %【第二指导教师(及其职称)】【若无，则第一个参数填“无”，第二个填数字0】
 \completiondate{2024}{5} %【完成日期（年、月）】
 % ================================================== %
-
-
-% ----- 文科类专业专用：脚注编号类型的选择 ----- %
-%% 填“1”：仅阿拉伯数字
-%% 填“2”：[1], [2], ...
-%% 填“3”：(1), (2), ...
-%% 填“4”：带圈的阿拉伯数字
-\footnotemode{4}
-% ============================================= %
 
 
 % ---------- 可以在此处添加自己定义的命令 ---------- %
@@ -46,23 +43,23 @@
 
 \begin{document}
 
-\makepages %【添加封面页】
+\makepages %【添加封面页、装订页、标题页】
 
 % ---------- 中文摘要 ---------- %
 \begin{abstract}
-\input{mainbody/humanities/abstract_zh}
+\input{mainbody/STEM/abstract_zh}
 \end{abstract}
 \newpage
-% ============================== %	
+% ================================================== %	
 
 
 % ---------- 英文摘要 ---------- %
 \renewcommand\abstractname{\large ABSTRACT} %临时修改摘要名
 \begin{abstract}
-\input{mainbody/humanities/abstract_en}
+\input{mainbody/STEM/abstract_en}
 \end{abstract}
 \newpage
-% ============================== %
+% ================================================== %	
 
 
 % ---------- 目录 ---------- %
@@ -82,30 +79,28 @@
 
 
 % ---------- 正文（划分为多个独立文件依次导入） ---------- %
-\input{mainbody/humanities/ch1} \clearpage\vspace*{0pt} %\vspace*{0pt}的添加解决了章节标题前间距不合理的问题
-\input{mainbody/humanities/ch2} \clearpage\vspace*{0pt}
-\input{mainbody/humanities/ch3} \clearpage\vspace*{0pt}
-\input{mainbody/humanities/conclusions} \clearpage\vspace*{0pt} % 总结
+\input{mainbody/STEM/ch1} \clearpage\vspace*{0pt} %\vspace*{0pt}的添加解决了章节标题前间距不合理的问题
+\input{mainbody/STEM/ch2} \clearpage\vspace*{0pt}
+\input{mainbody/STEM/ch3} \clearpage\vspace*{0pt}
+\input{mainbody/STEM/ch4} \clearpage\vspace*{0pt}
+\input{mainbody/STEM/conclusions} \clearpage\vspace*{0pt} % 结论
 % ================================================== %
-
 
 % ---------- 参考文献 ---------- %
 {\zihao{5} %【该句涉及到格式设置，请勿乱动】
-\bibliography{refs/refs_humanities} %bib文件导入的形式生成参考文献列表
+\bibliography{refs/refs_STEM} %bib文件导入的形式生成参考文献列表
 %\begin{thebibliography}{100}
 %\bibitem{文献x标签}文献x信息
 %\end{thebibliography}
 }
 % ================================================== %
 
-
 % ---------- 致谢 ---------- %
-\input{mainbody/humanities/acknowledgments}
+\input{mainbody/STEM/acknowledgments}
 % ================================================== %
 
-
 % ---------- 附录 ---------- %
-\input{mainbody/humanities/appendiceS}
+\input{mainbody/STEM/appendiceS}
 % ================================================== %
 
 \end{document} 

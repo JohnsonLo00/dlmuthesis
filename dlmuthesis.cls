@@ -20,6 +20,7 @@
 
 
 % --------------- 编译器约束 --------------- %
+\RequirePackage{ifthen}
 \RequirePackage{ifxetex}
 \RequireXeTeX
 \ifxetex\else
@@ -34,12 +35,27 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \newif\if@dlmuthesis@BAstem %【理工科模式，初始值为真，下同】
 \newif\if@dlmuthesis@BAhumanities %【文科模式，初始值为真，下同】
 
-\DeclareOption{BAstem}{\@dlmuthesis@BAstemtrue}
-\DeclareOption{BAhumanities}{\@dlmuthesis@BAhumanitiestrue}
+\newcounter{optionofdegree} %【用于计算关于学位类别的可选参数用了多少个】
+\setcounter{optionofdegree}{0}
+\DeclareOption{BAstem}{
+\@dlmuthesis@BAstemtrue
+\addtocounter{optionofdegree}{1}
+}
+\DeclareOption{BAhumanities}{
+\@dlmuthesis@BAhumanitiestrue
+\addtocounter{optionofdegree}{1}
+}
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{article}}
 \ProcessOptions\relax %【这句万万不可改动】
 \LoadClass[a4paper, 12pt]{article} %【导入正规文档类】
 % ======================================== %
+
+
+% ---------- 限定只能出现一个学位类别参数 ---------- %
+\ifthenelse{\value{optionofdegree}>1}{
+\ClassError{dlmuthesis}{documentclass命令中导入了多个关于学位类别的可选参数}{}
+}{}
+% ================================================== %
 
 
 % --------------- ctex宏集设置 --------------- %
@@ -372,7 +388,6 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 % ------------------------- 关于论文信息的全局变量导入 ------------------------- %
 
-\RequirePackage{ifthen} %【引入条件判断逻辑】
 \RequirePackage{etoolbox} %【文档类与宏包的命令自定义】
 \RequirePackage[absolute,overlay]{textpos} %【提供基于坐标的文本框环境，其中overlay为绝对坐标】
 %% -------------------- 图片&表格 -------------------- %
@@ -441,7 +456,9 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 
 % ------------------------- 封面页的创建 ------------------------- %
-\newcommand{\makecoverpage}{
+
+%% -------------------- 封面页-本科论文 -------------------- %
+\newcommand{\makecoverpageBA}{
   \thispagestyle{empty} %【无页眉页脚】
   \setlength{\extrarowheight}{9pt} %【设置表格行间距】
   \setlength{\TPHorizModule}{1cm} % 设置textblock环境的水平单位
@@ -514,16 +531,26 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
   %% ---------- 由于之前将\extrarowheight的值设为8pt，为保证往后正文表格的间距正常，需重新设置回来 ---------- %
   \setlength{\extrarowheight}{2pt}
-  %%% ==================================================================================================== %
+  %%% ================================================================================ %
 
   \newpage %【起到将封面页与正文隔离开的正式作用】
-} %【\newcommand{\makecoverpage}】
-% ============================================================ %
+} %【\newcommand{\makecoverpageBA}】
+%% ============================================================ %
+
+%% -------------------- 封面页-硕士论文 -------------------- %
+%\newcommand{\makecoverpageMA}{}
+%% ============================================================ %
+
+%% -------------------- 封面页-博士论文 -------------------- %
+%\newcommand{\makecoverpagePhD}{}
+%% ============================================================ %
+
+% ================================================================================ %
 
 
 % --------------- 封面页的导入 --------------- %
 \newcommand{\makepages}{
-\makecoverpage
+\makecoverpageBA
 }
 % ======================================== %
 
