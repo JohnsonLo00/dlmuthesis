@@ -6,7 +6,8 @@ long long factorial(int n){
     }  
     return n * factorial(n - 1);  
 }  
-  
+
+// 测试代码
 int main(){  
     int n;  
     std::cout <<"请输入一个整数: ";  

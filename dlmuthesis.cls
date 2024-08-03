@@ -141,12 +141,11 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \RequirePackage{geometry} %定制页面
 \geometry{bindingoffset=5mm, top=2.5cm, bottom=2.5cm, left=3.0cm, right=2.5cm, headsep=0.5cm}
 
-\pagestyle{fancy}
 \lhead{} %在'heading=true'下，默认左页眉为当前二级标题名称，因此要赋值为空
 \rhead{} %'heading=true'下，默认右页眉为当前一级标题名称，，因此要赋值为空
 \chead{\zihao{-5} \dlmuthesis@tokens@cntitle}
 \cfoot{\zihao{-5} \thepage}
-\renewcommand{\headrulewidth}{0.4pt} %疑惑：setlength命令不起作用
+\renewcommand{\headrulewidth}{0.4pt}
 \renewcommand{\footrulewidth}{0pt}
 % ======================================== %
 
@@ -160,6 +159,14 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 % 因此，该文件不可删掉。
 \setCJKmainfont[AutoFakeBold=3.0, AutoFakeSlant=0.3]{simsun.ttc} %中文字体设置
 \setmainfont{Times New Roman} %英文字体设置
+% ======================================== %
+
+
+% --------------- 颜色定制 --------------- %
+\RequirePackage{xcolor}
+\definecolor{keywordincode}{RGB}{000,000,255}
+\definecolor{stringincode}{RGB}{128,128,000}
+\definecolor{commentincode}{RGB}{106,153,85}
 % ======================================== %
 
 
@@ -256,11 +263,13 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 %代码环境定制
 \lstset{
   basicstyle=\small\ttfamily, %整体的字号、字体
-  stringstyle=\ttfamily, %字符串样式
   backgroundcolor=\color{gray!30}, %背景颜色
   breaklines=true, %自动断行
   showstringspaces=false, %取消特别的字符间距
   framexleftmargin=5pt, %内部左边距
+  keywordstyle=\color{keywordincode}, %关键字样式
+  stringstyle=\color{stringincode}, %字符串样式
+  commentstyle=\color{commentincode}, %注释样式
 }
 % ======================================== %
 
@@ -363,7 +372,6 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 % --------------- 杂项 --------------- %
 \RequirePackage{comment} % 提供注释环境
-\RequirePackage{xcolor} %颜色定制
 \RequirePackage{lipsum, zhlipsum} %随机文本（用于调试）
 % ======================================== %
 
@@ -382,7 +390,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 % 自定义附录章标题、在目录中的样式
 \newcounter{appendixcounting} %定义专属于附录的计数器
 \addtocounter{appendixcounting}{1} %附录标题计数器的初始值设为1
-\newcommand{\appendixsec}[1]{ \zihao{4}{\section*{附录\arabic{appendixcounting}\quad #1}}\addcontentsline{toc}{section}{附录\theappendixcounting\quad #1}\addtocounter{appendixcounting}{1}} %注：一定要先添加到目录、再将计数器值增1
+\newcommand{\appendixsec}[1]{ \zihao{4}{\section*{附录\arabic{appendixcounting}\quad #1}}\phantomsection\addcontentsline{toc}{section}{附录\theappendixcounting\quad #1}\addtocounter{appendixcounting}{1}} %注：一定要先添加到目录、再将计数器值增1
 % ======================================== %
 
 
@@ -565,6 +573,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 }{\typeout{succeeds: edit the style of page using package etoolbox}}{\PackageError{fails: edit the style of page using package etoolbox}}
 
 \BeforeBeginEnvironment{thebibliography}{
+\phantomsection
 \addcontentsline{toc}{section}{参~ 考~ 文~ 献} %不能放在导言区
 \vspace*{0pt}
 }{\typeout{succeeds: pre-style of env thebibliography}}{\typeout{fails: pre-style of env thebibliography}}
