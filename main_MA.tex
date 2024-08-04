@@ -61,6 +61,7 @@
 
 
 % ---------- 中文摘要 ---------- %
+\pesudohookOFabstractCN
 \begin{abstract}
 \input{mainbody/MA/abstract_zh}
 \end{abstract}
@@ -69,7 +70,7 @@
 
 
 % ---------- 英文摘要 ---------- %
-\renewcommand\abstractname{\large ABSTRACT} %临时修改摘要名
+\pesudohookOFabstractEN
 \begin{abstract}
 \input{mainbody/MA/abstract_en}
 \end{abstract}
@@ -78,15 +79,16 @@
 
 
 % ---------- 目录 ---------- %
-
-\tableofcontents
-\listofchanges
+\tableofcontents\toctolof %若全文一个图表都没有，则把\toctolof命令注释掉
+\listoffigures\vspace{36pt} %图目录
+\listoftables %表目录
+\listofchanges %批注记录列表
 \newpage
 % ================================================== %	
 
 
 % ---------- 正文（划分为多个独立文件依次导入） ---------- %
-\pesudohook
+\pesudohookOFpremainbody
 \input{mainbody/MA/ch1} \clearpage\vspace*{0pt} %\vspace*{0pt}的添加解决了章节标题前间距不合理的问题
 \input{mainbody/MA/ch2} \clearpage\vspace*{0pt}
 \input{mainbody/MA/ch3} \clearpage\vspace*{0pt}

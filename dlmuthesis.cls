@@ -132,7 +132,11 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \else\if@dlmuthesis@MA %硕士
 \ctexset{
   abstractname = {\zihao{-3}\heiti 摘\hspace{2em}要},
-  contentsname = \hfill{\zihao{3}目\hspace{2em}录}\hfill,
+  contentsname = \hfill{\heiti\zihao{-3}目\hspace{2em}录}\hfill,
+  listfigurename = \hfill{\songti\zihao{-3}图目录}\hfill,
+  listtablename = \hfill{\songti\zihao{-3}表目录}\hfill,
+  figurename = {图},
+  tablename = {表},
   bibname = \hfill{\zihao{3}参~ 考~ 文~ 献}\hfill,
   section = {
     format = {\zihao{3}\bfseries},
@@ -223,6 +227,30 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 {\titlerule*[8pt]{.}\contentspage}
 \else
 \fi
+%% =================================== %
+%% ---------- 目录到图(/表)目录之间的样式 ---------- %
+\if@dlmuthesis@MA
+\newcommand\toctolof{
+\newpage
+\begin{center}\heiti\zihao{-3}图表目录\end{center}
+}
+\fi
+%% ============================================== %
+%% ---------- 图目录样式 ---------- %
+\titlecontents{figure}
+  [0pt] %左边缩进为0
+  {\addvspace{0pt}} %每一行之间的垂直间距
+  {\figurename{~~}\thecontentslabel\quad} %条目样式
+  {\hfill} %填充对齐
+  {\titlerule*[6pt]{.}\contentspage} % 用点线间隔，并显示页面号
+%% =================================== %
+%% ---------- 表目录样式 ---------- %
+\titlecontents{table}
+  [0pt] %左边缩进为0
+  {\addvspace{0pt}} %每一行之间的垂直间距
+  {\tablename{~~}\thecontentslabel\quad} %条目样式
+  {\hfill} %填充对齐
+  {\titlerule*[6pt]{.}\contentspage} % 用点线间隔，并显示页面号
 %% =================================== %
 % ======================================== %
 
@@ -768,9 +796,11 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 % ============================================================ %
 
-
-% ---------- 伪钩子（实现正文开始前添加标题、设置样式） ---------- %
-\newcommand{\pesudohook}{{}}
+% ---------- 伪钩子 ---------- %
+\newcommand{\pesudohookOFabstractCN}{{}} %中文摘要
+\newcommand{\pesudohookOFabstractEN}{{}} %英文摘要
+\newcommand{\pesudohookOFtocfigtab}{{}} %图表目录总标题
+\newcommand{\pesudohookOFpremainbody}{{}} %实现正文开始前添加标题、设置样式
 % ================================================== %
 
 
@@ -782,6 +812,26 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \apptocmd{\OriginalityStatement}{\newpage}{}{}
 \pretocmd{\AuthorizationStatement}{\newpage}{}{}
 \fi
+%% ============================================================ %
+
+%% ----- 硕士论文中，中英文摘要的标题需加到目录中 ----- %
+\if@dlmuthesis@MA
+\pretocmd{\pesudohookOFabstractCN}{
+\phantomsection
+\addcontentsline{toc}{section}{摘\hspace{2em}要}
+}{}{\ClassError{dlmuthesis}{pesudohookOFabstractCN命令异常}{}}
+\fi
+\pretocmd{\pesudohookOFabstractEN}{
+\if@dlmuthesis@BAstem %本科-理工科
+\renewcommand\abstractname{\large ABSTRACT} %临时修改摘要名
+\else\if@dlmuthesis@BAhumanities %本科-人文社科
+\renewcommand\abstractname{\large ABSTRACT} %临时修改摘要名
+\else\if@dlmuthesis@MA
+\renewcommand\abstractname{\large Abstract} %临时修改摘要名
+\phantomsection
+\addcontentsline{toc}{section}{Abstract}
+\fi\fi\fi
+}{}{\ClassError{dlmuthesis}{pesudohookOFabstractEN命令异常}{}}
 %% ============================================================ %
 
 %% -------------------- 不同学位模式下，设置摘要到目录的样式的时机不同 -------------------- %
@@ -808,13 +858,13 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 %% --------------- 不同学位模式下，设置正文样式的时机不同 --------------- %
 \if@dlmuthesis@BAstem %本科-理工科
-\pretocmd{\pesudohook}{
+\pretocmd{\pesudohookOFpremainbody}{
 \cntitleinMAINBODY
 \pagestyle{fancy} %从第一章到致谢，设置为有页眉、有页脚的模式
 \pagenumbering{arabic} %《手册》要求：从正文开始设为阿拉伯数字页码，并且重新从1开始计数
 }{}{\ClassError{dlmuthesis}{tableofcontent命令执行异常}{}}
 \else\if@dlmuthesis@BAhumanities %本科-人文社科
-\pretocmd{\pesudohook}{
+\pretocmd{\pesudohookOFpremainbody}{
 \cntitleinMAINBODY
 \pagestyle{fancy} %从第一章到致谢，设置为有页眉、有页脚的模式
 \pagenumbering{arabic} %《手册》要求：从正文开始设为阿拉伯数字页码，并且重新从1开始计数
@@ -823,7 +873,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \apptocmd{\OriginalityStatement}{
 \pagestyle{fancy} %从第一章到致谢，设置为有页眉、有页脚的模式
 }{}{\ClassError{dlmuthesis}{OriginalityStatement命令执行异常}{}}
-\pretocmd{\pesudohook}{
+\pretocmd{\pesudohookOFpremainbody}{
 \pagenumbering{arabic} %《规范》要求：从正文开始设为阿拉伯数字页码，并且重新从1开始计数
 }{}{\ClassError{dlmuthesis}{pesudohook命令执行异常}{}}
 \fi\fi\fi
