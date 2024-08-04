@@ -6,7 +6,7 @@
 %% 1. 学位类别：
 %% 注：i.添加哪个参数即表示选择哪种模式；ii.只能添加一个
 %%% BAstem：本科-理工科
-%%% BAhumanities：本科-文科类
+%%% BAhumanities：本科-人文社科
 %%% MA：硕士
 %%% PhD：博士
 %% 2. 输出模式：
@@ -43,11 +43,11 @@
 
 \begin{document}
 
-\makepages %【添加封面页、装订页、标题页】
+\makepages %【封面页】
 
 % ---------- 中文摘要 ---------- %
 \begin{abstract}
-\input{mainbody/STEM/abstract_zh}
+\input{mainbody/BAstem/abstract_zh}
 \end{abstract}
 \newpage
 % ================================================== %	
@@ -56,7 +56,7 @@
 % ---------- 英文摘要 ---------- %
 \renewcommand\abstractname{\large ABSTRACT} %临时修改摘要名
 \begin{abstract}
-\input{mainbody/STEM/abstract_en}
+\input{mainbody/BAstem/abstract_en}
 \end{abstract}
 \newpage
 % ================================================== %	
@@ -69,21 +69,13 @@
 % ================================================== %	
 
 
-\pagestyle{fancy} %从第一章到致谢，设置为有页眉、有页脚的模式
-\pagenumbering{arabic} %《手册》要求：从正文开始设为阿拉伯数字页码，并且重新从1开始计数
-
-
-% ---------- 正文首页标题 ---------- %
-\cntitleinMAINBODY %【插入中文标题】
-% ================================================== %
-
-
 % ---------- 正文（划分为多个独立文件依次导入） ---------- %
-\input{mainbody/STEM/ch1} \clearpage\vspace*{0pt} %\vspace*{0pt}的添加解决了章节标题前间距不合理的问题
-\input{mainbody/STEM/ch2} \clearpage\vspace*{0pt}
-\input{mainbody/STEM/ch3} \clearpage\vspace*{0pt}
-\input{mainbody/STEM/ch4} \clearpage\vspace*{0pt}
-\input{mainbody/STEM/conclusions} \clearpage\vspace*{0pt} % 结论
+\pesudohook
+\input{mainbody/BAstem/ch1} \clearpage\vspace*{0pt} %\vspace*{0pt}的添加解决了章节标题前间距不合理的问题
+\input{mainbody/BAstem/ch2} \clearpage\vspace*{0pt}
+\input{mainbody/BAstem/ch3} \clearpage\vspace*{0pt}
+\input{mainbody/BAstem/ch4} \clearpage\vspace*{0pt}
+\input{mainbody/BAstem/conclusions} \clearpage\vspace*{0pt} % 结论
 % ================================================== %
 
 % ---------- 参考文献 ---------- %
@@ -96,11 +88,11 @@
 % ================================================== %
 
 % ---------- 致谢 ---------- %
-\input{mainbody/STEM/acknowledgments}
+\input{mainbody/BAstem/acknowledgments}
 % ================================================== %
 
 % ---------- 附录 ---------- %
-\input{mainbody/STEM/appendiceS}
+\input{mainbody/BAstem/appendiceS}
 % ================================================== %
 
 \end{document} 

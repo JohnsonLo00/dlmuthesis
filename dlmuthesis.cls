@@ -33,7 +33,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 % ---------- 文档类声明命令的可选参数初始化 ---------- %
 \RequirePackage{zhnumber} %【中文数字】
 \newif\if@dlmuthesis@BAstem %【理工科模式，初始值为真，下同】
-\newif\if@dlmuthesis@BAhumanities %【文科模式，初始值为真，下同】
+\newif\if@dlmuthesis@BAhumanities %【人文社科模式，初始值为真，下同】
 \newif\if@dlmuthesis@MA %【硕士模式，初始值为真，下同】
 
 \newcounter{optionofdegree} %【用于计算关于学位类别的可选参数用了多少个】
@@ -67,7 +67,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \RequirePackage[UTF8, heading=true, zihao = -4]{ctex}
 \RequirePackage{totcount}
 
-\if@dlmuthesis@BAstem
+\if@dlmuthesis@BAstem %本科-理工科
 \ctexset{
   abstractname = {\zihao{3}摘\hspace{2em}要},
   contentsname = \hfill{\zihao{3}目\hspace{2em}录}\hfill,
@@ -89,7 +89,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     afterskip=6.75pt,
   }
 }
-\else\if@dlmuthesis@BAhumanities
+\else\if@dlmuthesis@BAhumanities %本科-人文社科
 \renewcommand\thesubsection{\arabic{subsection}} %重设二级标题计数器格式
 \renewcommand\thesubsubsection{\arabic{subsubsection}} %重设三级标题计数器格式
 \renewcommand\theparagraph{\arabic{paragraph}} %重设四级标题计数器格式
@@ -129,7 +129,29 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     afterskip=6.75pt,
   }
 }
-\fi\fi
+\else\if@dlmuthesis@MA %硕士
+\ctexset{
+  abstractname = {\zihao{-3}\heiti 摘\hspace{2em}要},
+  contentsname = \hfill{\zihao{3}目\hspace{2em}录}\hfill,
+  bibname = \hfill{\zihao{3}参~ 考~ 文~ 献}\hfill,
+  section = {
+    format = {\zihao{3}\bfseries},
+    name = {第,章},
+    beforeskip=6.75pt,
+    afterskip=6.75pt,
+  },
+  subsection = {
+    format={\zihao{4}\bfseries},
+    beforeskip=6.75pt,
+    afterskip=6.75pt,
+  },
+  subsubsection = {
+    format={\zihao{-4}\bfseries},
+	beforeskip=6.75pt,
+    afterskip=6.75pt,
+  }
+}
+\fi\fi\fi
 
 % ======================================== %
 
@@ -144,7 +166,13 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 % --------------- 页面样式 --------------- %
 \RequirePackage{fancyhdr} %定制页眉页脚
 \RequirePackage{geometry} %定制页面
+\if@dlmuthesis@BAstem %本科-理工科
 \geometry{bindingoffset=5mm, top=2.5cm, bottom=2.5cm, left=3.0cm, right=2.5cm, headsep=0.5cm}
+\else\if@dlmuthesis@BAhumanities %本科-人文社科
+\geometry{bindingoffset=5mm, top=2.5cm, bottom=2.5cm, left=3.0cm, right=2.5cm, headsep=0.5cm}
+\else\if@dlmuthesis@MA %硕士
+\geometry{bindingoffset=5mm, top=2.5cm, bottom=2.5cm, left=3.0cm, right=2.5cm, headsep=24.0pt}
+\fi\fi\fi
 
 \lhead{} %在'heading=true'下，默认左页眉为当前二级标题名称，因此要赋值为空
 \rhead{} %'heading=true'下，默认右页眉为当前一级标题名称，，因此要赋值为空
@@ -199,13 +227,33 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 % ======================================== %
 
 
-% --------------- 摘要环境 --------------- %
+% -------------------- 摘要环境 -------------------- %
 \RequirePackage{abstract}
 \setlength{\absleftindent}{0pt} %取消左自动缩进
 \setlength{\absrightindent}{0pt} %取消右自动缩进
-\newcommand{\keywordsCN}[1]{\vspace{\baselineskip}{}\noindent\bf 关键词: #1} %插入关键词
-\newcommand{\keywordsEN}[1]{\vspace{\baselineskip}{}\noindent\bf Keywords: #1} %插入关键词
-% ======================================== %
+%% ---------- 中文版摘要插入关键词 ---------- %
+\newcommand{\keywordsCN}[1]{
+\if@dlmuthesis@BAstem %本科-理工科
+\vspace{\baselineskip}{}\noindent\bf 关键词: #1
+\else\if@dlmuthesis@BAhumanities %本科-人文社科
+\vspace{\baselineskip}{}\noindent\bf 关键词: #1
+\else\if@dlmuthesis@MA %硕士
+\vspace{\baselineskip}{}{\bf\heiti 关键词}: #1
+\fi\fi\fi
+}
+%% ======================================== %
+%% ---------- 英文版摘要插入关键词 ---------- %
+\newcommand{\keywordsEN}[1]{
+\if@dlmuthesis@BAstem %本科-理工科
+\vspace{\baselineskip}{}\noindent\bf Keywords: #1
+\else\if@dlmuthesis@BAhumanities %本科-人文社科
+\vspace{\baselineskip}{}\noindent\bf Keywords: #1
+\else\if@dlmuthesis@MA %硕士
+\vspace{\baselineskip}{}{\bf Key Words}: #1
+\fi\fi\fi
+}
+%% ======================================== %
+% ================================================== %
 
 
 % --------------- 列表环境 --------------- %
@@ -214,7 +262,9 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \setlist{leftmargin=0pt, itemindent=2\parindent, itemsep=0pt, parsep=0pt}
 \else\if@dlmuthesis@BAhumanities
 \setlist{leftmargin=0pt, itemindent=2\parindent, itemsep=0pt, nosep}
-\fi\fi
+\else\if@dlmuthesis@MA
+\setlist{leftmargin=0pt, itemindent=2\parindent, itemsep=0pt, parsep=0pt}
+\fi\fi\fi
 % ======================================== %
 
 
@@ -301,7 +351,13 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   {（\theparagraph）} %标题前的标签
   {1em} %标题和标签之间的间距
   {} %标题前没有额外的命令或内容
-\fi\fi
+\else\if@dlmuthesis@MA
+\titleformat{\paragraph}
+  {\normalsize\bfseries} %字体
+  {\theparagraph} %标题前的标签
+  {1em} %标题和标签之间的间距
+  {} %标题前没有额外的命令或内容
+\fi\fi\fi
 \titlespacing{\paragraph}
   {0pt} %标题左间距
   {0.5ex \@plus 1ex \@minus.2ex} %标题上间距
@@ -347,7 +403,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 % ======================================== %
 
 
-% --------------- 设置脚注样式（文科类专业专用） --------------- %
+% --------------- 设置脚注样式（人文社科专业专用） --------------- %
 \RequirePackage{xfp} %在latex代码中执行数值加减运算
 \RequirePackage{pifont} %提供带圈的阿拉伯数字编号
 \RequirePackage[perpage]{footmisc} %设置简单的脚注样式
@@ -682,13 +738,12 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \cline{2-2}\cline{4-4}\cline{6-6}\cline{8-8}
   \end{tabularx}%
 \end{table}%
-\newpage
 }
 %% ================================================== %
 
 %% -------------------- 授权使用声明 -------------------- %
 \newcommand{\AuthorizationStatement}{
-%\thispagestyle{plain} %【有页眉页脚】
+\thispagestyle{empty} %【无页眉页脚】
 \begin{spacing}{1.5}
 \begin{center}{\zihao{3}\heiti
 大连海事大学学位论文授权使用声明}
@@ -708,22 +763,73 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \cline{2-2}\cline{4-4}\cline{6-6}\cline{8-8}
   \end{tabularx}%
 \end{table}%
-\newpage
 }
 %% ================================================== %
 
 % ============================================================ %
 
 
+% ---------- 伪钩子（实现正文开始前添加标题、设置样式） ---------- %
+\newcommand{\pesudohook}{{}}
+% ================================================== %
+
+
 % --------------- 对sty,cls的命令的定制 --------------- %
 \RequirePackage{etoolbox}
 
+%% ----- 硕士论文中，原创性声明之后需换页、授权使用声明之前需要换页 ----- %
+\if@dlmuthesis@MA
+\apptocmd{\OriginalityStatement}{\newpage}{}{}
+\pretocmd{\AuthorizationStatement}{\newpage}{}{}
+\fi
+%% ============================================================ %
+
+%% -------------------- 不同学位模式下，设置摘要到目录的样式的时机不同 -------------------- %
+\if@dlmuthesis@BAstem %本科-理工科
 \apptocmd{\makepages}{
 \pagestyle{plain} %从摘要到目录，设置为无页眉、有页脚的模式
 \pagenumbering{Roman} %《手册》要求：从摘要到目录，设置罗马数字页码
 \renewcommand{\baselinestretch}{1.25}
-}{\typeout{succeeds: edit the style of page using package etoolbox}}{\PackageError{fails: edit the style of page using package etoolbox}}
+}{\typeout{succeeds: edit the style of page using package etoolbox}}{\ClassError{dlmuthesis}{fails: edit the style of page using package etoolbox}{}}
+\else\if@dlmuthesis@BAhumanities %本科-人文社科
+\apptocmd{\makepages}{
+\pagestyle{plain} %从摘要到目录，设置为无页眉、有页脚的模式
+\pagenumbering{Roman} %《手册》要求：从摘要到目录，设置罗马数字页码
+\renewcommand{\baselinestretch}{1.25}
+}{\typeout{succeeds: edit the style of page using package etoolbox}}{\ClassError{dlmuthesis}{fails: edit the style of page using package etoolbox}{}}
+\else\if@dlmuthesis@MA % 硕士
+\apptocmd{\OriginalityStatement}{
+\pagestyle{plain} %从摘要到目录，设置为无页眉、有页脚的模式
+\pagenumbering{Roman} %《规范》要求：从摘要到目录，设置罗马数字页码
+\renewcommand{\baselinestretch}{1.25}
+}{\typeout{succeeds: edit the style of page using package etoolbox}}{\ClassError{dlmuthesis}{fails: edit the style of page using package etoolbox}{}}
+\fi\fi\fi
+%% ================================================================================ %
 
+%% --------------- 不同学位模式下，设置正文样式的时机不同 --------------- %
+\if@dlmuthesis@BAstem %本科-理工科
+\pretocmd{\pesudohook}{
+\cntitleinMAINBODY
+\pagestyle{fancy} %从第一章到致谢，设置为有页眉、有页脚的模式
+\pagenumbering{arabic} %《手册》要求：从正文开始设为阿拉伯数字页码，并且重新从1开始计数
+}{}{\ClassError{dlmuthesis}{tableofcontent命令执行异常}{}}
+\else\if@dlmuthesis@BAhumanities %本科-人文社科
+\pretocmd{\pesudohook}{
+\cntitleinMAINBODY
+\pagestyle{fancy} %从第一章到致谢，设置为有页眉、有页脚的模式
+\pagenumbering{arabic} %《手册》要求：从正文开始设为阿拉伯数字页码，并且重新从1开始计数
+}{}{\ClassError{dlmuthesis}{tableofcontent命令执行异常}{}}
+\else\if@dlmuthesis@MA % 硕士
+\apptocmd{\OriginalityStatement}{
+\pagestyle{fancy} %从第一章到致谢，设置为有页眉、有页脚的模式
+}{}{\ClassError{dlmuthesis}{OriginalityStatement命令执行异常}{}}
+\pretocmd{\pesudohook}{
+\pagenumbering{arabic} %《规范》要求：从正文开始设为阿拉伯数字页码，并且重新从1开始计数
+}{}{\ClassError{dlmuthesis}{pesudohook命令执行异常}{}}
+\fi\fi\fi
+%% ======================================================= %
+
+%% --------------- 参考文献列表前后的样式设置 --------------- %
 \BeforeBeginEnvironment{thebibliography}{
 \phantomsection
 \addcontentsline{toc}{section}{参~ 考~ 文~ 献} %不能放在导言区
@@ -733,10 +839,13 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \AfterEndEnvironment{thebibliography}{
 \clearpage\vspace*{0pt}
 }{\typeout{succeeds: aft-style of env thebibliography}}{\typeout{fails: aft-style of env thebibliography}}
+%% ======================================================= %
 
+%% --------------- 每个附录章节之前的样式设置 --------------- %
 \pretocmd{\appendixsec}{
 \newpage
 }{\typeout{成功：附录环境下在下一个章节前前换页}}{\PackageError{失败：附录环境下在下一个章节前前换页}}
+%% ======================================================= %
 
 % ======================================== %
 
