@@ -34,6 +34,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \RequirePackage{zhnumber} %【中文数字】
 \newif\if@dlmuthesis@BAstem %【理工科模式，初始值为真，下同】
 \newif\if@dlmuthesis@BAhumanities %【文科模式，初始值为真，下同】
+\newif\if@dlmuthesis@MA %【硕士模式，初始值为真，下同】
 
 \newcounter{optionofdegree} %【用于计算关于学位类别的可选参数用了多少个】
 \setcounter{optionofdegree}{0}
@@ -43,6 +44,10 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 }
 \DeclareOption{BAhumanities}{
 \@dlmuthesis@BAhumanitiestrue
+\addtocounter{optionofdegree}{1}
+}
+\DeclareOption{MA}{
+\@dlmuthesis@MAtrue
 \addtocounter{optionofdegree}{1}
 }
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{article}}
@@ -404,19 +409,21 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 %% -------------------- 变量预定义 -------------------- %
 
-%%% ---------- 本科论文专用 ---------- %
 \newcommand{\dlmuthesis@tokens@cntitle}{~} %【中文标题】
 \newcommand{\dlmuthesis@tokens@entitle}{~} %【英文标题】
 \newcommand{\dlmuthesis@tokens@aauthor}{~} %【作者姓名】
 \newcommand{\dlmuthesis@tokens@sdtID}{~} %【学号】
-\newcommand{\dlmuthesis@tokens@faculty}{~} %【学院】
 \newcommand{\dlmuthesis@tokens@majorinCOVERPAGE}{~} %【专业年级班级(coverpage专用)】
-\newcommand{\dlmuthesis@tokens@mentorONE}{~} %【指导教师(及其职称)】
+\newcommand{\dlmuthesis@tokens@mentorONE}{~} %【指导教师（职称）】
+\newcommand{\dlmuthesis@tokens@faculty}{~} %【学院】
+\newcommand{\dlmuthesis@tokens@completiondate}{XXXX 年 X 月} %【完成日期（年、月），coverpage专用】
+
+%%% ---------- 本科论文专用 ---------- %
 \newcommand{\dlmuthesis@tokens@mentorTWO}{~} %【第二指导教师(及其职称)】
-\newcommand{\dlmuthesis@tokens@completiondateinCOVERPAGE}{XXXX 年 X 月} %【完成日期（年、月），coverpage专用】
 %%% ======================================== %
 
 %%% ---------- 硕士论文专用 ---------- %
+\newcommand{\dlmuthesis@tokens@degree}{~} %【学位类别】
 %%% ======================================== %
 
 %%% ---------- 博士论文专用 ---------- %
@@ -427,7 +434,6 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 %% -------------------- 正式变量定义 -------------------- %
 
-%%% ---------- 本科论文专用 ---------- %
 \newcommand{\cntitle}[1]{
 \renewcommand{\dlmuthesis@tokens@cntitle}{#1}
 \newcommand{\cntitleinMAINBODY}{\vspace*{1ex}{}\begin{center}{\zihao{3}\bfseries #1}\end{center}{}\vspace*{1ex}{}} %【正文第1页顶部的中文标题】
@@ -435,24 +441,32 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \newcommand{\entitle}[1]{\renewcommand{\dlmuthesis@tokens@entitle}{#1}} %【英文标题】
 \newcommand{\aauthor}[1]{\renewcommand{\dlmuthesis@tokens@aauthor}{#1}} %【作者姓名】
 \newcommand{\sdtID}[1]{\renewcommand{\dlmuthesis@tokens@sdtID}{#1}} %【学号】
-\newcommand{\faculty}[1]{\renewcommand{\dlmuthesis@tokens@faculty}{#1}} %【学院】
 \newcommand{\majorinCOVERPAGE}[1]{\renewcommand{\dlmuthesis@tokens@majorinCOVERPAGE}{#1}} %【专业年级班级(coverpage专用)】
-\newcommand{\mentorONE}[2]{
-  \renewcommand{\dlmuthesis@tokens@mentorONE}{#1（#2）}
-} %【指导教师(及其职称)】
-\newcommand{\mentorTWO}[2]{
-  \ifthenelse{\equal{#2}{0}}{
-    \renewcommand{\dlmuthesis@tokens@mentorTWO}{#1}
-  }{
-    \renewcommand{\dlmuthesis@tokens@mentorTWO}{#1（#2）}
-  }
-} %【第二指导教师(及其职称)】【若无，则第一个变量填“无”，第二个填0】
+\newcommand{\mentorONE}[1]{\renewcommand{\dlmuthesis@tokens@mentorONE}{#1}} %【指导教师（职称）】
+\newcommand{\faculty}[1]{\renewcommand{\dlmuthesis@tokens@faculty}{#1}} %【学院】
 \newcommand{\completiondate}[2]{
-  \renewcommand{\dlmuthesis@tokens@completiondateinCOVERPAGE}{{#1}~年~{#2}~月} %【完成日期（年、月），coverpage专用】
+  \renewcommand{\dlmuthesis@tokens@completiondate}{{#1}~年~{#2}~月} %【完成日期（年、月），coverpage专用】
 }
+
+%%% ---------- 本科论文专用 ---------- %
+\newcommand{\mentorTWO}[1]{\renewcommand{\dlmuthesis@tokens@mentorTWO}{#1}} %【第二指导教师（职称）】
 %%% ======================================== %
 
 %%% ---------- 硕士论文专用 ---------- %
+\newcommand{\headerinCOVERPAGEMA}{硕~士~}
+\newcommand{\degree}[2]{
+  \renewcommand{\dlmuthesis@tokens@degree}{#1}
+  \ifthenelse{\equal{#2}{academic}}{
+    % maintain original
+  }{
+    \ifthenelse{\equal{#2}{professional}}{
+      \renewcommand{\headerinCOVERPAGEMA}{专~业~学~位~硕~士~}
+    }{
+      % no commands
+    }
+  }
+} %【学位类别】
+
 %%% ======================================== %
 
 %%% ---------- 博士论文专用 ---------- %
@@ -477,7 +491,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   %%% ---------- 封面顶部LOGO ---------- %
   \begin{textblock}{15}(3,5)
     \centering
-    \includegraphics[width=11.11cm, height=2.4cm]{figures/logo/LogoAndName_dlmu.png}
+    \includegraphics[width=11.11cm, height=2.4cm]{figures/logo/LogoBA.png}
   \end{textblock}
   %%% ======================================== %
 
@@ -531,13 +545,13 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
       \cline{2-2}
       \selectfont\fangsong 第\hfill 二\hfill 导\hfill 师: & \selectfont\fangsong\dlmuthesis@tokens@mentorTWO \\
       \cline{2-2}
-      \selectfont\fangsong 完\hfill 成\hfill 日\hfill 期: & \selectfont\fangsong\dlmuthesis@tokens@completiondateinCOVERPAGE \\
+      \selectfont\fangsong 完\hfill 成\hfill 日\hfill 期: & \selectfont\fangsong\dlmuthesis@tokens@completiondate \\
       \cline{2-2}
     \end{tabular}
   \end{textblock}
   %%% ================================================== %
 
-  %% ---------- 由于之前将\extrarowheight的值设为8pt，为保证往后正文表格的间距正常，需重新设置回来 ---------- %
+  %% ---------- 由于之前将\extrarowheight的值设为9pt，为保证往后正文表格的间距正常，需重新设置回来 ---------- %
   \setlength{\extrarowheight}{2pt}
   %%% ================================================================================ %
 
@@ -546,7 +560,54 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 %% ============================================================ %
 
 %% -------------------- 封面页-硕士论文 -------------------- %
-%\newcommand{\makecoverpageMA}{}
+\newcommand{\makecoverpageMA}{
+  \thispagestyle{empty} %【无页眉页脚】
+  \setlength{\extrarowheight}{18pt} %【设置表格行间距】
+
+  ~\vspace{24pt}
+  \begin{center}{\bf\zihao{-1}
+  \headerinCOVERPAGEMA 学~位~论~文}
+  \end{center}{}\vspace{24.0pt}
+
+  \begin{center}
+  {\zihao{2}\heiti\dlmuthesis@tokens@cntitle}\\
+  {\zihao{3}\bfseries\dlmuthesis@tokens@entitle}
+  \end{center}{}\vspace{132.0pt}
+
+  \begin{table}[H]
+    \centering
+    \begin{tabular}
+      {
+      >{\fontsize{16pt}{16pt}\selectfont}m{2.8cm}
+      >{\centering\arraybackslash\fontsize{16pt}{16pt}\selectfont} p{8.0cm}
+      }
+      作\hfill 者\hfill 姓\hfill 名： & \dlmuthesis@tokens@aauthor \\
+      \cline{2-2}
+      学\hfill 科\hfill 专\hfill 业： & \dlmuthesis@tokens@majorinCOVERPAGE \\
+      \cline{2-2}
+      学\hfill 号： & \dlmuthesis@tokens@sdtID \\
+      \cline{2-2}
+      指\hfill 导\hfill 教\hfill 师： & \dlmuthesis@tokens@mentorONE \\
+      \cline{2-2}
+      学\hfill 位\hfill 类\hfill 别： & \dlmuthesis@tokens@degree \\
+      \cline{2-2}
+      培\hfill 养\hfill 单\hfill 位： & \dlmuthesis@tokens@faculty \\
+      \cline{2-2}
+      答\hfill 辩\hfill 时\hfill 间： & \dlmuthesis@tokens@completiondate \\
+      \cline{2-2}
+    \end{tabular}
+  \end{table}{}\vspace{24.0pt}
+
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.30\textwidth]{logo/LogoMA.pdf}
+  \end{figure}
+
+  %%% ----- 由于之前将\extrarowheight的值设为9pt，为保证往后正文表格的间距正常，需重新设置回来 ----- %
+  \setlength{\extrarowheight}{2pt}
+  %%% ================================================== %
+  \newpage
+}
 %% ============================================================ %
 
 %% -------------------- 封面页-博士论文 -------------------- %
@@ -558,9 +619,100 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 % --------------- 封面页的导入 --------------- %
 \newcommand{\makepages}{
+\if@dlmuthesis@BAstem
 \makecoverpageBA
+\else\if@dlmuthesis@BAhumanities
+\makecoverpageBA
+\else\if@dlmuthesis@MA
+\makecoverpageMA
+\fi\fi\fi
 }
 % ======================================== %
+
+
+% ---------- 硕士论文 - 原创性声明 & 授权使用声明 ---------- %
+\newcommand{\dlmuthesis@tokens@signofstudent}{XXX} %【预定义：作者签名】
+\newcommand{\dlmuthesis@tokens@signofmentor}{YYY} %【预定义：导师签名】
+\newcommand{\dlmuthesis@tokens@dateforstudent}{~} %【预定义：作者签名日期】
+\newcommand{\yearSTU}{XXXX}
+\newcommand{\monthSTU}{XX}
+\newcommand{\daySTU}{XX}
+\newcommand{\dlmuthesis@tokens@dateformentor}{~} %【预定义：导师签名日期】
+\newcommand{\yearMNT}{YYYY}
+\newcommand{\monthMNT}{YY}
+\newcommand{\dayMNT}{YY}
+
+\newcommand{\signofstudent}[1]{
+  \renewcommand{\dlmuthesis@tokens@signofstudent}{#1}
+} %【正式定义：作者签名】
+\newcommand{\signofmentor}[1]{
+  \renewcommand{\dlmuthesis@tokens@signofmentor}{#1}
+} %【正式定义：导师签名】
+\newcommand{\dateforstudent}[3]{
+  \renewcommand{\yearSTU}{#1}
+  \renewcommand{\monthSTU}{#2}
+  \renewcommand{\daySTU}{#3}
+} %【正式定义：作者签名日期】
+\newcommand{\dateformentor}[3]{
+  \renewcommand{\yearMNT}{#1}
+  \renewcommand{\monthMNT}{#2}
+  \renewcommand{\dayMNT}{#3}
+} %【正式定义：作者签名日期】
+
+%% -------------------- 原创性声明 -------------------- %
+\newcommand{\OriginalityStatement}{
+\thispagestyle{empty} %【无页眉页脚】
+
+~\vspace{24pt}
+\begin{center}\begin{spacing}{1.5}\zihao{-2}
+大连海事大学\\
+研究生学位论文原创性声明
+\end{spacing}\end{center}
+\begin{spacing}{1.5}
+
+本人郑重声明：所呈交的学位论文，是本人在导师的指导下进行研究工作所取得的成果。尽我所知，除文中已经注明引用内容和致谢的地方外，本论文不包含任何其他个人或集体已经发表或撰写过的研究成果。对论文所涉及的研究工作做出贡献的其他个人和集体，均已在论文中以明确的方式标明或致谢。\vspace{12.0pt}
+
+若有不实之处，本人愿意承担相关法律责任。
+\end{spacing}
+
+\begin{table}[H]
+  \centering
+  \begin{tabularx}{\textwidth}{cXccccccc}
+作 者 签 名 : & \hfil\dlmuthesis@tokens@signofstudent\hfil & 日期: & \yearSTU & 年 & \monthSTU & 月 & \daySTU & 日 \\
+\cline{2-2}\cline{4-4}\cline{6-6}\cline{8-8}
+  \end{tabularx}%
+\end{table}%
+\newpage
+}
+%% ================================================== %
+
+%% -------------------- 授权使用声明 -------------------- %
+\newcommand{\AuthorizationStatement}{
+%\thispagestyle{plain} %【有页眉页脚】
+\begin{spacing}{1.5}
+\begin{center}{\zihao{3}\heiti
+大连海事大学学位论文授权使用声明}
+\end{center}{}\vspace{12pt}
+
+本人完全了解并同意遵守学校有关学位论文知识产权的规定，在校攻读学位期间论文工作的知识产权属于大连海事大学，学校有权保留送交学位论文的副本，向国家有关部门或机构送交论文的复印件和电子版，允许该论文被查阅，可以将本学位论文的全部或部分内容编入有关数据库进行检索，可以采用影印、缩印、或扫描等复制手段保存和汇编本学位论文。
+
+涉密的学位论文在解密后使用本声明。
+\end{spacing}
+
+\begin{table}[H]
+  \centering
+  \begin{tabularx}{\textwidth}{cXccccccc}
+作~者~签~名 : & \hfil\dlmuthesis@tokens@signofstudent\hfil & 日期: & \yearSTU & 年 & \monthSTU & 月 & \daySTU & 日 \\
+\cline{2-2}\cline{4-4}\cline{6-6}\cline{8-8}\\[6pt]
+导~师~签~名 : & \hfil\dlmuthesis@tokens@signofmentor\hfil & 日期: & \yearMNT & 年 & \monthMNT & 月 & \dayMNT & 日 \\
+\cline{2-2}\cline{4-4}\cline{6-6}\cline{8-8}
+  \end{tabularx}%
+\end{table}%
+\newpage
+}
+%% ================================================== %
+
+% ============================================================ %
 
 
 % --------------- 对sty,cls的命令的定制 --------------- %
