@@ -135,22 +135,20 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   contentsname = \hfill{\heiti\zihao{-3}目\hspace{2em}录}\hfill,
   listfigurename = \hfill{\songti\zihao{-3}图目录}\hfill,
   listtablename = \hfill{\songti\zihao{-3}表目录}\hfill,
-  figurename = {图},
-  tablename = {表},
   bibname = \hfill{\zihao{3}参~ 考~ 文~ 献}\hfill,
   section = {
-    format = {\zihao{3}\bfseries},
-    name = {第,章},
+    format = {\zihao{-3}\heiti},
+    name = {,},
     beforeskip=6.75pt,
     afterskip=6.75pt,
   },
   subsection = {
-    format={\zihao{4}\bfseries},
+    format={\zihao{4}\heiti},
     beforeskip=6.75pt,
     afterskip=6.75pt,
   },
   subsubsection = {
-    format={\zihao{-4}\bfseries},
+    format={\zihao{-4}\heiti},
 	beforeskip=6.75pt,
     afterskip=6.75pt,
   }
@@ -175,7 +173,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \else\if@dlmuthesis@BAhumanities %本科-人文社科
 \geometry{bindingoffset=5mm, top=2.5cm, bottom=2.5cm, left=3.0cm, right=2.5cm, headsep=0.5cm}
 \else\if@dlmuthesis@MA %硕士
-\geometry{bindingoffset=5mm, top=2.5cm, bottom=2.5cm, left=3.0cm, right=2.5cm, headsep=24.0pt}
+\geometry{bindingoffset=5mm, top=3.5cm, bottom=2.5cm, left=3.0cm, right=2.5cm, headsep=24.0pt}
 \fi\fi\fi
 
 \lhead{} %在'heading=true'下，默认左页眉为当前二级标题名称，因此要赋值为空
@@ -367,21 +365,21 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \RequirePackage{titlesec}
 \setcounter{secnumdepth}{4}
 
-\if@dlmuthesis@BAstem
+\if@dlmuthesis@BAstem %本科-理工科
 \titleformat{\paragraph}
   {\normalsize\bfseries} %字体
   {\theparagraph} %标题前的标签
   {1em} %标题和标签之间的间距
   {} %标题前没有额外的命令或内容
-\else\if@dlmuthesis@BAhumanities
+\else\if@dlmuthesis@BAhumanities %本科-人文社科
 \titleformat{\paragraph}
   {\normalsize\bfseries} %字体
   {（\theparagraph）} %标题前的标签
   {1em} %标题和标签之间的间距
   {} %标题前没有额外的命令或内容
-\else\if@dlmuthesis@MA
+\else\if@dlmuthesis@MA %硕士
 \titleformat{\paragraph}
-  {\normalsize\bfseries} %字体
+  {\normalsize\heiti} %字体
   {\theparagraph} %标题前的标签
   {1em} %标题和标签之间的间距
   {} %标题前没有额外的命令或内容
@@ -397,9 +395,22 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 % --------------- 图、表标题样式 --------------- %
 \RequirePackage{caption}
+\RequirePackage[labelformat=brace]{subcaption} %(与 subfigure 宏包冲突)也能提供 subfigure 环境（需设置宽度），并使环境中的标题变成副标题样式
+\RequirePackage[list=off]{bicaption} %同时含中英文的标题
+\if@dlmuthesis@BAstem %本科-理工科
 \DeclareCaptionLabelSeparator{doublespace}{~~}
 \captionsetup{font=small, labelsep=doublespace, labelfont=bf, textfont=bf}
-\RequirePackage[labelformat=brace]{subcaption} %(与 subfigure 宏包冲突)也能提供 subfigure 环境（需设置宽度），并使环境中的标题变成副标题样式
+\else\if@dlmuthesis@BAhumanities %本科-人文社科
+\DeclareCaptionLabelSeparator{doublespace}{~~}
+\captionsetup{font=small, labelsep=doublespace, labelfont=bf, textfont=bf}
+\else\if@dlmuthesis@MA %硕士
+\DeclareCaptionLabelSeparator{doublespace}{~~}
+\captionsetup[figure][bi-first]{font=small, labelsep=doublespace}
+\captionsetup[figure][bi-second]{font=small, labelsep=doublespace, name={Fig}}
+\captionsetup[table][bi-first]{font=small, labelsep=doublespace}
+\captionsetup[table][bi-second]{font=small, labelsep=doublespace, name={Tab~}}
+\fi\fi\fi
+
 \numberwithin{figure}{section} %numberwithin命令必须放在amsmath宏包之后
 \numberwithin{table}{section}
 % ======================================== %
@@ -479,7 +490,18 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 % 自定义附录章标题、在目录中的样式
 \newcounter{appendixcounting} %定义专属于附录的计数器
 \addtocounter{appendixcounting}{1} %附录标题计数器的初始值设为1
+\if@dlmuthesis@BAstem %本科-理工科
 \newcommand{\appendixsec}[1]{ \zihao{4}{\section*{附录\arabic{appendixcounting}\quad #1}}\phantomsection\addcontentsline{toc}{section}{附录\theappendixcounting\quad #1}\addtocounter{appendixcounting}{1}} %注：一定要先添加到目录、再将计数器值增1
+\else\if@dlmuthesis@BAhumanities %本科-人文社科
+\newcommand{\appendixsec}[1]{ \zihao{4}{\section*{附录\arabic{appendixcounting}\quad #1}}\phantomsection\addcontentsline{toc}{section}{附录\theappendixcounting\quad #1}\addtocounter{appendixcounting}{1}}
+\else\if@dlmuthesis@MA %硕士
+\newcommand{\appendixsec}[1]{
+{\zihao{4}\section*{附录\Alph{appendixcounting}\quad #1}}
+\phantomsection
+\addcontentsline{toc}{section}{附录\Alph{appendixcounting}\quad #1}
+\addtocounter{appendixcounting}{1}
+}
+\fi\fi\fi
 % ======================================== %
 
 
@@ -799,8 +821,9 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 % ---------- 伪钩子 ---------- %
 \newcommand{\pesudohookOFabstractCN}{{}} %中文摘要
 \newcommand{\pesudohookOFabstractEN}{{}} %英文摘要
-\newcommand{\pesudohookOFtocfigtab}{{}} %图表目录总标题
+\newcommand{\pesudohookOFintro}{{}} %引言
 \newcommand{\pesudohookOFpremainbody}{{}} %实现正文开始前添加标题、设置样式
+\newcommand{\pesudohookOFconclusion}{{}} %结论
 % ================================================== %
 
 
@@ -856,6 +879,15 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \fi\fi\fi
 %% ================================================================================ %
 
+%% ----- 硕士论文中，引言标题需要添加到目录中 ----- %
+\if@dlmuthesis@MA
+\pretocmd{\pesudohookOFintro}{
+\phantomsection
+\addcontentsline{toc}{section}{引\hspace{2em}言}
+}{}{\ClassError{dlmuthesis}{引言部分的钩子异常}{}}
+\fi
+%% ================================================== %
+
 %% --------------- 不同学位模式下，设置正文样式的时机不同 --------------- %
 \if@dlmuthesis@BAstem %本科-理工科
 \pretocmd{\pesudohookOFpremainbody}{
@@ -878,6 +910,13 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 }{}{\ClassError{dlmuthesis}{pesudohook命令执行异常}{}}
 \fi\fi\fi
 %% ======================================================= %
+
+%% ----- 结论部分之前的样式 ----- %
+\pretocmd{\pesudohookOFconclusion}{
+\phantomsection
+\addcontentsline{toc}{section}{结\hspace{2em}论}
+}{}{\ClassError{dlmuthesis}{结论部分的钩子异常}{}}
+%% ================================================== %
 
 %% --------------- 参考文献列表前后的样式设置 --------------- %
 \BeforeBeginEnvironment{thebibliography}{
