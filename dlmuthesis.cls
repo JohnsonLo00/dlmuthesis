@@ -106,7 +106,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     afterskip=6.75pt,
   },
   subsection = {
-    format={\zihao{4}\bfseries},
+    format = {\zihao{4}\bfseries},
     name = {（,）},
     number = \zhnumber{\thesubsection},
     aftername = {},
@@ -114,14 +114,14 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     afterskip=6.75pt,
   },
   subsubsection = {
-    format={\zihao{-4}\bfseries},
+    format = {\zihao{-4}\bfseries},
     name = {,.~},
     aftername = {},
     beforeskip=6.75pt,
     afterskip=6.75pt,
   },
   paragraph={
-    format={\zihao{-4}\bfseries},
+    format = {\zihao{-4}\bfseries},
     name = {（,）},
     aftername = {},
     aftertitle = \par,
@@ -143,14 +143,17 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     afterskip=6.75pt,
   },
   subsection = {
-    format={\zihao{4}\heiti},
+    format = {\zihao{4}\heiti},
     beforeskip=6.75pt,
     afterskip=6.75pt,
   },
   subsubsection = {
-    format={\zihao{-4}\heiti},
+    format = {\zihao{-4}\heiti},
 	beforeskip=6.75pt,
     afterskip=6.75pt,
+  },
+  appendix={
+    name = {附录,},
   }
 }
 \fi\fi\fi
@@ -488,6 +491,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \captionsetup{font=small, labelsep=doublespace, labelfont=bf, textfont=bf}
 \else\if@dlmuthesis@MA %硕士
 \DeclareCaptionLabelSeparator{doublespace}{~~}
+\captionsetup{font=small, labelsep=doublespace} %单标题模式
 \captionsetup[figure][bi-first]{font=small, labelsep=doublespace}
 \captionsetup[figure][bi-second]{font=small, labelsep=doublespace, name={Fig}}
 \captionsetup[table][bi-first]{font=small, labelsep=doublespace}
@@ -564,6 +568,8 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \setlength{\bibsep}{0ex}
 \bibliographystyle{thuthesis-bachelor} %借鉴使用：清华大学(本科)学位论文模板bst样式文件，来源：https://mirrors.tuna.tsinghua.edu.cn/github-release/tuna/thuthesis/
 \newcommand{\upcite}[1]{$^{\mbox{\footnotesize\cite{#1}}}${}} %《手册》要求：“当提及的参考文献为文中直接说明时，则用小4号字与正文排齐。”因此单独设置一个上标引用的命令。
+\newcommand{\apdxcite}[1]{\citep[\thesection\hspace{-3pt}][]{#1}} %硕士论文中所使用，适用于“章节编号+文献序号”的格式
+\newcommand{\upapdxcite}[1]{$^{\mbox{\footnotesize\apdxcite{#1}}}${}} %硕士论文中所使用，动机与\upcite命令的类似
 % ======================================== %
 
 
@@ -944,11 +950,16 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 }{\typeout{succeeds: aft-style of env thebibliography}}{\typeout{fails: aft-style of env thebibliography}}
 %% ======================================================= %
 
-%% ---------- 硕士论文中，附录下图表标题的一级序号为字母 ---------- %
+%% ---------- 硕士论文中，附录章节标题需居中对齐，但全文是居左 ---------- %
 \if@dlmuthesis@MA
-\apptocmd{\pesudohookOFappendix}{
-%【脚手架】
-}{}{\ClassError{dlmuthesis}{钩子pesudohookOFappendix执行异常}{}}
+\apptocmd{\appendix}{
+\titleformat{\section}
+  {\normalfont\Large\heiti\filcenter} %只改变对齐方式，保留其他设置
+  {附录\thesection} %编号、标签
+  {1em} %编号与标题文本之间的间距
+  {} %编号之后、标题文本之前的格式
+  [\vspace{6.75pt}] %标题文本之后、正文之前的格式
+}{}{\ClassError{dlmuthesis}{appendix下章节标题对齐方式重置异常}{}}
 \fi
 %% ================================================================= %
 
