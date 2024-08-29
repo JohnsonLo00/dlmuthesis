@@ -573,28 +573,9 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 % ======================================== %
 
 
-% --------------- 附录与自定义附录 --------------- %
+% ---------- 附录与自定义附录 ---------- %
 \RequirePackage{appendix} %设置附录样式
-
-% 自定义附录章标题、在目录中的样式
-\newcounter{appendixcounting} %定义专属于附录的计数器
-\addtocounter{appendixcounting}{1} %附录标题计数器的初始值设为1
-\if@dlmuthesis@BAstem %本科-理工科
-\newcommand{\appendixsec}[1]{ \zihao{4}{\section*{附录\arabic{appendixcounting}\quad #1}}\phantomsection\addcontentsline{toc}{section}{附录\theappendixcounting\quad #1}\addtocounter{appendixcounting}{1}} %注：一定要先添加到目录、再将计数器值增1
-\else\if@dlmuthesis@BAhumanities %本科-人文社科
-\newcommand{\appendixsec}[1]{ \zihao{4}{\section*{附录\arabic{appendixcounting}\quad #1}}\phantomsection\addcontentsline{toc}{section}{附录\theappendixcounting\quad #1}\addtocounter{appendixcounting}{1}}
-\else\if@dlmuthesis@MA %硕士
-\newcommand{\appendixsec}[1]{
-{\zihao{4}\section*{附录\Alph{appendixcounting}\quad #1}}
-\phantomsection
-\addcontentsline{toc}{section}{附录\Alph{appendixcounting}\quad #1}
-\addtocounter{appendixcounting}{1}
-}
-\fi\fi\fi
 % ======================================== %
-
-
-%【脚手架：把变量定义挪到前面】
 
 
 % ------------------------- 封面页的创建 ------------------------- %
@@ -951,25 +932,38 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 %% ======================================================= %
 
 %% ---------- 硕士论文中，附录章节标题需居中对齐，但全文是居左 ---------- %
-\if@dlmuthesis@MA
-\apptocmd{\appendix}{
-\titleformat{\section}
-  {\normalfont\Large\heiti\filcenter} %只改变对齐方式，保留其他设置
-  {附录\thesection} %编号、标签
-  {1em} %编号与标题文本之间的间距
-  {} %编号之后、标题文本之前的格式
-  [\vspace{6.75pt}] %标题文本之后、正文之前的格式
-}{}{\ClassError{dlmuthesis}{appendix下章节标题对齐方式重置异常}{}}
-\fi
+\if@dlmuthesis@BAstem %本科-理工科
+  \apptocmd{\appendix}{
+  \pagestyle{plain} %《手册》要求：从附录页开始，去掉页眉
+  \titleformat{\section}
+    {\normalfont\Large\heiti\filcenter} %只改变对齐方式，保留其他设置
+    {附录\arabic{\thesection}} %编号、标签
+    {1em} %编号与标题文本之间的间距
+    {} %编号之后、标题文本之前的格式
+    [\vspace{6.75pt}] %标题文本之后、正文之前的格式
+  }{}{\ClassError{dlmuthesis}{本科理工科-appendix下章节标题对齐方式重置异常}{}}
+\else\if@dlmuthesis@BAhumanities %本科-人文社科
+  \apptocmd{\appendix}{
+  \pagestyle{plain} %《手册》要求：从附录页开始，去掉页眉
+  \titleformat{\section}
+    {\normalfont\Large\heiti\filcenter} %只改变对齐方式，保留其他设置
+    {附录\arabic{\thesection}} %编号、标签
+    {1em} %编号与标题文本之间的间距
+    {} %编号之后、标题文本之前的格式
+    [\vspace{6.75pt}] %标题文本之后、正文之前的格式
+  }{}{\ClassError{dlmuthesis}{本科人文社科-appendix下章节标题对齐方式重置异常}{}}
+\else\if@dlmuthesis@MA %硕士
+  \apptocmd{\appendix}{
+  \titleformat{\section}
+    {\normalfont\Large\heiti\filcenter} %只改变对齐方式，保留其他设置
+    {附录\thesection} %编号、标签
+    {1em} %编号与标题文本之间的间距
+    {} %编号之后、标题文本之前的格式
+    [\vspace{6.75pt}] %标题文本之后、正文之前的格式
+  }{}{\ClassError{dlmuthesis}{硕士-appendix下章节标题对齐方式重置异常}{}}
+\fi\fi
 %% ================================================================= %
-
-%% --------------- 每个附录章节之前的样式设置 --------------- %
-\pretocmd{\appendixsec}{
-\newpage
-}{\typeout{成功：附录环境下在下一个章节前前换页}}{\PackageError{失败：附录环境下在下一个章节前前换页}}
-%% ======================================================= %
-
-% ======================================== %
+% ================================================================================ %
 
 
 % --------------- 超链接与交叉引用 --------------- %

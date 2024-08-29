@@ -1,11 +1,5 @@
 
-\vspace*{0pt} %【该句涉及到格式设置，请勿乱动】
-
-\pagestyle{plain} %《手册》要求：从附录页开始，去掉页眉
-
-{\zihao{5} %【该句涉及到格式设置，请勿乱动】
-
-\appendixsec{企业信息表}
+\section{企业信息表}
 
 \begin{longtable}{cccc}
     \caption{企业信息表} \label{tab:企业信息表} \\
@@ -45,9 +39,11 @@
     CREATE\_USERID & 创建人 & NUMBER & 15
 \end{longtable}
 
-\appendixsec{相关定理证明}
+\section{相关定理证明}
 
-\appendixsec{程序代码}
+此处展示附录下参考文献引用的序号格式：正文类型\apdxcite{张旭明2005}，上标类型\upapdxcite{张中祥2023}。
+
+\section{程序代码}
 
 % 直接输入的形式插入代码
 
@@ -70,4 +66,3 @@ int main(){
 
 \lstinputlisting[style=Matlab-editor, title={\raggedright\normalsize 计算$\bk{n}$的阶乘（MATLAB）：}]{codes/funfactorial.m} %MATLAB（如果不想要这种风格，则把该行命令的可选参数style=Matlab-editor改为language=Matlab
 
-} %字号设置
