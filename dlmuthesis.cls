@@ -135,7 +135,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   contentsname = \hfill{\heiti\zihao{-3}目\hspace{2em}录}\hfill,
   listfigurename = \hfill{\songti\zihao{-3}图目录}\hfill,
   listtablename = \hfill{\songti\zihao{-3}表目录}\hfill,
-  bibname = \hfill{\zihao{3}参~ 考~ 文~ 献}\hfill,
+  bibname = \hfill{\zihao{-3}参~ 考~ 文~ 献}\hfill,
   section = {
     format = {\zihao{-3}\heiti},
     name = {,},
@@ -158,6 +158,82 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 % ======================================== %
 
 
+% ------------------------- 关于论文信息的全局变量导入 ------------------------- %
+\RequirePackage{etoolbox} %【文档类与宏包的命令自定义】
+\RequirePackage[absolute,overlay]{textpos} %【提供基于坐标的文本框环境，其中overlay为绝对坐标】
+\RequirePackage{array} %【与表格相关】
+
+%% -------------------- 变量预定义 -------------------- %
+\newcommand{\dlmuthesis@tokens@cntitle}{~} %【中文标题】
+\newcommand{\dlmuthesis@tokens@entitle}{~} %【英文标题】
+\newcommand{\dlmuthesis@tokens@aauthor}{~} %【作者姓名】
+\newcommand{\dlmuthesis@tokens@sdtID}{~} %【学号】
+\newcommand{\dlmuthesis@tokens@majorinCOVERPAGE}{~} %【专业年级班级(coverpage专用)】
+\newcommand{\dlmuthesis@tokens@mentorONE}{~} %【指导教师（职称）】
+\newcommand{\dlmuthesis@tokens@faculty}{~} %【学院】
+\newcommand{\dlmuthesis@tokens@completiondate}{XXXX 年 X 月} %【完成日期（年、月），coverpage专用】
+
+%%% ---------- 本科论文专用 ---------- %
+\newcommand{\dlmuthesis@tokens@mentorTWO}{~} %【第二指导教师(及其职称)】
+%%% ======================================== %
+
+%%% ---------- 硕士论文专用 ---------- %
+\newcommand{\dlmuthesis@tokens@headermajoir}{学\hfill 科\hfill 专\hfill 业} %【封面页中“学科专业”向“工程领域”的转换】
+\newcommand{\dlmuthesis@tokens@degree}{~} %【学位类别】
+%%% ======================================== %
+
+%%% ---------- 博士论文专用 ---------- %
+%%% ======================================== %
+%% ================================================== %
+
+%% -------------------- 正式变量定义 -------------------- %
+\newcommand{\cntitle}[1]{
+\renewcommand{\dlmuthesis@tokens@cntitle}{#1}
+\newcommand{\cntitleinMAINBODY}{\vspace*{1ex}{}\begin{center}{\zihao{3}\bfseries #1}\end{center}{}\vspace*{1ex}{}} %【正文第1页顶部的中文标题】
+} %【中文标题】
+\newcommand{\entitle}[1]{\renewcommand{\dlmuthesis@tokens@entitle}{#1}} %【英文标题】
+\newcommand{\aauthor}[1]{\renewcommand{\dlmuthesis@tokens@aauthor}{#1}} %【作者姓名】
+\newcommand{\sdtID}[1]{\renewcommand{\dlmuthesis@tokens@sdtID}{#1}} %【学号】
+\newcommand{\majorinCOVERPAGE}[2]{
+  \renewcommand{\dlmuthesis@tokens@majorinCOVERPAGE}{#1}
+  \ifthenelse{\equal{#2}{MEng}}{
+    \renewcommand{\dlmuthesis@tokens@headermajoir}{工\hfill 程\hfill 领\hfill 域}
+  }{}
+} %【专业年级班级(coverpage专用)】
+\newcommand{\mentorONE}[1]{\renewcommand{\dlmuthesis@tokens@mentorONE}{#1}} %【指导教师（职称）】
+\newcommand{\faculty}[1]{\renewcommand{\dlmuthesis@tokens@faculty}{#1}} %【学院】
+\newcommand{\completiondate}[2]{
+  \renewcommand{\dlmuthesis@tokens@completiondate}{{#1}~年~{#2}~月} %【完成日期（年、月），coverpage专用】
+}
+
+%%% ---------- 本科论文专用 ---------- %
+\newcommand{\mentorTWO}[1]{\renewcommand{\dlmuthesis@tokens@mentorTWO}{#1}} %【第二指导教师（职称）】
+%%% ======================================== %
+
+%%% ---------- 硕士论文专用 ---------- %
+\newcommand{\headerinCOVERPAGEMA}{硕~士~} %硕士论文封面页的开头
+\newcommand{\headerinHEADERMA}{硕士} %硕士论文页眉的开头
+\newcommand{\degree}[2]{
+  \renewcommand{\dlmuthesis@tokens@degree}{#1}
+  \ifthenelse{\equal{#2}{academic}}{
+    % maintain original
+  }{
+    \ifthenelse{\equal{#2}{professional}}{
+      \renewcommand{\headerinCOVERPAGEMA}{专~业~学~位~硕~士~}
+      \renewcommand{\headerinHEADERMA}{专业学位硕士}
+    }{
+      % no commands
+    }
+  }
+} %【学位类别】
+%%% ======================================== %
+
+%%% ---------- 博士论文专用 ---------- %
+%%% ======================================== %
+%% ============================================================ %
+% ================================================================================ %
+
+
 % --------------- 限定标题页三要素为空 --------------- %
 \title{}
 \author{}
@@ -166,20 +242,27 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 
 % --------------- 页面样式 --------------- %
-\RequirePackage{fancyhdr} %定制页眉页脚
+\RequirePackage[twoside]{fancyhdr} %定制页眉页脚
 \RequirePackage{geometry} %定制页面
+
 \if@dlmuthesis@BAstem %本科-理工科
 \geometry{bindingoffset=5mm, top=2.5cm, bottom=2.5cm, left=3.0cm, right=2.5cm, headsep=0.5cm}
+\fancyhead{\zihao{-5}\dlmuthesis@tokens@cntitle}
+\cfoot{\zihao{-5} \thepage}
 \else\if@dlmuthesis@BAhumanities %本科-人文社科
 \geometry{bindingoffset=5mm, top=2.5cm, bottom=2.5cm, left=3.0cm, right=2.5cm, headsep=0.5cm}
+\fancyhead{\zihao{-5}\dlmuthesis@tokens@cntitle}
+\cfoot{\zihao{-5} \thepage}
 \else\if@dlmuthesis@MA %硕士
-\geometry{bindingoffset=5mm, top=3.5cm, bottom=2.5cm, left=3.0cm, right=2.5cm, headsep=24.0pt}
+\geometry{top=3.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm, headsep=24.0pt, headheight=2.5cm}
+%偶数页为论文中文题目，奇数页为“大连海事大学硕士学位论文”：
+\fancyhead[CEH]{\zihao{5}\dlmuthesis@tokens@cntitle}
+\fancyhead[COH]{\zihao{5}大连海事大学{\headerinHEADERMA}学位论文}
+\cfoot{\zihao{-5}--~\thepage~--}
 \fi\fi\fi
 
 \lhead{} %在'heading=true'下，默认左页眉为当前二级标题名称，因此要赋值为空
-\rhead{} %'heading=true'下，默认右页眉为当前一级标题名称，，因此要赋值为空
-\chead{\zihao{-5} \dlmuthesis@tokens@cntitle}
-\cfoot{\zihao{-5} \thepage}
+\rhead{} %'heading=true'下，默认右页眉为当前一级标题名称，因此要赋值为空
 \renewcommand{\headrulewidth}{0.4pt}
 \renewcommand{\footrulewidth}{0pt}
 % ======================================== %
@@ -264,7 +347,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \else\if@dlmuthesis@BAhumanities %本科-人文社科
 \vspace{\baselineskip}{}\noindent\bf 关键词: #1
 \else\if@dlmuthesis@MA %硕士
-\vspace{\baselineskip}{}{\bf\heiti 关键词}: #1
+\vspace{\baselineskip}{}{\heiti 关键词}: #1
 \fi\fi\fi
 }
 %% ======================================== %
@@ -505,82 +588,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 % ======================================== %
 
 
-% ------------------------- 关于论文信息的全局变量导入 ------------------------- %
-
-\RequirePackage{etoolbox} %【文档类与宏包的命令自定义】
-\RequirePackage[absolute,overlay]{textpos} %【提供基于坐标的文本框环境，其中overlay为绝对坐标】
-%% -------------------- 图片&表格 -------------------- %
-\RequirePackage{array} %【与表格相关】
-%% ============================================================ %
-
-%% -------------------- 变量预定义 -------------------- %
-
-\newcommand{\dlmuthesis@tokens@cntitle}{~} %【中文标题】
-\newcommand{\dlmuthesis@tokens@entitle}{~} %【英文标题】
-\newcommand{\dlmuthesis@tokens@aauthor}{~} %【作者姓名】
-\newcommand{\dlmuthesis@tokens@sdtID}{~} %【学号】
-\newcommand{\dlmuthesis@tokens@majorinCOVERPAGE}{~} %【专业年级班级(coverpage专用)】
-\newcommand{\dlmuthesis@tokens@mentorONE}{~} %【指导教师（职称）】
-\newcommand{\dlmuthesis@tokens@faculty}{~} %【学院】
-\newcommand{\dlmuthesis@tokens@completiondate}{XXXX 年 X 月} %【完成日期（年、月），coverpage专用】
-
-%%% ---------- 本科论文专用 ---------- %
-\newcommand{\dlmuthesis@tokens@mentorTWO}{~} %【第二指导教师(及其职称)】
-%%% ======================================== %
-
-%%% ---------- 硕士论文专用 ---------- %
-\newcommand{\dlmuthesis@tokens@degree}{~} %【学位类别】
-%%% ======================================== %
-
-%%% ---------- 博士论文专用 ---------- %
-%%% ======================================== %
-
-%% ============================================================ %
-
-
-%% -------------------- 正式变量定义 -------------------- %
-
-\newcommand{\cntitle}[1]{
-\renewcommand{\dlmuthesis@tokens@cntitle}{#1}
-\newcommand{\cntitleinMAINBODY}{\vspace*{1ex}{}\begin{center}{\zihao{3}\bfseries #1}\end{center}{}\vspace*{1ex}{}} %【正文第1页顶部的中文标题】
-} %【中文标题】
-\newcommand{\entitle}[1]{\renewcommand{\dlmuthesis@tokens@entitle}{#1}} %【英文标题】
-\newcommand{\aauthor}[1]{\renewcommand{\dlmuthesis@tokens@aauthor}{#1}} %【作者姓名】
-\newcommand{\sdtID}[1]{\renewcommand{\dlmuthesis@tokens@sdtID}{#1}} %【学号】
-\newcommand{\majorinCOVERPAGE}[1]{\renewcommand{\dlmuthesis@tokens@majorinCOVERPAGE}{#1}} %【专业年级班级(coverpage专用)】
-\newcommand{\mentorONE}[1]{\renewcommand{\dlmuthesis@tokens@mentorONE}{#1}} %【指导教师（职称）】
-\newcommand{\faculty}[1]{\renewcommand{\dlmuthesis@tokens@faculty}{#1}} %【学院】
-\newcommand{\completiondate}[2]{
-  \renewcommand{\dlmuthesis@tokens@completiondate}{{#1}~年~{#2}~月} %【完成日期（年、月），coverpage专用】
-}
-
-%%% ---------- 本科论文专用 ---------- %
-\newcommand{\mentorTWO}[1]{\renewcommand{\dlmuthesis@tokens@mentorTWO}{#1}} %【第二指导教师（职称）】
-%%% ======================================== %
-
-%%% ---------- 硕士论文专用 ---------- %
-\newcommand{\headerinCOVERPAGEMA}{硕~士~}
-\newcommand{\degree}[2]{
-  \renewcommand{\dlmuthesis@tokens@degree}{#1}
-  \ifthenelse{\equal{#2}{academic}}{
-    % maintain original
-  }{
-    \ifthenelse{\equal{#2}{professional}}{
-      \renewcommand{\headerinCOVERPAGEMA}{专~业~学~位~硕~士~}
-    }{
-      % no commands
-    }
-  }
-} %【学位类别】
-
-%%% ======================================== %
-
-%%% ---------- 博士论文专用 ---------- %
-%%% ======================================== %
-
-%% ============================================================ %
-
-% ================================================================================ %
+%【脚手架：把变量定义挪到前面】
 
 
 % ------------------------- 封面页的创建 ------------------------- %
@@ -689,7 +697,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
       }
       作\hfill 者\hfill 姓\hfill 名： & \dlmuthesis@tokens@aauthor \\
       \cline{2-2}
-      学\hfill 科\hfill 专\hfill 业： & \dlmuthesis@tokens@majorinCOVERPAGE \\
+      \dlmuthesis@tokens@headermajoir： & \dlmuthesis@tokens@majorinCOVERPAGE \\
       \cline{2-2}
       学\hfill 号： & \dlmuthesis@tokens@sdtID \\
       \cline{2-2}
@@ -818,17 +826,18 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 % ============================================================ %
 
+
 % ---------- 伪钩子 ---------- %
 \newcommand{\pesudohookOFabstractCN}{{}} %中文摘要
 \newcommand{\pesudohookOFabstractEN}{{}} %英文摘要
 \newcommand{\pesudohookOFintro}{{}} %引言
 \newcommand{\pesudohookOFpremainbody}{{}} %实现正文开始前添加标题、设置样式
 \newcommand{\pesudohookOFconclusion}{{}} %结论
+\newcommand{\pesudohookOFappendix}{{}} %附录
 % ================================================== %
 
 
 % --------------- 对sty,cls的命令的定制 --------------- %
-\RequirePackage{etoolbox}
 
 %% ----- 硕士论文中，原创性声明之后需换页、授权使用声明之前需要换页 ----- %
 \if@dlmuthesis@MA
@@ -850,10 +859,15 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \else\if@dlmuthesis@BAhumanities %本科-人文社科
 \renewcommand\abstractname{\large ABSTRACT} %临时修改摘要名
 \else\if@dlmuthesis@MA
-\renewcommand\abstractname{\large Abstract} %临时修改摘要名
+\renewcommand\abstractname{\large\rm Abstract} %临时修改摘要名
 \phantomsection
-\addcontentsline{toc}{section}{Abstract}
+\addcontentsline{toc}{section}{Abstract} %临时修改摘要名
 \fi\fi\fi
+}{}{\ClassError{dlmuthesis}{pesudohookOFabstractEN命令异常}{}}
+\apptocmd{\pesudohookOFabstractEN}{
+\begin{center}
+\zihao{-3}\dlmuthesis@tokens@entitle %在英文摘要页开头打印英文版论文题目
+\end{center}
 }{}{\ClassError{dlmuthesis}{pesudohookOFabstractEN命令异常}{}}
 %% ============================================================ %
 
@@ -929,6 +943,14 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \clearpage\vspace*{0pt}
 }{\typeout{succeeds: aft-style of env thebibliography}}{\typeout{fails: aft-style of env thebibliography}}
 %% ======================================================= %
+
+%% ---------- 硕士论文中，附录下图表标题的一级序号为字母 ---------- %
+\if@dlmuthesis@MA
+\apptocmd{\pesudohookOFappendix}{
+%【脚手架】
+}{}{\ClassError{dlmuthesis}{钩子pesudohookOFappendix执行异常}{}}
+\fi
+%% ================================================================= %
 
 %% --------------- 每个附录章节之前的样式设置 --------------- %
 \pretocmd{\appendixsec}{
