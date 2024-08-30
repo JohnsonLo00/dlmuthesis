@@ -557,6 +557,58 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 % ============================================================ %
 
 
+% --------------- 引言环境 --------------- %
+\newenvironment{introduction}[1]{
+  \phantomsection
+  \addcontentsline{toc}{section}{引\hspace{2em}言}
+  \ifthenelse{\equal{#1}{MA}}{
+  \begin{center}
+  \heiti\zihao{-3} 引\hspace{2em}言
+  \end{center}
+  \par
+  }{}
+}{}
+% ======================================== %
+
+
+% --------------- 结论环境 --------------- %
+\newenvironment{conclusion}[1]{
+  \phantomsection
+  \addcontentsline{toc}{section}{结\hspace{2em}论}
+  \ifthenelse{\equal{#1}{BA}}{
+  \begin{center}
+  \heiti\zihao{3} 结\hspace{2em}论
+  \end{center}
+  }{}
+  \ifthenelse{\equal{#1}{MA}}{
+  \begin{center}
+  \heiti\zihao{-3} 结\hspace{2em}论
+  \end{center}
+  \par
+  }{}
+}{}
+% ======================================== %
+
+
+% --------------- 致谢环境 --------------- %
+\newenvironment{acknowledgment}[1]{
+  \phantomsection
+  \addcontentsline{toc}{section}{致\hspace{2em}谢}
+  \ifthenelse{\equal{#1}{BA}}{
+  \begin{center}
+  \heiti\zihao{3} 致\hspace{2em}谢
+  \end{center}
+  }{}
+  \ifthenelse{\equal{#1}{MA}}{
+  \begin{center}
+  \heiti\zihao{-3} 致\hspace{2em}谢
+  \end{center}
+  \par
+  }{}
+}{}
+% ======================================== %
+
+
 % --------------- 杂项 --------------- %
 \RequirePackage{comment} % 提供注释环境
 \RequirePackage{lipsum, zhlipsum} %随机文本（用于调试）
@@ -817,10 +869,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 % ---------- 伪钩子 ---------- %
 \newcommand{\pesudohookOFabstractCN}{{}} %中文摘要
 \newcommand{\pesudohookOFabstractEN}{{}} %英文摘要
-\newcommand{\pesudohookOFintro}{{}} %引言
 \newcommand{\pesudohookOFpremainbody}{{}} %实现正文开始前添加标题、设置样式
-\newcommand{\pesudohookOFconclusion}{{}} %结论
-\newcommand{\pesudohookOFappendix}{{}} %附录
 % ================================================== %
 
 
@@ -880,15 +929,6 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \fi\fi\fi
 %% ================================================================================ %
 
-%% ----- 硕士论文中，引言标题需要添加到目录中 ----- %
-\if@dlmuthesis@MA
-\pretocmd{\pesudohookOFintro}{
-\phantomsection
-\addcontentsline{toc}{section}{引\hspace{2em}言}
-}{}{\ClassError{dlmuthesis}{引言部分的钩子异常}{}}
-\fi
-%% ================================================== %
-
 %% --------------- 不同学位模式下，设置正文样式的时机不同 --------------- %
 \if@dlmuthesis@BAstem %本科-理工科
 \pretocmd{\pesudohookOFpremainbody}{
@@ -911,13 +951,6 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 }{}{\ClassError{dlmuthesis}{pesudohook命令执行异常}{}}
 \fi\fi\fi
 %% ======================================================= %
-
-%% ----- 结论部分之前的样式 ----- %
-\pretocmd{\pesudohookOFconclusion}{
-\phantomsection
-\addcontentsline{toc}{section}{结\hspace{2em}论}
-}{}{\ClassError{dlmuthesis}{结论部分的钩子异常}{}}
-%% ================================================== %
 
 %% --------------- 参考文献列表前后的样式设置 --------------- %
 \BeforeBeginEnvironment{thebibliography}{

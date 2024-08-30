@@ -17,7 +17,7 @@
 
 % --------------- 添加批注 --------------- %
 \let\comment\undefined
-\usepackage[]{changes}
+\usepackage[]{changes} %当取消所有markup时，添加可选参数 final
 \definechangesauthor[name={海哥}, color=blue]{海哥} %创建批注者信息
 \definechangesauthor[name={海老}, color=red]{海老} %创建批注者信息
 % ======================================== %
@@ -31,8 +31,8 @@
 \majorinCOVERPAGE{应用数学}{MEng} %【学科专业（若为工程硕士，则第二个参数填 “MEng”）】
 \sdtID{112020xxxx} %【学号】
 \mentorONE{海老（教授）} %【指导教师（职称）】
-\degree{理学硕士}{academic} %【学位类别】
-% 第二个参数：学硕填“academic”，专硕填“professional”
+\degree{理学硕士}{professional} %【学位类别】
+% 第二个参数：学硕填“academic”，专硕（含工程硕士、MBA、EMBA、MPA等）填“professional”
 \faculty{理学院} %【培养单位】
 \completiondate{2024}{5} %【答辩时间（年、月）】
 %% ============================== %
@@ -77,7 +77,7 @@
 % ================================================== %	
 
 
-% ---------- 目录 ---------- %
+% -------------------- 目录 -------------------- %
 \tableofcontents\toctolof %若全文一个图表都没有，则把\toctolof命令注释掉
 \listoffigures\vspace{36pt} %图目录
 \listoftables %表目录
@@ -94,8 +94,7 @@
 \input{mainbody/MA/ch2} \clearpage
 \input{mainbody/MA/ch3} \clearpage
 \input{mainbody/MA/ch4} \clearpage
-\pesudohookOFconclusion
-\input{mainbody/MA/conclusions} \clearpage\vspace*{0pt} % 结论
+\input{mainbody/MA/conclusion} \clearpage\vspace*{0pt} % 结论
 % ================================================== %
 
 
@@ -106,7 +105,7 @@
 %\bibitem{文献x标签}文献x信息
 %\end{thebibliography}
 }
-% ================================================== %
+% ============================== %
 
 
 % ---------- 附录 ---------- %
@@ -119,8 +118,15 @@
 
 % ---------- 致谢 ---------- %
 \newpage
-\input{mainbody/MA/acknowledgments}
+\input{mainbody/MA/acknowledgment}
+% ============================== %
+
+
+% ----- 作者简历及攻读硕士学位期间的科研成果 ----- %
+\newpage
+\input{mainbody/MA/achievements}
 % ================================================== %
+
 
 \AuthorizationStatement %【授权使用声明】
 
