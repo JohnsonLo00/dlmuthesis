@@ -609,6 +609,20 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 % ======================================== %
 
 
+% --------------- 作者简历环境 --------------- %
+\newenvironment{achievement}[1]{
+  \phantomsection
+  \addcontentsline{toc}{section}{作者简历及攻读硕士学位期间的科研成果}
+  \ifthenelse{\equal{#1}{MA}}{
+  \begin{center}
+  \heiti\zihao{-3} 作者简历及攻读硕士学位期间的科研成果
+  \end{center}
+  \par
+  }{}
+}{}
+% ======================================== %
+
+
 % --------------- 杂项 --------------- %
 \RequirePackage{comment} % 提供注释环境
 \RequirePackage{lipsum, zhlipsum} %随机文本（用于调试）
@@ -625,9 +639,9 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 % ======================================== %
 
 
-% ---------- 附录与自定义附录 ---------- %
-\RequirePackage{appendix} %设置附录样式
-% ======================================== %
+% ---------- 附录 ---------- %
+\RequirePackage[title, titletoc]{appendix} %设置附录样式
+% ========================= %
 
 
 % ------------------------- 封面页的创建 ------------------------- %
@@ -840,7 +854,11 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 %% -------------------- 授权使用声明 -------------------- %
 \newcommand{\AuthorizationStatement}{
-\thispagestyle{empty} %【无页眉页脚】
+\fancyhf{}
+\thispagestyle{fancy}
+\fancyhead[C]{大连海事大学{\headerinHEADERMA}学位论文}
+\fancyfoot{}
+~\vspace{1em}
 \begin{spacing}{1.5}
 \begin{center}{\zihao{3}\heiti
 大连海事大学学位论文授权使用声明}
@@ -966,7 +984,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 %% ---------- 硕士论文中，附录章节标题需居中对齐，但全文是居左 ---------- %
 \if@dlmuthesis@BAstem %本科-理工科
-  \apptocmd{\appendix}{
+  \BeforeBeginEnvironment{appendices}{
   \pagestyle{plain} %《手册》要求：从附录页开始，去掉页眉
   \titleformat{\section}
     {\normalfont\Large\heiti\filcenter} %只改变对齐方式，保留其他设置
@@ -976,7 +994,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     [\vspace{6.75pt}] %标题文本之后、正文之前的格式
   }{}{\ClassError{dlmuthesis}{本科理工科-appendix下章节标题对齐方式重置异常}{}}
 \else\if@dlmuthesis@BAhumanities %本科-人文社科
-  \apptocmd{\appendix}{
+  \BeforeBeginEnvironment{appendices}{
   \pagestyle{plain} %《手册》要求：从附录页开始，去掉页眉
   \titleformat{\section}
     {\normalfont\Large\heiti\filcenter} %只改变对齐方式，保留其他设置
@@ -984,17 +1002,17 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     {1em} %编号与标题文本之间的间距
     {} %编号之后、标题文本之前的格式
     [\vspace{6.75pt}] %标题文本之后、正文之前的格式
-  }{}{\ClassError{dlmuthesis}{本科人文社科-appendix下章节标题对齐方式重置异常}{}}
+  }{}{\ClassError{dlmuthesis}{本科理工科-appendix下章节标题对齐方式重置异常}{}}
 \else\if@dlmuthesis@MA %硕士
-  \apptocmd{\appendix}{
+  \BeforeBeginEnvironment{appendices}{
   \titleformat{\section}
     {\normalfont\Large\heiti\filcenter} %只改变对齐方式，保留其他设置
     {附录\thesection} %编号、标签
     {1em} %编号与标题文本之间的间距
     {} %编号之后、标题文本之前的格式
     [\vspace{6.75pt}] %标题文本之后、正文之前的格式
-  }{}{\ClassError{dlmuthesis}{硕士-appendix下章节标题对齐方式重置异常}{}}
-\fi\fi
+  }
+\fi\fi\fi
 %% ================================================================= %
 % ================================================================================ %
 
