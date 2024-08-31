@@ -35,6 +35,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \newif\if@dlmuthesis@BAstem %【理工科模式，初始值为真，下同】
 \newif\if@dlmuthesis@BAhumanities %【人文社科模式，初始值为真，下同】
 \newif\if@dlmuthesis@MA %【硕士模式，初始值为真，下同】
+\newif\if@dlmuthesis@printed %【打印模式，初始值为真，下同】
 
 \newcounter{optionofdegree} %【用于计算关于学位类别的可选参数用了多少个】
 \setcounter{optionofdegree}{0}
@@ -50,6 +51,8 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \@dlmuthesis@MAtrue
 \addtocounter{optionofdegree}{1}
 }
+\DeclareOption{printed}{\@dlmuthesis@printedtrue}
+
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{article}}
 \ProcessOptions\relax %【这句万万不可改动】
 \LoadClass[a4paper, 12pt]{article} %【导入正规文档类】
@@ -314,10 +317,10 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 %% =================================== %
 %% ---------- 目录到图(/表)目录之间的样式 ---------- %
 \if@dlmuthesis@MA
-\newcommand\toctolof{
-\newpage
-\begin{center}\heiti\zihao{-3}图表目录\end{center}
-}
+  \newcommand\toctolof{
+  \clearpage
+  \begin{center}\heiti\zihao{-3}图表目录\end{center}
+  }
 \fi
 %% ============================================== %
 %% ---------- 图目录样式 ---------- %
@@ -773,7 +776,8 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   %%% ----- 由于之前将\extrarowheight的值设为9pt，为保证往后正文表格的间距正常，需重新设置回来 ----- %
   \setlength{\extrarowheight}{2pt}
   %%% ================================================== %
-  \newpage
+%  \clearpage %【脚手架：暂时注释】
+  \nextpages{single}
 }
 %% ============================================================ %
 
@@ -829,6 +833,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 %% -------------------- 原创性声明 -------------------- %
 \newcommand{\OriginalityStatement}{
 \thispagestyle{empty} %【无页眉页脚】
+%\pagenumbering{Roman} %用来激活该页的\nextpages命令
 
 ~\vspace{24pt}
 \begin{center}\begin{spacing}{1.5}\zihao{-2}
@@ -849,6 +854,8 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \cline{2-2}\cline{4-4}\cline{6-6}\cline{8-8}
   \end{tabularx}%
 \end{table}%
+%\clearpage %【脚手架：暂时注释】
+\nextpages{single}
 }
 %% ================================================== %
 
@@ -891,11 +898,84 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 % ================================================== %
 
 
+% ---------- 打印模式 ---------- %
+\RequirePackage{refcount}
+%% ----- 中文摘要页 ----- %
+\newcounter{beginpageOFabstractCN}
+\newcounter{endpageOFabstractCN}
+%% ==================== %
+%% ----- 英文摘要页 ----- %
+\newcounter{beginpageOFabstractEN}
+\newcounter{endpageOFabstractEN}
+%% ==================== %
+%% ----- 目录组（章节、图、表） ----- %
+\newcounter{tocsbegincounter}
+\newcounter{tocsendcounter}
+\newcounter{tocsdif}
+%% =================================== %
+
+\newcommand{\nextpages}[1]{
+  \if@dlmuthesis@printed
+    \ifthenelse{\equal{#1}{single}}{ %封面、原创性声明、授权声明
+      \clearpage
+      \addtocounter{page}{-1}
+      \thispagestyle{empty}
+      \mbox{}
+      \clearpage
+    }{}
+    \ifthenelse{\equal{#1}{abstractCN}}{ %中文摘要页
+      \setcounter{endpageOFabstractCN}{\value{page}}
+      \label{endpageOFabstractCN} %【脚手架：暂时添加】
+      <\pageref{beginpageOFabstractCN}><\pageref{endpageOFabstractCN}> %【脚手架：暂时添加】
+      【\thebeginpageOFabstractCN】【\theendpageOFabstractCN】%【脚手架：暂时添加】
+      \addtocounter{endpageOFabstractCN}{-\value{beginpageOFabstractCN}}
+      \addtocounter{endpageOFabstractCN}{1}
+      \ifthenelse{\isodd{\value{endpageOFabstractCN}}}{
+        \clearpage
+        \addtocounter{page}{-1}
+        \thispagestyle{empty}
+        \mbox{}
+        \clearpage
+      }{\clearpage}
+    }{}
+    \ifthenelse{\equal{#1}{abstractEN}}{ %英文摘要页
+      \setcounter{endpageOFabstractEN}{\value{page}}
+      【\thebeginpageOFabstractEN】【\theendpageOFabstractEN】%【脚手架：暂时添加】
+      \addtocounter{endpageOFabstractEN}{-\value{beginpageOFabstractEN}}
+      \addtocounter{endpageOFabstractEN}{1}
+      \ifthenelse{\isodd{\value{endpageOFabstractEN}}}{
+        \clearpage
+        \addtocounter{page}{-1}
+        \thispagestyle{empty}
+        \mbox{}
+        \clearpage
+      }{\clearpage}
+    }{}
+    \ifthenelse{\equal{#1}{tocs}}{ %目录组
+      \label{tocsendref} %【脚手架：暂时添加】
+      \setcounterpageref{tocsendcounter}{tocsendref} %【脚手架：暂时添加】
+%      【\thebeginpageOFtocs】【\theendpageOFtocs】%【脚手架：暂时添加】
+%      \ifthenelse{\isodd{\value{res}}}{ %【脚手架：暂时注释】
+%        \clearpage
+%        \addtocounter{page}{-1}
+%        \thispagestyle{empty}
+%        \mbox{}
+%        \clearpage
+%      }{\clearpage}
+    }{}
+  \else
+    \clearpage
+  \fi
+}
+
+% ============================== %
+
+
 % --------------- 对sty,cls的命令的定制 --------------- %
 
 %% ----- 硕士论文中，原创性声明之后需换页、授权使用声明之前需要换页 ----- %
 \if@dlmuthesis@MA
-\apptocmd{\OriginalityStatement}{\newpage}{}{}
+%\apptocmd{\OriginalityStatement}{\nextpagess}{}{}
 \pretocmd{\AuthorizationStatement}{\newpage}{}{}
 \fi
 %% ============================================================ %
@@ -903,49 +983,62 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 %% ----- 硕士论文中，中英文摘要的标题需加到目录中 ----- %
 \if@dlmuthesis@MA
 \pretocmd{\pesudohookOFabstractCN}{
+\setcounter{beginpageOFabstractCN}{\value{page}} %涉及打印模式
+\label{beginpageOFabstractCN} %【脚手架：暂时添加】
+\pagenumbering{Roman}
 \phantomsection
 \addcontentsline{toc}{section}{摘\hspace{2em}要}
 }{}{\ClassError{dlmuthesis}{pesudohookOFabstractCN命令异常}{}}
 \fi
 \pretocmd{\pesudohookOFabstractEN}{
-\if@dlmuthesis@BAstem %本科-理工科
-\renewcommand\abstractname{\large ABSTRACT} %临时修改摘要名
-\else\if@dlmuthesis@BAhumanities %本科-人文社科
-\renewcommand\abstractname{\large ABSTRACT} %临时修改摘要名
-\else\if@dlmuthesis@MA
-\renewcommand\abstractname{\large\rm Abstract} %临时修改摘要名
-\phantomsection
-\addcontentsline{toc}{section}{Abstract} %临时修改摘要名
-\fi\fi\fi
+  \if@dlmuthesis@BAstem %本科-理工科
+    \renewcommand\abstractname{\large ABSTRACT} %临时修改摘要名
+  \else\if@dlmuthesis@BAhumanities %本科-人文社科
+    \renewcommand\abstractname{\large ABSTRACT} %临时修改摘要名
+  \else\if@dlmuthesis@MA
+    \setcounter{beginpageOFabstractCN}{\value{page}} %涉及打印模式
+    \renewcommand\abstractname{\large\rm Abstract} %临时修改摘要名
+    \phantomsection
+    \addcontentsline{toc}{section}{Abstract}
+  \fi\fi\fi
 }{}{\ClassError{dlmuthesis}{pesudohookOFabstractEN命令异常}{}}
 \apptocmd{\pesudohookOFabstractEN}{
-\begin{center}
-\zihao{-3}\dlmuthesis@tokens@entitle %在英文摘要页开头打印英文版论文题目
-\end{center}
+  \begin{center}
+  \zihao{-3}\dlmuthesis@tokens@entitle %在英文摘要页开头打印英文版论文题目
+  \end{center}
 }{}{\ClassError{dlmuthesis}{pesudohookOFabstractEN命令异常}{}}
 %% ============================================================ %
 
 %% -------------------- 不同学位模式下，设置摘要到目录的样式的时机不同 -------------------- %
 \if@dlmuthesis@BAstem %本科-理工科
-\apptocmd{\makepages}{
-\pagestyle{plain} %从摘要到目录，设置为无页眉、有页脚的模式
-\pagenumbering{Roman} %《手册》要求：从摘要到目录，设置罗马数字页码
-\renewcommand{\baselinestretch}{1.25}
-}{\typeout{succeeds: edit the style of page using package etoolbox}}{\ClassError{dlmuthesis}{fails: edit the style of page using package etoolbox}{}}
+  \apptocmd{\makepages}{
+    \pagestyle{plain} %从摘要到目录，设置为无页眉、有页脚的模式
+    \pagenumbering{Roman} %《手册》要求：从摘要到目录，设置罗马数字页码
+    \renewcommand{\baselinestretch}{1.25}
+  }{\typeout{succeeds: edit the style of page using package etoolbox}}{\ClassError{dlmuthesis}{fails: edit the style of page using package etoolbox}{}}
 \else\if@dlmuthesis@BAhumanities %本科-人文社科
-\apptocmd{\makepages}{
-\pagestyle{plain} %从摘要到目录，设置为无页眉、有页脚的模式
-\pagenumbering{Roman} %《手册》要求：从摘要到目录，设置罗马数字页码
-\renewcommand{\baselinestretch}{1.25}
-}{\typeout{succeeds: edit the style of page using package etoolbox}}{\ClassError{dlmuthesis}{fails: edit the style of page using package etoolbox}{}}
+  \apptocmd{\makepages}{
+    \pagestyle{plain} %从摘要到目录，设置为无页眉、有页脚的模式
+    \pagenumbering{Roman} %《手册》要求：从摘要到目录，设置罗马数字页码
+    \renewcommand{\baselinestretch}{1.25}
+  }{\typeout{succeeds: edit the style of page using package etoolbox}}{\ClassError{dlmuthesis}{fails: edit the style of page using package etoolbox}{}}
 \else\if@dlmuthesis@MA % 硕士
-\apptocmd{\OriginalityStatement}{
-\pagestyle{plain} %从摘要到目录，设置为无页眉、有页脚的模式
-\pagenumbering{Roman} %《规范》要求：从摘要到目录，设置罗马数字页码
-\renewcommand{\baselinestretch}{1.25}
-}{\typeout{succeeds: edit the style of page using package etoolbox}}{\ClassError{dlmuthesis}{fails: edit the style of page using package etoolbox}{}}
+  \apptocmd{\OriginalityStatement}{
+    \pagestyle{plain} %从摘要到目录，设置为无页眉、有页脚的模式
+%    \pagenumbering{Roman} %《规范》要求：从摘要到目录，设置罗马数字页码 %【脚手架：暂时注释】
+    \renewcommand{\baselinestretch}{1.25}
+  }{\typeout{succeeds: edit the style of page using package etoolbox}}{\ClassError{dlmuthesis}{fails: edit the style of page using package etoolbox}{}}
 \fi\fi\fi
 %% ================================================================================ %
+
+%% ----- 硕士论文中，为设置目录的打印模式而埋下计数器 ----- %
+\newcommand{\tempcount}{
+  \label{tocsbeginref} %【脚手架：暂时添加】
+  \setcounterpageref{tocsbegincounter}{tocsbeginref} %【脚手架：暂时添加】
+}
+%\pretocmd{\tableofcontents}{
+%}{}{\ClassError{dlmuthesis}{打印模式专用：目录中的计数器植入异常}{}}
+%% ======================================================= %
 
 %% --------------- 不同学位模式下，设置正文样式的时机不同 --------------- %
 \if@dlmuthesis@BAstem %本科-理工科

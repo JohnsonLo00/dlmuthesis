@@ -1,7 +1,7 @@
 % !Mode:: "TeX:UTF-8"
 
 % ---------- 声明文档类 ---------- %
-\documentclass[MA]{dlmuthesis}
+\documentclass[MA, printed]{dlmuthesis}
 % 有如下类型的可选参数：
 %% 1. 学位类别：
 %% 注：i.添加哪个参数即表示选择哪种模式；ii.只能添加一个
@@ -63,8 +63,8 @@
 \pesudohookOFabstractCN
 \begin{abstract}
 \input{mainbody/MA/abstract_zh}
-\end{abstract}
-\newpage
+\end{abstract}{}%
+\nextpages{abstractCN}
 % ================================================== %	
 
 
@@ -73,16 +73,19 @@
 \begin{abstract}
 \input{mainbody/MA/abstract_en}
 \end{abstract}
-\newpage
+\nextpages{abstractEN}
 % ================================================== %	
 
 
 % -------------------- 目录 -------------------- %
+\tempcount
 \tableofcontents\toctolof %若全文一个图表都没有，则把\toctolof命令注释掉
 \listoffigures\vspace{36pt} %图目录
 \listoftables %表目录
 \listofchanges %批注记录列表
-\newpage
+\zhlipsum
+\lipsum
+\nextpages{tocs}
 \input{mainbody/MA/notation} \clearpage %符号说明表
 % ================================================== %	
 
