@@ -647,6 +647,138 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 % ========================= %
 
 
+% --------------- 打印模式相关变量的定义 --------------- %
+\RequirePackage{refcount}
+%% ----- 中文摘要页 ----- %
+\newcounter{abstractCNbegin}
+\newcounter{abstractCNend}
+\newcounter{abstractCNdif}
+%% ==================== %
+%% ----- 英文摘要页 ----- %
+\newcounter{abstractENbegin}
+\newcounter{abstractENend}
+\newcounter{abstractENdif}
+%% ==================== %
+%% ----- 目录组（章节、图、表） ----- %
+\newcounter{tocsbegin}
+\newcounter{tocsend}
+\newcounter{tocsdif}
+%% =================================== %
+%% ----- 作者简历页 ----- %
+\newcounter{achievementlastpage}
+%% ==================== %
+% ============================================= %
+
+
+% -------------------- 封装的预设置 -------------------- %
+%% ----- 硕士论文中，中英文摘要的标题需加到目录中 ----- %
+\newcommand{\presetupOFabstractCN}{
+  \if@dlmuthesis@MA
+    \pagenumbering{Roman}
+    \setcounter{abstractCNbegin}{\value{page}} %涉及打印模式
+    \phantomsection
+    \addcontentsline{toc}{section}{摘\hspace{2em}要}
+  \else
+  \fi
+} %中文摘要
+
+\newcommand{\presetupOFabstractEN}{
+  \if@dlmuthesis@BAstem %本科-理工科
+    \renewcommand\abstractname{\large ABSTRACT} %临时修改摘要名
+  \else\if@dlmuthesis@BAhumanities %本科-人文社科
+    \renewcommand\abstractname{\large ABSTRACT} %临时修改摘要名
+  \else\if@dlmuthesis@MA %硕士
+    \setcounter{abstractENbegin}{\value{page}} %涉及打印模式
+    \renewcommand\abstractname{\large\rm Abstract} %临时修改摘要名
+    \phantomsection
+    \addcontentsline{toc}{section}{Abstract}
+  \fi\fi\fi
+
+  \begin{center}
+  \zihao{-3}\dlmuthesis@tokens@entitle %在英文摘要页开头打印英文版论文题目
+  \end{center}
+} %英文摘要
+%% ================================================== %
+
+%% ----- 硕士论文中，为设置目录的打印模式而埋下计数器 ----- %
+\newcommand{\presetupOFtocs}{
+  \if@dlmuthesis@MA
+    \setcounter{tocsbegin}{\value{page}}
+  \else
+  \fi
+}
+%% ======================================================= %
+
+%% ----- 硕士论文中，要根据作者简历页最后一页奇偶来决定授权声明之后是否要加空页 ----- %
+\newcommand{\presetupOFachievement}{
+  \setcounter{achievementlastpage}{\value{page}}
+}
+%% ===================================================================================== %
+% ================================================== %
+
+
+% ---------- 打印模式 ---------- %
+\newcommand{\nextpages}[1]{
+  \if@dlmuthesis@printed
+    \ifthenelse{\equal{#1}{single}}{ %封面、原创性声明、授权声明
+      \clearpage
+      \addtocounter{page}{-1}
+      \thispagestyle{empty}
+      \mbox{}
+      \clearpage
+    }{}
+    \ifthenelse{\equal{#1}{abstractCN}}{ %中文摘要页
+      \setcounter{abstractCNend}{\value{page}}
+      \setcounter{abstractCNdif}{\numexpr\value{abstractCNend}-\value{abstractCNbegin}+1\relax}
+%      【\theabstractCNbegin】【\theabstractCNend】【\theabstractCNdif】
+      \ifthenelse{\isodd{\value{abstractCNdif}}}{
+        \clearpage
+        \addtocounter{page}{-1}
+        \thispagestyle{empty}
+        \mbox{}
+        \clearpage
+      }{\clearpage}
+    }{}
+    \ifthenelse{\equal{#1}{abstractEN}}{ %英文摘要页
+      \setcounter{abstractENend}{\value{page}}
+      \setcounter{abstractENdif}{\numexpr\value{abstractENend}-\value{abstractENbegin}+1\relax}
+%      【\theabstractENbegin】【\theabstractENend】【\theabstractENdif】
+      \ifthenelse{\isodd{\value{abstractENdif}}}{
+        \clearpage
+        \addtocounter{page}{-1}
+        \thispagestyle{empty}
+        \mbox{}
+        \clearpage
+      }{\clearpage}
+    }{}
+    \ifthenelse{\equal{#1}{tocs}}{ %目录组
+      \setcounter{tocsend}{\value{page}}
+      \setcounter{tocsdif}{\numexpr\value{tocsend}-\value{tocsbegin}+1\relax}
+%      【\thetocsbegin】【\thetocsend】【\thetocsdif】
+      \ifthenelse{\isodd{\value{tocsdif}}}{
+        \clearpage
+        \addtocounter{page}{-1}
+        \thispagestyle{empty}
+        \mbox{}
+        \clearpage
+      }{\clearpage}
+    }{}
+    \ifthenelse{\equal{#1}{achievement}}{ %作者简历页
+      \ifthenelse{\isodd{\value{achievementlastpage}}}{
+        \clearpage
+        \addtocounter{page}{-1}
+        \thispagestyle{empty}
+        \mbox{}
+        \clearpage
+      }{\clearpage}
+    }{}
+  \else
+    \clearpage
+  \fi
+}
+% ============================== %
+
+
 % ------------------------- 封面页的创建 ------------------------- %
 
 %% -------------------- 封面页-本科论文 -------------------- %
@@ -776,7 +908,6 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   %%% ----- 由于之前将\extrarowheight的值设为9pt，为保证往后正文表格的间距正常，需重新设置回来 ----- %
   \setlength{\extrarowheight}{2pt}
   %%% ================================================== %
-%  \clearpage %【脚手架：暂时注释】
   \nextpages{single}
 }
 %% ============================================================ %
@@ -854,7 +985,6 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \cline{2-2}\cline{4-4}\cline{6-6}\cline{8-8}
   \end{tabularx}%
 \end{table}%
-%\clearpage %【脚手架：暂时注释】
 \nextpages{single}
 }
 %% ================================================== %
@@ -885,6 +1015,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \cline{2-2}\cline{4-4}\cline{6-6}\cline{8-8}
   \end{tabularx}%
 \end{table}%
+\nextpages{single}
 }
 %% ================================================== %
 
@@ -892,122 +1023,11 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 
 % ---------- 伪钩子 ---------- %
-\newcommand{\pesudohookOFabstractCN}{{}} %中文摘要
-\newcommand{\pesudohookOFabstractEN}{{}} %英文摘要
 \newcommand{\pesudohookOFpremainbody}{{}} %实现正文开始前添加标题、设置样式
 % ================================================== %
 
 
-% ---------- 打印模式 ---------- %
-\RequirePackage{refcount}
-%% ----- 中文摘要页 ----- %
-\newcounter{beginpageOFabstractCN}
-\newcounter{endpageOFabstractCN}
-%% ==================== %
-%% ----- 英文摘要页 ----- %
-\newcounter{beginpageOFabstractEN}
-\newcounter{endpageOFabstractEN}
-%% ==================== %
-%% ----- 目录组（章节、图、表） ----- %
-\newcounter{tocsbegincounter}
-\newcounter{tocsendcounter}
-\newcounter{tocsdif}
-%% =================================== %
-
-\newcommand{\nextpages}[1]{
-  \if@dlmuthesis@printed
-    \ifthenelse{\equal{#1}{single}}{ %封面、原创性声明、授权声明
-      \clearpage
-      \addtocounter{page}{-1}
-      \thispagestyle{empty}
-      \mbox{}
-      \clearpage
-    }{}
-    \ifthenelse{\equal{#1}{abstractCN}}{ %中文摘要页
-      \setcounter{endpageOFabstractCN}{\value{page}}
-      \label{endpageOFabstractCN} %【脚手架：暂时添加】
-      <\pageref{beginpageOFabstractCN}><\pageref{endpageOFabstractCN}> %【脚手架：暂时添加】
-      【\thebeginpageOFabstractCN】【\theendpageOFabstractCN】%【脚手架：暂时添加】
-      \addtocounter{endpageOFabstractCN}{-\value{beginpageOFabstractCN}}
-      \addtocounter{endpageOFabstractCN}{1}
-      \ifthenelse{\isodd{\value{endpageOFabstractCN}}}{
-        \clearpage
-        \addtocounter{page}{-1}
-        \thispagestyle{empty}
-        \mbox{}
-        \clearpage
-      }{\clearpage}
-    }{}
-    \ifthenelse{\equal{#1}{abstractEN}}{ %英文摘要页
-      \setcounter{endpageOFabstractEN}{\value{page}}
-      【\thebeginpageOFabstractEN】【\theendpageOFabstractEN】%【脚手架：暂时添加】
-      \addtocounter{endpageOFabstractEN}{-\value{beginpageOFabstractEN}}
-      \addtocounter{endpageOFabstractEN}{1}
-      \ifthenelse{\isodd{\value{endpageOFabstractEN}}}{
-        \clearpage
-        \addtocounter{page}{-1}
-        \thispagestyle{empty}
-        \mbox{}
-        \clearpage
-      }{\clearpage}
-    }{}
-    \ifthenelse{\equal{#1}{tocs}}{ %目录组
-      \label{tocsendref} %【脚手架：暂时添加】
-      \setcounterpageref{tocsendcounter}{tocsendref} %【脚手架：暂时添加】
-%      【\thebeginpageOFtocs】【\theendpageOFtocs】%【脚手架：暂时添加】
-%      \ifthenelse{\isodd{\value{res}}}{ %【脚手架：暂时注释】
-%        \clearpage
-%        \addtocounter{page}{-1}
-%        \thispagestyle{empty}
-%        \mbox{}
-%        \clearpage
-%      }{\clearpage}
-    }{}
-  \else
-    \clearpage
-  \fi
-}
-
-% ============================== %
-
-
 % --------------- 对sty,cls的命令的定制 --------------- %
-
-%% ----- 硕士论文中，原创性声明之后需换页、授权使用声明之前需要换页 ----- %
-\if@dlmuthesis@MA
-%\apptocmd{\OriginalityStatement}{\nextpagess}{}{}
-\pretocmd{\AuthorizationStatement}{\newpage}{}{}
-\fi
-%% ============================================================ %
-
-%% ----- 硕士论文中，中英文摘要的标题需加到目录中 ----- %
-\if@dlmuthesis@MA
-\pretocmd{\pesudohookOFabstractCN}{
-\setcounter{beginpageOFabstractCN}{\value{page}} %涉及打印模式
-\label{beginpageOFabstractCN} %【脚手架：暂时添加】
-\pagenumbering{Roman}
-\phantomsection
-\addcontentsline{toc}{section}{摘\hspace{2em}要}
-}{}{\ClassError{dlmuthesis}{pesudohookOFabstractCN命令异常}{}}
-\fi
-\pretocmd{\pesudohookOFabstractEN}{
-  \if@dlmuthesis@BAstem %本科-理工科
-    \renewcommand\abstractname{\large ABSTRACT} %临时修改摘要名
-  \else\if@dlmuthesis@BAhumanities %本科-人文社科
-    \renewcommand\abstractname{\large ABSTRACT} %临时修改摘要名
-  \else\if@dlmuthesis@MA
-    \setcounter{beginpageOFabstractCN}{\value{page}} %涉及打印模式
-    \renewcommand\abstractname{\large\rm Abstract} %临时修改摘要名
-    \phantomsection
-    \addcontentsline{toc}{section}{Abstract}
-  \fi\fi\fi
-}{}{\ClassError{dlmuthesis}{pesudohookOFabstractEN命令异常}{}}
-\apptocmd{\pesudohookOFabstractEN}{
-  \begin{center}
-  \zihao{-3}\dlmuthesis@tokens@entitle %在英文摘要页开头打印英文版论文题目
-  \end{center}
-}{}{\ClassError{dlmuthesis}{pesudohookOFabstractEN命令异常}{}}
-%% ============================================================ %
 
 %% -------------------- 不同学位模式下，设置摘要到目录的样式的时机不同 -------------------- %
 \if@dlmuthesis@BAstem %本科-理工科
@@ -1025,20 +1045,10 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \else\if@dlmuthesis@MA % 硕士
   \apptocmd{\OriginalityStatement}{
     \pagestyle{plain} %从摘要到目录，设置为无页眉、有页脚的模式
-%    \pagenumbering{Roman} %《规范》要求：从摘要到目录，设置罗马数字页码 %【脚手架：暂时注释】
     \renewcommand{\baselinestretch}{1.25}
   }{\typeout{succeeds: edit the style of page using package etoolbox}}{\ClassError{dlmuthesis}{fails: edit the style of page using package etoolbox}{}}
 \fi\fi\fi
 %% ================================================================================ %
-
-%% ----- 硕士论文中，为设置目录的打印模式而埋下计数器 ----- %
-\newcommand{\tempcount}{
-  \label{tocsbeginref} %【脚手架：暂时添加】
-  \setcounterpageref{tocsbegincounter}{tocsbeginref} %【脚手架：暂时添加】
-}
-%\pretocmd{\tableofcontents}{
-%}{}{\ClassError{dlmuthesis}{打印模式专用：目录中的计数器植入异常}{}}
-%% ======================================================= %
 
 %% --------------- 不同学位模式下，设置正文样式的时机不同 --------------- %
 \if@dlmuthesis@BAstem %本科-理工科

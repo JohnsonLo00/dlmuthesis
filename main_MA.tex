@@ -1,7 +1,7 @@
 % !Mode:: "TeX:UTF-8"
 
 % ---------- 声明文档类 ---------- %
-\documentclass[MA, printed]{dlmuthesis}
+\documentclass[MA,printed]{dlmuthesis}
 % 有如下类型的可选参数：
 %% 1. 学位类别：
 %% 注：i.添加哪个参数即表示选择哪种模式；ii.只能添加一个
@@ -11,7 +11,7 @@
 %%% PhD：博士
 %% 2. 输出模式：
 %% 注：默认为电子版模式，即不添加任何空白页
-%%% ：打印模式
+%%% printed：打印模式（打印时请采用双面打印）
 % ================================================== %
 
 
@@ -58,33 +58,30 @@
 
 \OriginalityStatement %【原创性声明】
 
-
 % ---------- 中文摘要 ---------- %
-\pesudohookOFabstractCN
+\presetupOFabstractCN%
 \begin{abstract}
 \input{mainbody/MA/abstract_zh}
-\end{abstract}{}%
+\end{abstract}%
 \nextpages{abstractCN}
 % ================================================== %	
 
 
 % ---------- 英文摘要 ---------- %
-\pesudohookOFabstractEN
+\presetupOFabstractEN%
 \begin{abstract}
 \input{mainbody/MA/abstract_en}
-\end{abstract}
+\end{abstract}%
 \nextpages{abstractEN}
 % ================================================== %	
 
 
 % -------------------- 目录 -------------------- %
-\tempcount
+\presetupOFtocs%
 \tableofcontents\toctolof %若全文一个图表都没有，则把\toctolof命令注释掉
 \listoffigures\vspace{36pt} %图目录
 \listoftables %表目录
 \listofchanges %批注记录列表
-\zhlipsum
-\lipsum
 \nextpages{tocs}
 \input{mainbody/MA/notation} \clearpage %符号说明表
 % ================================================== %	
@@ -112,26 +109,26 @@
 
 
 % ---------- 附录 ---------- %
-%\appendix
 \begin{appendices}
 {\zihao{5} %【该句涉及到格式设置，请勿乱动】
 \input{mainbody/MA/appendices}
 }
 \end{appendices}
+\clearpage
 % ========================= %
 
 
 % ---------- 致谢 ---------- %
-\newpage
 \input{mainbody/MA/acknowledgment}
+\clearpage
 % ============================== %
 
 
 % ----- 作者简历及攻读硕士学位期间的科研成果 ----- %
-\newpage
 \input{mainbody/MA/achievements}
+\presetupOFachievement
+\nextpages{achievement}
 % ================================================== %
-
 
 \AuthorizationStatement %【授权使用声明】
 
