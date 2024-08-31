@@ -321,6 +321,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   \clearpage
   \begin{center}\heiti\zihao{-3}图表目录\end{center}
   }
+\else
 \fi
 %% ============================================== %
 %% ---------- 图目录样式 ---------- %
@@ -374,11 +375,11 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 % --------------- 列表环境 --------------- %
 \RequirePackage[inline]{enumitem}
 \if@dlmuthesis@BAstem
-\setlist{leftmargin=0pt, itemindent=2\parindent, itemsep=0pt, parsep=0pt}
+  \setlist{leftmargin=0pt, itemindent=2\parindent, itemsep=0pt, parsep=0pt}
 \else\if@dlmuthesis@BAhumanities
-\setlist{leftmargin=0pt, itemindent=2\parindent, itemsep=0pt, nosep}
+  \setlist{leftmargin=0pt, itemindent=2\parindent, itemsep=0pt, nosep}
 \else\if@dlmuthesis@MA
-\setlist{leftmargin=0pt, itemindent=2\parindent, itemsep=0pt, parsep=0pt}
+  \setlist{leftmargin=0pt, itemindent=2\parindent, itemsep=0pt, parsep=0pt}
 \fi\fi\fi
 % ======================================== %
 
@@ -1079,10 +1080,6 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \addcontentsline{toc}{section}{参~ 考~ 文~ 献} %不能放在导言区
 \vspace*{0pt}
 }{\typeout{succeeds: pre-style of env thebibliography}}{\typeout{fails: pre-style of env thebibliography}}
-
-\AfterEndEnvironment{thebibliography}{
-\clearpage\vspace*{0pt}
-}{\typeout{succeeds: aft-style of env thebibliography}}{\typeout{fails: aft-style of env thebibliography}}
 %% ======================================================= %
 
 %% ---------- 硕士论文中，附录章节标题需居中对齐，但全文是居左 ---------- %
@@ -1095,7 +1092,10 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     {1em} %编号与标题文本之间的间距
     {} %编号之后、标题文本之前的格式
     [\vspace{6.75pt}] %标题文本之后、正文之前的格式
-  }{}{\ClassError{dlmuthesis}{本科理工科-appendix下章节标题对齐方式重置异常}{}}
+  }
+  \AtBeginEnvironment{appendices}{
+    \zihao{5}
+  }
 \else\if@dlmuthesis@BAhumanities %本科-人文社科
   \BeforeBeginEnvironment{appendices}{
   \pagestyle{plain} %《手册》要求：从附录页开始，去掉页眉
@@ -1105,7 +1105,10 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     {1em} %编号与标题文本之间的间距
     {} %编号之后、标题文本之前的格式
     [\vspace{6.75pt}] %标题文本之后、正文之前的格式
-  }{}{\ClassError{dlmuthesis}{本科理工科-appendix下章节标题对齐方式重置异常}{}}
+  }
+  \AtBeginEnvironment{appendices}{
+    \zihao{5}
+  }
 \else\if@dlmuthesis@MA %硕士
   \BeforeBeginEnvironment{appendices}{
   \titleformat{\section}
@@ -1114,6 +1117,9 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     {1em} %编号与标题文本之间的间距
     {} %编号之后、标题文本之前的格式
     [\vspace{6.75pt}] %标题文本之后、正文之前的格式
+  }
+  \AtBeginEnvironment{appendices}{
+    \zihao{-4}
   }
 \fi\fi\fi
 %% ================================================================= %

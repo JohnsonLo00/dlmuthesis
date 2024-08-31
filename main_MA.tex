@@ -1,7 +1,7 @@
 % !Mode:: "TeX:UTF-8"
 
 % ---------- 声明文档类 ---------- %
-\documentclass[MA,printed]{dlmuthesis}
+\documentclass[MA]{dlmuthesis}
 % 有如下类型的可选参数：
 %% 1. 学位类别：
 %% 注：i.添加哪个参数即表示选择哪种模式；ii.只能添加一个
@@ -82,8 +82,9 @@
 \listoffigures\vspace{36pt} %图目录
 \listoftables %表目录
 \listofchanges %批注记录列表
+\clearpage
+\input{mainbody/MA/notation} %符号说明表
 \nextpages{tocs}
-\input{mainbody/MA/notation} \clearpage %符号说明表
 % ================================================== %	
 
 
@@ -105,14 +106,13 @@
 %\bibitem{文献x标签}文献x信息
 %\end{thebibliography}
 }
+\clearpage
 % ============================== %
 
 
 % ---------- 附录 ---------- %
 \begin{appendices}
-{\zihao{5} %【该句涉及到格式设置，请勿乱动】
 \input{mainbody/MA/appendices}
-}
 \end{appendices}
 \clearpage
 % ========================= %
