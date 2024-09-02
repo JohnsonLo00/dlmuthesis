@@ -32,9 +32,10 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 % ---------- 文档类声明命令的可选参数初始化 ---------- %
 \RequirePackage{zhnumber} %【中文数字】
-\newif\if@dlmuthesis@BAstem %【理工科模式，初始值为真，下同】
-\newif\if@dlmuthesis@BAhumanities %【人文社科模式，初始值为真，下同】
+\newif\if@dlmuthesis@BAstem %【本科-理工科模式，初始值为真，下同】
+\newif\if@dlmuthesis@BAhumanities %【本科-人文社科模式，初始值为真，下同】
 \newif\if@dlmuthesis@MA %【硕士模式，初始值为真，下同】
+\newif\if@dlmuthesis@MAlaw %【硕士-法学/法律模式，初始值为真，下同】
 \newif\if@dlmuthesis@printed %【打印模式，初始值为真，下同】
 
 \newcounter{optionofdegree} %【用于计算关于学位类别的可选参数用了多少个】
@@ -49,6 +50,10 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 }
 \DeclareOption{MA}{
 \@dlmuthesis@MAtrue
+\addtocounter{optionofdegree}{1}
+}
+\DeclareOption{MAlaw}{
+\@dlmuthesis@MAlawtrue
 \addtocounter{optionofdegree}{1}
 }
 \DeclareOption{printed}{\@dlmuthesis@printedtrue}
@@ -70,7 +75,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \RequirePackage[UTF8, heading=true, zihao = -4]{ctex}
 \RequirePackage{totcount}
 
-\if@dlmuthesis@BAstem %本科-理工科
+\if@dlmuthesis@BAstem %【本科-理工科】
 \ctexset{
   abstractname = {\zihao{3}摘\hspace{2em}要},
   contentsname = \hfill{\zihao{3}目\hspace{2em}录}\hfill,
@@ -92,7 +97,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     afterskip=6.75pt,
   }
 }
-\else\if@dlmuthesis@BAhumanities %本科-人文社科
+\else\if@dlmuthesis@BAhumanities %【本科-人文社科】
 \renewcommand\thesubsection{\arabic{subsection}} %重设二级标题计数器格式
 \renewcommand\thesubsubsection{\arabic{subsubsection}} %重设三级标题计数器格式
 \renewcommand\theparagraph{\arabic{paragraph}} %重设四级标题计数器格式
@@ -103,7 +108,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   section = {
     format = {\zihao{3}\bfseries},
     name = {,、},
-    number = \zhnumber{\thesection},
+    number = \chinese{section},
     aftername = {},
     beforeskip=6.75pt,
     afterskip=6.75pt,
@@ -111,7 +116,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   subsection = {
     format = {\zihao{4}\bfseries},
     name = {（,）},
-    number = \zhnumber{\thesubsection},
+    number = \chinese{section},
     aftername = {},
     beforeskip=6.75pt,
     afterskip=6.75pt,
@@ -132,7 +137,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     afterskip=6.75pt,
   }
 }
-\else\if@dlmuthesis@MA %硕士
+\else\if@dlmuthesis@MA %【硕士】
 \ctexset{
   abstractname = {\zihao{-3}\heiti 摘\hspace{2em}要},
   contentsname = \hfill{\heiti\zihao{-3}目\hspace{2em}录}\hfill,
@@ -159,7 +164,48 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     name = {附录,},
   }
 }
-\fi\fi\fi
+\else\if@dlmuthesis@MAlaw %【硕士-法学/法律】
+\renewcommand\thesubsection{\arabic{subsection}} %重设二级标题计数器格式
+\renewcommand\thesubsubsection{\arabic{subsubsection}} %重设三级标题计数器格式
+\renewcommand\theparagraph{\arabic{paragraph}} %重设四级标题计数器格式
+\ctexset{
+  abstractname = {\zihao{-3}\heiti 摘\hspace{2em}要},
+  contentsname = \hfill{\heiti\zihao{-3}目\hspace{2em}录}\hfill,
+  listfigurename = \hfill{\songti\zihao{-3}图目录}\hfill,
+  listtablename = \hfill{\songti\zihao{-3}表目录}\hfill,
+  bibname = \hfill{\zihao{-3}参~ 考~ 文~ 献}\hfill,
+  section = {
+    format = {\zihao{-3}\heiti},
+    name = {,、},
+    number = \chinese{section},
+    aftername = {},
+    indent = 2em,
+    aftername = {},
+    beforeskip=6.75pt,
+    afterskip=6.75pt,
+  },
+  subsection = {
+    format = {\zihao{4}\heiti},
+    name = {（,）},
+    number = \chinese{subsection},
+    aftername = {},
+    indent = 2em,
+    beforeskip=6.75pt,
+    afterskip=6.75pt,
+  },
+  subsubsection = {
+    format = {\zihao{-4}\heiti},
+    name = {,.~},
+    aftername = {},
+    indent = 2em,
+	beforeskip=6.75pt,
+    afterskip=6.75pt,
+  },
+  appendix={
+    name = {附录,},
+  }
+}
+\fi\fi\fi\fi
 
 % ======================================== %
 
@@ -251,20 +297,26 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \RequirePackage[twoside]{fancyhdr} %定制页眉页脚
 \RequirePackage{geometry} %定制页面
 
-\if@dlmuthesis@BAstem %本科-理工科
-\geometry{bindingoffset=5mm, top=2.5cm, bottom=2.5cm, left=3.0cm, right=2.5cm, headsep=0.5cm}
-\fancyhead{\zihao{-5}\dlmuthesis@tokens@cntitle}
-\cfoot{\zihao{-5} \thepage}
-\else\if@dlmuthesis@BAhumanities %本科-人文社科
-\geometry{bindingoffset=5mm, top=2.5cm, bottom=2.5cm, left=3.0cm, right=2.5cm, headsep=0.5cm}
-\fancyhead{\zihao{-5}\dlmuthesis@tokens@cntitle}
-\cfoot{\zihao{-5} \thepage}
-\else\if@dlmuthesis@MA %硕士
-\geometry{top=3.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm, headsep=24.0pt, headheight=2.5cm}
-%偶数页为论文中文题目，奇数页为“大连海事大学硕士学位论文”：
-\fancyhead[CEH]{\zihao{5}\dlmuthesis@tokens@cntitle}
-\fancyhead[COH]{\zihao{5}大连海事大学{\headerinHEADERMA}学位论文}
-\cfoot{\zihao{-5}--~\thepage~--}
+\if@dlmuthesis@BAstem %【本科-理工科】
+  \geometry{bindingoffset=5mm, top=2.5cm, bottom=2.5cm, left=3.0cm, right=2.5cm, headsep=0.5cm}
+  \fancyhead{\zihao{-5}\dlmuthesis@tokens@cntitle}
+  \cfoot{\zihao{-5} \thepage}
+\else\if@dlmuthesis@BAhumanities %【本科-人文社科】
+  \geometry{bindingoffset=5mm, top=2.5cm, bottom=2.5cm, left=3.0cm, right=2.5cm, headsep=0.5cm}
+  \fancyhead{\zihao{-5}\dlmuthesis@tokens@cntitle}
+  \cfoot{\zihao{-5} \thepage}
+\else\if@dlmuthesis@MA %【硕士】
+  \geometry{top=3.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm, headsep=24.0pt, headheight=2.5cm}
+  %偶数页为论文中文题目，奇数页为“大连海事大学硕士学位论文”：
+  \fancyhead[CEH]{\zihao{5}\dlmuthesis@tokens@cntitle}
+  \fancyhead[COH]{\zihao{5}大连海事大学{\headerinHEADERMA}学位论文}
+  \cfoot{\zihao{-5}--~\thepage~--}
+\else\if@dlmuthesis@MAlaw %【硕士-法学/法律】
+  \geometry{top=3.0cm, bottom=3.0cm, left=3.0cm, right=3.0cm, headsep=24.0pt, headheight=2.5cm}
+  %偶数页为论文中文题目，奇数页为“大连海事大学硕士学位论文”：
+  \fancyhead[CEH]{\zihao{5}大连海事大学{\headerinHEADERMA}学位论文}
+  \fancyhead[COH]{\zihao{5}\dlmuthesis@tokens@cntitle}
+  \cfoot{\zihao{-5}--~\thepage~--}
 \fi\fi\fi
 
 \lhead{} %在'heading=true'下，默认左页眉为当前二级标题名称，因此要赋值为空
@@ -300,30 +352,51 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \titlecontents{section}
 [0pt]
 {\addvspace{2pt}\filright}
-{\contentspush{\thecontentslabel\ }}
+{\contentspush{\thecontentslabel}}
 {}
 {\titlerule*[8pt]{.}\contentspage}
 %% =================================== %
-%% ---------- 二级标题样式 ---------- %
-\if@dlmuthesis@BAhumanities
-\titlecontents{subsubsection}
-[5em]
-{}
-{\contentslabel{1em}}
-{\hspace*{5pt}}
-{\titlerule*[8pt]{.}\contentspage}
+%% ---------- 三级标题样式 ---------- %
+\if@dlmuthesis@BAhumanities %【本科-人文社科】
+  \titlecontents{subsubsection}
+    [5em]
+    {}
+    {\contentslabel{1em}}
+    {\hspace*{5pt}}
+    {\titlerule*[8pt]{.}\contentspage}
+\else\if@dlmuthesis@MAlaw %【硕士-法学/法律】
+  \titlecontents{subsubsection}
+    [5em]
+    {}
+    {\contentslabel{1em}}
+    {\hspace*{5pt}}
+    {\titlerule*[8pt]{.}\contentspage}
 \else
-\fi
+\fi\fi
 %% =================================== %
-%% ---------- 目录到图(/表)目录之间的样式 ---------- %
-\if@dlmuthesis@MA
+%% ----- 硕士论文中，目录到图(/表)目录之间需翻页+添加大标题 ----- %
+\if@dlmuthesis@MA %【硕士】
   \newcommand\toctolof{
   \clearpage
   \begin{center}\heiti\zihao{-3}图表目录\end{center}
   }
-\else
-\fi
-%% ============================================== %
+\else\if@dlmuthesis@MAlaw %【硕士-法学/法律】
+  \newcommand\toctolof{
+  \clearpage
+  \begin{center}\heiti\zihao{-3}图表目录\end{center}
+  }
+\else\if@dlmuthesis@MAlaw %【硕士-法学/法律】
+  \newcommand\toctolof{
+  \clearpage
+  \begin{center}\heiti\zihao{-3}图表目录\end{center}
+  }
+\else\if@dlmuthesis@MAlaw %【硕士-法学/法律】
+  \newcommand\toctolof{
+  \clearpage
+  \begin{center}\heiti\zihao{-3}图表目录\end{center}
+  }
+\fi\fi\fi\fi
+%% ============================================================= %
 %% ---------- 图目录样式 ---------- %
 \titlecontents{figure}
   [0pt] %左边缩进为0
@@ -349,24 +422,28 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \setlength{\absrightindent}{0pt} %取消右自动缩进
 %% ---------- 中文版摘要插入关键词 ---------- %
 \newcommand{\keywordsCN}[1]{
-\if@dlmuthesis@BAstem %本科-理工科
-\vspace{\baselineskip}{}\noindent\bf 关键词: #1
-\else\if@dlmuthesis@BAhumanities %本科-人文社科
-\vspace{\baselineskip}{}\noindent\bf 关键词: #1
-\else\if@dlmuthesis@MA %硕士
-\vspace{\baselineskip}{}{\heiti 关键词}: #1
-\fi\fi\fi
+  \if@dlmuthesis@BAstem %【本科-理工科】
+    \vspace{\baselineskip}{}\noindent\bf 关键词: #1
+  \else\if@dlmuthesis@BAhumanities %【本科-人文社科】
+    \vspace{\baselineskip}{}\noindent\bf 关键词: #1
+  \else\if@dlmuthesis@MA %【硕士】
+    \vspace{\baselineskip}{}{\heiti 关键词}: #1
+  \else\if@dlmuthesis@MAlaw %【硕士-法学/法律】
+    \vspace{\baselineskip}{}\heiti 关键词: #1
+\fi\fi\fi\fi
 }
 %% ======================================== %
 %% ---------- 英文版摘要插入关键词 ---------- %
 \newcommand{\keywordsEN}[1]{
-\if@dlmuthesis@BAstem %本科-理工科
-\vspace{\baselineskip}{}\noindent\bf Keywords: #1
-\else\if@dlmuthesis@BAhumanities %本科-人文社科
-\vspace{\baselineskip}{}\noindent\bf Keywords: #1
-\else\if@dlmuthesis@MA %硕士
-\vspace{\baselineskip}{}{\bf Key Words}: #1
-\fi\fi\fi
+  \if@dlmuthesis@BAstem %【本科-理工科】
+    \vspace{\baselineskip}{}\noindent\bf Keywords: #1
+  \else\if@dlmuthesis@BAhumanities %【本科-人文社科】
+    \vspace{\baselineskip}{}\noindent\bf Keywords: #1
+  \else\if@dlmuthesis@MA %【硕士】
+    \vspace{\baselineskip}{}{\bf Key Words}: #1
+  \else\if@dlmuthesis@MAlaw %【硕士-法学/法律】
+    \vspace{\baselineskip}{}\bf Key Words: #1
+\fi\fi\fi\fi
 }
 %% ======================================== %
 % ================================================== %
@@ -374,13 +451,15 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 % --------------- 列表环境 --------------- %
 \RequirePackage[inline]{enumitem}
-\if@dlmuthesis@BAstem
+\if@dlmuthesis@BAstem %【本科-理工科】
   \setlist{leftmargin=0pt, itemindent=2\parindent, itemsep=0pt, parsep=0pt}
-\else\if@dlmuthesis@BAhumanities
+\else\if@dlmuthesis@BAhumanities %【本科-人文社科】
   \setlist{leftmargin=0pt, itemindent=2\parindent, itemsep=0pt, nosep}
-\else\if@dlmuthesis@MA
+\else\if@dlmuthesis@MA %【硕士】
   \setlist{leftmargin=0pt, itemindent=2\parindent, itemsep=0pt, parsep=0pt}
-\fi\fi\fi
+\else\if@dlmuthesis@MAlaw %【硕士-法学/法律】
+  \setlist{leftmargin=0pt, itemindent=2\parindent, itemsep=0pt, nosep}
+\fi\fi\fi\fi
 % ======================================== %
 
 
@@ -455,29 +534,47 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \RequirePackage{titlesec}
 \setcounter{secnumdepth}{4}
 
-\if@dlmuthesis@BAstem %本科-理工科
-\titleformat{\paragraph}
-  {\normalsize\bfseries} %字体
-  {\theparagraph} %标题前的标签
-  {1em} %标题和标签之间的间距
-  {} %标题前没有额外的命令或内容
-\else\if@dlmuthesis@BAhumanities %本科-人文社科
-\titleformat{\paragraph}
-  {\normalsize\bfseries} %字体
-  {（\theparagraph）} %标题前的标签
-  {1em} %标题和标签之间的间距
-  {} %标题前没有额外的命令或内容
-\else\if@dlmuthesis@MA %硕士
-\titleformat{\paragraph}
-  {\normalsize\heiti} %字体
-  {\theparagraph} %标题前的标签
-  {1em} %标题和标签之间的间距
-  {} %标题前没有额外的命令或内容
-\fi\fi\fi
-\titlespacing{\paragraph}
-  {0pt} %标题左间距
-  {0.5ex \@plus 1ex \@minus.2ex} %标题上间距
-  {0.5ex \@plus .2ex} %标题下间距
+\if@dlmuthesis@BAstem %【本科-理工科】
+  \titleformat{\paragraph}
+    {\normalsize\bfseries} %字体
+    {\theparagraph} %标题前的标签
+    {1em} %标题和标签之间的间距
+    {} %标题前没有额外的命令或内容
+  \titlespacing{\paragraph}
+    {0pt} %标题左间距
+    {0.5ex \@plus 1ex \@minus.2ex} %标题上间距
+    {0.5ex \@plus .2ex} %标题下间距
+\else\if@dlmuthesis@BAhumanities %【本科-人文社科】
+  \titleformat{\paragraph}
+    {\normalsize\bfseries} %字体
+    {（\theparagraph）} %标题前的标签
+    {1em} %标题和标签之间的间距
+    {} %标题前没有额外的命令或内容
+  \titlespacing{\paragraph}
+    {0pt} %标题左间距
+    {0.5ex \@plus 1ex \@minus.2ex} %标题上间距
+    {0.5ex \@plus .2ex} %标题下间距
+\else\if@dlmuthesis@MA %【硕士】
+  \titleformat{\paragraph}
+    {\normalsize\heiti} %字体
+    {\theparagraph} %标题前的标签
+    {1em} %标题和标签之间的间距
+    {} %标题前没有额外的命令或内容
+  \titlespacing{\paragraph}
+    {0pt} %标题左间距
+    {0.5ex \@plus 1ex \@minus.2ex} %标题上间距
+    {0.5ex \@plus .2ex} %标题下间距
+\else\if@dlmuthesis@MAlaw %【硕士-法学/法律】
+  \titleformat{\paragraph}
+    {\normalsize\heiti} %字体
+    {（\theparagraph）} %标题前的标签
+    {0pt} %标题和标签之间的间距
+    {} %标题前没有额外的命令或内容
+  \titlespacing{\paragraph}
+    {2em} %标题左间距
+    {0.5ex \@plus 1ex \@minus.2ex} %标题上间距
+    {0.5ex \@plus .2ex} %标题下间距
+\fi\fi\fi\fi
 
 \newcommand{\fourthsection}[1]{\paragraph{#1}} %将命令\paragraph改名为四级标题
 % ============================================================ %
@@ -487,20 +584,27 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \RequirePackage{caption}
 \RequirePackage[labelformat=brace]{subcaption} %(与 subfigure 宏包冲突)也能提供 subfigure 环境（需设置宽度），并使环境中的标题变成副标题样式
 \RequirePackage[list=off]{bicaption} %同时含中英文的标题
-\if@dlmuthesis@BAstem %本科-理工科
-\DeclareCaptionLabelSeparator{doublespace}{~~}
-\captionsetup{font=small, labelsep=doublespace, labelfont=bf, textfont=bf}
-\else\if@dlmuthesis@BAhumanities %本科-人文社科
-\DeclareCaptionLabelSeparator{doublespace}{~~}
-\captionsetup{font=small, labelsep=doublespace, labelfont=bf, textfont=bf}
-\else\if@dlmuthesis@MA %硕士
-\DeclareCaptionLabelSeparator{doublespace}{~~}
-\captionsetup{font=small, labelsep=doublespace} %单标题模式
-\captionsetup[figure][bi-first]{font=small, labelsep=doublespace}
-\captionsetup[figure][bi-second]{font=small, labelsep=doublespace, name={Fig}}
-\captionsetup[table][bi-first]{font=small, labelsep=doublespace}
-\captionsetup[table][bi-second]{font=small, labelsep=doublespace, name={Tab~}}
-\fi\fi\fi
+\if@dlmuthesis@BAstem %【本科-理工科】
+  \DeclareCaptionLabelSeparator{doublespace}{~~}
+  \captionsetup{font=small, labelsep=doublespace, labelfont=bf, textfont=bf}
+\else\if@dlmuthesis@BAhumanities %【本科-人文社科】
+  \DeclareCaptionLabelSeparator{doublespace}{~~}
+  \captionsetup{font=small, labelsep=doublespace, labelfont=bf, textfont=bf}
+\else\if@dlmuthesis@MA %【硕士】
+  \DeclareCaptionLabelSeparator{doublespace}{~~}
+  \captionsetup{font=small, labelsep=doublespace} %单标题模式
+  \captionsetup[figure][bi-first]{font=small, labelsep=doublespace}
+  \captionsetup[figure][bi-second]{font=small, labelsep=doublespace, name={Fig}}
+  \captionsetup[table][bi-first]{font=small, labelsep=doublespace}
+  \captionsetup[table][bi-second]{font=small, labelsep=doublespace, name={Tab~}}
+\else\if@dlmuthesis@MAlaw %【硕士-法学/法律】
+  \DeclareCaptionLabelSeparator{doublespace}{~~}
+  \captionsetup{font=small, labelsep=doublespace} %单标题模式
+  \captionsetup[figure][bi-first]{font=small, labelsep=doublespace}
+  \captionsetup[figure][bi-second]{font=small, labelsep=doublespace, name={Fig}}
+  \captionsetup[table][bi-first]{font=small, labelsep=doublespace}
+  \captionsetup[table][bi-second]{font=small, labelsep=doublespace, name={Tab~}}
+\fi\fi\fi\fi
 
 \numberwithin{figure}{section} %numberwithin命令必须放在amsmath宏包之后
 \numberwithin{table}{section}
@@ -640,11 +744,13 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \newcommand{\upcite}[1]{$^{\mbox{\footnotesize\cite{#1}}}${}} %《手册》要求：“当提及的参考文献为文中直接说明时，则用小4号字与正文排齐。”因此单独设置一个上标引用的命令。
 \newcommand{\apdxcite}[1]{\citep[\thesection\hspace{-3pt}][]{#1}} %硕士论文中所使用，适用于“章节编号+文献序号”的格式
 \newcommand{\upapdxcite}[1]{$^{\mbox{\footnotesize\apdxcite{#1}}}${}} %硕士论文中所使用，动机与\upcite命令的类似
+
+ \bibliographystyle{}
 % ======================================== %
 
 
 % ---------- 附录 ---------- %
-\RequirePackage[title, titletoc]{appendix} %设置附录样式
+\RequirePackage[title]{appendix} %设置附录样式
 % ========================= %
 
 
@@ -674,26 +780,33 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 % -------------------- 封装的预设置 -------------------- %
 %% ----- 硕士论文中，中英文摘要的标题需加到目录中 ----- %
 \newcommand{\presetupOFabstractCN}{
-  \if@dlmuthesis@MA
+  \if@dlmuthesis@MA %【硕士】
     \pagenumbering{Roman}
     \setcounter{abstractCNbegin}{\value{page}} %涉及打印模式
     \phantomsection
     \addcontentsline{toc}{section}{摘\hspace{2em}要}
+  \else\if@dlmuthesis@MAlaw %【硕士-法学/法律】
+    \pagenumbering{Roman}
+    \setcounter{abstractCNbegin}{\value{page}} %涉及打印模式
   \else
-  \fi
+    \pagenumbering{Roman}
+  \fi\fi
 } %中文摘要
 
 \newcommand{\presetupOFabstractEN}{
-  \if@dlmuthesis@BAstem %本科-理工科
+  \if@dlmuthesis@BAstem %【本科-理工科】
     \renewcommand\abstractname{\large ABSTRACT} %临时修改摘要名
-  \else\if@dlmuthesis@BAhumanities %本科-人文社科
+  \else\if@dlmuthesis@BAhumanities %【本科-人文社科】
     \renewcommand\abstractname{\large ABSTRACT} %临时修改摘要名
-  \else\if@dlmuthesis@MA %硕士
+  \else\if@dlmuthesis@MA %【硕士】
     \setcounter{abstractENbegin}{\value{page}} %涉及打印模式
     \renewcommand\abstractname{\large\rm Abstract} %临时修改摘要名
     \phantomsection
     \addcontentsline{toc}{section}{Abstract}
-  \fi\fi\fi
+  \else\if@dlmuthesis@MAlaw %【硕士-法学/法律】
+    \setcounter{abstractENbegin}{\value{page}} %涉及打印模式
+    \renewcommand\abstractname{\large\rm Abstract} %临时修改摘要名
+  \fi\fi\fi\fi
 
   \begin{center}
   \zihao{-3}\dlmuthesis@tokens@entitle %在英文摘要页开头打印英文版论文题目
@@ -703,10 +816,11 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 %% ----- 硕士论文中，为设置目录的打印模式而埋下计数器 ----- %
 \newcommand{\presetupOFtocs}{
-  \if@dlmuthesis@MA
+  \if@dlmuthesis@MA %【硕士】
     \setcounter{tocsbegin}{\value{page}}
-  \else
-  \fi
+  \else\if@dlmuthesis@MAlaw %【硕士-法学/法律】
+    \setcounter{tocsbegin}{\value{page}}
+  \fi\fi
 }
 %% ======================================================= %
 
@@ -753,16 +867,20 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
       }{\clearpage}
     }{}
     \ifthenelse{\equal{#1}{tocs}}{ %目录组
-      \setcounter{tocsend}{\value{page}}
-      \setcounter{tocsdif}{\numexpr\value{tocsend}-\value{tocsbegin}+1\relax}
-%      【\thetocsbegin】【\thetocsend】【\thetocsdif】
-      \ifthenelse{\isodd{\value{tocsdif}}}{
-        \clearpage
-        \addtocounter{page}{-1}
-        \thispagestyle{empty}
-        \mbox{}
-        \clearpage
-      }{\clearpage}
+      \if@dlmuthesis@MAlaw %【硕士-法学/法律】
+        \clearpage %[硕士-法学/法律]中，从目录到致谢都是双面打印
+      \else
+        \setcounter{tocsend}{\value{page}}
+        \setcounter{tocsdif}{\numexpr\value{tocsend}-\value{tocsbegin}+1\relax}
+%        【\thetocsbegin】【\thetocsend】【\thetocsdif】
+        \ifthenelse{\isodd{\value{tocsdif}}}{
+          \clearpage
+          \addtocounter{page}{-1}
+          \thispagestyle{empty}
+          \mbox{}
+          \clearpage
+        }{\clearpage}
+      \fi
     }{}
     \ifthenelse{\equal{#1}{achievement}}{ %作者简历页
       \ifthenelse{\isodd{\value{achievementlastpage}}}{
@@ -922,13 +1040,15 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 % --------------- 封面页的导入 --------------- %
 \newcommand{\makepages}{
-\if@dlmuthesis@BAstem
-\makecoverpageBA
-\else\if@dlmuthesis@BAhumanities
-\makecoverpageBA
-\else\if@dlmuthesis@MA
-\makecoverpageMA
-\fi\fi\fi
+\if@dlmuthesis@BAstem %【本科-理工科】
+  \makecoverpageBA
+\else\if@dlmuthesis@BAhumanities %【本科-人文社科】
+  \makecoverpageBA
+\else\if@dlmuthesis@MA %【硕士】
+  \makecoverpageMA
+\else\if@dlmuthesis@MAlaw %【硕士-法学/法律】
+  \makecoverpageMA
+\fi\fi\fi\fi
 }
 % ======================================== %
 
@@ -1029,50 +1149,78 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 
 % --------------- 对sty,cls的命令的定制 --------------- %
-
 %% -------------------- 不同学位模式下，设置摘要到目录的样式的时机不同 -------------------- %
-\if@dlmuthesis@BAstem %本科-理工科
+\if@dlmuthesis@BAstem %【本科-理工科】
   \apptocmd{\makepages}{
     \pagestyle{plain} %从摘要到目录，设置为无页眉、有页脚的模式
     \pagenumbering{Roman} %《手册》要求：从摘要到目录，设置罗马数字页码
     \renewcommand{\baselinestretch}{1.25}
   }{\typeout{succeeds: edit the style of page using package etoolbox}}{\ClassError{dlmuthesis}{fails: edit the style of page using package etoolbox}{}}
-\else\if@dlmuthesis@BAhumanities %本科-人文社科
+\else\if@dlmuthesis@BAhumanities %【本科-人文社科】
   \apptocmd{\makepages}{
     \pagestyle{plain} %从摘要到目录，设置为无页眉、有页脚的模式
     \pagenumbering{Roman} %《手册》要求：从摘要到目录，设置罗马数字页码
     \renewcommand{\baselinestretch}{1.25}
   }{\typeout{succeeds: edit the style of page using package etoolbox}}{\ClassError{dlmuthesis}{fails: edit the style of page using package etoolbox}{}}
-\else\if@dlmuthesis@MA % 硕士
+\else\if@dlmuthesis@MA %【硕士】
   \apptocmd{\OriginalityStatement}{
     \pagestyle{plain} %从摘要到目录，设置为无页眉、有页脚的模式
     \renewcommand{\baselinestretch}{1.25}
   }{\typeout{succeeds: edit the style of page using package etoolbox}}{\ClassError{dlmuthesis}{fails: edit the style of page using package etoolbox}{}}
-\fi\fi\fi
+\else\if@dlmuthesis@MAlaw %【硕士-法学/法律】
+  \apptocmd{\OriginalityStatement}{
+    \pagestyle{plain} %从摘要到目录，设置为无页眉、有页脚的模式
+    \renewcommand{\baselinestretch}{1.25}
+  }{\typeout{succeeds: edit the style of page using package etoolbox}}{\ClassError{dlmuthesis}{fails: edit the style of page using package etoolbox}{}}
+\fi\fi\fi\fi
 %% ================================================================================ %
 
 %% --------------- 不同学位模式下，设置正文样式的时机不同 --------------- %
-\if@dlmuthesis@BAstem %本科-理工科
-\pretocmd{\pesudohookOFpremainbody}{
-\cntitleinMAINBODY
-\pagestyle{fancy} %从第一章到致谢，设置为有页眉、有页脚的模式
-\pagenumbering{arabic} %《手册》要求：从正文开始设为阿拉伯数字页码，并且重新从1开始计数
-}{}{\ClassError{dlmuthesis}{tableofcontent命令执行异常}{}}
-\else\if@dlmuthesis@BAhumanities %本科-人文社科
-\pretocmd{\pesudohookOFpremainbody}{
-\cntitleinMAINBODY
-\pagestyle{fancy} %从第一章到致谢，设置为有页眉、有页脚的模式
-\pagenumbering{arabic} %《手册》要求：从正文开始设为阿拉伯数字页码，并且重新从1开始计数
-}{}{\ClassError{dlmuthesis}{tableofcontent命令执行异常}{}}
-\else\if@dlmuthesis@MA % 硕士
-\apptocmd{\OriginalityStatement}{
-\pagestyle{fancy} %从第一章到致谢，设置为有页眉、有页脚的模式
-}{}{\ClassError{dlmuthesis}{OriginalityStatement命令执行异常}{}}
-\pretocmd{\pesudohookOFpremainbody}{
-\pagenumbering{arabic} %《规范》要求：从正文开始设为阿拉伯数字页码，并且重新从1开始计数
-}{}{\ClassError{dlmuthesis}{pesudohook命令执行异常}{}}
-\fi\fi\fi
+\if@dlmuthesis@BAstem %【本科-理工科】
+  \pretocmd{\pesudohookOFpremainbody}{
+    \cntitleinMAINBODY
+    \pagestyle{fancy} %从第一章到致谢，设置为有页眉、有页脚的模式
+    \pagenumbering{arabic} %《手册》要求：从正文开始设为阿拉伯数字页码，并且重新从1开始计数
+  }{}{\ClassError{dlmuthesis}{tableofcontent命令执行异常}{}}
+\else\if@dlmuthesis@BAhumanities %【本科-人文社科】
+  \pretocmd{\pesudohookOFpremainbody}{
+    \cntitleinMAINBODY
+    \pagestyle{fancy} %从第一章到致谢，设置为有页眉、有页脚的模式
+    \pagenumbering{arabic} %《手册》要求：从正文开始设为阿拉伯数字页码，并且重新从1开始计数
+  }{}{\ClassError{dlmuthesis}{tableofcontent命令执行异常}{}}
+\else\if@dlmuthesis@MA %【硕士】
+  \apptocmd{\OriginalityStatement}{
+    \pagestyle{fancy} %从第一章到致谢，设置为有页眉、有页脚的模式
+  }{}{\ClassError{dlmuthesis}{OriginalityStatement命令执行异常}{}}
+  \pretocmd{\pesudohookOFpremainbody}{
+    \pagenumbering{arabic} %《规范》要求：从正文开始设为阿拉伯数字页码，并且重新从1开始计数
+  }{}{\ClassError{dlmuthesis}{pesudohook命令执行异常}{}}
+\else\if@dlmuthesis@MAlaw %【硕士-法学/法律】
+  \apptocmd{\OriginalityStatement}{
+    \pagestyle{fancy} %从第一章到致谢，设置为有页眉、有页脚的模式
+  }{}{\ClassError{dlmuthesis}{OriginalityStatement命令执行异常}{}}
+  \pretocmd{\pesudohookOFpremainbody}{
+    \pagenumbering{arabic} %《规范》要求：从正文开始设为阿拉伯数字页码，并且重新从1开始计数
+  }{}{\ClassError{dlmuthesis}{pesudohook命令执行异常}{}}
+\fi\fi\fi\fi
 %% ======================================================= %
+
+%% ----- [硕士-法学/法律]中，正文（引言之后、结论之前）奇数页页眉为每章题目 ----- %
+\if@dlmuthesis@MAlaw %【硕士-法学/法律】
+  \AfterEndEnvironment{introduction}{
+    \renewcommand{\sectionmark}[1]{\markboth{#1}{}}
+    \pagestyle{fancy}
+    \fancyhead[CEH]{\leftmark}
+    \fancyhead[COH]{\zihao{5}\dlmuthesis@tokens@cntitle}
+  }
+  \BeforeBeginEnvironment{conclusion}{
+    \pagestyle{fancy}
+    \fancyhead[CEH]{\zihao{5}大连海事大学{\headerinHEADERMA}学位论文}
+    \fancyhead[COH]{\zihao{5}\dlmuthesis@tokens@cntitle}
+  }
+\else
+\fi
+%% ====================================================================== %
 
 %% --------------- 参考文献列表前后的样式设置 --------------- %
 \BeforeBeginEnvironment{thebibliography}{
@@ -1083,7 +1231,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 %% ======================================================= %
 
 %% ---------- 硕士论文中，附录章节标题需居中对齐，但全文是居左 ---------- %
-\if@dlmuthesis@BAstem %本科-理工科
+\if@dlmuthesis@BAstem %【本科-理工科】
   \BeforeBeginEnvironment{appendices}{
   \pagestyle{plain} %《手册》要求：从附录页开始，去掉页眉
   \titleformat{\section}
@@ -1096,7 +1244,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   \AtBeginEnvironment{appendices}{
     \zihao{5}
   }
-\else\if@dlmuthesis@BAhumanities %本科-人文社科
+\else\if@dlmuthesis@BAhumanities %【本科-人文社科】
   \BeforeBeginEnvironment{appendices}{
   \pagestyle{plain} %《手册》要求：从附录页开始，去掉页眉
   \titleformat{\section}
@@ -1109,11 +1257,11 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   \AtBeginEnvironment{appendices}{
     \zihao{5}
   }
-\else\if@dlmuthesis@MA %硕士
+\else\if@dlmuthesis@MA %【硕士】
   \BeforeBeginEnvironment{appendices}{
   \titleformat{\section}
     {\normalfont\Large\heiti\filcenter} %只改变对齐方式，保留其他设置
-    {附录\thesection} %编号、标签
+    {附录~\thesection} %编号、标签
     {1em} %编号与标题文本之间的间距
     {} %编号之后、标题文本之前的格式
     [\vspace{6.75pt}] %标题文本之后、正文之前的格式
@@ -1121,7 +1269,24 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   \AtBeginEnvironment{appendices}{
     \zihao{-4}
   }
-\fi\fi\fi
+\else\if@dlmuthesis@MAlaw %【硕士-法学/法律】
+  \AtBeginEnvironment{appendices}{
+  \titleformat{\section}
+    {\normalfont\Large\heiti\filcenter} %只改变对齐方式，保留其他设置
+    {附录~\chinese{section}} %编号、标签
+    {1em} %编号与标题文本之间的间距
+    {} %编号之后、标题文本之前的格式
+    [\vspace{6.75pt}] %标题文本之后、正文之前的格式
+  \titlecontents{section}
+    [0pt]
+    {\addvspace{2pt}\filright}
+    {附录~\thecontentslabel}
+    {}
+    {\titlerule*[8pt]{.}\contentspage}
+
+  \zihao{-4}
+  }
+\fi\fi\fi\fi
 %% ================================================================= %
 % ================================================================================ %
 
