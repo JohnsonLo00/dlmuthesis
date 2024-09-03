@@ -641,10 +641,11 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \RequirePackage{xfp} %在latex代码中执行数值加减运算
 \RequirePackage{pifont} %提供带圈的阿拉伯数字编号
 \RequirePackage[perpage]{footmisc} %设置简单的脚注样式
-%% 填“1”：仅阿拉伯数字
+%% 填“1”：1, 2, ...
 %% 填“2”：[1], [2], ...
 %% 填“3”：(1), (2), ...
 %% 填“4”：带圈的阿拉伯数字
+%% 填“5”：【1】, 【2】, ...
 \newcommand\footnotemode[1]{
 \ifthenelse{#1=1}{}{ %模式1
   \ifthenelse{#1=2}{
@@ -654,9 +655,11 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
       \renewcommand{\thefootnote}{(\arabic{footnote})} %模式3
     }{
       \ifthenelse{#1=4}{
-        %% --------------- 模式4 --------------- %
-        \renewcommand{\thefootnote}{\ding{ \fpeval{171+\arabic{footnote}} }}
-        %% ======================================== %
+        \renewcommand{\thefootnote}{\ding{ \fpeval{171+\arabic{footnote}} }} %模式4
+      }{
+        \ifthenelse{#1=5}{
+          \renewcommand{\thefootnote}{【\arabic{footnote}】} %模式5
+        }
       }
     }
   }
@@ -737,16 +740,34 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 % ======================================== %
 
 
-% --------------- 参考文献 --------------- %
+% ------------------------- 参考文献 ------------------------- %
 \RequirePackage[numbers,square,comma]{natbib}
 \setlength{\bibsep}{0ex}
-\bibliographystyle{thuthesis-bachelor} %借鉴使用：清华大学(本科)学位论文模板bst样式文件，来源：https://mirrors.tuna.tsinghua.edu.cn/github-release/tuna/thuthesis/
-\newcommand{\upcite}[1]{$^{\mbox{\footnotesize\cite{#1}}}${}} %《手册》要求：“当提及的参考文献为文中直接说明时，则用小4号字与正文排齐。”因此单独设置一个上标引用的命令。
-\newcommand{\apdxcite}[1]{\citep[\thesection\hspace{-3pt}][]{#1}} %硕士论文中所使用，适用于“章节编号+文献序号”的格式
-\newcommand{\upapdxcite}[1]{$^{\mbox{\footnotesize\apdxcite{#1}}}${}} %硕士论文中所使用，动机与\upcite命令的类似
+\bibliographystyle{thuthesis-bachelor} %借鉴使用：清华大学(本科)学位论文模板bst样式文件
+\newcommand{\upcite}[1]{$^{\mbox{\footnotesize\cite{#1}}}${}} %《手册》《规范》要求：“当提及的参考文献为文中直接说明时，则用小4号字与正文排齐。”
+\if@dlmuthesis@MAlaw %【硕士-法学/法律】
+  \newcommand{\apdxcite}[1]{\citep[\chinese{section},~\hspace{-3pt}][]{#1}} %[硕士-法学/法律]中所使用，适用于“章节编号+文献序号”的格式
+  \newcommand{\upapdxcite}[1]{$^{\mbox{\footnotesize\apdxcite{#1}}}${}} %[硕士-法学/法律]中所使用，动机与\upcite命令的类似
+\else
+  \newcommand{\apdxcite}[1]{\citep[\thesection\hspace{-3pt}][]{#1}} %硕士论文中所使用，适用于“章节编号+文献序号”的格式
+  \newcommand{\upapdxcite}[1]{$^{\mbox{\footnotesize\apdxcite{#1}}}${}} %硕士论文中所使用，动机与\upcite命令的类似
+\fi
 
- \bibliographystyle{}
-% ======================================== %
+%% ----- [硕士-法学/法律]的特殊参考文献规范 ----- %
+\if@dlmuthesis@MAlaw %【硕士-法学/法律】
+  \renewcommand{\bibnumfmt}[1]{#1.}
+  \RequirePackage{xpatch}
+  %\makeatletter
+  \xapptocmd{\NAT@bibsetnum}{\setlength{\leftmargin}{0pt}\setlength{\itemindent}{\labelwidth}\addtolength{\itemindent}{\labelsep}}{}{}
+  %\makeatother
+  \newcommand{\nextbibtype}{
+    \makeatletter
+    \global\setcounter{NAT@ctr}{0}
+    \makeatother
+}
+\fi
+%% ============================================= %
+% ======================================================= %
 
 
 % ---------- 附录 ---------- %
@@ -1228,6 +1249,14 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \addcontentsline{toc}{section}{参~ 考~ 文~ 献} %不能放在导言区
 \vspace*{0pt}
 }{\typeout{succeeds: pre-style of env thebibliography}}{\typeout{fails: pre-style of env thebibliography}}
+
+\if@dlmuthesis@MAlaw %【硕士-法学/法律】
+  \AtBeginEnvironment{thebibliography}{
+    \ctexset{
+       subsubsection/format={\zihao{-4}\bfseries}
+    }
+  }
+\fi
 %% ======================================================= %
 
 %% ---------- 硕士论文中，附录章节标题需居中对齐，但全文是居左 ---------- %
