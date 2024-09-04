@@ -213,7 +213,34 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     name = {附录,},
   }
 }
-\fi\fi\fi\fi
+\else\if@dlmuthesis@MAmarxism %【硕士-马克思主义理论】
+\ctexset{
+  abstractname = {\zihao{-3}\heiti 摘\hspace{2em}要},
+  contentsname = \hfill{\heiti\zihao{-3}目\hspace{2em}录}\hfill,
+  listfigurename = \hfill{\songti\zihao{-3}图目录}\hfill,
+  listtablename = \hfill{\songti\zihao{-3}表目录}\hfill,
+  bibname = \hfill{\zihao{-3}参~ 考~ 文~ 献}\hfill,
+  section = {
+    format = {\zihao{-3}\heiti},
+    name = {第,章},
+    beforeskip=6.75pt,
+    afterskip=6.75pt,
+  },
+  subsection = {
+    format = {\zihao{4}\heiti},
+    beforeskip=6.75pt,
+    afterskip=6.75pt,
+  },
+  subsubsection = {
+    format = {\zihao{-4}\heiti},
+	beforeskip=6.75pt,
+    afterskip=6.75pt,
+  },
+  appendix={
+    name = {附录,},
+  }
+}
+\fi\fi\fi\fi\fi
 
 % ======================================== %
 
@@ -361,7 +388,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \titlecontents{section}
 [0pt]
 {\addvspace{2pt}\filright}
-{\contentspush{\thecontentslabel}}
+{\contentspush{\thecontentslabel}~~}
 {}
 {\titlerule*[8pt]{.}\contentspage}
 %% =================================== %
@@ -384,27 +411,20 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \fi\fi
 %% =================================== %
 %% ----- 硕士论文中，目录到图(/表)目录之间需翻页+添加大标题 ----- %
-\if@dlmuthesis@MA %【硕士】
-  \newcommand\toctolof{
-  \clearpage
-  \begin{center}\heiti\zihao{-3}图表目录\end{center}
-  }
-\else\if@dlmuthesis@MAlaw %【硕士-法学/法律】
-  \newcommand\toctolof{
-  \clearpage
-  \begin{center}\heiti\zihao{-3}图表目录\end{center}
-  }
-\else\if@dlmuthesis@MAlaw %【硕士-法学/法律】
-  \newcommand\toctolof{
-  \clearpage
-  \begin{center}\heiti\zihao{-3}图表目录\end{center}
-  }
-\else\if@dlmuthesis@MAlaw %【硕士-法学/法律】
-  \newcommand\toctolof{
-  \clearpage
-  \begin{center}\heiti\zihao{-3}图表目录\end{center}
-  }
-\fi\fi\fi\fi
+\newcommand\toctolof{
+  \if@dlmuthesis@MA %【硕士】
+    \clearpage
+    \begin{center}\heiti\zihao{-3}图表目录\end{center}
+  \else\if@dlmuthesis@MAlaw %【硕士-法学/法律】
+    \clearpage
+    \begin{center}\heiti\zihao{-3}图表目录\end{center}
+  \else\if@dlmuthesis@MAmarxism %【硕士-马克思主义理论】
+    \clearpage
+    \begin{center}\heiti\zihao{-3}图表目录\end{center}
+  \else
+    \ClassError{dlmuthesis}{该学位类别下不适宜使用toctolof命令}{}
+  \fi\fi%\fi
+}
 %% ============================================================= %
 %% ---------- 图目录样式 ---------- %
 \titlecontents{figure}
@@ -439,7 +459,11 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     \vspace{\baselineskip}{}{\heiti 关键词}: #1
   \else\if@dlmuthesis@MAlaw %【硕士-法学/法律】
     \vspace{\baselineskip}{}\heiti 关键词: #1
-\fi\fi\fi\fi
+  \else\if@dlmuthesis@MAmarxism %【硕士-马克思主义理论】
+    \vspace{\baselineskip}{}{\heiti 关键词}: #1
+  \else
+    \ClassError{dlmuthesis}{documentclass命令未添加学位类别参数}{}
+\fi\fi\fi\fi\fi
 }
 %% ======================================== %
 %% ---------- 英文版摘要插入关键词 ---------- %
@@ -452,7 +476,11 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     \vspace{\baselineskip}{}{\bf Key Words}: #1
   \else\if@dlmuthesis@MAlaw %【硕士-法学/法律】
     \vspace{\baselineskip}{}\bf Key Words: #1
-\fi\fi\fi\fi
+  \else\if@dlmuthesis@MAmarxism %【硕士-马克思主义理论】
+    \vspace{\baselineskip}{\bf Key Words}: #1
+  \else
+    \ClassError{dlmuthesis}{documentclass命令未添加学位类别参数}{}
+\fi\fi\fi\fi\fi
 }
 %% ======================================== %
 % ================================================== %
@@ -817,9 +845,14 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   \else\if@dlmuthesis@MAlaw %【硕士-法学/法律】
     \pagenumbering{Roman}
     \setcounter{abstractCNbegin}{\value{page}} %涉及打印模式
+  \else\if@dlmuthesis@MAmarxism %【硕士-马克思主义理论】
+    \pagenumbering{Roman}
+    \setcounter{abstractCNbegin}{\value{page}} %涉及打印模式
+    \phantomsection
+    \addcontentsline{toc}{section}{摘\hspace{2em}要}
   \else
     \pagenumbering{Roman}
-  \fi\fi
+  \fi\fi\fi
 } %中文摘要
 
 \newcommand{\presetupOFabstractEN}{
@@ -830,16 +863,23 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   \else\if@dlmuthesis@MA %【硕士】
     \setcounter{abstractENbegin}{\value{page}} %涉及打印模式
     \renewcommand\abstractname{\large\rm Abstract} %临时修改摘要名
+    \begin{center}
+    \zihao{-3}\dlmuthesis@tokens@entitle %在英文摘要页开头打印英文版论文题目
+    \end{center}
     \phantomsection
     \addcontentsline{toc}{section}{Abstract}
   \else\if@dlmuthesis@MAlaw %【硕士-法学/法律】
     \setcounter{abstractENbegin}{\value{page}} %涉及打印模式
     \renewcommand\abstractname{\large\rm Abstract} %临时修改摘要名
-  \fi\fi\fi\fi
-
-  \begin{center}
-  \zihao{-3}\dlmuthesis@tokens@entitle %在英文摘要页开头打印英文版论文题目
-  \end{center}
+    \begin{center}
+    \zihao{-3}\dlmuthesis@tokens@entitle %在英文摘要页开头打印英文版论文题目
+    \end{center}
+  \else\if@dlmuthesis@MAmarxism %【硕士-马克思主义理论】
+    \setcounter{abstractENbegin}{\value{page}} %涉及打印模式
+    \renewcommand\abstractname{\large ABSTRACT} %临时修改摘要名
+    \phantomsection
+    \addcontentsline{toc}{section}{ABSTRACT}
+  \fi\fi\fi\fi\fi
 } %英文摘要
 %% ================================================== %
 
@@ -1077,12 +1117,14 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   \makecoverpageMA
 \else\if@dlmuthesis@MAlaw %【硕士-法学/法律】
   \makecoverpageMA
-\fi\fi\fi\fi
+\else\if@dlmuthesis@MAmarxism %【硕士-马克思主义理论】
+  \makecoverpageMA
+\fi\fi\fi\fi\fi
 }
 % ======================================== %
 
 
-% ---------- 硕士论文 - 原创性声明 & 授权使用声明 ---------- %
+% ---------- 硕博论文 - 原创性声明 & 授权使用声明 ---------- %
 \newcommand{\dlmuthesis@tokens@signofstudent}{XXX} %【预定义：作者签名】
 \newcommand{\dlmuthesis@tokens@signofmentor}{YYY} %【预定义：导师签名】
 \newcommand{\dlmuthesis@tokens@dateforstudent}{~} %【预定义：作者签名日期】
@@ -1111,23 +1153,25 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   \renewcommand{\dayMNT}{#3}
 } %【正式定义：作者签名日期】
 
-%% -------------------- 原创性声明 -------------------- %
-\newcommand{\OriginalityStatement}{
-\thispagestyle{empty} %【无页眉页脚】
-%\pagenumbering{Roman} %用来激活该页的\nextpages命令
-
-~\vspace{24pt}
-\begin{center}\begin{spacing}{1.5}\zihao{-2}
-大连海事大学\\
+%% ---------- 元内容 - 原创性声明 ---------- %
+\newcommand{\titleOFOriginalityStatement}{
+\if@dlmuthesis@MAmarxism %【硕士-马克思主义理论】
+\zihao{-2}\heiti 大连海事大学\\
 研究生学位论文原创性声明
-\end{spacing}\end{center}
+\else
+\zihao{-2} 大连海事大学\\
+研究生学位论文原创性声明
+\fi
+}
+\newcommand{\metaOriginalityStatement}{
+\begin{center}\begin{spacing}{1.5}
+\titleOFOriginalityStatement
+\end{spacing}\end{center}{}\vspace{-24pt}
 \begin{spacing}{1.5}
-
 本人郑重声明：所呈交的学位论文，是本人在导师的指导下进行研究工作所取得的成果。尽我所知，除文中已经注明引用内容和致谢的地方外，本论文不包含任何其他个人或集体已经发表或撰写过的研究成果。对论文所涉及的研究工作做出贡献的其他个人和集体，均已在论文中以明确的方式标明或致谢。\vspace{12.0pt}
 
 若有不实之处，本人愿意承担相关法律责任。
-\end{spacing}
-
+\end{spacing}%
 \begin{table}[H]
   \centering
   \begin{tabularx}{\textwidth}{cXccccccc}
@@ -1135,6 +1179,44 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \cline{2-2}\cline{4-4}\cline{6-6}\cline{8-8}
   \end{tabularx}%
 \end{table}%
+}
+%% ======================================== %
+
+%% ---------- 元内容 - 授权使用声明 ---------- %
+\newcommand{\titleOFAuthorizationStatement}{
+\if@dlmuthesis@MAmarxism %【硕士-马克思主义理论】
+\zihao{-2}\heiti 大连海事大学学位论文授权使用声明
+\else
+\zihao{3}\heiti 大连海事大学学位论文授权使用声明
+\fi
+}
+\newcommand{\metaAuthorizationStatement}{
+\begin{center}\begin{spacing}{1.5}
+\titleOFAuthorizationStatement
+\end{spacing}\end{center}{}\vspace{-24pt}
+\begin{spacing}{1.5}
+本人完全了解并同意遵守学校有关学位论文知识产权的规定，在校攻读学位期间论文工作的知识产权属于大连海事大学，学校有权保留送交学位论文的副本，向国家有关部门或机构送交论文的复印件和电子版，允许该论文被查阅，可以将本学位论文的全部或部分内容编入有关数据库进行检索，可以采用影印、缩印、或扫描等复制手段保存和汇编本学位论文。
+
+涉密的学位论文在解密后使用本声明。
+\end{spacing}%
+\begin{table}[H]
+  \centering
+  \begin{tabularx}{\textwidth}{cXccccccc}
+作~者~签~名 : & \hfil\dlmuthesis@tokens@signofstudent\hfil & 日期: & \yearSTU & 年 & \monthSTU & 月 & \daySTU & 日 \\
+\cline{2-2}\cline{4-4}\cline{6-6}\cline{8-8}\\[6pt]
+导~师~签~名 : & \hfil\dlmuthesis@tokens@signofmentor\hfil & 日期: & \yearMNT & 年 & \monthMNT & 月 & \dayMNT & 日 \\
+\cline{2-2}\cline{4-4}\cline{6-6}\cline{8-8}
+  \end{tabularx}%
+\end{table}%
+}
+%% ======================================== %
+
+%% -------------------- 原创性声明 -------------------- %
+\newcommand{\OriginalityStatement}{
+\thispagestyle{empty} %【无页眉页脚】
+
+~\vspace{24pt}
+\metaOriginalityStatement
 \nextpages{single}
 }
 %% ================================================== %
@@ -1146,25 +1228,21 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \fancyhead[C]{大连海事大学{\headerinHEADERMA}学位论文}
 \fancyfoot{}
 ~\vspace{1em}
-\begin{spacing}{1.5}
-\begin{center}{\zihao{3}\heiti
-大连海事大学学位论文授权使用声明}
-\end{center}{}\vspace{12pt}
+\metaAuthorizationStatement
+\nextpages{single}
+}
+%% ================================================== %
 
-本人完全了解并同意遵守学校有关学位论文知识产权的规定，在校攻读学位期间论文工作的知识产权属于大连海事大学，学校有权保留送交学位论文的副本，向国家有关部门或机构送交论文的复印件和电子版，允许该论文被查阅，可以将本学位论文的全部或部分内容编入有关数据库进行检索，可以采用影印、缩印、或扫描等复制手段保存和汇编本学位论文。
-
-涉密的学位论文在解密后使用本声明。
-\end{spacing}
-
-\begin{table}[H]
-  \centering
-  \begin{tabularx}{\textwidth}{cXccccccc}
-作~者~签~名 : & \hfil\dlmuthesis@tokens@signofstudent\hfil & 日期: & \yearSTU & 年 & \monthSTU & 月 & \daySTU & 日 \\
-\cline{2-2}\cline{4-4}\cline{6-6}\cline{8-8}\\[6pt]
-导~师~签~名 : & \hfil\dlmuthesis@tokens@signofmentor\hfil & 日期: & \yearMNT & 年 & \monthMNT & 月 & \dayMNT & 日 \\
-\cline{2-2}\cline{4-4}\cline{6-6}\cline{8-8}
-  \end{tabularx}%
-\end{table}%
+%% --------------- 原创性 + 授权使用 --------------- %
+\newcommand{\OriginalityANDAuthorization}{
+\fancyhf{}
+\thispagestyle{fancy}
+\fancyhead[C]{}
+\fancyfoot{}
+~\vspace{-30pt}
+\metaOriginalityStatement
+~\vspace{-1em}
+\metaAuthorizationStatement
 \nextpages{single}
 }
 %% ================================================== %
@@ -1177,7 +1255,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 % ================================================== %
 
 
-% --------------- 对sty,cls的命令的定制 --------------- %
+% --------------- 钩子 --------------- %
 %% -------------------- 不同学位模式下，设置摘要到目录的样式的时机不同 -------------------- %
 \if@dlmuthesis@BAstem %【本科-理工科】
   \apptocmd{\makepages}{

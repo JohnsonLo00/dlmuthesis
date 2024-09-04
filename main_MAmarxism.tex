@@ -1,7 +1,7 @@
 % !Mode:: "TeX:UTF-8"
 
 % ---------- 声明文档类 ---------- %
-\documentclass[MAlaw]{dlmuthesis}
+\documentclass[MAmarxism]{dlmuthesis}
 % 有如下类型的可选参数：
 %% 1. 学位类别：
 %% 注：i.添加哪个参数即表示选择哪种模式；ii.只能添加一个
@@ -66,7 +66,7 @@
 
 \makepages %【封面页】
 
-\OriginalityStatement %【原创性声明】
+\OriginalityANDAuthorization %【原创性声明】
 
 % ---------- 中文摘要 ---------- %
 \presetupOFabstractCN%
@@ -99,7 +99,6 @@
 
 % ---------- 正文（划分为多个独立文件依次导入） ---------- %
 \pesudohookOFpremainbody
-\input{mainbody/MAmarxism/introduction} \clearpage %引言
 \input{mainbody/MAmarxism/ch1} \clearpage
 \input{mainbody/MAmarxism/ch2} \clearpage
 \input{mainbody/MAmarxism/ch3} \clearpage
