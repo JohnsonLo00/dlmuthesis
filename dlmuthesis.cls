@@ -64,9 +64,12 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 % ======================================== %
 
 
-% ---------- 限定只能出现一个学位类别参数 ---------- %
+% ---------- 添加且仅一个学位类别参数 ---------- %
+\ifthenelse{\value{optionofdegree}=0}{
+  \ClassError{dlmuthesis}{documentclass命令中未添加关于学位类别的可选参数}{}
+}{}
 \ifthenelse{\value{optionofdegree}>1}{
-\ClassError{dlmuthesis}{documentclass命令中导入了多个关于学位类别的可选参数}{}
+  \ClassError{dlmuthesis}{documentclass命令中添加了多个关于学位类别的可选参数}{}
 }{}
 % ================================================== %
 
@@ -211,7 +214,8 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 
 % ------------------------- 关于论文信息的全局变量导入 ------------------------- %
-\RequirePackage{etoolbox} %【文档类与宏包的命令自定义】
+\RequirePackage{etoolbox}
+\RequirePackage{xpatch}
 \RequirePackage[absolute,overlay]{textpos} %【提供基于坐标的文本框环境，其中overlay为绝对坐标】
 \RequirePackage{array} %【与表格相关】
 
@@ -756,7 +760,6 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 %% ----- [硕士-法学/法律]的特殊参考文献规范 ----- %
 \if@dlmuthesis@MAlaw %【硕士-法学/法律】
   \renewcommand{\bibnumfmt}[1]{#1.}
-  \RequirePackage{xpatch}
   %\makeatletter
   \xapptocmd{\NAT@bibsetnum}{\setlength{\leftmargin}{0pt}\setlength{\itemindent}{\labelwidth}\addtolength{\itemindent}{\labelsep}}{}{}
   %\makeatother
