@@ -32,10 +32,11 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 % ---------- 文档类声明命令的可选参数初始化 ---------- %
 \RequirePackage{zhnumber} %【中文数字】
-\newif\if@dlmuthesis@BAstem %【本科-理工科模式，初始值为真，下同】
-\newif\if@dlmuthesis@BAhumanities %【本科-人文社科模式，初始值为真，下同】
-\newif\if@dlmuthesis@MA %【硕士模式，初始值为真，下同】
-\newif\if@dlmuthesis@MAlaw %【硕士-法学/法律模式，初始值为真，下同】
+\newif\if@dlmuthesis@BAstem %【[本科-理工科]模式，初始值为真，下同】
+\newif\if@dlmuthesis@BAhumanities %【[本科-人文社科]模式，初始值为真，下同】
+\newif\if@dlmuthesis@MA %【[硕士]模式，初始值为真，下同】
+\newif\if@dlmuthesis@MAlaw %【[硕士-法学/法律]模式，初始值为真，下同】
+\newif\if@dlmuthesis@MAmarxism %【[硕士-马克思主义理论]模式，初始值为真，下同】
 \newif\if@dlmuthesis@printed %【打印模式，初始值为真，下同】
 
 \newcounter{optionofdegree} %【用于计算关于学位类别的可选参数用了多少个】
@@ -54,6 +55,10 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 }
 \DeclareOption{MAlaw}{
 \@dlmuthesis@MAlawtrue
+\addtocounter{optionofdegree}{1}
+}
+\DeclareOption{MAmarxism}{
+\@dlmuthesis@MAmarxismtrue
 \addtocounter{optionofdegree}{1}
 }
 \DeclareOption{printed}{\@dlmuthesis@printedtrue}
