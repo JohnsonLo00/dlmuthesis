@@ -241,7 +241,6 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   }
 }
 \fi\fi\fi\fi\fi
-
 % ======================================== %
 
 
@@ -353,7 +352,13 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   \fancyhead[CEH]{\zihao{5}大连海事大学{\headerinHEADERMA}学位论文}
   \fancyhead[COH]{\zihao{5}\dlmuthesis@tokens@cntitle}
   \cfoot{\zihao{-5}--~\thepage~--}
-\fi\fi\fi
+\else\if@dlmuthesis@MAmarxism %【硕士-马克思主义理论】
+  \geometry{top=3.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm, headsep=24.0pt, headheight=2.5cm}
+  %偶数页为论文中文题目，奇数页为“大连海事大学硕士学位论文”：
+  \fancyhead[CEH]{\zihao{5}\dlmuthesis@tokens@cntitle}
+  \fancyhead[COH]{\zihao{5}大连海事大学{\headerinHEADERMA}学位论文}
+  \cfoot{\zihao{-5}--~\thepage~--}
+\fi\fi\fi\fi\fi
 
 \lhead{} %在'heading=true'下，默认左页眉为当前二级标题名称，因此要赋值为空
 \rhead{} %'heading=true'下，默认右页眉为当前一级标题名称，因此要赋值为空
@@ -496,7 +501,9 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   \setlist{leftmargin=0pt, itemindent=2\parindent, itemsep=0pt, parsep=0pt}
 \else\if@dlmuthesis@MAlaw %【硕士-法学/法律】
   \setlist{leftmargin=0pt, itemindent=2\parindent, itemsep=0pt, nosep}
-\fi\fi\fi\fi
+\else\if@dlmuthesis@MAmarxism %【硕士-马克思主义理论】
+  \setlist{leftmargin=0pt, itemindent=2\parindent, itemsep=0pt, nosep}
+\fi\fi\fi\fi\fi
 % ======================================== %
 
 
@@ -641,7 +648,14 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   \captionsetup[figure][bi-second]{font=small, labelsep=doublespace, name={Fig}}
   \captionsetup[table][bi-first]{font=small, labelsep=doublespace}
   \captionsetup[table][bi-second]{font=small, labelsep=doublespace, name={Tab~}}
-\fi\fi\fi\fi
+\else\if@dlmuthesis@MAmarxism %【硕士-马克思主义理论】
+  \DeclareCaptionLabelSeparator{doublespace}{~~}
+  \captionsetup{font=small, labelsep=doublespace} %单标题模式
+  \captionsetup[figure][bi-first]{font=small, labelsep=doublespace}
+  \captionsetup[figure][bi-second]{font=small, labelsep=doublespace, name={Fig}}
+  \captionsetup[table][bi-first]{font=small, labelsep=doublespace}
+  \captionsetup[table][bi-second]{font=small, labelsep=doublespace, name={Tab~}}
+\fi\fi\fi\fi\fi
 
 \numberwithin{figure}{section} %numberwithin命令必须放在amsmath宏包之后
 \numberwithin{table}{section}
@@ -758,16 +772,24 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 
 % --------------- 作者简历环境 --------------- %
-\newenvironment{achievement}[1]{
-  \phantomsection
-  \addcontentsline{toc}{section}{作者简历及攻读硕士学位期间的科研成果}
-  \ifthenelse{\equal{#1}{MA}}{
-  \begin{center}
-  \heiti\zihao{-3} 作者简历及攻读硕士学位期间的科研成果
-  \end{center}
-  \par
+\newcommand{\printmaintitle}{{\bf\color{red}标题创建失败！}}
+
+\newcommand{\maintitle}[2]{
+  \renewcommand{\printmaintitle}{#1}
+  \ifthenelse{\equal{#2}{1}}{
+    \phantomsection
+    \addcontentsline{toc}{section}{#1}
   }{}
-}{}
+}
+\newenvironment{achievement}{
+  \begingroup
+  \apptocmd{\maintitle}{
+  \begin{center}
+    \heiti\zihao{-3}\printmaintitle
+  \end{center}%
+  }{}{\ClassError{dlmuthesis}{achievement环境创建失败}{}}
+  \par
+}{\endgroup}
 % ======================================== %
 
 
@@ -790,18 +812,23 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   \newcommand{\upapdxcite}[1]{$^{\mbox{\footnotesize\apdxcite{#1}}}${}} %硕士论文中所使用，动机与\upcite命令的类似
 \fi
 
-%% ----- [硕士-法学/法律]的特殊参考文献规范 ----- %
+\newcommand{\nextbibtype}{
+  \makeatletter
+  \global\setcounter{NAT@ctr}{0}
+  \makeatother
+}
+%% ---------- 特殊参考文献规范 ---------- %
 \if@dlmuthesis@MAlaw %【硕士-法学/法律】
   \renewcommand{\bibnumfmt}[1]{#1.}
   %\makeatletter
   \xapptocmd{\NAT@bibsetnum}{\setlength{\leftmargin}{0pt}\setlength{\itemindent}{\labelwidth}\addtolength{\itemindent}{\labelsep}}{}{}
   %\makeatother
-  \newcommand{\nextbibtype}{
-    \makeatletter
-    \global\setcounter{NAT@ctr}{0}
-    \makeatother
-}
-\fi
+\else\if@dlmuthesis@MAmarxism %【硕士-马克思主义理论】
+  \renewcommand{\bibnumfmt}[1]{【#1】}
+  %\makeatletter
+  \xapptocmd{\NAT@bibsetnum}{\setlength{\leftmargin}{0pt}\setlength{\itemindent}{\labelwidth}\addtolength{\itemindent}{\labelsep}}{}{}
+  %\makeatother
+\fi\fi
 %% ============================================= %
 % ======================================================= %
 
@@ -889,7 +916,9 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     \setcounter{tocsbegin}{\value{page}}
   \else\if@dlmuthesis@MAlaw %【硕士-法学/法律】
     \setcounter{tocsbegin}{\value{page}}
-  \fi\fi
+  \else\if@dlmuthesis@MAmarxism %【硕士-马克思主义理论】
+    \setcounter{tocsbegin}{\value{page}}
+  \fi\fi\fi
 }
 %% ======================================================= %
 
@@ -904,6 +933,11 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 % ---------- 打印模式 ---------- %
 \newcommand{\nextpages}[1]{
   \if@dlmuthesis@printed
+    \if@dlmuthesis@BAstem %【本科-理工科】
+      \clearpage
+    \else\if@dlmuthesis@BAhumanities %【本科-人文社科】
+      \clearpage
+    \else
     \ifthenelse{\equal{#1}{single}}{ %封面、原创性声明、授权声明
       \clearpage
       \addtocounter{page}{-1}
@@ -960,6 +994,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
         \clearpage
       }{\clearpage}
     }{}
+    \fi\fi
   \else
     \clearpage
   \fi
@@ -1342,7 +1377,16 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
        subsubsection/format={\zihao{-4}\bfseries}
     }
   }
-\fi
+\else\if@dlmuthesis@MAmarxism %【硕士-马克思主义理论】
+  \AtBeginEnvironment{thebibliography}{
+    \ctexset{
+       subsubsection={
+         format={\zihao{-4}\bfseries},
+         indent = 1em
+       }
+    }
+  }
+\fi\fi
 %% ======================================================= %
 
 %% ---------- 硕士论文中，附录章节标题需居中对齐，但全文是居左 ---------- %
@@ -1401,7 +1445,24 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
   \zihao{-4}
   }
-\fi\fi\fi\fi
+\else\if@dlmuthesis@MAmarxism %【硕士-马克思主义理论】
+  \AtBeginEnvironment{appendices}{
+  \titleformat{\section}
+    {\normalfont\Large\heiti\filcenter} %只改变对齐方式，保留其他设置
+    {附录~\thesection} %编号、标签
+    {1em} %编号与标题文本之间的间距
+    {} %编号之后、标题文本之前的格式
+    [\vspace{6.75pt}] %标题文本之后、正文之前的格式
+  \titlecontents{section}
+    [0pt]
+    {\addvspace{2pt}\filright}
+    {\thecontentslabel}
+    {}
+    {\titlerule*[8pt]{.}\contentspage}
+
+  \zihao{-4}
+  }
+\fi\fi\fi\fi\fi
 %% ================================================================= %
 % ================================================================================ %
 
