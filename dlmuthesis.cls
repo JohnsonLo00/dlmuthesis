@@ -214,6 +214,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   }
 }
 \else\if@dlmuthesis@MAmarxism %【硕士-马克思主义理论】
+\renewcommand\theparagraph{\arabic{paragraph}} %重设四级标题计数器格式
 \ctexset{
   abstractname = {\zihao{-3}\heiti 摘\hspace{2em}要},
   contentsname = \hfill{\heiti\zihao{-3}目\hspace{2em}录}\hfill,
@@ -355,6 +356,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \else\if@dlmuthesis@MAmarxism %【硕士-马克思主义理论】
   \geometry{top=3.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm, headsep=24.0pt, headheight=2.5cm}
   %偶数页为论文中文题目，奇数页为“大连海事大学硕士学位论文”：
+  \pagestyle{fancy}
   \fancyhead[CEH]{\zihao{5}\dlmuthesis@tokens@cntitle}
   \fancyhead[COH]{\zihao{5}大连海事大学{\headerinHEADERMA}学位论文}
   \cfoot{\zihao{-5}--~\thepage~--}
@@ -618,7 +620,17 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     {2em} %标题左间距
     {0.5ex \@plus 1ex \@minus.2ex} %标题上间距
     {0.5ex \@plus .2ex} %标题下间距
-\fi\fi\fi\fi
+\else\if@dlmuthesis@MAmarxism %【硕士-马克思主义理论】
+  \titleformat{\paragraph}
+    {\normalsize\heiti} %字体
+    {（\theparagraph）} %标题前的标签
+    {0pt} %标题和标签之间的间距
+    {} %标题前没有额外的命令或内容
+  \titlespacing{\paragraph}
+    {2em} %标题左间距
+    {0.5ex \@plus 1ex \@minus.2ex} %标题上间距
+    {0.5ex \@plus .2ex} %标题下间距
+\fi\fi\fi\fi\fi
 
 \newcommand{\fourthsection}[1]{\paragraph{#1}} %将命令\paragraph改名为四级标题
 % ============================================================ %
@@ -873,6 +885,10 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     \pagenumbering{Roman}
     \setcounter{abstractCNbegin}{\value{page}} %涉及打印模式
   \else\if@dlmuthesis@MAmarxism %【硕士-马克思主义理论】
+    \pagestyle{fancy}
+    \fancyhead[CEH]{\zihao{5}\dlmuthesis@tokens@cntitle}
+    \fancyhead[COH]{\zihao{5}大连海事大学{\headerinHEADERMA}学位论文}
+    \cfoot{\zihao{-5}--~\thepage~--}
     \pagenumbering{Roman}
     \setcounter{abstractCNbegin}{\value{page}} %涉及打印模式
     \phantomsection
@@ -1219,11 +1235,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 %% ---------- 元内容 - 授权使用声明 ---------- %
 \newcommand{\titleOFAuthorizationStatement}{
-\if@dlmuthesis@MAmarxism %【硕士-马克思主义理论】
 \zihao{-2}\heiti 大连海事大学学位论文授权使用声明
-\else
-\zihao{3}\heiti 大连海事大学学位论文授权使用声明
-\fi
 }
 \newcommand{\metaAuthorizationStatement}{
 \begin{center}\begin{spacing}{1.5}
@@ -1270,10 +1282,11 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 %% --------------- 原创性 + 授权使用 --------------- %
 \newcommand{\OriginalityANDAuthorization}{
-\fancyhf{}
-\thispagestyle{fancy}
-\fancyhead[C]{}
-\fancyfoot{}
+\if@dlmuthesis@MAmarxism %【硕士-马克思主义理论】
+  \thispagestyle{fancy}
+  \fancyhead[C]{~}
+  \fancyfoot{}
+\fi
 ~\vspace{-30pt}
 \metaOriginalityStatement
 ~\vspace{-1em}
@@ -1292,6 +1305,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 % --------------- 钩子 --------------- %
 %% -------------------- 不同学位模式下，设置摘要到目录的样式的时机不同 -------------------- %
+% 【脚手架：待修改/待废弃】
 \if@dlmuthesis@BAstem %【本科-理工科】
   \apptocmd{\makepages}{
     \pagestyle{plain} %从摘要到目录，设置为无页眉、有页脚的模式
@@ -1323,31 +1337,36 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     \cntitleinMAINBODY
     \pagestyle{fancy} %从第一章到致谢，设置为有页眉、有页脚的模式
     \pagenumbering{arabic} %《手册》要求：从正文开始设为阿拉伯数字页码，并且重新从1开始计数
-  }{}{\ClassError{dlmuthesis}{tableofcontent命令执行异常}{}}
+  }{}{\ClassError{dlmuthesis}{pesudohookOFpremainbody命令执行异常}{}}
 \else\if@dlmuthesis@BAhumanities %【本科-人文社科】
   \pretocmd{\pesudohookOFpremainbody}{
     \cntitleinMAINBODY
     \pagestyle{fancy} %从第一章到致谢，设置为有页眉、有页脚的模式
     \pagenumbering{arabic} %《手册》要求：从正文开始设为阿拉伯数字页码，并且重新从1开始计数
-  }{}{\ClassError{dlmuthesis}{tableofcontent命令执行异常}{}}
+  }{}{\ClassError{dlmuthesis}{pesudohookOFpremainbody命令执行异常}{}}
 \else\if@dlmuthesis@MA %【硕士】
   \apptocmd{\OriginalityStatement}{
-    \pagestyle{fancy} %从第一章到致谢，设置为有页眉、有页脚的模式
+    \pagestyle{fancy} %从第一章到致谢，设置为有页眉、有页脚的模式 %【脚手架：待修改】
   }{}{\ClassError{dlmuthesis}{OriginalityStatement命令执行异常}{}}
   \pretocmd{\pesudohookOFpremainbody}{
     \pagenumbering{arabic} %《规范》要求：从正文开始设为阿拉伯数字页码，并且重新从1开始计数
   }{}{\ClassError{dlmuthesis}{pesudohook命令执行异常}{}}
 \else\if@dlmuthesis@MAlaw %【硕士-法学/法律】
   \apptocmd{\OriginalityStatement}{
-    \pagestyle{fancy} %从第一章到致谢，设置为有页眉、有页脚的模式
+    \pagestyle{fancy} %从第一章到致谢，设置为有页眉、有页脚的模式  %【脚手架：待修改】
   }{}{\ClassError{dlmuthesis}{OriginalityStatement命令执行异常}{}}
   \pretocmd{\pesudohookOFpremainbody}{
     \pagenumbering{arabic} %《规范》要求：从正文开始设为阿拉伯数字页码，并且重新从1开始计数
   }{}{\ClassError{dlmuthesis}{pesudohook命令执行异常}{}}
-\fi\fi\fi\fi
+\else\if@dlmuthesis@MAmarxism %【硕士-马克思主义理论】
+  \pretocmd{\pesudohookOFpremainbody}{
+    \pagenumbering{arabic} %《规范》要求：从正文开始设为阿拉伯数字页码，并且重新从1开始计数
+  }{}{\ClassError{dlmuthesis}{pesudohook命令执行异常}{}}
+\fi\fi\fi\fi\fi
 %% ======================================================= %
 
 %% ----- [硕士-法学/法律]中，正文（引言之后、结论之前）奇数页页眉为每章题目 ----- %
+%%% 【脚手架：待废弃】
 \if@dlmuthesis@MAlaw %【硕士-法学/法律】
   \AfterEndEnvironment{introduction}{
     \renewcommand{\sectionmark}[1]{\markboth{#1}{}}
@@ -1390,6 +1409,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 %% ======================================================= %
 
 %% ---------- 硕士论文中，附录章节标题需居中对齐，但全文是居左 ---------- %
+% 【脚手架：待修改】
 \if@dlmuthesis@BAstem %【本科-理工科】
   \BeforeBeginEnvironment{appendices}{
   \pagestyle{plain} %《手册》要求：从附录页开始，去掉页眉
@@ -1447,16 +1467,17 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   }
 \else\if@dlmuthesis@MAmarxism %【硕士-马克思主义理论】
   \AtBeginEnvironment{appendices}{
-  \titleformat{\section}
-    {\normalfont\Large\heiti\filcenter} %只改变对齐方式，保留其他设置
-    {附录~\thesection} %编号、标签
-    {1em} %编号与标题文本之间的间距
-    {} %编号之后、标题文本之前的格式
-    [\vspace{6.75pt}] %标题文本之后、正文之前的格式
+    \ctexset{
+      section = {
+        format = \zihao{-3}\heiti\centering,
+        name = {附录~,},
+        number = {\thesection},
+      }
+    }
   \titlecontents{section}
     [0pt]
     {\addvspace{2pt}\filright}
-    {\thecontentslabel}
+    {\thecontentslabel~~}
     {}
     {\titlerule*[8pt]{.}\contentspage}
 
