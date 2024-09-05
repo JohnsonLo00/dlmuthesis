@@ -343,23 +343,10 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   \cfoot{\zihao{-5} \thepage}
 \else\if@dlmuthesis@MA %【硕士】
   \geometry{top=3.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm, headsep=24.0pt, headheight=2.5cm}
-  %偶数页为论文中文题目，奇数页为“大连海事大学硕士学位论文”：
-  \fancyhead[CEH]{\zihao{5}\dlmuthesis@tokens@cntitle}
-  \fancyhead[COH]{\zihao{5}大连海事大学{\headerinHEADERMA}学位论文}
-  \cfoot{\zihao{-5}--~\thepage~--}
 \else\if@dlmuthesis@MAlaw %【硕士-法学/法律】
   \geometry{top=3.0cm, bottom=3.0cm, left=3.0cm, right=3.0cm, headsep=24.0pt, headheight=2.5cm}
-  %偶数页为论文中文题目，奇数页为“大连海事大学硕士学位论文”：
-  \fancyhead[CEH]{\zihao{5}大连海事大学{\headerinHEADERMA}学位论文}
-  \fancyhead[COH]{\zihao{5}\dlmuthesis@tokens@cntitle}
-  \cfoot{\zihao{-5}--~\thepage~--}
 \else\if@dlmuthesis@MAmarxism %【硕士-马克思主义理论】
   \geometry{top=3.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm, headsep=24.0pt, headheight=2.5cm}
-  %偶数页为论文中文题目，奇数页为“大连海事大学硕士学位论文”：
-  \pagestyle{fancy}
-  \fancyhead[CEH]{\zihao{5}\dlmuthesis@tokens@cntitle}
-  \fancyhead[COH]{\zihao{5}大连海事大学{\headerinHEADERMA}学位论文}
-  \cfoot{\zihao{-5}--~\thepage~--}
 \fi\fi\fi\fi\fi
 
 \lhead{} %在'heading=true'下，默认左页眉为当前二级标题名称，因此要赋值为空
@@ -430,7 +417,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     \begin{center}\heiti\zihao{-3}图表目录\end{center}
   \else
     \ClassError{dlmuthesis}{该学位类别下不适宜使用toctolof命令}{}
-  \fi\fi%\fi
+  \fi\fi\fi
 }
 %% ============================================================= %
 %% ---------- 图目录样式 ---------- %
@@ -506,6 +493,16 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \else\if@dlmuthesis@MAmarxism %【硕士-马克思主义理论】
   \setlist{leftmargin=0pt, itemindent=2\parindent, itemsep=0pt, nosep}
 \fi\fi\fi\fi\fi
+
+%【脚手架：暂时添加】
+\AtBeginEnvironment{enumerate}{
+  \begingroup
+  \circledtextset{
+    resize=real,
+    charf=\small
+  }
+  \endgroup
+}
 % ======================================== %
 
 
@@ -701,8 +698,8 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 
 % --------------- 设置脚注样式（人文社科专业专用） --------------- %
-\RequirePackage{xfp} %在latex代码中执行数值加减运算
-\RequirePackage{pifont} %提供带圈的阿拉伯数字编号
+\RequirePackage{circledtext}
+
 \RequirePackage[perpage]{footmisc} %设置简单的脚注样式
 %% 填“1”：1, 2, ...
 %% 填“2”：[1], [2], ...
@@ -718,7 +715,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
       \renewcommand{\thefootnote}{(\arabic{footnote})} %模式3
     }{
       \ifthenelse{#1=4}{
-        \renewcommand{\thefootnote}{\ding{ \fpeval{171+\arabic{footnote}} }} %模式4
+        \renewcommand{\thefootnote}{\circledtext[resize=real,charf=\scriptsize]{\arabic{footnote}}~} %模式4
       }{
         \ifthenelse{#1=5}{
           \renewcommand{\thefootnote}{【\arabic{footnote}】} %模式5
@@ -874,20 +871,31 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 
 % -------------------- 封装的预设置 -------------------- %
-%% ----- 硕士论文中，中英文摘要的标题需加到目录中 ----- %
+%% ----- 硕士论文中，从摘要页开始的页眉内容、目录书签设置 ----- %
 \newcommand{\presetupOFabstractCN}{
   \if@dlmuthesis@MA %【硕士】
+    %奇数页为“大连海事大学硕士学位论文”，偶数页为论文中文题目：
+    \pagestyle{fancy}
+    \fancyhead[COH]{\zihao{5}大连海事大学{\headerinHEADERMA}学位论文}
+    \fancyhead[CEH]{\zihao{5}\dlmuthesis@tokens@cntitle}
+    \cfoot{\zihao{-5}--~\thepage~--}
     \pagenumbering{Roman}
     \setcounter{abstractCNbegin}{\value{page}} %涉及打印模式
     \phantomsection
     \addcontentsline{toc}{section}{摘\hspace{2em}要}
   \else\if@dlmuthesis@MAlaw %【硕士-法学/法律】
+    %奇数页为“大连海事大学硕士学位论文”，偶数页为论文中文题目：
+    \pagestyle{fancy}
+    \fancyhead[COH]{\zihao{5}大连海事大学{\headerinHEADERMA}学位论文}
+    \fancyhead[CEH]{\zihao{5}\dlmuthesis@tokens@cntitle}
+    \cfoot{\zihao{-5}--~\thepage~--}
     \pagenumbering{Roman}
     \setcounter{abstractCNbegin}{\value{page}} %涉及打印模式
   \else\if@dlmuthesis@MAmarxism %【硕士-马克思主义理论】
+    %奇数页为“大连海事大学硕士学位论文”，偶数页为论文中文题目：
     \pagestyle{fancy}
-    \fancyhead[CEH]{\zihao{5}\dlmuthesis@tokens@cntitle}
     \fancyhead[COH]{\zihao{5}大连海事大学{\headerinHEADERMA}学位论文}
+    \fancyhead[CEH]{\zihao{5}\dlmuthesis@tokens@cntitle}
     \cfoot{\zihao{-5}--~\thepage~--}
     \pagenumbering{Roman}
     \setcounter{abstractCNbegin}{\value{page}} %涉及打印模式
@@ -1344,17 +1352,11 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     \pagestyle{fancy} %从第一章到致谢，设置为有页眉、有页脚的模式
     \pagenumbering{arabic} %《手册》要求：从正文开始设为阿拉伯数字页码，并且重新从1开始计数
   }{}{\ClassError{dlmuthesis}{pesudohookOFpremainbody命令执行异常}{}}
-\else\if@dlmuthesis@MA %【硕士】
-  \apptocmd{\OriginalityStatement}{
-    \pagestyle{fancy} %从第一章到致谢，设置为有页眉、有页脚的模式 %【脚手架：待修改】
-  }{}{\ClassError{dlmuthesis}{OriginalityStatement命令执行异常}{}}
+\else\if@dlmuthesis@MA %【硕士】%【脚手架：暂时注释】
   \pretocmd{\pesudohookOFpremainbody}{
     \pagenumbering{arabic} %《规范》要求：从正文开始设为阿拉伯数字页码，并且重新从1开始计数
   }{}{\ClassError{dlmuthesis}{pesudohook命令执行异常}{}}
 \else\if@dlmuthesis@MAlaw %【硕士-法学/法律】
-  \apptocmd{\OriginalityStatement}{
-    \pagestyle{fancy} %从第一章到致谢，设置为有页眉、有页脚的模式  %【脚手架：待修改】
-  }{}{\ClassError{dlmuthesis}{OriginalityStatement命令执行异常}{}}
   \pretocmd{\pesudohookOFpremainbody}{
     \pagenumbering{arabic} %《规范》要求：从正文开始设为阿拉伯数字页码，并且重新从1开始计数
   }{}{\ClassError{dlmuthesis}{pesudohook命令执行异常}{}}
@@ -1364,24 +1366,6 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   }{}{\ClassError{dlmuthesis}{pesudohook命令执行异常}{}}
 \fi\fi\fi\fi\fi
 %% ======================================================= %
-
-%% ----- [硕士-法学/法律]中，正文（引言之后、结论之前）奇数页页眉为每章题目 ----- %
-%%% 【脚手架：待废弃】
-\if@dlmuthesis@MAlaw %【硕士-法学/法律】
-  \AfterEndEnvironment{introduction}{
-    \renewcommand{\sectionmark}[1]{\markboth{#1}{}}
-    \pagestyle{fancy}
-    \fancyhead[CEH]{\leftmark}
-    \fancyhead[COH]{\zihao{5}\dlmuthesis@tokens@cntitle}
-  }
-  \BeforeBeginEnvironment{conclusion}{
-    \pagestyle{fancy}
-    \fancyhead[CEH]{\zihao{5}大连海事大学{\headerinHEADERMA}学位论文}
-    \fancyhead[COH]{\zihao{5}\dlmuthesis@tokens@cntitle}
-  }
-\else
-\fi
-%% ====================================================================== %
 
 %% --------------- 参考文献列表前后的样式设置 --------------- %
 \BeforeBeginEnvironment{thebibliography}{
@@ -1393,15 +1377,18 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \if@dlmuthesis@MAlaw %【硕士-法学/法律】
   \AtBeginEnvironment{thebibliography}{
     \ctexset{
-       subsubsection/format={\zihao{-4}\bfseries}
+       subsubsection={
+         format = {\zihao{-4}\bfseries},
+         indent = {1em}
+       }
     }
   }
 \else\if@dlmuthesis@MAmarxism %【硕士-马克思主义理论】
   \AtBeginEnvironment{thebibliography}{
     \ctexset{
        subsubsection={
-         format={\zihao{-4}\bfseries},
-         indent = 1em
+         format = {\zihao{-4}\bfseries},
+         indent = {1em}
        }
     }
   }
@@ -1437,29 +1424,36 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     \zihao{5}
   }
 \else\if@dlmuthesis@MA %【硕士】
-  \BeforeBeginEnvironment{appendices}{
-  \titleformat{\section}
-    {\normalfont\Large\heiti\filcenter} %只改变对齐方式，保留其他设置
-    {附录~\thesection} %编号、标签
-    {1em} %编号与标题文本之间的间距
-    {} %编号之后、标题文本之前的格式
-    [\vspace{6.75pt}] %标题文本之后、正文之前的格式
-  }
   \AtBeginEnvironment{appendices}{
-    \zihao{-4}
-  }
-\else\if@dlmuthesis@MAlaw %【硕士-法学/法律】
-  \AtBeginEnvironment{appendices}{
-  \titleformat{\section}
-    {\normalfont\Large\heiti\filcenter} %只改变对齐方式，保留其他设置
-    {附录~\chinese{section}} %编号、标签
-    {1em} %编号与标题文本之间的间距
-    {} %编号之后、标题文本之前的格式
-    [\vspace{6.75pt}] %标题文本之后、正文之前的格式
+    \ctexset{
+      section = {
+        format = \zihao{-3}\heiti\centering,
+        name = {附录~,},
+        number = {\thesection},
+      }
+    }
   \titlecontents{section}
     [0pt]
     {\addvspace{2pt}\filright}
-    {附录~\thecontentslabel}
+    {\thecontentslabel~~}
+    {}
+    {\titlerule*[8pt]{.}\contentspage}
+
+  \zihao{-4}
+  }
+\else\if@dlmuthesis@MAlaw %【硕士-法学/法律】
+  \AtBeginEnvironment{appendices}{
+    \ctexset{
+      section = {
+        format = \zihao{-3}\heiti\centering,
+        name = {附录~,},
+        number = {\thesection},
+      }
+    }
+  \titlecontents{section}
+    [0pt]
+    {\addvspace{2pt}\filright}
+    {\thecontentslabel~~}
     {}
     {\titlerule*[8pt]{.}\contentspage}
 
