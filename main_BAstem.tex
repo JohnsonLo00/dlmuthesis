@@ -33,7 +33,7 @@
 \aauthor{海哥} %【作者姓名】
 \sdtID{222020xxxx} %【学号】
 \faculty{理学院} %【学院】
-\majorinCOVERPAGE{数学与应用数学2020-1} %【专业年级班级(coverpage专用)】
+\majorinCOVERPAGE{数学与应用数学2020-1}{} %【专业年级班级】
 \mentorONE{海老（教授）} %【指导教师（职称）】
 \mentorTWO{无} %【第二指导教师（职称）】
 \completiondate{2024}{5} %【完成日期（年、月）】
@@ -50,26 +50,28 @@
 \makepages %【封面页】
 
 % ---------- 中文摘要 ---------- %
+\presetupOFabstractCN%
 \begin{abstract}
 \input{mainbody/BAstem/abstract_zh}
 \end{abstract}
-\newpage
+\nextpages{abstractCN}
 % ================================================== %	
 
 
 % ---------- 英文摘要 ---------- %
-\renewcommand\abstractname{\large ABSTRACT} %临时修改摘要名
+\presetupOFabstractEN%
 \begin{abstract}
 \input{mainbody/BAstem/abstract_en}
 \end{abstract}
-\newpage
+\nextpages{abstractEN}
 % ================================================== %	
 
 
 % ---------- 目录 ---------- %
+\presetupOFtocs%
 \tableofcontents
 \listofchanges
-\newpage
+\nextpages{tocs}
 % ================================================== %	
 
 
@@ -78,25 +80,29 @@
 \input{mainbody/BAstem/ch1} \clearpage\vspace*{0pt} %\vspace*{0pt}的添加解决了章节标题前间距不合理的问题
 \input{mainbody/BAstem/ch2} \clearpage\vspace*{0pt}
 \input{mainbody/BAstem/ch3} \clearpage\vspace*{0pt}
-\input{mainbody/BAstem/ch4} \clearpage\vspace*{0pt}
-\input{mainbody/BAstem/conclusions} \clearpage\vspace*{0pt} % 结论
+\input{mainbody/BAstem/ch4} \clearpage
+\input{mainbody/BAstem/conclusion} \clearpage\vspace*{0pt} % 结论
 % ================================================== %
 
 % ---------- 参考文献 ---------- %
 {\zihao{5} %【该句涉及到格式设置，请勿乱动】
-\bibliography{refs/refs_STEM} %bib文件导入的形式生成参考文献列表
+\bibliography{refs/refs_BAstem} %bib文件导入的形式生成参考文献列表
 %\begin{thebibliography}{100}
-%\bibitem{文献x标签}文献x信息
+%\bibitem{文献x的标签}{文献x的信息}
 %\end{thebibliography}
 }
+\clearpage
 % ================================================== %
 
 % ---------- 致谢 ---------- %
-\input{mainbody/BAstem/acknowledgments}
+\input{mainbody/BAstem/acknowledgment}
+\clearpage
 % ================================================== %
 
 % ---------- 附录 ---------- %
-\input{mainbody/BAstem/appendiceS}
+\begin{appendices}
+\input{mainbody/BAstem/appendices}
+\end{appendices}
 % ================================================== %
 
 \end{document} 

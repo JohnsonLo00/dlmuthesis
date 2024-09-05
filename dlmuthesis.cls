@@ -746,17 +746,33 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \newenvironment{conclusion}[1]{
   \phantomsection
   \addcontentsline{toc}{section}{结\hspace{2em}论}
-  \ifthenelse{\equal{#1}{BA}}{
-  \begin{center}
-  \heiti\zihao{3} 结\hspace{2em}论
-  \end{center}
+  \vspace*{0pt}
+  \ifthenelse{\equal{#1}{BAstem}}{
+  \begin{flushleft}
+  \bf\zihao{3} 结论
+  \end{flushleft}
+  }{}
+  \ifthenelse{\equal{#1}{BAhumanities}}{
+  \begin{flushleft}
+  \bf\zihao{3} 总结
+  \end{flushleft}
   }{}
   \ifthenelse{\equal{#1}{MA}}{
   \begin{center}
   \heiti\zihao{-3} 结\hspace{2em}论
   \end{center}
-  \par
   }{}
+  \ifthenelse{\equal{#1}{MAlaw}}{
+  \begin{center}
+  \heiti\zihao{-3} 结\hspace{2em}论
+  \end{center}
+  }{}
+  \ifthenelse{\equal{#1}{MAmarxism}}{
+  \begin{center}
+  \heiti\zihao{-3} 结\hspace{2em}论
+  \end{center}
+  }{}
+  \par
 }{}
 % ======================================== %
 
@@ -765,17 +781,38 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \newenvironment{acknowledgment}[1]{
   \phantomsection
   \addcontentsline{toc}{section}{致\hspace{2em}谢}
+  \vspace*{0pt}
   \ifthenelse{\equal{#1}{BA}}{
   \begin{center}
   \heiti\zihao{3} 致\hspace{2em}谢
+  \end{center}
+  }{}
+  \ifthenelse{\equal{#1}{BAstem}}{
+  \begin{center}
+  \bf\zihao{3} 致\hspace{2em}谢
+  \end{center}
+  }{}
+  \ifthenelse{\equal{#1}{BAhumanities}}{
+  \begin{center}
+  \bf\zihao{3} 致\hspace{2em}谢
   \end{center}
   }{}
   \ifthenelse{\equal{#1}{MA}}{
   \begin{center}
   \heiti\zihao{-3} 致\hspace{2em}谢
   \end{center}
-  \par
   }{}
+  \ifthenelse{\equal{#1}{MAlaw}}{
+  \begin{center}
+  \heiti\zihao{-3} 致\hspace{2em}谢
+  \end{center}
+  }{}
+  \ifthenelse{\equal{#1}{MAmarxism}}{
+  \begin{center}
+  \heiti\zihao{-3} 致\hspace{2em}谢
+  \end{center}
+  }{}
+  \par
 }{}
 % ======================================== %
 
@@ -1398,28 +1435,28 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 %% ---------- 硕士论文中，附录章节标题需居中对齐，但全文是居左 ---------- %
 % 【脚手架：待修改】
 \if@dlmuthesis@BAstem %【本科-理工科】
-  \BeforeBeginEnvironment{appendices}{
-  \pagestyle{plain} %《手册》要求：从附录页开始，去掉页眉
-  \titleformat{\section}
-    {\normalfont\Large\heiti\filcenter} %只改变对齐方式，保留其他设置
-    {附录\arabic{\thesection}} %编号、标签
-    {1em} %编号与标题文本之间的间距
-    {} %编号之后、标题文本之前的格式
-    [\vspace{6.75pt}] %标题文本之后、正文之前的格式
-  }
   \AtBeginEnvironment{appendices}{
+    \pagestyle{plain} %《手册》要求：从附录页开始，去掉页眉
+    \ctexset{
+      section = {
+        name = {附录~,},
+        number = {\arabic{section}},
+      }
+    }
+
     \zihao{5}
   }
 \else\if@dlmuthesis@BAhumanities %【本科-人文社科】
   \BeforeBeginEnvironment{appendices}{
   \pagestyle{plain} %《手册》要求：从附录页开始，去掉页眉
-  \titleformat{\section}
-    {\normalfont\Large\heiti\filcenter} %只改变对齐方式，保留其他设置
-    {附录\arabic{\thesection}} %编号、标签
-    {1em} %编号与标题文本之间的间距
-    {} %编号之后、标题文本之前的格式
-    [\vspace{6.75pt}] %标题文本之后、正文之前的格式
-  }
+   \ctexset{
+      section = {
+        format = \zihao{-3}\bfseries,
+        name = {附录~,},
+        number = {\arabic{section}},
+      }
+    }
+   }
   \AtBeginEnvironment{appendices}{
     \zihao{5}
   }
