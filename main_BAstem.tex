@@ -55,7 +55,7 @@
 \input{mainbody/BAstem/abstract_zh}
 \end{abstract}
 \nextpages{abstractCN}
-% ================================================== %	
+% =================================== %	
 
 
 % ---------- 英文摘要 ---------- %
@@ -64,7 +64,7 @@
 \input{mainbody/BAstem/abstract_en}
 \end{abstract}
 \nextpages{abstractEN}
-% ================================================== %	
+% =================================== %	
 
 
 % ---------- 目录 ---------- %
@@ -72,16 +72,16 @@
 \tableofcontents
 \listofchanges
 \nextpages{tocs}
-% ================================================== %	
+% ============================== %
 
 
-% ---------- 正文（划分为多个独立文件依次导入） ---------- %
+% ----- 正文（划分为多个独立文件依次导入） ----- %
 \pesudohookOFpremainbody
-\input{mainbody/BAstem/ch1} \clearpage\vspace*{0pt} %\vspace*{0pt}的添加解决了章节标题前间距不合理的问题
+\input{mainbody/BAstem/ch1} \clearpage\vspace*{0pt}
 \input{mainbody/BAstem/ch2} \clearpage\vspace*{0pt}
 \input{mainbody/BAstem/ch3} \clearpage\vspace*{0pt}
 \input{mainbody/BAstem/ch4} \clearpage
-\input{mainbody/BAstem/conclusion} \clearpage\vspace*{0pt} % 结论
+\input{mainbody/BAstem/conclusion} \clearpage % 结论
 % ================================================== %
 
 % ---------- 参考文献 ---------- %
@@ -92,17 +92,17 @@
 %\end{thebibliography}
 }
 \clearpage
-% ================================================== %
+% =================================== %	
 
 % ---------- 致谢 ---------- %
 \input{mainbody/BAstem/acknowledgment}
 \clearpage
-% ================================================== %
+% =================================== %	
 
 % ---------- 附录 ---------- %
 \begin{appendices}
 \input{mainbody/BAstem/appendices}
 \end{appendices}
-% ================================================== %
+% =================================== %	
 
 \end{document} 

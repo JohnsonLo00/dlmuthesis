@@ -8,10 +8,14 @@
 %%% BAstem：本科-理工科
 %%% BAhumanities：本科-人文社科
 %%% MA：硕士
+%%% MAlaw：硕士-法学/法律
+%%% MAmarxism：硕士-马克思主义理论
 %%% PhD：博士
+%%% MAlaw：博士-法学/法律
+%%% MAmarxism：博士-马克思主义理论
 %% 2. 输出模式：
 %% 注：默认为电子版模式，即不添加任何空白页
-%%% ：打印模式
+%%% printed：打印模式（仅适用于硕博论文；打印时请采用双面打印）
 % ================================================== %
 
 
@@ -29,7 +33,7 @@
 \aauthor{海哥} %【作者姓名】
 \sdtID{222020xxxx} %【学号】
 \faculty{公共管理与人文艺术学院} %【学院】
-\majorinCOVERPAGE{公共事业管理2020-1} %【专业年级班级(coverpage专用)】
+\majorinCOVERPAGE{公共事业管理2020-1}{} %【专业年级班级】
 \mentorONE{海老（教授）} %【指导教师（职称）】
 \mentorTWO{无} %【第二指导教师（职称）】
 \completiondate{2024}{5} %【完成日期（年、月）】
@@ -37,10 +41,11 @@
 
 
 % ----- 人文社科专业专用：脚注编号类型的选择 ----- %
-%% 填“1”：仅阿拉伯数字
+%% 填“1”：1, 2, ...
 %% 填“2”：[1], [2], ...
 %% 填“3”：(1), (2), ...
 %% 填“4”：带圈的阿拉伯数字
+%% 填“5”：【1】, 【2】, ...
 \footnotemode{4}
 % ============================================= %
 
@@ -52,58 +57,63 @@
 
 \begin{document}
 
-\makepages %【添加封面页】
+\makepages %【封面页】
 
 % ---------- 中文摘要 ---------- %
+\presetupOFabstractCN%
 \begin{abstract}
 \input{mainbody/BAhumanities/abstract_zh}
 \end{abstract}
-\newpage
+\nextpages{abstractCN}
 % ============================== %	
 
 
 % ---------- 英文摘要 ---------- %
-\renewcommand\abstractname{\large ABSTRACT} %临时修改摘要名
+\presetupOFabstractEN%
 \begin{abstract}
 \input{mainbody/BAhumanities/abstract_en}
 \end{abstract}
-\newpage
+\nextpages{abstractEN}
 % ============================== %
 
 
 % ---------- 目录 ---------- %
+\presetupOFtocs%
 \tableofcontents
 \listofchanges
-\newpage
-% ================================================== %	
+\nextpages{tocs}
+% ============================== %	
 
 
-% ---------- 正文（划分为多个独立文件依次导入） ---------- %
+% ----- 正文（划分为多个独立文件依次导入） ----- %
 \pesudohookOFpremainbody
-\input{mainbody/BAhumanities/ch1} \clearpage\vspace*{0pt} %\vspace*{0pt}的添加解决了章节标题前间距不合理的问题
+\input{mainbody/BAhumanities/ch1} \clearpage\vspace*{0pt}
 \input{mainbody/BAhumanities/ch2} \clearpage\vspace*{0pt}
-\input{mainbody/BAhumanities/ch3} \clearpage\vspace*{0pt}
-\input{mainbody/BAhumanities/conclusions} \clearpage\vspace*{0pt} % 总结
+\input{mainbody/BAhumanities/ch3} \clearpage
+\input{mainbody/BAhumanities/conclusion} \clearpage % 总结
 % ================================================== %
 
 
 % ---------- 参考文献 ---------- %
 {\zihao{5} %【该句涉及到格式设置，请勿乱动】
-\bibliography{refs/refs_humanities} %bib文件导入的形式生成参考文献列表
-%\begin{thebibliography}{100}
-%\bibitem{文献x标签}文献x信息
-%\end{thebibliography}
+\begin{thebibliography}{100}
+\input{refs/refs_BAhumanities} %当文献数量较多时，也可通过单独的tex文件进行导入
+\end{thebibliography}
 }
-% ================================================== %
+\clearpage
+% =================================== %	
 
 
 % ---------- 致谢 ---------- %
-\input{mainbody/BAhumanities/acknowledgments}
-% ================================================== %
+\input{mainbody/BAhumanities/acknowledgment}
+\clearpage
+% =================================== %	
 
 
 % ---------- 附录 ---------- %
-\input{mainbody/BAhumanities/appendiceS}
-% ================================================== %
+\begin{appendices}
+\input{mainbody/BAhumanities/appendices}
+\end{appendices}
+% =================================== %	
 
 \end{document} 

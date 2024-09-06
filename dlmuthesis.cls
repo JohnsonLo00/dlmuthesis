@@ -116,7 +116,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   section = {
     format = {\zihao{3}\bfseries},
     name = {,、},
-    number = \chinese{section},
+    number = {\chinese{section}},
     aftername = {},
     beforeskip=6.75pt,
     afterskip=6.75pt,
@@ -124,7 +124,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   subsection = {
     format = {\zihao{4}\bfseries},
     name = {（,）},
-    number = \chinese{section},
+    number = {\chinese{subsection}},
     aftername = {},
     beforeskip=6.75pt,
     afterskip=6.75pt,
@@ -335,12 +335,8 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 \if@dlmuthesis@BAstem %【本科-理工科】
   \geometry{bindingoffset=5mm, top=2.5cm, bottom=2.5cm, left=3.0cm, right=2.5cm, headsep=0.5cm}
-  \fancyhead{\zihao{-5}\dlmuthesis@tokens@cntitle}
-  \cfoot{\zihao{-5} \thepage}
 \else\if@dlmuthesis@BAhumanities %【本科-人文社科】
   \geometry{bindingoffset=5mm, top=2.5cm, bottom=2.5cm, left=3.0cm, right=2.5cm, headsep=0.5cm}
-  \fancyhead{\zihao{-5}\dlmuthesis@tokens@cntitle}
-  \cfoot{\zihao{-5} \thepage}
 \else\if@dlmuthesis@MA %【硕士】
   \geometry{top=3.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm, headsep=24.0pt, headheight=2.5cm}
 \else\if@dlmuthesis@MAlaw %【硕士-法学/法律】
@@ -494,15 +490,10 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   \setlist{leftmargin=0pt, itemindent=2\parindent, itemsep=0pt, nosep}
 \fi\fi\fi\fi\fi
 
-%【脚手架：暂时添加】
-\AtBeginEnvironment{enumerate}{
-  \begingroup
-  \circledtextset{
-    resize=real,
-    charf=\small
-  }
-  \endgroup
-}
+\ExplSyntaxOn
+  \patchcmd\__circledtext_calc_char_box_size:{\dim_gset_eq:NN \charboxwd}{\dim_set_eq:NN \charboxwd}{}{}
+  \patchcmd\__circledtext_calc_char_box_size:{\dim_gset_eq:NN \charboxht}{\dim_set_eq:NN \charboxht}{}{}
+\ExplSyntaxOff
 % ======================================== %
 
 
@@ -729,15 +720,13 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 
 % --------------- 引言环境 --------------- %
-\newenvironment{introduction}[1]{
+\newenvironment{introduction}{
   \phantomsection
   \addcontentsline{toc}{section}{引\hspace{2em}言}
-  \ifthenelse{\equal{#1}{MA}}{
   \begin{center}
   \heiti\zihao{-3} 引\hspace{2em}言
-  \end{center}
+  \end{center}%
   \par
-  }{}
 }{}
 % ======================================== %
 
@@ -880,7 +869,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 
 % ---------- 附录 ---------- %
-\RequirePackage[title]{appendix} %设置附录样式
+\RequirePackage{appendix} %注：不能添加option
 % ========================= %
 
 
@@ -908,9 +897,16 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 
 % -------------------- 封装的预设置 -------------------- %
+%% ----- 本科论文中，从摘要页到目录，有页眉无页脚 ----- %
 %% ----- 硕士论文中，从摘要页开始的页眉内容、目录书签设置 ----- %
 \newcommand{\presetupOFabstractCN}{
-  \if@dlmuthesis@MA %【硕士】
+  \if@dlmuthesis@BAstem %【本科-理工科】
+    \pagestyle{plain}
+    \cfoot{\zihao{-5} \thepage}
+  \else\if@dlmuthesis@BAhumanities %【本科-人文社科】
+    \pagestyle{plain}
+    \cfoot{\zihao{-5} \thepage}
+  \else\if@dlmuthesis@MA %【硕士】
     %奇数页为“大连海事大学硕士学位论文”，偶数页为论文中文题目：
     \pagestyle{fancy}
     \fancyhead[COH]{\zihao{5}大连海事大学{\headerinHEADERMA}学位论文}
@@ -940,7 +936,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     \addcontentsline{toc}{section}{摘\hspace{2em}要}
   \else
     \pagenumbering{Roman}
-  \fi\fi\fi
+  \fi\fi\fi\fi\fi
 } %中文摘要
 
 \newcommand{\presetupOFabstractEN}{
@@ -1349,44 +1345,25 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 
 % --------------- 钩子 --------------- %
-%% -------------------- 不同学位模式下，设置摘要到目录的样式的时机不同 -------------------- %
-% 【脚手架：待修改/待废弃】
-\if@dlmuthesis@BAstem %【本科-理工科】
-  \apptocmd{\makepages}{
-    \pagestyle{plain} %从摘要到目录，设置为无页眉、有页脚的模式
-    \pagenumbering{Roman} %《手册》要求：从摘要到目录，设置罗马数字页码
-    \renewcommand{\baselinestretch}{1.25}
-  }{\typeout{succeeds: edit the style of page using package etoolbox}}{\ClassError{dlmuthesis}{fails: edit the style of page using package etoolbox}{}}
-\else\if@dlmuthesis@BAhumanities %【本科-人文社科】
-  \apptocmd{\makepages}{
-    \pagestyle{plain} %从摘要到目录，设置为无页眉、有页脚的模式
-    \pagenumbering{Roman} %《手册》要求：从摘要到目录，设置罗马数字页码
-    \renewcommand{\baselinestretch}{1.25}
-  }{\typeout{succeeds: edit the style of page using package etoolbox}}{\ClassError{dlmuthesis}{fails: edit the style of page using package etoolbox}{}}
-\else\if@dlmuthesis@MA %【硕士】
-  \apptocmd{\OriginalityStatement}{
-    \pagestyle{plain} %从摘要到目录，设置为无页眉、有页脚的模式
-    \renewcommand{\baselinestretch}{1.25}
-  }{\typeout{succeeds: edit the style of page using package etoolbox}}{\ClassError{dlmuthesis}{fails: edit the style of page using package etoolbox}{}}
-\else\if@dlmuthesis@MAlaw %【硕士-法学/法律】
-  \apptocmd{\OriginalityStatement}{
-    \pagestyle{plain} %从摘要到目录，设置为无页眉、有页脚的模式
-    \renewcommand{\baselinestretch}{1.25}
-  }{\typeout{succeeds: edit the style of page using package etoolbox}}{\ClassError{dlmuthesis}{fails: edit the style of page using package etoolbox}{}}
-\fi\fi\fi\fi
-%% ================================================================================ %
+%% ----- 行间距 ----- %
+\AtBeginDocument{
+  \renewcommand{\baselinestretch}{1.25}
+}
+%% ==================== %
 
 %% --------------- 不同学位模式下，设置正文样式的时机不同 --------------- %
 \if@dlmuthesis@BAstem %【本科-理工科】
   \pretocmd{\pesudohookOFpremainbody}{
     \cntitleinMAINBODY
     \pagestyle{fancy} %从第一章到致谢，设置为有页眉、有页脚的模式
+    \fancyhead[C]{\zihao{-5}\dlmuthesis@tokens@cntitle}
     \pagenumbering{arabic} %《手册》要求：从正文开始设为阿拉伯数字页码，并且重新从1开始计数
   }{}{\ClassError{dlmuthesis}{pesudohookOFpremainbody命令执行异常}{}}
 \else\if@dlmuthesis@BAhumanities %【本科-人文社科】
   \pretocmd{\pesudohookOFpremainbody}{
     \cntitleinMAINBODY
     \pagestyle{fancy} %从第一章到致谢，设置为有页眉、有页脚的模式
+    \fancyhead[C]{\zihao{-5}\dlmuthesis@tokens@cntitle}
     \pagenumbering{arabic} %《手册》要求：从正文开始设为阿拉伯数字页码，并且重新从1开始计数
   }{}{\ClassError{dlmuthesis}{pesudohookOFpremainbody命令执行异常}{}}
 \else\if@dlmuthesis@MA %【硕士】%【脚手架：暂时注释】
@@ -1443,21 +1420,17 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
         number = {\arabic{section}},
       }
     }
-
     \zihao{5}
   }
 \else\if@dlmuthesis@BAhumanities %【本科-人文社科】
-  \BeforeBeginEnvironment{appendices}{
-  \pagestyle{plain} %《手册》要求：从附录页开始，去掉页眉
-   \ctexset{
+  \AtBeginEnvironment{appendices}{
+    \pagestyle{plain} %《手册》要求：从附录页开始，去掉页眉
+    \ctexset{
       section = {
-        format = \zihao{-3}\bfseries,
-        name = {附录~,},
+        name = {附录~,~~},
         number = {\arabic{section}},
       }
     }
-   }
-  \AtBeginEnvironment{appendices}{
     \zihao{5}
   }
 \else\if@dlmuthesis@MA %【硕士】
@@ -1469,32 +1442,18 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
         number = {\thesection},
       }
     }
-  \titlecontents{section}
-    [0pt]
-    {\addvspace{2pt}\filright}
-    {\thecontentslabel~~}
-    {}
-    {\titlerule*[8pt]{.}\contentspage}
-
-  \zihao{-4}
+    \zihao{-4}
   }
 \else\if@dlmuthesis@MAlaw %【硕士-法学/法律】
   \AtBeginEnvironment{appendices}{
     \ctexset{
       section = {
         format = \zihao{-3}\heiti\centering,
-        name = {附录~,},
-        number = {\thesection},
+        name = {附录~,~~},
+        number = {\arabic{section}},
       }
     }
-  \titlecontents{section}
-    [0pt]
-    {\addvspace{2pt}\filright}
-    {\thecontentslabel~~}
-    {}
-    {\titlerule*[8pt]{.}\contentspage}
-
-  \zihao{-4}
+    \zihao{-4}
   }
 \else\if@dlmuthesis@MAmarxism %【硕士-马克思主义理论】
   \AtBeginEnvironment{appendices}{
