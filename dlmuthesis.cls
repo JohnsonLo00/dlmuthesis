@@ -65,7 +65,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{article}}
 \ProcessOptions\relax %【这句万万不可改动】
-\LoadClass[a4paper, 12pt]{article} %【导入正规文档类】
+\LoadClass[a4paper, 12bp]{article} %【导入正规文档类】
 % ======================================== %
 
 
@@ -91,18 +91,18 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   section = {
     format = {\zihao{3}\bfseries},
     name = {第,章},
-    beforeskip=6.75pt,
-    afterskip=6.75pt,
+    beforeskip=6.7bp,
+    afterskip=6.75bp,
   },
   subsection = {
     format={\zihao{4}\bfseries},
-    beforeskip=6.75pt,
-    afterskip=6.75pt,
+    beforeskip=6.75bp,
+    afterskip=6.75bp,
   },
   subsubsection = {
     format={\zihao{-4}\bfseries},
-	beforeskip=6.75pt,
-    afterskip=6.75pt,
+	beforeskip=6.75bp,
+    afterskip=6.75bp,
   }
 }
 \else\if@dlmuthesis@BAhumanities %【本科-人文社科】
@@ -118,31 +118,31 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     name = {,、},
     number = {\chinese{section}},
     aftername = {},
-    beforeskip=6.75pt,
-    afterskip=6.75pt,
+    beforeskip=6.75bp,
+    afterskip=6.75bp,
   },
   subsection = {
     format = {\zihao{4}\bfseries},
     name = {（,）},
     number = {\chinese{subsection}},
     aftername = {},
-    beforeskip=6.75pt,
-    afterskip=6.75pt,
+    beforeskip=6.75bp,
+    afterskip=6.75bp,
   },
   subsubsection = {
     format = {\zihao{-4}\bfseries},
     name = {,.~},
     aftername = {},
-    beforeskip=6.75pt,
-    afterskip=6.75pt,
+    beforeskip=6.75bp,
+    afterskip=6.75bp,
   },
   paragraph={
     format = {\zihao{-4}\bfseries},
     name = {（,）},
     aftername = {},
     aftertitle = \par,
-    beforeskip=6.75pt,
-    afterskip=6.75pt,
+    beforeskip=6.75bp,
+    afterskip=6.75bp,
   }
 }
 \else\if@dlmuthesis@MA %【硕士】
@@ -155,18 +155,18 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   section = {
     format = {\zihao{-3}\heiti},
     name = {,},
-    beforeskip=6.75pt,
-    afterskip=6.75pt,
+    beforeskip=6.75bp,
+    afterskip=6.75bp,
   },
   subsection = {
     format = {\zihao{4}\heiti},
-    beforeskip=6.75pt,
-    afterskip=6.75pt,
+    beforeskip=6.75bp,
+    afterskip=6.75bp,
   },
   subsubsection = {
     format = {\zihao{-4}\heiti},
-	beforeskip=6.75pt,
-    afterskip=6.75pt,
+	beforeskip=6.75bp,
+    afterskip=6.75bp,
   },
   appendix={
     name = {附录,},
@@ -189,8 +189,8 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     aftername = {},
     indent = 2em,
     aftername = {},
-    beforeskip=6.75pt,
-    afterskip=6.75pt,
+    beforeskip=6.75bp,
+    afterskip=6.75bp,
   },
   subsection = {
     format = {\zihao{4}\heiti},
@@ -198,16 +198,16 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     number = \chinese{subsection},
     aftername = {},
     indent = 2em,
-    beforeskip=6.75pt,
-    afterskip=6.75pt,
+    beforeskip=6.75bp,
+    afterskip=6.75bp,
   },
   subsubsection = {
     format = {\zihao{-4}\heiti},
     name = {,.~},
     aftername = {},
     indent = 2em,
-	beforeskip=6.75pt,
-    afterskip=6.75pt,
+	beforeskip=6.75bp,
+    afterskip=6.75bp,
   },
   appendix={
     name = {附录,},
@@ -224,18 +224,18 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   section = {
     format = {\zihao{-3}\heiti},
     name = {第,章},
-    beforeskip=6.75pt,
-    afterskip=6.75pt,
+    beforeskip=6.75bp,
+    afterskip=6.75bp,
   },
   subsection = {
     format = {\zihao{4}\heiti},
-    beforeskip=6.75pt,
-    afterskip=6.75pt,
+    beforeskip=6.75bp,
+    afterskip=6.75bp,
   },
   subsubsection = {
     format = {\zihao{-4}\heiti},
-	beforeskip=6.75pt,
-    afterskip=6.75pt,
+	beforeskip=6.75bp,
+    afterskip=6.75bp,
   },
   appendix={
     name = {附录,},
@@ -347,7 +347,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 \lhead{} %在'heading=true'下，默认左页眉为当前二级标题名称，因此要赋值为空
 \rhead{} %'heading=true'下，默认右页眉为当前一级标题名称，因此要赋值为空
-\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrulewidth}{0.4bp}
 \renewcommand{\footrulewidth}{0pt}
 % ======================================== %
 
@@ -377,10 +377,10 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 %% ---------- 一级标题样式 ---------- %
 \titlecontents{section}
 [0pt]
-{\addvspace{2pt}\filright}
+{\addvspace{2bp}\filright}
 {\contentspush{\thecontentslabel}~~}
 {}
-{\titlerule*[8pt]{.}\contentspage}
+{\titlerule*[8bp]{.}\contentspage}
 %% =================================== %
 %% ---------- 三级标题样式 ---------- %
 \if@dlmuthesis@BAhumanities %【本科-人文社科】
@@ -388,15 +388,15 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     [5em]
     {}
     {\contentslabel{1em}}
-    {\hspace*{5pt}}
-    {\titlerule*[8pt]{.}\contentspage}
+    {\hspace*{5bp}}
+    {\titlerule*[8bp]{.}\contentspage}
 \else\if@dlmuthesis@MAlaw %【硕士-法学/法律】
   \titlecontents{subsubsection}
     [5em]
     {}
     {\contentslabel{1em}}
-    {\hspace*{5pt}}
-    {\titlerule*[8pt]{.}\contentspage}
+    {\hspace*{5bp}}
+    {\titlerule*[8bp]{.}\contentspage}
 \else
 \fi\fi
 %% =================================== %
@@ -422,7 +422,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   {\addvspace{0pt}} %每一行之间的垂直间距
   {\figurename{~~}\thecontentslabel\quad} %条目样式
   {\hfill} %填充对齐
-  {\titlerule*[6pt]{.}\contentspage} % 用点线间隔，并显示页面号
+  {\titlerule*[6bp]{.}\contentspage} % 用点线间隔，并显示页面号
 %% =================================== %
 %% ---------- 表目录样式 ---------- %
 \titlecontents{table}
@@ -430,7 +430,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   {\addvspace{0pt}} %每一行之间的垂直间距
   {\tablename{~~}\thecontentslabel\quad} %条目样式
   {\hfill} %填充对齐
-  {\titlerule*[6pt]{.}\contentspage} % 用点线间隔，并显示页面号
+  {\titlerule*[6bp]{.}\contentspage} % 用点线间隔，并显示页面号
 %% =================================== %
 % ======================================== %
 
@@ -508,8 +508,8 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 \RequirePackage{amsthm}
 \newtheoremstyle{newthmstyle}
-  {3pt} %Space above
-  {3pt} %Space below
+  {3bp} %Space above
+  {3bp} %Space below
   {\rm} %Body font
   {\parindent} %Indent amount
   {\bf} %Theorem head font
@@ -550,7 +550,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   backgroundcolor=\color{gray!30}, %背景颜色
   breaklines=true, %自动断行
   showstringspaces=false, %取消特别的字符间距
-  framexleftmargin=5pt, %内部左边距
+  framexleftmargin=5bp, %内部左边距
   keywordstyle=\color{keywordincode}, %关键字样式
   stringstyle=\color{stringincode}, %字符串样式
   commentstyle=\color{commentincode}, %注释样式
@@ -840,10 +840,10 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \bibliographystyle{thuthesis-bachelor} %借鉴使用：清华大学(本科)学位论文模板bst样式文件
 \newcommand{\upcite}[1]{$^{\mbox{\footnotesize\cite{#1}}}${}} %《手册》《规范》要求：“当提及的参考文献为文中直接说明时，则用小4号字与正文排齐。”
 \if@dlmuthesis@MAlaw %【硕士-法学/法律】
-  \newcommand{\apdxcite}[1]{\citep[\chinese{section},~\hspace{-3pt}][]{#1}} %[硕士-法学/法律]中所使用，适用于“章节编号+文献序号”的格式
+  \newcommand{\apdxcite}[1]{\citep[\chinese{section},~\hspace{-3bp}][]{#1}} %[硕士-法学/法律]中所使用，适用于“章节编号+文献序号”的格式
   \newcommand{\upapdxcite}[1]{$^{\mbox{\footnotesize\apdxcite{#1}}}${}} %[硕士-法学/法律]中所使用，动机与\upcite命令的类似
 \else
-  \newcommand{\apdxcite}[1]{\citep[\thesection\hspace{-3pt}][]{#1}} %硕士论文中所使用，适用于“章节编号+文献序号”的格式
+  \newcommand{\apdxcite}[1]{\citep[\thesection\hspace{-3bp}][]{#1}} %硕士论文中所使用，适用于“章节编号+文献序号”的格式
   \newcommand{\upapdxcite}[1]{$^{\mbox{\footnotesize\apdxcite{#1}}}${}} %硕士论文中所使用，动机与\upcite命令的类似
 \fi
 
@@ -1064,7 +1064,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 %% -------------------- 封面页-本科论文 -------------------- %
 \newcommand{\makecoverpageBA}{
   \thispagestyle{empty} %【无页眉页脚】
-  \setlength{\extrarowheight}{9pt} %【设置表格行间距】
+  \setlength{\extrarowheight}{9bp} %【设置表格行间距】
   \setlength{\TPHorizModule}{1cm} % 设置textblock环境的水平单位
   \setlength{\TPVertModule}{1cm} % 设置textblock环境的垂直单位
 
@@ -1080,7 +1080,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   %%% ---------- LOGO下方的大字号标题 ---------- %
   \begin{textblock}{10}(5.5,9.85)
     \centering
-    \fontsize{40pt}{26pt}\selectfont{\heiti 本科毕业论文}\\
+    \fontsize{40bp}{26bp}\selectfont{\heiti 本科毕业论文}\\
   \end{textblock}
   %%% ======================================== %
 
@@ -1093,12 +1093,12 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
       m{1.4cm}<{\vspace{-0.3\baselineskip}\centering}
       m{11.4cm}<{\vspace{-0.3\baselineskip}\centering}
       }
-      \bfseries\fontsize{16pt}{16pt}\selectfont 题\hfil 目: &
-      \multirow[t]{2}{12.0cm}{\centering\bfseries\fontsize{16pt}{16pt}\selectfont\dlmuthesis@tokens@cntitle}
+      \bfseries\fontsize{16bp}{16bp}\selectfont 题\hfil 目: &
+      \multirow[t]{2}{12.0cm}{\centering\bfseries\fontsize{16bp}{16bp}\selectfont\dlmuthesis@tokens@cntitle}
       \\ \cline{2-2} %【为论文题目添加下划线，但需手动添加（目前只有两行）】
       \\ \cline{2-2}
-      \bfseries\fontsize{16pt}{16pt}\selectfont Title: &
-      \multirow[t]{2}{12.0cm}{\centering\bfseries\fontsize{16pt}{16pt}\selectfont\dlmuthesis@tokens@entitle}
+      \bfseries\fontsize{16bp}{16bp}\selectfont Title: &
+      \multirow[t]{2}{12.0cm}{\centering\bfseries\fontsize{16bp}{16bp}\selectfont\dlmuthesis@tokens@entitle}
       \\ \cline{2-2}
       \\ \cline{2-2}
       \\ \cline{2-2}
@@ -1112,8 +1112,8 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     \renewcommand{\arraystretch}{1.2}
     \begin{tabular}
       {
-      >{\fontsize{16pt}{16pt}\selectfont}m{3.8cm}
-      >{\centering\arraybackslash\fontsize{16pt}{16pt}\selectfont} p{8.0cm}
+      >{\fontsize{16bp}{16bp}\selectfont}m{3.8cm}
+      >{\centering\arraybackslash\fontsize{16bp}{16bp}\selectfont} p{8.0cm}
       }
       \selectfont\fangsong 姓\hfill 名: & \selectfont\fangsong\dlmuthesis@tokens@aauthor \\
       \cline{2-2}
@@ -1133,8 +1133,8 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   \end{textblock}
   %%% ================================================== %
 
-  %% ---------- 由于之前将\extrarowheight的值设为9pt，为保证往后正文表格的间距正常，需重新设置回来 ---------- %
-  \setlength{\extrarowheight}{2pt}
+  %% ---------- 由于之前将\extrarowheight的值设为9bp，为保证往后正文表格的间距正常，需重新设置回来 ---------- %
+  \setlength{\extrarowheight}{2bp}
   %%% ================================================================================ %
 
   \newpage %【起到将封面页与正文隔离开的正式作用】
@@ -1144,24 +1144,24 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 %% -------------------- 封面页-硕士论文 -------------------- %
 \newcommand{\makecoverpageMA}{
   \thispagestyle{empty} %【无页眉页脚】
-  \setlength{\extrarowheight}{18pt} %【设置表格行间距】
+  \setlength{\extrarowheight}{18bp} %【设置表格行间距】
 
-  ~\vspace{24pt}
+  ~\vspace{24bp}
   \begin{center}{\bf\zihao{-1}
   \headerinCOVERPAGEMA 学~位~论~文}
-  \end{center}{}\vspace{24.0pt}
+  \end{center}{}\vspace{24.0bp}
 
   \begin{center}
   {\zihao{2}\heiti\dlmuthesis@tokens@cntitle}\\
   {\zihao{3}\bfseries\dlmuthesis@tokens@entitle}
-  \end{center}{}\vspace{132.0pt}
+  \end{center}{}\vspace{132.0bp}
 
   \begin{table}[H]
     \centering
     \begin{tabular}
       {
-      >{\fontsize{16pt}{16pt}\selectfont}m{2.8cm}
-      >{\centering\arraybackslash\fontsize{16pt}{16pt}\selectfont} p{8.0cm}
+      >{\fontsize{16bp}{16bp}\selectfont}m{2.8cm}
+      >{\centering\arraybackslash\fontsize{16bp}{16bp}\selectfont} p{8.0cm}
       }
       作\hfill 者\hfill 姓\hfill 名： & \dlmuthesis@tokens@aauthor \\
       \cline{2-2}
@@ -1178,15 +1178,15 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
       答\hfill 辩\hfill 时\hfill 间： & \dlmuthesis@tokens@completiondate \\
       \cline{2-2}
     \end{tabular}
-  \end{table}{}\vspace{24.0pt}
+  \end{table}{}\vspace{24.0bp}
 
   \begin{figure}[H]
     \centering
     \includegraphics[width=0.30\textwidth]{logo/LogoMA.pdf}
   \end{figure}
 
-  %%% ----- 由于之前将\extrarowheight的值设为9pt，为保证往后正文表格的间距正常，需重新设置回来 ----- %
-  \setlength{\extrarowheight}{2pt}
+  %%% ----- 由于之前将\extrarowheight的值设为9bp，为保证往后正文表格的间距正常，需重新设置回来 ----- %
+  \setlength{\extrarowheight}{2bp}
   %%% ================================================== %
   \nextpages{single}
 }
@@ -1258,9 +1258,9 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \newcommand{\metaOriginalityStatement}{
 \begin{center}\begin{spacing}{1.5}
 \titleOFOriginalityStatement
-\end{spacing}\end{center}{}\vspace{-24pt}
+\end{spacing}\end{center}{}\vspace{-24bp}
 \begin{spacing}{1.5}
-本人郑重声明：所呈交的学位论文，是本人在导师的指导下进行研究工作所取得的成果。尽我所知，除文中已经注明引用内容和致谢的地方外，本论文不包含任何其他个人或集体已经发表或撰写过的研究成果。对论文所涉及的研究工作做出贡献的其他个人和集体，均已在论文中以明确的方式标明或致谢。\vspace{12.0pt}
+本人郑重声明：所呈交的学位论文，是本人在导师的指导下进行研究工作所取得的成果。尽我所知，除文中已经注明引用内容和致谢的地方外，本论文不包含任何其他个人或集体已经发表或撰写过的研究成果。对论文所涉及的研究工作做出贡献的其他个人和集体，均已在论文中以明确的方式标明或致谢。\vspace{12.0bp}
 
 若有不实之处，本人愿意承担相关法律责任。
 \end{spacing}%
@@ -1281,7 +1281,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \newcommand{\metaAuthorizationStatement}{
 \begin{center}\begin{spacing}{1.5}
 \titleOFAuthorizationStatement
-\end{spacing}\end{center}{}\vspace{-24pt}
+\end{spacing}\end{center}{}\vspace{-24bp}
 \begin{spacing}{1.5}
 本人完全了解并同意遵守学校有关学位论文知识产权的规定，在校攻读学位期间论文工作的知识产权属于大连海事大学，学校有权保留送交学位论文的副本，向国家有关部门或机构送交论文的复印件和电子版，允许该论文被查阅，可以将本学位论文的全部或部分内容编入有关数据库进行检索，可以采用影印、缩印、或扫描等复制手段保存和汇编本学位论文。
 
@@ -1291,7 +1291,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   \centering
   \begin{tabularx}{\textwidth}{cXccccccc}
 作~者~签~名 : & \hfil\dlmuthesis@tokens@signofstudent\hfil & 日期: & \yearSTU & 年 & \monthSTU & 月 & \daySTU & 日 \\
-\cline{2-2}\cline{4-4}\cline{6-6}\cline{8-8}\\[6pt]
+\cline{2-2}\cline{4-4}\cline{6-6}\cline{8-8}\\[6bp]
 导~师~签~名 : & \hfil\dlmuthesis@tokens@signofmentor\hfil & 日期: & \yearMNT & 年 & \monthMNT & 月 & \dayMNT & 日 \\
 \cline{2-2}\cline{4-4}\cline{6-6}\cline{8-8}
   \end{tabularx}%
@@ -1303,7 +1303,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \newcommand{\OriginalityStatement}{
 \thispagestyle{empty} %【无页眉页脚】
 
-~\vspace{24pt}
+~\vspace{24bp}
 \metaOriginalityStatement
 \nextpages{single}
 }
@@ -1328,7 +1328,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   \fancyhead[C]{~}
   \fancyfoot{}
 \fi
-~\vspace{-30pt}
+~\vspace{-30bp}
 \metaOriginalityStatement
 ~\vspace{-1em}
 \metaAuthorizationStatement
@@ -1466,10 +1466,10 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     }
   \titlecontents{section}
     [0pt]
-    {\addvspace{2pt}\filright}
+    {\addvspace{2bp}\filright}
     {\thecontentslabel~~}
     {}
-    {\titlerule*[8pt]{.}\contentspage}
+    {\titlerule*[8bp]{.}\contentspage}
 
   \zihao{-4}
   }
