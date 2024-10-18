@@ -285,21 +285,31 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     {\setcounter{InputLineCn}{#1}} %替换成中文题目的预期行数
   \renewcommand{\dlmuthesis@tokens@cntitle}{#2}
   \newcommand{\cntitleinMAINBODY}{\vspace*{1ex}{}\begin{center}{\zihao{3}\bfseries #2}\end{center}{}\vspace*{1ex}{}} %【正文第1页顶部的中文标题】
-} %【中文标题】
+} %【中文题目】
 \NewDocumentCommand{\entitle}{o m}{
   \IfNoValueTF{#1}
     {\setcounter{InputLineEn}{1}}  %设置[记录英文题目的预期行数的计数器]的默认值
     {\setcounter{InputLineEn}{#1}} %替换成英文题目的预期行数
   \renewcommand{\dlmuthesis@tokens@entitle}{#2}
-} %【英文标题】
+} %【英文题目】
 \newcommand{\aauthor}[1]{\renewcommand{\dlmuthesis@tokens@aauthor}{#1}} %【作者姓名】
 \newcommand{\sdtID}[1]{\renewcommand{\dlmuthesis@tokens@sdtID}{#1}} %【学号】
-\newcommand{\majorinCOVERPAGE}[2]{
-  \renewcommand{\dlmuthesis@tokens@majorinCOVERPAGE}{#1}
-  \ifthenelse{\equal{#2}{MEng}}{
-    \renewcommand{\dlmuthesis@tokens@headermajoir}{工\hfill 程\hfill 领\hfill 域}
-  }{}
-} %【专业年级班级(coverpage专用)】
+%\newcommand{\majorinCOVERPAGE}[2]{
+%  \renewcommand{\dlmuthesis@tokens@majorinCOVERPAGE}{#1}
+%  \ifthenelse{\equal{#2}{MEng}}{
+%    \renewcommand{\dlmuthesis@tokens@headermajoir}{工\hfill 程\hfill 领\hfill 域}
+%  }{}
+%} %【专业年级班级(coverpage专用)】
+\NewDocumentCommand{\majorinCOVERPAGE}{o m}{
+  \IfNoValueTF{#1}{}{
+    \ifthenelse{\equal{#1}{MEng}}{
+      \renewcommand{\dlmuthesis@tokens@headermajoir}{工\hfill 程\hfill 领\hfill 域}
+      }{
+        \ClassError{}
+      }
+    }
+  \renewcommand{\dlmuthesis@tokens@majorinCOVERPAGE}{#2}
+} %【专业】
 \newcommand{\mentorONE}[1]{\renewcommand{\dlmuthesis@tokens@mentorONE}{#1}} %【指导教师（职称）】
 \newcommand{\faculty}[1]{\renewcommand{\dlmuthesis@tokens@faculty}{#1}} %【学院】
 \newcommand{\completiondate}[2]{
