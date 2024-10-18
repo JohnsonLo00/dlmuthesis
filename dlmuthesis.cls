@@ -542,6 +542,25 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \newtheorem{Corollary}{推论}[section]
 \newtheorem{Remark}{注}[section]
 \renewcommand{\proofname}{\zihao{-4}\bfseries 证明}
+
+\newtheoremstyle{newthmstyle-cited} %带文献引用的定理环境样式
+  {3bp} %Space above
+  {3bp} %Space below
+  {\rm} %Body font
+  {\parindent} %Indent amount
+  {\bf} %Theorem head font
+  {} %Punctuation after theorem head
+  {1.0em} %Space after theorem head
+  {\thmname{#1}\thmnumber{#2}\thmnote{\rm{}#3}} %Theorem head spec (can be left empty, meaning ‘normal’)
+\theoremstyle{newthmstyle-cited}
+\newtheorem{Definition-cited}[Definition]{定义}
+\newtheorem{Proposition-cited}[Proposition]{命题}
+\newtheorem{Lemma-cited}[Lemma]{引理}
+\newtheorem{Theorem-cited}[Theorem]{定理}
+\newtheorem{Example-cited}[Example]{例}
+\newtheorem{Problem-cited}[Problem]{问题}
+\newtheorem{Corollary-cited}[Corollary]{推论}
+\newtheorem{Remark-cited}[Remark]{注}
 % ======================================== %
 
 
