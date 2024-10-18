@@ -248,6 +248,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 % ------------------------- 关于论文信息的全局变量导入 ------------------------- %
 \RequirePackage{etoolbox}
 \RequirePackage{xpatch}
+\RequirePackage{xparse}
 \RequirePackage[absolute,overlay]{textpos} %【提供基于坐标的文本框环境，其中overlay为绝对坐标】
 \RequirePackage{array} %【与表格相关】
 
@@ -275,11 +276,22 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 %% ================================================== %
 
 %% -------------------- 正式变量定义 -------------------- %
-\newcommand{\cntitle}[1]{
-\renewcommand{\dlmuthesis@tokens@cntitle}{#1}
-\newcommand{\cntitleinMAINBODY}{\vspace*{1ex}{}\begin{center}{\zihao{3}\bfseries #1}\end{center}{}\vspace*{1ex}{}} %【正文第1页顶部的中文标题】
+\newcounter{InputLineCn} %定义计数器：记录中文题目的预期行数
+\newcounter{InputLineEn} %定义计数器：记录英文题目的预期行数
+
+\NewDocumentCommand{\cntitle}{o m}{
+  \IfNoValueTF{#1}
+    {\setcounter{InputLineCn}{1}}  %设置[记录中文题目的预期行数的计数器]的默认值
+    {\setcounter{InputLineCn}{#1}} %替换成中文题目的预期行数
+  \renewcommand{\dlmuthesis@tokens@cntitle}{#2}
+  \newcommand{\cntitleinMAINBODY}{\vspace*{1ex}{}\begin{center}{\zihao{3}\bfseries #2}\end{center}{}\vspace*{1ex}{}} %【正文第1页顶部的中文标题】
 } %【中文标题】
-\newcommand{\entitle}[1]{\renewcommand{\dlmuthesis@tokens@entitle}{#1}} %【英文标题】
+\NewDocumentCommand{\entitle}{o m}{
+  \IfNoValueTF{#1}
+    {\setcounter{InputLineEn}{1}}  %设置[记录英文题目的预期行数的计数器]的默认值
+    {\setcounter{InputLineEn}{#1}} %替换成英文题目的预期行数
+  \renewcommand{\dlmuthesis@tokens@entitle}{#2}
+} %【英文标题】
 \newcommand{\aauthor}[1]{\renewcommand{\dlmuthesis@tokens@aauthor}{#1}} %【作者姓名】
 \newcommand{\sdtID}[1]{\renewcommand{\dlmuthesis@tokens@sdtID}{#1}} %【学号】
 \newcommand{\majorinCOVERPAGE}[2]{
@@ -296,6 +308,10 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 %%% ---------- 本科论文专用 ---------- %
 \newcommand{\mentorTWO}[1]{\renewcommand{\dlmuthesis@tokens@mentorTWO}{#1}} %【第二指导教师（职称）】
+\newcounter{CounterOfAddClineCn} %定义计数器：记录中文题目的循环轮次
+\newcounter{CounterOfAddClineEn} %定义计数器：记录英文题目的循环轮次
+\setcounter{CounterOfAddClineCn}{0} %设置[记录循环轮次的计数器(中)]的初始值
+\setcounter{CounterOfAddClineEn}{0} %设置[记录循环轮次的计数器(英)]的初始值
 %%% ======================================== %
 
 %%% ---------- 硕士论文专用 ---------- %
@@ -1062,6 +1078,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 % ------------------------- 封面页的创建 ------------------------- %
 
 %% -------------------- 封面页-本科论文 -------------------- %
+\def\AddCline{\\ \cline{2-2}} %定义宏：被循环的内容
 \newcommand{\makecoverpageBA}{
   \thispagestyle{empty} %【无页眉页脚】
   \setlength{\extrarowheight}{9bp} %【设置表格行间距】
@@ -1090,18 +1107,21 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     \renewcommand{\arraystretch}{0.75} %【调整表格行间距】
     \begin{tabular}
       {
-      m{1.4cm}<{\vspace{-0.3\baselineskip}\centering}
-      m{11.4cm}<{\vspace{-0.3\baselineskip}\centering}
+      >{\vspace{-0.3\baselineskip}}m{1.4cm}
+      >{\vspace{-0.3\baselineskip}}m{12.0cm}
       }
       \bfseries\fontsize{16bp}{16bp}\selectfont 题\hfil 目: &
-      \multirow[t]{2}{12.0cm}{\centering\bfseries\fontsize{16bp}{16bp}\selectfont\dlmuthesis@tokens@cntitle}
-      \\ \cline{2-2} %【为论文题目添加下划线，但需手动添加（目前只有两行）】
-      \\ \cline{2-2}
+      \multirow[t]{2}{12.0cm}{\centering\arraybackslash\bfseries\fontsize{16bp}{16bp}\selectfont\dlmuthesis@tokens@cntitle}
+      \whiledo{\value{CounterOfAddClineCn}<\value{InputLineCn}}{
+        \AddCline
+        \stepcounter{CounterOfAddClineCn}
+      }
       \bfseries\fontsize{16bp}{16bp}\selectfont Title: &
-      \multirow[t]{2}{12.0cm}{\centering\bfseries\fontsize{16bp}{16bp}\selectfont\dlmuthesis@tokens@entitle}
-      \\ \cline{2-2}
-      \\ \cline{2-2}
-      \\ \cline{2-2}
+      \multirow[t]{2}{12.0cm}{\centering\arraybackslash\bfseries\fontsize{16bp}{16bp}\selectfont\dlmuthesis@tokens@entitle}
+      \whiledo{\value{CounterOfAddClineEn}<\value{InputLineEn}}{
+        \AddCline
+        \stepcounter{CounterOfAddClineEn}
+      }
     \end{tabular}
   \end{textblock}
   %%% ================================================== %
@@ -1113,7 +1133,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     \begin{tabular}
       {
       >{\fontsize{16bp}{16bp}\selectfont}m{3.8cm}
-      >{\centering\arraybackslash\fontsize{16bp}{16bp}\selectfont} p{8.0cm}
+      >{\centering\arraybackslash\fontsize{16bp}{16bp}\selectfont}p{8.0cm}
       }
       \selectfont\fangsong 姓\hfill 名: & \selectfont\fangsong\dlmuthesis@tokens@aauthor \\
       \cline{2-2}
