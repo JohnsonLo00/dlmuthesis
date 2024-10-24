@@ -515,11 +515,6 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \else\if@dlmuthesis@MAmarxism %【硕士-马克思主义理论】
   \setlist{leftmargin=0pt, itemindent=2\parindent, itemsep=0pt, nosep}
 \fi\fi\fi\fi\fi
-
-\ExplSyntaxOn
-  \patchcmd\__circledtext_calc_char_box_size:{\dim_gset_eq:NN \charboxwd}{\dim_set_eq:NN \charboxwd}{}{}
-  \patchcmd\__circledtext_calc_char_box_size:{\dim_gset_eq:NN \charboxht}{\dim_set_eq:NN \charboxht}{}{}
-\ExplSyntaxOff
 % ======================================== %
 
 
