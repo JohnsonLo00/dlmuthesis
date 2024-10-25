@@ -380,12 +380,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 % --------------- 字体 --------------- %
 \RequirePackage{fontspec}
-% (1) 一般地，MacOS, WindowsOS内部都会安装有simsun字体（即宋体&新宋体）。
-% 因此在本地编译时，LaTeX引擎会调用本地自带的字体文件。
-% 若本地未安装该字体，双击字体文件simsun.ttc即可安装。
-% (2) 然而，采用云端编译时（即：overleaf等在线编辑器），就需要调用文件夹下的字体文件simsun.ttc。
-% 因此，该文件不可删掉。
-\setCJKmainfont[AutoFakeBold=3.0, AutoFakeSlant=0.3]{simsun.ttc} %中文字体设置
+\setCJKmainfont[Path={./misc/}, AutoFakeBold=3.0, AutoFakeSlant=0.3]{simsun.ttc} %中文字体设置
 \setmainfont{Times New Roman} %英文字体设置
 % ======================================== %
 
