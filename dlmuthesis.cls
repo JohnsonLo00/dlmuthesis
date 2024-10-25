@@ -380,7 +380,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 % --------------- 字体 --------------- %
 \RequirePackage{fontspec}
-\setCJKmainfont[Path={./misc/}, AutoFakeBold=3.0, AutoFakeSlant=0.3]{simsun.ttc} %中文字体设置
+\setCJKmainfont{simsun.ttc}[Path={./misc/}, AutoFakeBold=3.0, AutoFakeSlant=0.3] %中文字体设置
 \setmainfont{Times New Roman} %英文字体设置
 % ======================================== %
 
