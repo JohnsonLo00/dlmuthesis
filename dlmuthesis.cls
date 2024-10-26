@@ -33,33 +33,34 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 % ---------- 文档类声明命令的可选参数初始化 ---------- %
 \RequirePackage{zhnumber} %【中文数字】
 \newif\if@dlmuthesis@BAstem %【[本科-理工科]模式，初始值为真，下同】
-\newif\if@dlmuthesis@BAhumanities %【[本科-人文社科]模式，初始值为真，下同】
-\newif\if@dlmuthesis@MA %【[硕士]模式，初始值为真，下同】
-\newif\if@dlmuthesis@MAlaw %【[硕士-法学/法律]模式，初始值为真，下同】
-\newif\if@dlmuthesis@MAmarxism %【[硕士-马克思主义理论]模式，初始值为真，下同】
-\newif\if@dlmuthesis@printed %【打印模式，初始值为真，下同】
+\newif\if@dlmuthesis@BAhumanities %【[本科-人文社科]模式】
+\newif\if@dlmuthesis@MA %【[硕士]模式】
+\newif\if@dlmuthesis@MAlaw %【[硕士-法学/法律]模式】
+\newif\if@dlmuthesis@MAmarxism %【[硕士-马克思主义理论]模式】
 
-\newcounter{optionofdegree} %【用于计算关于学位类别的可选参数用了多少个】
-\setcounter{optionofdegree}{0}
+\newif\if@dlmuthesis@printed %【打印模式】
+
+\newcounter{OptionOfDegree} %【用于计算关于学位类别的可选参数用了多少个】
+\setcounter{OptionOfDegree}{0}
 \DeclareOption{BAstem}{
 \@dlmuthesis@BAstemtrue
-\addtocounter{optionofdegree}{1}
+\addtocounter{OptionOfDegree}{1}
 }
 \DeclareOption{BAhumanities}{
 \@dlmuthesis@BAhumanitiestrue
-\addtocounter{optionofdegree}{1}
+\addtocounter{OptionOfDegree}{1}
 }
 \DeclareOption{MA}{
 \@dlmuthesis@MAtrue
-\addtocounter{optionofdegree}{1}
+\addtocounter{OptionOfDegree}{1}
 }
 \DeclareOption{MAlaw}{
 \@dlmuthesis@MAlawtrue
-\addtocounter{optionofdegree}{1}
+\addtocounter{OptionOfDegree}{1}
 }
 \DeclareOption{MAmarxism}{
 \@dlmuthesis@MAmarxismtrue
-\addtocounter{optionofdegree}{1}
+\addtocounter{OptionOfDegree}{1}
 }
 \DeclareOption{printed}{\@dlmuthesis@printedtrue}
 
@@ -70,10 +71,10 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 
 % ---------- 添加且仅一个学位类别参数 ---------- %
-\ifthenelse{\value{optionofdegree}=0}{
+\ifthenelse{\value{OptionOfDegree}=0}{
   \ClassError{dlmuthesis}{documentclass命令中未添加关于学位类别的可选参数}{}
 }{}
-\ifthenelse{\value{optionofdegree}>1}{
+\ifthenelse{\value{OptionOfDegree}>1}{
   \ClassError{dlmuthesis}{documentclass命令中添加了多个关于学位类别的可选参数}{}
 }{}
 % ================================================== %

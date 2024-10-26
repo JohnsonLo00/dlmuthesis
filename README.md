@@ -1,10 +1,10 @@
 
-dlmubachelorthesis
+dlmuthesis
 ===
-**2024大连海事大学本科毕业论文模板**
+**大连海事大学本硕博论文模板**
 
 **JL**, [yhlaozero2@163.com](yhlaozero2@163.com)
-**v2.0(2024/07)**
+**v3.0.0 (2025/01)**
 
 ***
 
