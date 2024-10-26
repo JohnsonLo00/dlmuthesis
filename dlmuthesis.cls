@@ -40,6 +40,12 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 \newif\if@dlmuthesis@printed %【打印模式】
 
+\newif\if@dlmuthesis@windows %【平台为[Windows]】
+\newif\if@dlmuthesis@macos %【平台为[MacOS]】
+\newif\if@dlmuthesis@ubuntu %【平台为[Ubuntu]】
+\newif\if@dlmuthesis@web %【平台为[在线编辑器]】
+\newif\if@dlmuthesis@customization %【自定义平台】
+
 \newcounter{OptionOfDegree} %【用于计算关于学位类别的可选参数用了多少个】
 \setcounter{OptionOfDegree}{0}
 \DeclareOption{BAstem}{
@@ -62,7 +68,31 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \@dlmuthesis@MAmarxismtrue
 \addtocounter{OptionOfDegree}{1}
 }
+
 \DeclareOption{printed}{\@dlmuthesis@printedtrue}
+
+\newcounter{OptionOfPlatform} %【用于计算关于平台类型的可选参数用了多少个】
+\setcounter{OptionOfPlatform}{0}
+\DeclareOption{windows}{
+  \@dlmuthesis@windowstrue
+  \addtocounter{OptionOfPlatform}{1}
+}
+\DeclareOption{macos}{
+  \@dlmuthesis@macostrue
+  \addtocounter{OptionOfPlatform}{1}
+}
+\DeclareOption{ubuntu}{
+  \@dlmuthesis@ubuntutrue
+  \addtocounter{OptionOfPlatform}{1}
+}
+\DeclareOption{web}{
+  \@dlmuthesis@webtrue
+  \addtocounter{OptionOfPlatform}{1}
+}
+\DeclareOption{customization}{
+  \@dlmuthesis@customizationtrue
+  \addtocounter{OptionOfPlatform}{1}
+}
 
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{article}}
 \ProcessOptions\relax %【这句万万不可改动】
@@ -72,12 +102,22 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 % ---------- 添加且仅一个学位类别参数 ---------- %
 \ifthenelse{\value{OptionOfDegree}=0}{
-  \ClassError{dlmuthesis}{documentclass命令中未添加关于学位类别的可选参数}{}
+  \ClassError{dlmuthesis}{documentclass命令中未设置[学位类别]！}{}
 }{}
 \ifthenelse{\value{OptionOfDegree}>1}{
-  \ClassError{dlmuthesis}{documentclass命令中添加了多个关于学位类别的可选参数}{}
+  \ClassError{dlmuthesis}{documentclass命令中设置了多个[学位类别]！}{}
 }{}
-% ================================================== %
+% ============================================= %
+
+
+% ---------- 添加且仅一个平台类别参数 ---------- %
+\ifthenelse{\value{OptionOfPlatform}=0}{
+  \ClassError{dlmuthesis}{documentclass命令中未设置[平台类别]！}{}
+}{}
+\ifthenelse{\value{OptionOfPlatform}>1}{
+  \ClassError{dlmuthesis}{documentclass命令中设置了多个[平台类别]！}{}
+}{}
+% ============================================= %
 
 
 % --------------- ctex宏集设置 --------------- %
@@ -381,8 +421,42 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 % --------------- 字体 --------------- %
 \RequirePackage{fontspec}
-\setCJKmainfont{simsun.ttc}[Path={./misc/}, AutoFakeBold=3.0, AutoFakeSlant=0.3] %中文字体设置
 \setmainfont{Times New Roman} %英文字体设置
+%% ----- 中文字体设置 ----- %
+\if@dlmuthesis@windows
+  \IfFontExistsTF{SimSun}{
+    \setCJKmainfont{SimSun}[AutoFakeBold=3.0, AutoFakeSlant=0.3]
+  }{
+    \ClassError{dlmuthesis}{中易字库不存在}{}
+  }
+\else\if@dlmuthesis@macos
+  \IfFontExistsTF{STSong}{
+    \setCJKmainfont{STSong}[AutoFakeBold=3.0, AutoFakeSlant=0.3]
+  }{
+    \ClassError{dlmuthesis}{华文字库不存在}{}
+  }
+\else\if@dlmuthesis@ubuntu
+  \IfFontExistsTF{FandolSong}{
+    \setCJKmainfont{FandolSong}[AutoFakeBold=3.0, AutoFakeSlant=0.3]
+  }{
+    \ClassError{dlmuthesis}{Fandol字库不存在}{}
+  }
+\else\if@dlmuthesis@web
+  \IfFontExistsTF{FandolSong}{
+    \setCJKmainfont{FandolSong}[AutoFakeBold=3.0, AutoFakeSlant=0.3]
+  }{
+    \ClassError{dlmuthesis}{Fandol字库不存在}{}
+  }
+\else\if@dlmuthesis@customization
+  \newcommand{\CustomizedFont}{}
+  \newcommand{\setfont}[1]{
+    \renewcommand{\CustomizedFont}{#1}
+  }
+  \AtBeginDocument{
+  \setCJKmainfont{\CustomizedFont}[Path={./misc/}, AutoFakeBold=3.0, AutoFakeSlant=0.3]
+  }
+\fi\fi\fi\fi\fi
+%% ============================== %
 % ======================================== %
 
 
