@@ -3,7 +3,7 @@ chcp 936
 title dlmuthesis box
 
 REM ------------------------------
-REM dlmuthesis box v1.0.0 2025-1-15
+REM dlmuthesis box v0.1.0 2025-1-15
 REM <JL, yhlaozero2@163.com>
 REM ------------------------------
 
