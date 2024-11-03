@@ -1,10 +1,11 @@
 
-dlmuthesis
+<font size="12">D</font>LMU<font size="12">T</font>HESIS
 ===
-**大连海事大学本硕博论文模板**
+===
+**大连海事大学本硕博学位论文$\LaTeX$模板**
 
 **JL**, [yhlaozero2@163.com](yhlaozero2@163.com)
-**v3.0.0 (2025/01)**
+**v3.0.0 (2025/01/15)**
 
 ***
 
