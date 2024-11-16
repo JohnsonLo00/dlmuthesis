@@ -848,34 +848,38 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 % --------------- 结论环境 --------------- %
 \newenvironment{conclusion}[1]{
+  \vspace*{0pt}
+  \if@dlmuthesis@BAstem %【本科-理工科】
   \phantomsection
   \addcontentsline{toc}{section}{结\hspace{2em}论}
-  \vspace*{0pt}
-  \ifthenelse{\equal{#1}{BAstem}}{
   \begin{flushleft}
   \bfseries\zihao{3} 结论
   \end{flushleft}
-  }{}
-  \ifthenelse{\equal{#1}{BAhumanities}}{
+  \else\if@dlmuthesis@BAhumanities %【本科-人文社科】
+  \phantomsection
+  \addcontentsline{toc}{section}{总\hspace{2em}结}
   \begin{flushleft}
   \bfseries\zihao{3} 总结
   \end{flushleft}
-  }{}
-  \ifthenelse{\equal{#1}{MA}}{
+  \else\if@dlmuthesis@MA %【硕士】
+  \phantomsection
+  \addcontentsline{toc}{section}{结\hspace{2em}论}
   \begin{center}
   \heiti\zihao{-3} 结\hspace{2em}论
   \end{center}
-  }{}
-  \ifthenelse{\equal{#1}{MAlaw}}{
+  \else\if@dlmuthesis@MAlaw %【硕士-法学/法律】
+  \phantomsection
+  \addcontentsline{toc}{section}{结\hspace{2em}论}
   \begin{center}
   \heiti\zihao{-3} 结\hspace{2em}论
   \end{center}
-  }{}
-  \ifthenelse{\equal{#1}{MAmarxism}}{
+  \else\if@dlmuthesis@MAmarxism %【硕士-马克思主义理论】
+  \phantomsection
+  \addcontentsline{toc}{section}{结\hspace{2em}论}
   \begin{center}
   \heiti\zihao{-3} 结\hspace{2em}论
   \end{center}
-  }{}
+  \fi\fi\fi\fi\fi
   \par
 }{}
 % ======================================== %
@@ -886,36 +890,27 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   \phantomsection
   \addcontentsline{toc}{section}{致\hspace{2em}谢}
   \vspace*{0pt}
-  \ifthenelse{\equal{#1}{BA}}{
+  \if@dlmuthesis@BAstem %【本科-理工科】
   \begin{center}
   \heiti\zihao{3} 致\hspace{2em}谢
   \end{center}
-  }{}
-  \ifthenelse{\equal{#1}{BAstem}}{
+  \else\if@dlmuthesis@BAhumanities %【本科-人文社科】
   \begin{center}
   \bfseries\zihao{3} 致\hspace{2em}谢
   \end{center}
-  }{}
-  \ifthenelse{\equal{#1}{BAhumanities}}{
-  \begin{center}
-  \bfseries\zihao{3} 致\hspace{2em}谢
-  \end{center}
-  }{}
-  \ifthenelse{\equal{#1}{MA}}{
+  \else\if@dlmuthesis@MA %【硕士】
   \begin{center}
   \heiti\zihao{-3} 致\hspace{2em}谢
   \end{center}
-  }{}
-  \ifthenelse{\equal{#1}{MAlaw}}{
+  \else\if@dlmuthesis@MAlaw %【硕士-法学/法律】
   \begin{center}
   \heiti\zihao{-3} 致\hspace{2em}谢
   \end{center}
-  }{}
-  \ifthenelse{\equal{#1}{MAmarxism}}{
+  \else\if@dlmuthesis@MAmarxism %【硕士-马克思主义理论】
   \begin{center}
   \heiti\zihao{-3} 致\hspace{2em}谢
   \end{center}
-  }{}
+  \fi\fi\fi\fi\fi
   \par
 }{}
 % ======================================== %
