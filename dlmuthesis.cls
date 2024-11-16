@@ -96,7 +96,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{article}}
 \ProcessOptions\relax %【这句万万不可改动】
-\LoadClass[a4paper, 12bp]{article} %【导入正规文档类】
+\LoadClass[a4paper, 12pt]{article} %【导入正规文档类】
 % ======================================== %
 
 
