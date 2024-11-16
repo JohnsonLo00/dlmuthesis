@@ -15,7 +15,7 @@
 
 % --------------- 全局设置 --------------- %
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{dlmuthesis}[2024/07/10 v3.0.0 Unofficial Thesis LaTeX Template for DLMU]
+\ProvidesClass{dlmuthesis}[2024-07-10 v3.0.0 Unofficial Thesis LaTeX Template for DLMU]
 % ======================================== %
 
 
