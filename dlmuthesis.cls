@@ -21,8 +21,7 @@
 
 % --------------- 编译器约束 --------------- %
 \RequirePackage{ifthen}
-\RequirePackage{ifxetex}
-\RequireXeTeX
+\RequirePackage{iftex}
 \ifxetex\else
 \ClassError{dlmuthesis}{You must use the `xelatex' driver\MessageBreak Please choose `xelatex'}{%
 Just choose `xelatex', no `pdflatex' or `latex' and so on.}
@@ -102,13 +101,13 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 % ---------- 添加且仅一个学位类别参数 ---------- %
 \ifthenelse{\value{OptionOfDegree}=0}{
-  \ClassError{dlmuthesis}{No degree-types in command \protect\documentclass\space}{
-    Choose and complete one degree-type in command \protect\documentclass\space.
+  \ClassError{dlmuthesis}{No degree-types in command '\protect\documentclass\space'.}{
+    Choose and complete one degree-type in command '\protect\documentclass\space'.
   }
 }{}
 \ifthenelse{\value{OptionOfDegree}>1}{
-  \ClassError{dlmuthesis}{Too many degree-types in command \protect\documentclass\space.}{
-    Remain only one degree-type in command \protect\documentclass\space.
+  \ClassError{dlmuthesis}{Too many degree-types in command '\protect\documentclass\space'.}{
+    Remain only one degree-type in command '\protect\documentclass\space'.
   }
 }{}
 % ============================================= %
@@ -116,13 +115,13 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 % ---------- 添加且仅一个平台类别参数 ---------- %
 \ifthenelse{\value{OptionOfPlatform}=0}{
-  \ClassError{dlmuthesis}{No platform-types in command \protect\documentclass\space}{
-    Choose and complete one platform-type in command \protect\documentclass\space.
+  \ClassError{dlmuthesis}{No platform-types in command '\protect\documentclass\space'.}{
+    Choose and complete one platform-type in command '\protect\documentclass\space'.
   }
 }{}
 \ifthenelse{\value{OptionOfPlatform}>1}{
-  \ClassError{dlmuthesis}{Too many platform-types in command \protect\documentclass\space.}{
-    Remain only one platform-type in command \protect\documentclass\space.
+  \ClassError{dlmuthesis}{Too many platform-types in command '\protect\documentclass\space'.}{
+    Remain only one platform-type in command '\protect\documentclass\space'.
   }
 }{}
 % ============================================= %
@@ -354,7 +353,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     \ifthenelse{\equal{#1}{MEng}}{
       \renewcommand{\dlmuthesis@tokens@headermajoir}{工\hfill 程\hfill 领\hfill 域}
       }{
-        \ClassError{Invalid option in command \protect\majorinCOVERPAGE\space.}{
+        \ClassError{Invalid option in command '\protect\majorinCOVERPAGE\space'.}{
           Only 'MEng' is valid.
         }
       }
@@ -518,7 +517,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     \clearpage
     \begin{center}\heiti\zihao{-3}图表目录\end{center}
   \else
-    \ClassError{dlmuthesis}{Do not use command \protect\toctolof\space\MessageBreak in this degree-type.}{}
+    \ClassError{dlmuthesis}{Do not use command '\protect\toctolof\space'\MessageBreak in this degree-type.}{}
   \fi\fi\fi
 }
 %% ============================================================= %
@@ -938,7 +937,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   \begin{center}
     \heiti\zihao{-3}\printmaintitle
   \end{center}%
-  }{}{\ClassError{dlmuthesis}{Failed usage of environment achievement.}{}}
+  }{}{\ClassError{dlmuthesis}{Failed usage of environment 'achievement'.}{}}
   \par
 }{\endgroup}
 % ======================================== %
@@ -1478,26 +1477,26 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     \pagestyle{fancy} %从第一章到致谢，设置为有页眉、有页脚的模式
     \fancyhead[C]{\zihao{-5}\dlmuthesis@tokens@cntitle}
     \pagenumbering{arabic} %《手册》要求：从正文开始设为阿拉伯数字页码，并且重新从1开始计数
-  }{}{\ClassError{dlmuthesis}{Execution exception for\MessageBreak pesudo-hook \protect\pesudohookOFpremainbody\space.}{}}
+  }{}{\ClassError'{dlmuthesis}{Execution exception for\MessageBreak pesudo-hook '\protect\pesudohookOFpremainbody\space'.}{}}
 \else\if@dlmuthesis@BAhumanities %【本科-人文社科】
   \pretocmd{\pesudohookOFpremainbody}{
     \cntitleinMAINBODY
     \pagestyle{fancy} %从第一章到致谢，设置为有页眉、有页脚的模式
     \fancyhead[C]{\zihao{-5}\dlmuthesis@tokens@cntitle}
     \pagenumbering{arabic} %《手册》要求：从正文开始设为阿拉伯数字页码，并且重新从1开始计数
-  }{}{\ClassError{dlmuthesis}{Execution exception for\MessageBreak pesudo-hook \protect\pesudohookOFpremainbody\space.}{}}
+  }{}{\ClassError'{dlmuthesis}{Execution exception for\MessageBreak pesudo-hook '\protect\pesudohookOFpremainbody\space'.}{}}
 \else\if@dlmuthesis@MA %【硕士】%【脚手架：暂时注释】
   \pretocmd{\pesudohookOFpremainbody}{
     \pagenumbering{arabic} %《规范》要求：从正文开始设为阿拉伯数字页码，并且重新从1开始计数
-  }{}{\ClassError{dlmuthesis}{Execution exception for\MessageBreak pesudo-hook \protect\pesudohookOFpremainbody\space.}{}}
+  }{}{\ClassError{dlmuthesis}{Execution exception for\MessageBreak pesudo-hook '\protect\pesudohookOFpremainbody\space'.}{}}
 \else\if@dlmuthesis@MAlaw %【硕士-法学/法律】
   \pretocmd{\pesudohookOFpremainbody}{
     \pagenumbering{arabic} %《规范》要求：从正文开始设为阿拉伯数字页码，并且重新从1开始计数
-  }{}{\ClassError{dlmuthesis}{Execution exception for\MessageBreak pesudo-hook \protect\pesudohookOFpremainbody\space.}{}}
+  }{}{\ClassError{dlmuthesis}{Execution exception for\MessageBreak pesudo-hook '\protect\pesudohookOFpremainbody\space'.}{}}
 \else\if@dlmuthesis@MAmarxism %【硕士-马克思主义理论】
   \pretocmd{\pesudohookOFpremainbody}{
     \pagenumbering{arabic} %《规范》要求：从正文开始设为阿拉伯数字页码，并且重新从1开始计数
-  }{}{\ClassError{dlmuthesis}{Execution exception for\MessageBreak pesudo-hook \protect\pesudohookOFpremainbody\space.}{}}
+  }{}{\ClassError{dlmuthesis}{Execution exception for\MessageBreak pesudo-hook '\protect\pesudohookOFpremainbody\space'.}{}}
 \fi\fi\fi\fi\fi
 %% ======================================================= %
 
