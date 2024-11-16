@@ -538,9 +538,9 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 %% ---------- 中文版摘要插入关键词 ---------- %
 \newcommand{\keywordsCN}[1]{
   \if@dlmuthesis@BAstem %【本科-理工科】
-    \vspace{\baselineskip}{}\noindent\bf 关键词: #1
+    \vspace{\baselineskip}{}\noindent\bfseries 关键词: #1
   \else\if@dlmuthesis@BAhumanities %【本科-人文社科】
-    \vspace{\baselineskip}{}\noindent\bf 关键词: #1
+    \vspace{\baselineskip}{}\noindent\bfseries 关键词: #1
   \else\if@dlmuthesis@MA %【硕士】
     \vspace{\baselineskip}{}{\heiti 关键词}: #1
   \else\if@dlmuthesis@MAlaw %【硕士-法学/法律】
@@ -555,15 +555,15 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 %% ---------- 英文版摘要插入关键词 ---------- %
 \newcommand{\keywordsEN}[1]{
   \if@dlmuthesis@BAstem %【本科-理工科】
-    \vspace{\baselineskip}{}\noindent\bf Keywords: #1
+    \vspace{\baselineskip}{}\noindent\bfseries Keywords: #1
   \else\if@dlmuthesis@BAhumanities %【本科-人文社科】
-    \vspace{\baselineskip}{}\noindent\bf Keywords: #1
+    \vspace{\baselineskip}{}\noindent\bfseries Keywords: #1
   \else\if@dlmuthesis@MA %【硕士】
-    \vspace{\baselineskip}{}{\bf Key Words}: #1
+    \vspace{\baselineskip}{}{\bfseries Key Words}: #1
   \else\if@dlmuthesis@MAlaw %【硕士-法学/法律】
-    \vspace{\baselineskip}{}\bf Key Words: #1
+    \vspace{\baselineskip}{}\bfseries Key Words: #1
   \else\if@dlmuthesis@MAmarxism %【硕士-马克思主义理论】
-    \vspace{\baselineskip}{\bf Key Words}: #1
+    \vspace{\baselineskip}{\bfseries Key Words}: #1
   \else
     \ClassError{dlmuthesis}{documentclass命令未添加学位类别参数}{}
 \fi\fi\fi\fi\fi
@@ -603,7 +603,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   {3bp} %Space below
   {\rm} %Body font
   {\parindent} %Indent amount
-  {\bf} %Theorem head font
+  {\bfseries} %Theorem head font
   {} %Punctuation after theorem head
   {1.0em} %Space after theorem head
   {} %Theorem head spec (can be left empty, meaning ‘normal’)
@@ -623,7 +623,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   {3bp} %Space below
   {\rm} %Body font
   {\parindent} %Indent amount
-  {\bf} %Theorem head font
+  {\bfseries} %Theorem head font
   {} %Punctuation after theorem head
   {1.0em} %Space after theorem head
   {\thmname{#1}\thmnumber{#2}\thmnote{\rm{}#3}} %Theorem head spec (can be left empty, meaning ‘normal’)
@@ -848,12 +848,12 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   \vspace*{0pt}
   \ifthenelse{\equal{#1}{BAstem}}{
   \begin{flushleft}
-  \bf\zihao{3} 结论
+  \bfseries\zihao{3} 结论
   \end{flushleft}
   }{}
   \ifthenelse{\equal{#1}{BAhumanities}}{
   \begin{flushleft}
-  \bf\zihao{3} 总结
+  \bfseries\zihao{3} 总结
   \end{flushleft}
   }{}
   \ifthenelse{\equal{#1}{MA}}{
@@ -888,12 +888,12 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   }{}
   \ifthenelse{\equal{#1}{BAstem}}{
   \begin{center}
-  \bf\zihao{3} 致\hspace{2em}谢
+  \bfseries\zihao{3} 致\hspace{2em}谢
   \end{center}
   }{}
   \ifthenelse{\equal{#1}{BAhumanities}}{
   \begin{center}
-  \bf\zihao{3} 致\hspace{2em}谢
+  \bfseries\zihao{3} 致\hspace{2em}谢
   \end{center}
   }{}
   \ifthenelse{\equal{#1}{MA}}{
@@ -917,7 +917,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 
 % --------------- 作者简历环境 --------------- %
-\newcommand{\printmaintitle}{{\bf\color{red}标题创建失败！}}
+\newcommand{\printmaintitle}{{\bfseries\color{red}标题创建失败！}}
 
 \newcommand{\maintitle}[2]{
   \renewcommand{\printmaintitle}{#1}
@@ -1261,7 +1261,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   \setlength{\extrarowheight}{18bp} %【设置表格行间距】
 
   ~\vspace{24bp}
-  \begin{center}{\bf\zihao{-1}
+  \begin{center}{\bfseries\zihao{-1}
   \headerinCOVERPAGEMA 学~位~论~文}
   \end{center}{}\vspace{24.0bp}
 
