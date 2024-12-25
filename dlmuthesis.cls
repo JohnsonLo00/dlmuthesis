@@ -40,7 +40,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \newif\if@dlmuthesis@printed %【打印模式】
 
 \newif\if@dlmuthesis@windows %【平台为[Windows]】
-\newif\if@dlmuthesis@macos %【平台为[MacOS]】
+\newif\if@dlmuthesis@macos %【平台为[macOS]】
 \newif\if@dlmuthesis@ubuntu %【平台为[Ubuntu]】
 \newif\if@dlmuthesis@web %【平台为[在线编辑器]】
 \newif\if@dlmuthesis@customization %【自定义平台】
