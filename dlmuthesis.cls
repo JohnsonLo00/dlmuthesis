@@ -430,19 +430,59 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 % --------------- 字体 --------------- %
 \RequirePackage{fontspec}
-\setmainfont{Times New Roman} %英文字体设置
-%% ----- 中文字体设置 ----- %
+%% ----- 中英字体设置 ----- %
 \if@dlmuthesis@windows
   \IfFontExistsTF{SimSun}{
     \setCJKmainfont{SimSun}[AutoFakeBold=3.0, AutoFakeSlant=0.3]
   }{
-    \ClassError{dlmuthesis}{The ZHONGYI fontset does not exists.}{}
+    \IfFontExistsTF{./misc/SimSun.ttc}{
+      \setCJKmainfont{SimSun}[Path={./misc/}, AutoFakeBold=3.0, AutoFakeSlant=0.3]
+    }{
+      \ClassError{dlmuthesis}{The ZHONGYI fontset does not exists.}{}
+    }
+  }
+  \IfFontExistsTF{Times New Roman}{
+    \setmainfont{Times New Roman}
+  }{
+    \IfFontExistsTF{./misc/times.ttf}{
+      \setmainfont{times}[
+        Path={./misc/},
+        Extension = .ttf,
+        UprightFont = times,
+        BoldFont = timesbd,
+        ItalicFont = timesi,
+        BoldItalicFont = timesbi,
+      ]
+    }{
+      \ClassError{dlmuthesis}{The Times New Roman font does not exists.}{}
+    }
   }
 \else\if@dlmuthesis@macos
   \IfFontExistsTF{STSong}{
     \setCJKmainfont{STSong}[AutoFakeBold=3.0, AutoFakeSlant=0.3]
   }{
-    \ClassError{dlmuthesis}{The HUAWEN fontset does not exists.}{}
+    \IfFontExistsTF{./misc/STSong.ttf}{
+      \setCJKmainfont{STSong}[Path={./misc/}, AutoFakeBold=3.0, AutoFakeSlant=0.3]
+    }{
+      \ClassError{dlmuthesis}{The HUAWEN fontset does not exists.}{}
+    }
+    %
+  }
+  \IfFontExistsTF{Times New Roman}{
+    \setmainfont{Times New Roman}
+  }{
+    \IfFontExistsTF{./misc/times.ttf}{
+      \setmainfont{times}[
+        Path={./misc/},
+        Extension = .ttf,
+        UprightFont = times,
+        BoldFont = timesbd,
+        ItalicFont = timesi,
+        BoldItalicFont = timesbi,
+      ]
+    }{
+      \ClassError{dlmuthesis}{The Times New Roman font does not exists.}{}
+    }
   }
 \else\if@dlmuthesis@ubuntu
   \IfFontExistsTF{FandolSong}{
@@ -450,11 +490,43 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   }{
     \ClassError{dlmuthesis}{The Fandol fontset does not exists.}{}
   }
+  \IfFontExistsTF{Times New Roman}{
+    \setmainfont{Times New Roman}
+  }{
+    \IfFontExistsTF{./misc/times.ttf}{
+      \setmainfont{times}[
+        Path={./misc/},
+        Extension = .ttf,
+        UprightFont = times,
+        BoldFont = timesbd,
+        ItalicFont = timesi,
+        BoldItalicFont = timesbi,
+      ]
+    }{
+      \setmainfont{TeX Gyre Termes} %发行版内置字体，不必搜索
+    }
+  }
 \else\if@dlmuthesis@web
   \IfFontExistsTF{FandolSong}{
     \setCJKmainfont{FandolSong}[AutoFakeBold=3.0, AutoFakeSlant=0.3]
   }{
     \ClassError{dlmuthesis}{The Fandol fontset does not exists.}{}
+  }
+  \IfFontExistsTF{Times New Roman}{
+    \setmainfont{Times New Roman}
+  }{
+    \IfFontExistsTF{./misc/times.ttf}{
+      \setmainfont{times}[
+        Path={./misc/},
+        Extension = .ttf,
+        UprightFont = times,
+        BoldFont = timesbd,
+        ItalicFont = timesi,
+        BoldItalicFont = timesbi,
+      ]
+    }{
+      \setmainfont{TeX Gyre Termes} %发行版内置字体，不必搜索
+    }
   }
 \else\if@dlmuthesis@customization
   \typeout{This is customization mode. All fonts used are customized.}
