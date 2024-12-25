@@ -457,13 +457,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     \ClassError{dlmuthesis}{The Fandol fontset does not exists.}{}
   }
 \else\if@dlmuthesis@customization
-  \newcommand{\CustomizedFont}{}
-  \newcommand{\setfont}[1]{
-    \renewcommand{\CustomizedFont}{#1}
-  }
-  \AtBeginDocument{
-  \setCJKmainfont{\CustomizedFont}[Path={./misc/}, AutoFakeBold=3.0, AutoFakeSlant=0.3]
-  }
+  \typeout{This is customization mode. All fonts used are customized.}
 \fi\fi\fi\fi\fi
 %% ============================== %
 % ======================================== %
@@ -645,6 +639,8 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 
 % --------------- 部分学科高相关度宏包 --------------- %
+\RequirePackage{nicematrix} %解释型矩阵绘制
+\RequirePackage{extarrows} %解释型[长]箭头的生成
 \RequirePackage{braket} %量子力学算符
 \RequirePackage{qcircuit} %量子电路绘制
 \RequirePackage[version=4]{mhchem} %化学式、反应方程的书写
