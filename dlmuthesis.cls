@@ -296,10 +296,9 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 }
 \else\if@dlmuthesis@DOC %【博士】
 \ctexset{
-  abstractname = {\zihao{-3}\heiti 摘\hspace{2em}要},
   contentsname = \hfill{\heiti\zihao{-3}目\hspace{2em}录}\hfill,
-  listfigurename = \hfill{\songti\zihao{-3}图目录}\hfill,
-  listtablename = \hfill{\songti\zihao{-3}表目录}\hfill,
+  listfigurename = \hfill{\heiti\zihao{-3}图目录}\hfill,
+  listtablename = \hfill{\heiti\zihao{-3}表目录}\hfill,
   bibname = \hfill{\zihao{-3}参~ 考~ 文~ 献}\hfill,
   section = {
     format = {\zihao{-3}\heiti},
@@ -346,9 +345,12 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \newcommand{\dlmuthesis@tokens@mentorTWO}{~} %【第二指导教师(及其职称)】
 %%% ======================================== %
 
-%%% ---------- 硕士论文专用 ---------- %
+%%% ---------- 硕博论文专用 ---------- %
 \newcommand{\dlmuthesis@tokens@headermajoir}{学\hfill 科\hfill 专\hfill 业} %【封面页中“学科专业”向“工程领域”的转换】
 \newcommand{\dlmuthesis@tokens@degree}{~} %【学位类别】
+%%% ======================================== %
+
+%%% ---------- 硕士论文专用 ---------- %
 %%% ======================================== %
 
 %%% ---------- 博士论文专用 ---------- %
@@ -406,22 +408,87 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \setcounter{CounterOfAddClineEn}{0} %设置[记录循环轮次的计数器(英)]的初始值
 %%% ======================================== %
 
-%%% ---------- 硕士论文专用 ---------- %
-\newcommand{\headerinCOVERPAGEMA}{硕~士~} %硕士论文封面页的开头
-\newcommand{\headerinHEADERMA}{硕士} %硕士论文页眉的开头
+%%% ---------- 硕博论文专用 ---------- %
+%%%% 论文封面页的开头
+\if@dlmuthesis@MA %【硕士】
+\newcommand{\headerinCOVERPAGE}{硕~士~}
+\else\if@dlmuthesis@MAlaw %【硕士-法学/法律】
+\newcommand{\headerinCOVERPAGE}{硕~士~}
+\else\if@dlmuthesis@MAmarxism %【硕士-马克思主义理论】
+\newcommand{\headerinCOVERPAGE}{硕~士~}
+\else\if@dlmuthesis@DOC %【博士】
+\newcommand{\headerinCOVERPAGE}{博~士~}
+\fi\fi\fi\fi
+%%%% 论文页眉的开头
+\if@dlmuthesis@MA %【硕士】
+\newcommand{\headerinHEADER}{硕士}
+\else\if@dlmuthesis@MAlaw %【硕士-法学/法律】
+\newcommand{\headerinHEADER}{硕士}
+\else\if@dlmuthesis@MAmarxism %【硕士-马克思主义理论】
+\newcommand{\headerinHEADER}{硕士}
+\else\if@dlmuthesis@DOC %【博士】
+\newcommand{\headerinHEADER}{博士}
+\fi\fi\fi\fi
+%%%% 学位类别命令\degree
+\if@dlmuthesis@MA %【硕士】
 \newcommand{\degree}[2]{
   \renewcommand{\dlmuthesis@tokens@degree}{#1}
   \ifthenelse{\equal{#2}{academic}}{
     % maintain original
   }{
     \ifthenelse{\equal{#2}{professional}}{
-      \renewcommand{\headerinCOVERPAGEMA}{专~业~学~位~硕~士~}
-      \renewcommand{\headerinHEADERMA}{专业学位硕士}
+      \renewcommand{\headerinCOVERPAGE}{专~业~学~位~硕~士~}
+      \renewcommand{\headerinHEADER}{专业学位硕士}
     }{
       % no commands
     }
   }
-} %【学位类别】
+}
+\else\if@dlmuthesis@MAlaw %【硕士-法学/法律】
+\newcommand{\degree}[2]{
+  \renewcommand{\dlmuthesis@tokens@degree}{#1}
+  \ifthenelse{\equal{#2}{academic}}{
+    % maintain original
+  }{
+    \ifthenelse{\equal{#2}{professional}}{
+      \renewcommand{\headerinCOVERPAGE}{专~业~学~位~硕~士~}
+      \renewcommand{\headerinHEADER}{专业学位硕士}
+    }{
+      % no commands
+    }
+  }
+}
+\else\if@dlmuthesis@MAmarxism %【硕士-马克思主义理论】
+\newcommand{\degree}[2]{
+  \renewcommand{\dlmuthesis@tokens@degree}{#1}
+  \ifthenelse{\equal{#2}{academic}}{
+    % maintain original
+  }{
+    \ifthenelse{\equal{#2}{professional}}{
+      \renewcommand{\headerinCOVERPAGE}{专~业~学~位~硕~士~}
+      \renewcommand{\headerinHEADER}{专业学位硕士}
+    }{
+      % no commands
+    }
+  }
+}
+\else\if@dlmuthesis@DOC %【博士】
+\newcommand{\degree}[2]{
+  \renewcommand{\dlmuthesis@tokens@degree}{#1}
+  \ifthenelse{\equal{#2}{academic}}{
+    % maintain original
+  }{
+    \ifthenelse{\equal{#2}{engineering}}{
+      \renewcommand{\headerinCOVERPAGE}{工~程~博~士~}
+      \renewcommand{\headerinHEADER}{工程博士}
+    }{
+      % no commands
+    }
+  }
+}
+%%% ======================================== %
+
+%%% ---------- 硕士论文专用 ---------- %
 %%% ======================================== %
 
 %%% ---------- 博士论文专用 ---------- %
@@ -439,6 +506,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 % --------------- 页面样式 --------------- %
 \RequirePackage[twoside]{fancyhdr} %定制页眉页脚
+\renewcommand{\sectionmark}[1]{\markboth{#1}{}}%
 \RequirePackage{geometry} %定制页面
 
 \if@dlmuthesis@BAstem %【本科-理工科】
@@ -619,6 +687,9 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   \else\if@dlmuthesis@DOC %【博士】
     \clearpage
     \begin{center}\heiti\zihao{-3}图表目录\end{center}
+    % 同时，奇数页为每部分的名称，偶数页为论文中文题目：
+    \fancyhead[COH]{\zihao{5}图表目录}
+    \fancyhead[CEH]{\zihao{5}\dlmuthesis@tokens@cntitle}
   \else
     \ClassError{dlmuthesis}{Do not use command '\protect\toctolof\space'\MessageBreak in this degree-type.}{}
   \fi\fi\fi\fi
@@ -1045,6 +1116,9 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   \heiti\zihao{-3} 致\hspace{2em}谢
   \end{center}
   \else\if@dlmuthesis@DOC %【博士】
+  % 奇数页为该部分名称，偶数页为论文中文题目
+  \fancyhead[COH]{\zihao{5}致谢}
+  \fancyhead[CEH]{\zihao{5}\dlmuthesis@tokens@cntitle}
   \begin{center}
   \heiti\zihao{-3} 致\hspace{2em}谢
   \end{center}
@@ -1065,6 +1139,11 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   }{}
 }
 \newenvironment{achievement}{
+  \if@dlmuthesis@DOC %【博士】
+    % 在博士论文中，奇数页页眉为该部分名称，偶数页为论文中文题目
+    \fancyhead[COH]{\zihao{5}\printmaintitle}
+    \fancyhead[CEH]{\zihao{5}\dlmuthesis@tokens@cntitle}
+  \fi
   \begingroup
   \apptocmd{\maintitle}{
   \begin{center}
@@ -1123,6 +1202,11 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 % --------------- 打印模式相关变量的定义 --------------- %
 \RequirePackage{refcount}
+%% ----- 创新点摘要页 ----- %
+\newcounter{abstractINNOVATIONbegin}
+\newcounter{abstractINNOVATIONend}
+\newcounter{abstractINNOVATIONdif}
+%% ==================== %
 %% ----- 中文摘要页 ----- %
 \newcounter{abstractCNbegin}
 \newcounter{abstractCNend}
@@ -1146,6 +1230,20 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 % -------------------- 封装的预设置 -------------------- %
 %% ----- 本科论文中，从摘要页到目录，有页眉无页脚 ----- %
+
+%% ----- 博士论文中，从创新点摘要页开始的页眉内容、目录书签设置 ----- %
+\newcommand{\presetupOFabstractINNOVATION}{
+  \if@dlmuthesis@DOC %【博士】
+    \renewcommand\abstractname{\zihao{-3}\heiti 创~新~点~摘~要} %临时修改摘要名
+    \pagestyle{fancy}
+    \fancyhead[COH]{\zihao{5}创新点摘要}
+    \fancyhead[CEH]{\zihao{5}\dlmuthesis@tokens@cntitle}
+    \cfoot{~}
+    \setcounter{abstractINNOVATIONbegin}{\value{page}} %涉及打印模式
+  \fi
+}
+%% ================================================== %
+
 %% ----- 硕士论文中，从摘要页开始的页眉内容、目录书签设置 ----- %
 \newcommand{\presetupOFabstractCN}{
   \if@dlmuthesis@BAstem %【本科-理工科】
@@ -1157,7 +1255,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   \else\if@dlmuthesis@MA %【硕士】
     %奇数页为“大连海事大学硕士学位论文”，偶数页为论文中文题目：
     \pagestyle{fancy}
-    \fancyhead[COH]{\zihao{5}大连海事大学{\headerinHEADERMA}学位论文}
+    \fancyhead[COH]{\zihao{5}大连海事大学{\headerinHEADER}学位论文}
     \fancyhead[CEH]{\zihao{5}\dlmuthesis@tokens@cntitle}
     \cfoot{\zihao{-5}--~\thepage~--}
     \pagenumbering{Roman}
@@ -1167,7 +1265,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   \else\if@dlmuthesis@MAlaw %【硕士-法学/法律】
     %奇数页为“大连海事大学硕士学位论文”，偶数页为论文中文题目：
     \pagestyle{fancy}
-    \fancyhead[COH]{\zihao{5}大连海事大学{\headerinHEADERMA}学位论文}
+    \fancyhead[COH]{\zihao{5}大连海事大学{\headerinHEADER}学位论文}
     \fancyhead[CEH]{\zihao{5}\dlmuthesis@tokens@cntitle}
     \cfoot{\zihao{-5}--~\thepage~--}
     \pagenumbering{Roman}
@@ -1175,7 +1273,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   \else\if@dlmuthesis@MAmarxism %【硕士-马克思主义理论】
     %奇数页为“大连海事大学硕士学位论文”，偶数页为论文中文题目：
     \pagestyle{fancy}
-    \fancyhead[COH]{\zihao{5}大连海事大学{\headerinHEADERMA}学位论文}
+    \fancyhead[COH]{\zihao{5}大连海事大学{\headerinHEADER}学位论文}
     \fancyhead[CEH]{\zihao{5}\dlmuthesis@tokens@cntitle}
     \cfoot{\zihao{-5}--~\thepage~--}
     \pagenumbering{Roman}
@@ -1183,9 +1281,9 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     \phantomsection
     \addcontentsline{toc}{section}{摘\hspace{2em}要}
   \else\if@dlmuthesis@DOC %【博士】
-    %奇数页为“大连海事大学硕士学位论文”，偶数页为论文中文题目：
-    \pagestyle{fancy}
-    \fancyhead[COH]{\zihao{5}大连海事大学{\headerinHEADERMA}学位论文}
+    \renewcommand\abstractname{\zihao{-3}\heiti 摘\hspace{2em}要} %临时修改摘要名
+    % 奇数页为每部分的名称，偶数页为论文中文题目：
+    \fancyhead[COH]{\zihao{5}摘要}
     \fancyhead[CEH]{\zihao{5}\dlmuthesis@tokens@cntitle}
     \cfoot{\zihao{-5}--~\thepage~--}
     \pagenumbering{Roman}
@@ -1223,17 +1321,17 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     \addcontentsline{toc}{section}{ABSTRACT}
   \else\if@dlmuthesis@DOC %【博士】
     \setcounter{abstractENbegin}{\value{page}} %涉及打印模式
-    \renewcommand\abstractname{\large\rm Abstract} %临时修改摘要名
-    \begin{center}
-    \zihao{-3}\dlmuthesis@tokens@entitle %在英文摘要页开头打印英文版论文题目
-    \end{center}
+    \renewcommand\abstractname{\large\bfseries ABSTRACT} %临时修改摘要名
+    % 奇数页为每部分的名称，偶数页为论文中文题目：
+    \fancyhead[COH]{\zihao{5}ABSTRACT}
+    \fancyhead[CEH]{\zihao{5}\dlmuthesis@tokens@cntitle}
     \phantomsection
-    \addcontentsline{toc}{section}{Abstract}
+    \addcontentsline{toc}{section}{ABSTRACT}
   \fi\fi\fi\fi\fi\fi
 } %英文摘要
 %% ================================================== %
 
-%% ----- 硕士论文中，为设置目录的打印模式而埋下计数器 ----- %
+%% ----- 硕博论文中，为设置目录的打印模式而埋下计数器 ----- %
 \newcommand{\presetupOFtocs}{
   \if@dlmuthesis@MA %【硕士】
     \setcounter{tocsbegin}{\value{page}}
@@ -1243,6 +1341,9 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     \setcounter{tocsbegin}{\value{page}}
   \else\if@dlmuthesis@DOC %【博士】
     \setcounter{tocsbegin}{\value{page}}
+    % 同时，奇数页页眉为每部分的名称，偶数页为论文中文题目：
+    \fancyhead[COH]{\zihao{5}目录}
+    \fancyhead[CEH]{\zihao{5}\dlmuthesis@tokens@cntitle}
   \fi\fi\fi\fi
 }
 %% ======================================================= %
@@ -1270,10 +1371,22 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
       \mbox{}
       \clearpage
     }{}
+    \ifthenelse{\equal{#1}{abstractINNOVATION}}{ %创新点摘要页
+      \setcounter{abstractINNOVATIONend}{\value{page}}
+      \setcounter{abstractINNOVATIONdif}{\numexpr\value{abstractINNOVATIONend}-\value{abstractINNOVATIONbegin}+1\relax}
+%      【\theabstractCNbegin】【\theabstractCNend】【\theabstractCNdif】%【脚手架：暂时添加】
+      \ifthenelse{\isodd{\value{abstractINNOVATIONdif}}}{
+        \clearpage
+        \addtocounter{page}{-1}
+        \thispagestyle{empty}
+        \mbox{}
+        \clearpage
+      }{\clearpage}
+    }{}
     \ifthenelse{\equal{#1}{abstractCN}}{ %中文摘要页
       \setcounter{abstractCNend}{\value{page}}
       \setcounter{abstractCNdif}{\numexpr\value{abstractCNend}-\value{abstractCNbegin}+1\relax}
-%      【\theabstractCNbegin】【\theabstractCNend】【\theabstractCNdif】
+%      【\theabstractCNbegin】【\theabstractCNend】【\theabstractCNdif】%【脚手架：暂时添加】
       \ifthenelse{\isodd{\value{abstractCNdif}}}{
         \clearpage
         \addtocounter{page}{-1}
@@ -1285,7 +1398,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     \ifthenelse{\equal{#1}{abstractEN}}{ %英文摘要页
       \setcounter{abstractENend}{\value{page}}
       \setcounter{abstractENdif}{\numexpr\value{abstractENend}-\value{abstractENbegin}+1\relax}
-%      【\theabstractENbegin】【\theabstractENend】【\theabstractENdif】
+%      【\theabstractENbegin】【\theabstractENend】【\theabstractENdif】%【脚手架：暂时添加】
       \ifthenelse{\isodd{\value{abstractENdif}}}{
         \clearpage
         \addtocounter{page}{-1}
@@ -1300,7 +1413,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
       \else
         \setcounter{tocsend}{\value{page}}
         \setcounter{tocsdif}{\numexpr\value{tocsend}-\value{tocsbegin}+1\relax}
-%        【\thetocsbegin】【\thetocsend】【\thetocsdif】
+%        【\thetocsbegin】【\thetocsend】【\thetocsdif】%【脚手架：暂时添加】%【脚手架：暂时添加】
         \ifthenelse{\isodd{\value{tocsdif}}}{
           \clearpage
           \addtocounter{page}{-1}
@@ -1420,7 +1533,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
   ~\vspace{24bp}
   \begin{center}{\bfseries\zihao{-1}
-  \headerinCOVERPAGEMA 学~位~论~文}
+  \headerinCOVERPAGE 学~位~论~文}
   \end{center}{}\vspace{24.0bp}
 
   \begin{center}
@@ -1465,7 +1578,54 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 %% ============================================================ %
 
 %% -------------------- 封面页-博士论文 -------------------- %
-\newcommand{\makecoverpageDOC}{}
+\newcommand{\makecoverpageDOC}{
+  \thispagestyle{empty} %【无页眉页脚】
+  \setlength{\extrarowheight}{18bp} %【设置表格行间距】
+
+  ~\vspace{24bp}
+  \begin{center}{\bfseries\zihao{-1}
+  \headerinCOVERPAGE 学~位~论~文}
+  \end{center}{}\vspace{24.0bp}
+
+  \begin{center}
+  {\zihao{2}\heiti\dlmuthesis@tokens@cntitle}\\
+  {\zihao{3}\bfseries\dlmuthesis@tokens@entitle}
+  \end{center}{}\vspace{132.0bp}
+
+  \begin{table}[H]
+    \centering
+    \begin{tabular}
+      {
+      >{\fontsize{16bp}{16bp}\selectfont}m{2.8cm}
+      >{\centering\arraybackslash\fontsize{16bp}{16bp}\selectfont} p{8.0cm}
+      }
+      作\hfill 者\hfill 姓\hfill 名： & \dlmuthesis@tokens@aauthor \\
+      \cline{2-2}
+      学\hfill 号： & \dlmuthesis@tokens@sdtID \\
+      \cline{2-2}
+      指\hfill 导\hfill 教\hfill 师： & \dlmuthesis@tokens@mentorONE \\
+      \cline{2-2}
+      \dlmuthesis@tokens@headermajoir： & \dlmuthesis@tokens@majorinCOVERPAGE \\
+      \cline{2-2}
+      学\hfill 位\hfill 类\hfill 别： & \dlmuthesis@tokens@degree \\
+      \cline{2-2}
+      培\hfill 养\hfill 单\hfill 位： & \dlmuthesis@tokens@faculty \\
+      \cline{2-2}
+      答\hfill 辩\hfill 时\hfill 间： & \dlmuthesis@tokens@completiondate \\
+      \cline{2-2}
+    \end{tabular}
+  \end{table}{}\vspace{24.0bp}
+
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.30\textwidth]{logo/LogoMA.pdf}
+  \end{figure}
+
+  %%% ----- 由于之前将\extrarowheight的值设为9bp，为保证往后正文表格的间距正常，需重新设置回来 ----- %
+  \setlength{\extrarowheight}{2bp}
+  %%% ================================================== %
+  \nextpages{single}
+}
 %% ============================================================ %
 
 % ================================================================================ %
@@ -1587,7 +1747,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \newcommand{\AuthorizationStatement}{
 \fancyhf{}
 \thispagestyle{fancy}
-\fancyhead[C]{大连海事大学{\headerinHEADERMA}学位论文}
+\fancyhead[C]{大连海事大学{\headerinHEADER}学位论文}
 \fancyfoot{}
 ~\vspace{1em}
 \metaAuthorizationStatement
@@ -1601,7 +1761,11 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   \thispagestyle{fancy}
   \fancyhead[C]{~}
   \fancyfoot{}
-\fi
+\else\if@dlmuthesis@DOC %【博士】
+  \thispagestyle{fancy}
+  \fancyhead[C]{~}
+  \fancyfoot{}
+\fi\fi
 ~\vspace{-30bp}
 \metaOriginalityStatement
 ~\vspace{-1em}
@@ -1654,10 +1818,14 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   }{}{\ClassError{dlmuthesis}{Execution exception for\MessageBreak pesudo-hook '\protect\pesudohookOFpremainbody\space'.}{}}
 \else\if@dlmuthesis@DOC %【博士】%【脚手架：暂时注释】
   \pretocmd{\pesudohookOFpremainbody}{
+    \pagestyle{fancy}
+    \fancyhead[COH]{\zihao{5}\leftmark}
+    \fancyhead[CEH]{\zihao{5}\dlmuthesis@tokens@cntitle}
     \pagenumbering{arabic} %《规范》要求：从正文开始设为阿拉伯数字页码，并且重新从1开始计数
   }{}{\ClassError{dlmuthesis}{Execution exception for\MessageBreak pesudo-hook '\protect\pesudohookOFpremainbody\space'.}{}}
 \fi\fi\fi\fi\fi\fi
 %% ======================================================= %
+
 
 %% --------------- 参考文献列表前后的样式设置 --------------- %
 \BeforeBeginEnvironment{thebibliography}{
@@ -1687,7 +1855,8 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \fi\fi
 %% ======================================================= %
 
-%% ---------- 硕士论文中，附录章节标题需居中对齐，但全文是居左 ---------- %
+%% ---------- 硕博论文中，附录章节标题需居中对齐，但全文是居左 ---------- %
+%% ----- 特别的，博士论文中，奇数页页眉为每部分名称，偶数页为论文中文题目 ----- %
 % 【脚手架：待修改】
 \if@dlmuthesis@BAstem %【本科-理工科】
   \AtBeginEnvironment{appendices}{
@@ -1760,6 +1929,8 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
         number = {\thesection},
       }
     }
+    \fancyhead[COH]{\zihao{5}附录}
+    \fancyhead[CEH]{\zihao{5}\dlmuthesis@tokens@cntitle}
     \zihao{-4}
   }
 \fi\fi\fi\fi\fi\fi
