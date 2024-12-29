@@ -1244,7 +1244,23 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 }
 %% ================================================== %
 
-%% ----- 硕士论文中，从摘要页开始的页眉内容、目录书签设置 ----- %
+%% ----- 打印模式下，博士论文的中文摘要部分需单面打印 ----- %
+\if@dlmuthesis@printed % 打印模式下才开启
+  \if@dlmuthesis@DOC %【博士】
+    \newif\ifInsertBlankPages
+    \global\InsertBlankPagesfalse
+    \AddToHook{shipout/after}{%
+      \ifInsertBlankPages
+        \RawShipout\null
+      \else
+    % no actions
+      \fi%
+    }
+  \fi
+\fi
+%% ======================================================= %
+
+%% ----- 从摘要页开始的页眉内容、目录书签设置 ----- %
 \newcommand{\presetupOFabstractCN}{
   \if@dlmuthesis@BAstem %【本科-理工科】
     \pagestyle{plain}
@@ -1290,6 +1306,11 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     \setcounter{abstractCNbegin}{\value{page}} %涉及打印模式
     \phantomsection
     \addcontentsline{toc}{section}{摘\hspace{2em}要}
+    \if@dlmuthesis@printed % 打印模式下才操作
+      %%% ----- 开始插入空白页 ----- %
+      \InsertBlankPagestrue
+      %%% ========================= %
+    \fi
   \else
     \pagenumbering{Roman}
   \fi\fi\fi\fi\fi\fi
@@ -1352,7 +1373,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \newcommand{\presetupOFachievement}{
   \setcounter{achievementlastpage}{\value{page}}
 }
-%% ===================================================================================== %
+%% =========================================================================== %
 % ================================================== %
 
 
@@ -1364,74 +1385,81 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     \else\if@dlmuthesis@BAhumanities %【本科-人文社科】
       \clearpage
     \else
-    \ifthenelse{\equal{#1}{single}}{ %封面、原创性声明、授权声明
-      \clearpage
-      \addtocounter{page}{-1}
-      \thispagestyle{empty}
-      \mbox{}
-      \clearpage
-    }{}
-    \ifthenelse{\equal{#1}{abstractINNOVATION}}{ %创新点摘要页
-      \setcounter{abstractINNOVATIONend}{\value{page}}
-      \setcounter{abstractINNOVATIONdif}{\numexpr\value{abstractINNOVATIONend}-\value{abstractINNOVATIONbegin}+1\relax}
+      \ifthenelse{\equal{#1}{single}}{ %封面、原创性声明、授权声明
+        \clearpage
+        \addtocounter{page}{-1}
+        \thispagestyle{empty}
+        \mbox{}
+        \clearpage
+      }{}
+      \ifthenelse{\equal{#1}{abstractINNOVATION}}{ %创新点摘要页
+        \setcounter{abstractINNOVATIONend}{\value{page}}
+        \setcounter{abstractINNOVATIONdif}{\numexpr\value{abstractINNOVATIONend}-\value{abstractINNOVATIONbegin}+1\relax}
 %      【\theabstractCNbegin】【\theabstractCNend】【\theabstractCNdif】%【脚手架：暂时添加】
-      \ifthenelse{\isodd{\value{abstractINNOVATIONdif}}}{
-        \clearpage
-        \addtocounter{page}{-1}
-        \thispagestyle{empty}
-        \mbox{}
-        \clearpage
-      }{\clearpage}
-    }{}
-    \ifthenelse{\equal{#1}{abstractCN}}{ %中文摘要页
-      \setcounter{abstractCNend}{\value{page}}
-      \setcounter{abstractCNdif}{\numexpr\value{abstractCNend}-\value{abstractCNbegin}+1\relax}
-%      【\theabstractCNbegin】【\theabstractCNend】【\theabstractCNdif】%【脚手架：暂时添加】
-      \ifthenelse{\isodd{\value{abstractCNdif}}}{
-        \clearpage
-        \addtocounter{page}{-1}
-        \thispagestyle{empty}
-        \mbox{}
-        \clearpage
-      }{\clearpage}
-    }{}
-    \ifthenelse{\equal{#1}{abstractEN}}{ %英文摘要页
-      \setcounter{abstractENend}{\value{page}}
-      \setcounter{abstractENdif}{\numexpr\value{abstractENend}-\value{abstractENbegin}+1\relax}
-%      【\theabstractENbegin】【\theabstractENend】【\theabstractENdif】%【脚手架：暂时添加】
-      \ifthenelse{\isodd{\value{abstractENdif}}}{
-        \clearpage
-        \addtocounter{page}{-1}
-        \thispagestyle{empty}
-        \mbox{}
-        \clearpage
-      }{\clearpage}
-    }{}
-    \ifthenelse{\equal{#1}{tocs}}{ %目录组
-      \if@dlmuthesis@MAlaw %【硕士-法学/法律】
-        \clearpage %[硕士-法学/法律]中，从目录到致谢都是双面打印
-      \else
-        \setcounter{tocsend}{\value{page}}
-        \setcounter{tocsdif}{\numexpr\value{tocsend}-\value{tocsbegin}+1\relax}
-%        【\thetocsbegin】【\thetocsend】【\thetocsdif】%【脚手架：暂时添加】%【脚手架：暂时添加】
-        \ifthenelse{\isodd{\value{tocsdif}}}{
+        \ifthenelse{\isodd{\value{abstractINNOVATIONdif}}}{
           \clearpage
           \addtocounter{page}{-1}
           \thispagestyle{empty}
           \mbox{}
           \clearpage
         }{\clearpage}
-      \fi
-    }{}
-    \ifthenelse{\equal{#1}{achievement}}{ %作者简历页
-      \ifthenelse{\isodd{\value{achievementlastpage}}}{
-        \clearpage
-        \addtocounter{page}{-1}
-        \thispagestyle{empty}
-        \mbox{}
-        \clearpage
-      }{\clearpage}
-    }{}
+      }{}
+      \ifthenelse{\equal{#1}{abstractCN}}{ %中文摘要页
+        \if@dlmuthesis@DOC %【博士】
+          \clearpage
+          %%% ----- 停止插入空白页 ----- %
+          \InsertBlankPagesfalse
+          %%% ========================= %
+        \else
+          \setcounter{abstractCNend}{\value{page}}
+          \setcounter{abstractCNdif}{\numexpr\value{abstractCNend}-\value{abstractCNbegin}+1\relax}
+%        【\theabstractCNbegin】【\theabstractCNend】【\theabstractCNdif】%【脚手架：暂时添加】
+          \ifthenelse{\isodd{\value{abstractCNdif}}}{
+            \clearpage
+            \addtocounter{page}{-1}
+            \thispagestyle{empty}
+            \mbox{}
+            \clearpage
+          }{\clearpage}
+        \fi
+      }{}
+      \ifthenelse{\equal{#1}{abstractEN}}{ %英文摘要页
+        \setcounter{abstractENend}{\value{page}}
+        \setcounter{abstractENdif}{\numexpr\value{abstractENend}-\value{abstractENbegin}+1\relax}
+%      【\theabstractENbegin】【\theabstractENend】【\theabstractENdif】%【脚手架：暂时添加】
+        \ifthenelse{\isodd{\value{abstractENdif}}}{
+          \clearpage
+          \addtocounter{page}{-1}
+          \thispagestyle{empty}
+          \mbox{}
+          \clearpage
+        }{\clearpage}
+      }{}
+      \ifthenelse{\equal{#1}{tocs}}{ %目录组
+        \if@dlmuthesis@MAlaw %【硕士-法学/法律】
+          \clearpage %[硕士-法学/法律]中，从目录到致谢都是双面打印
+        \else
+          \setcounter{tocsend}{\value{page}}
+          \setcounter{tocsdif}{\numexpr\value{tocsend}-\value{tocsbegin}+1\relax}
+%        【\thetocsbegin】【\thetocsend】【\thetocsdif】%【脚手架：暂时添加】%【脚手架：暂时添加】
+          \ifthenelse{\isodd{\value{tocsdif}}}{
+            \clearpage
+            \addtocounter{page}{-1}
+            \thispagestyle{empty}
+            \mbox{}
+            \clearpage
+          }{\clearpage}
+        \fi
+      }{}
+      \ifthenelse{\equal{#1}{achievement}}{ %作者简历页
+        \ifthenelse{\isodd{\value{achievementlastpage}}}{
+          \clearpage
+          \addtocounter{page}{-1}
+          \thispagestyle{empty}
+          \mbox{}
+          \clearpage
+        }{\clearpage}
+      }{}
     \fi\fi
   \else
     \clearpage
@@ -1804,7 +1832,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     \fancyhead[C]{\zihao{-5}\dlmuthesis@tokens@cntitle}
     \pagenumbering{arabic} %《手册》要求：从正文开始设为阿拉伯数字页码，并且重新从1开始计数
   }{}{\ClassError'{dlmuthesis}{Execution exception for\MessageBreak pesudo-hook '\protect\pesudohookOFpremainbody\space'.}{}}
-\else\if@dlmuthesis@MA %【硕士】%【脚手架：暂时注释】
+\else\if@dlmuthesis@MA %【硕士】
   \pretocmd{\pesudohookOFpremainbody}{
     \pagenumbering{arabic} %《规范》要求：从正文开始设为阿拉伯数字页码，并且重新从1开始计数
   }{}{\ClassError{dlmuthesis}{Execution exception for\MessageBreak pesudo-hook '\protect\pesudohookOFpremainbody\space'.}{}}
@@ -1816,7 +1844,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   \pretocmd{\pesudohookOFpremainbody}{
     \pagenumbering{arabic} %《规范》要求：从正文开始设为阿拉伯数字页码，并且重新从1开始计数
   }{}{\ClassError{dlmuthesis}{Execution exception for\MessageBreak pesudo-hook '\protect\pesudohookOFpremainbody\space'.}{}}
-\else\if@dlmuthesis@DOC %【博士】%【脚手架：暂时注释】
+\else\if@dlmuthesis@DOC %【博士】
   \pretocmd{\pesudohookOFpremainbody}{
     \pagestyle{fancy}
     \fancyhead[COH]{\zihao{5}\leftmark}
@@ -1857,7 +1885,6 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 %% ---------- 硕博论文中，附录章节标题需居中对齐，但全文是居左 ---------- %
 %% ----- 特别的，博士论文中，奇数页页眉为每部分名称，偶数页为论文中文题目 ----- %
-% 【脚手架：待修改】
 \if@dlmuthesis@BAstem %【本科-理工科】
   \AtBeginEnvironment{appendices}{
     \pagestyle{plain} %《手册》要求：从附录页开始，去掉页眉
