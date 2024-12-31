@@ -30,13 +30,14 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 
 % ---------- 文档类声明命令的可选参数初始化 ---------- %
-\RequirePackage{zhnumber} %【中文数字】
+%\RequirePackage{zhnumber} %【中文数字】
 \newif\if@dlmuthesis@BAstem %【[本科-理工科]模式，初始值为真，下同】
 \newif\if@dlmuthesis@BAhumanities %【[本科-人文社科]模式】
 \newif\if@dlmuthesis@MA %【[硕士]模式】
 \newif\if@dlmuthesis@MAlaw %【[硕士-法学/法律]模式】
 \newif\if@dlmuthesis@MAmarxism %【[硕士-马克思主义理论]模式】
 \newif\if@dlmuthesis@DOC %【[博士]模式】
+\newif\if@dlmuthesis@DOClaw %【博士-法学/法律】
 
 \newif\if@dlmuthesis@printed %【打印模式】
 
@@ -70,6 +71,10 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 }
 \DeclareOption{DOC}{
 \@dlmuthesis@DOCtrue
+\addtocounter{OptionOfDegree}{1}
+}
+\DeclareOption{DOClaw}{
+\@dlmuthesis@DOClawtrue
 \addtocounter{OptionOfDegree}{1}
 }
 
@@ -303,7 +308,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   section = {
     format = {\zihao{-3}\heiti},
     name = {,},
-    beforeskip=0pt,
+    beforeskip=1em,
     afterskip=1em,
   },
   subsection = {
@@ -320,7 +325,52 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     name = {附录,},
   }
 }
-\fi\fi\fi\fi\fi\fi
+\else\if@dlmuthesis@DOClaw %【博士-法学/法律】
+\renewcommand\thesubsection{\arabic{subsection}} %重设二级标题计数器格式
+\renewcommand\thesubsubsection{\arabic{subsubsection}} %重设三级标题计数器格式
+\renewcommand\theparagraph{\arabic{paragraph}} %重设四级标题计数器格式
+\ctexset{
+  abstractname = {\zihao{-3}\heiti 摘\hspace{2em}要},
+  contentsname = \hfill{\heiti\zihao{-3}目\hspace{2em}录}\hfill,
+  listfigurename = \hfill{\songti\zihao{-3}图目录}\hfill,
+  listtablename = \hfill{\songti\zihao{-3}表目录}\hfill,
+  bibname = \hfill{\heiti\zihao{-3}参考文献}\hfill,
+  section = {
+    format = {\zihao{-3}\heiti},
+    name = {第,章\hspace{1em}},
+    number = \chinese{section},
+    aftername = {},
+    indent = 2em,
+    aftername = {},
+    beforeskip=11bp,
+    afterskip=11bp,
+  },
+  subsection = {
+    format = {\zihao{4}\heiti},
+    name = {第,节\hspace{1em}},
+    number = \chinese{subsection},
+    aftername = {},
+    indent = 2em,
+    beforeskip=0.5em,
+    afterskip=0.5em,
+  },
+  subsubsection = {
+    format = {\zihao{-4}\heiti},
+    name = {,、},
+    number = \chinese{subsection},
+    aftername = {},
+    indent = 2em,
+    beforeskip=0.5em,
+    afterskip=0.5em,
+  },
+  paragraph = {
+    number = \chinese{paragraph},
+  },
+  appendix={
+    name = {附录,},
+  }
+}
+\fi\fi\fi\fi\fi\fi\fi
 % ======================================== %
 
 
@@ -411,81 +461,90 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 %%% ---------- 硕博论文专用 ---------- %
 %%%% 论文封面页的开头
 \if@dlmuthesis@MA %【硕士】
-\newcommand{\headerinCOVERPAGE}{硕~士~}
+  \newcommand{\headerinCOVERPAGE}{硕~士~}
 \else\if@dlmuthesis@MAlaw %【硕士-法学/法律】
-\newcommand{\headerinCOVERPAGE}{硕~士~}
+  \newcommand{\headerinCOVERPAGE}{硕~士~}
 \else\if@dlmuthesis@MAmarxism %【硕士-马克思主义理论】
-\newcommand{\headerinCOVERPAGE}{硕~士~}
+  \newcommand{\headerinCOVERPAGE}{硕~士~}
 \else\if@dlmuthesis@DOC %【博士】
-\newcommand{\headerinCOVERPAGE}{博~士~}
-\fi\fi\fi\fi
+  \newcommand{\headerinCOVERPAGE}{博~士~}
+\else\if@dlmuthesis@DOClaw %【博士-法学/法律】
+  \newcommand{\headerinCOVERPAGE}{博~士~}
+\fi\fi\fi\fi\fi
 %%%% 论文页眉的开头
 \if@dlmuthesis@MA %【硕士】
-\newcommand{\headerinHEADER}{硕士}
+  \newcommand{\headerinHEADER}{硕士}
 \else\if@dlmuthesis@MAlaw %【硕士-法学/法律】
-\newcommand{\headerinHEADER}{硕士}
+  \newcommand{\headerinHEADER}{硕士}
 \else\if@dlmuthesis@MAmarxism %【硕士-马克思主义理论】
-\newcommand{\headerinHEADER}{硕士}
+  \newcommand{\headerinHEADER}{硕士}
 \else\if@dlmuthesis@DOC %【博士】
-\newcommand{\headerinHEADER}{博士}
-\fi\fi\fi\fi
+  \newcommand{\headerinHEADER}{博士}
+\else\if@dlmuthesis@DOClaw %【博士-法学/法律】
+  \newcommand{\headerinHEADER}{博士}
+\fi\fi\fi\fi\fi
 %%%% 学位类别命令\degree
 \if@dlmuthesis@MA %【硕士】
-\newcommand{\degree}[2]{
-  \renewcommand{\dlmuthesis@tokens@degree}{#1}
-  \ifthenelse{\equal{#2}{academic}}{
-    % maintain original
-  }{
-    \ifthenelse{\equal{#2}{professional}}{
-      \renewcommand{\headerinCOVERPAGE}{专~业~学~位~硕~士~}
-      \renewcommand{\headerinHEADER}{专业学位硕士}
+  \newcommand{\degree}[2]{
+    \renewcommand{\dlmuthesis@tokens@degree}{#1}
+    \ifthenelse{\equal{#2}{academic}}{
+      % maintain original
     }{
-      % no commands
+      \ifthenelse{\equal{#2}{professional}}{
+        \renewcommand{\headerinCOVERPAGE}{专~业~学~位~硕~士~}
+        \renewcommand{\headerinHEADER}{专业学位硕士}
+      }{
+        % no commands
+      }
     }
   }
-}
 \else\if@dlmuthesis@MAlaw %【硕士-法学/法律】
-\newcommand{\degree}[2]{
-  \renewcommand{\dlmuthesis@tokens@degree}{#1}
-  \ifthenelse{\equal{#2}{academic}}{
-    % maintain original
-  }{
-    \ifthenelse{\equal{#2}{professional}}{
-      \renewcommand{\headerinCOVERPAGE}{专~业~学~位~硕~士~}
-      \renewcommand{\headerinHEADER}{专业学位硕士}
+  \newcommand{\degree}[2]{
+    \renewcommand{\dlmuthesis@tokens@degree}{#1}
+    \ifthenelse{\equal{#2}{academic}}{
+      % maintain original
     }{
-      % no commands
+      \ifthenelse{\equal{#2}{professional}}{
+        \renewcommand{\headerinCOVERPAGE}{专~业~学~位~硕~士~}
+        \renewcommand{\headerinHEADER}{专业学位硕士}
+      }{
+        % no commands
+      }
     }
   }
-}
 \else\if@dlmuthesis@MAmarxism %【硕士-马克思主义理论】
-\newcommand{\degree}[2]{
-  \renewcommand{\dlmuthesis@tokens@degree}{#1}
-  \ifthenelse{\equal{#2}{academic}}{
-    % maintain original
-  }{
-    \ifthenelse{\equal{#2}{professional}}{
-      \renewcommand{\headerinCOVERPAGE}{专~业~学~位~硕~士~}
-      \renewcommand{\headerinHEADER}{专业学位硕士}
+  \newcommand{\degree}[2]{
+    \renewcommand{\dlmuthesis@tokens@degree}{#1}
+    \ifthenelse{\equal{#2}{academic}}{
+      % maintain original
     }{
-      % no commands
+      \ifthenelse{\equal{#2}{professional}}{
+        \renewcommand{\headerinCOVERPAGE}{专~业~学~位~硕~士~}
+        \renewcommand{\headerinHEADER}{专业学位硕士}
+      }{
+        % no commands
+      }
     }
   }
-}
 \else\if@dlmuthesis@DOC %【博士】
-\newcommand{\degree}[2]{
-  \renewcommand{\dlmuthesis@tokens@degree}{#1}
-  \ifthenelse{\equal{#2}{academic}}{
-    % maintain original
-  }{
-    \ifthenelse{\equal{#2}{engineering}}{
-      \renewcommand{\headerinCOVERPAGE}{工~程~博~士~}
-      \renewcommand{\headerinHEADER}{工程博士}
+  \newcommand{\degree}[2]{
+    \renewcommand{\dlmuthesis@tokens@degree}{#1}
+    \ifthenelse{\equal{#2}{academic}}{
+      % maintain original
     }{
-      % no commands
+      \ifthenelse{\equal{#2}{engineering}}{
+        \renewcommand{\headerinCOVERPAGE}{工~程~博~士~}
+        \renewcommand{\headerinHEADER}{工程博士}
+      }{
+        % no commands
+      }
     }
   }
-}
+\else\if@dlmuthesis@DOClaw %【博士-法学/法律】
+  \newcommand{\degree}[2]{
+    \renewcommand{\dlmuthesis@tokens@degree}{#1}
+  }
+\fi\fi\fi\fi\fi
 %%% ======================================== %
 
 %%% ---------- 硕士论文专用 ---------- %
@@ -521,7 +580,9 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   \geometry{top=3.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm, headsep=24.0pt, headheight=2.5cm}
   \else\if@dlmuthesis@DOC %【博士】
   \geometry{top=3.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm, headsep=24.0pt, headheight=2.5cm}
-\fi\fi\fi\fi\fi\fi
+\else\if@dlmuthesis@DOClaw %【博士-法学/法律】
+  \geometry{top=3.0cm, bottom=3.0cm, left=3.0cm, right=3.0cm, headsep=24.0pt, headheight=2.5cm}
+\fi\fi\fi\fi\fi\fi\fi
 
 \lhead{} %在'heading=true'下，默认左页眉为当前二级标题名称，因此要赋值为空
 \rhead{} %'heading=true'下，默认右页眉为当前一级标题名称，因此要赋值为空
@@ -670,10 +731,9 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     {\contentslabel{1em}}
     {\hspace*{5bp}}
     {\titlerule*[8bp]{.}\contentspage}
-\else
 \fi\fi
 %% =================================== %
-%% ----- 硕士论文中，目录到图(/表)目录之间需翻页+添加大标题 ----- %
+%% ----- 硕博论文中，目录到图(/表)目录之间需翻页+添加大标题 ----- %
 \newcommand\toctolof{
   \if@dlmuthesis@MA %【硕士】
     \clearpage
@@ -690,9 +750,12 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     % 同时，奇数页为每部分的名称，偶数页为论文中文题目：
     \fancyhead[COH]{\zihao{5}图表目录}
     \fancyhead[CEH]{\zihao{5}\dlmuthesis@tokens@cntitle}
+  \else\if@dlmuthesis@DOClaw %【博士-法学/法律】
+    \clearpage
+    \begin{center}\heiti\zihao{-3}图表目录\end{center}
   \else
     \ClassError{dlmuthesis}{Do not use command '\protect\toctolof\space'\MessageBreak in this degree-type.}{}
-  \fi\fi\fi\fi
+  \fi\fi\fi\fi\fi
 }
 %% ============================================================= %
 %% ---------- 图目录样式 ---------- %
@@ -732,7 +795,9 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     \vspace{\baselineskip}{}{\heiti 关键词}: #1
   \else\if@dlmuthesis@DOC %【博士】
     \vspace{\baselineskip}{}{\heiti 关键词}: #1
-\fi\fi\fi\fi\fi\fi
+  \else\if@dlmuthesis@DOClaw %【博士-法学/法律】
+    \vspace{\baselineskip}{}\heiti 关键词: #1
+\fi\fi\fi\fi\fi\fi\fi
 }
 %% ======================================== %
 %% ---------- 英文版摘要插入关键词 ---------- %
@@ -749,7 +814,9 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     \vspace{\baselineskip}{\bfseries Key Words}: #1
   \else\if@dlmuthesis@DOC %【博士】
     \vspace{\baselineskip}{}{\bfseries Key Words}: #1
-\fi\fi\fi\fi\fi\fi
+  \else\if@dlmuthesis@DOClaw %【博士-法学/法律】
+    \vspace{\baselineskip}{}\bfseries Key Words: #1
+\fi\fi\fi\fi\fi\fi\fi
 }
 %% ======================================== %
 % ================================================== %
@@ -769,7 +836,9 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   \setlist{leftmargin=0pt, itemindent=2\parindent, itemsep=0pt, nosep}
 \else\if@dlmuthesis@DOC %【博士】
   \setlist{leftmargin=0pt, itemindent=2\parindent, itemsep=0pt, parsep=0pt}
-\fi\fi\fi\fi\fi\fi
+\else\if@dlmuthesis@DOClaw %【博士-法学/法律】
+  \setlist{leftmargin=0pt, itemindent=2\parindent, itemsep=0pt, nosep}
+\fi\fi\fi\fi\fi\fi\fi
 % ======================================== %
 
 
@@ -873,8 +942,8 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     {} %标题前没有额外的命令或内容
   \titlespacing{\paragraph}
     {0pt} %标题左间距
-    {0.5ex \@plus 1ex \@minus.2ex} %标题上间距
-    {0.5ex \@plus .2ex} %标题下间距
+    {0.5ex plus 1ex minus 0.2ex} %标题上间距
+    {0.5ex plus 0.2ex} %标题下间距
 \else\if@dlmuthesis@BAhumanities %【本科-人文社科】
   \titleformat{\paragraph}
     {\normalsize\bfseries} %字体
@@ -883,8 +952,8 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     {} %标题前没有额外的命令或内容
   \titlespacing{\paragraph}
     {0pt} %标题左间距
-    {0.5ex \@plus 1ex \@minus.2ex} %标题上间距
-    {0.5ex \@plus .2ex} %标题下间距
+    {0.5ex plus 1ex minus 0.2ex} %标题上间距
+    {0.5ex plus 0.2ex} %标题下间距
 \else\if@dlmuthesis@MA %【硕士】
   \titleformat{\paragraph}
     {\normalsize\heiti} %字体
@@ -893,8 +962,8 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     {} %标题前没有额外的命令或内容
   \titlespacing{\paragraph}
     {0pt} %标题左间距
-    {0.5ex \@plus 1ex \@minus.2ex} %标题上间距
-    {0.5ex \@plus .2ex} %标题下间距
+    {0.5ex plus 1ex minus 0.2ex} %标题上间距
+    {0.5ex plus 0.2ex} %标题下间距
 \else\if@dlmuthesis@MAlaw %【硕士-法学/法律】
   \titleformat{\paragraph}
     {\normalsize\heiti} %字体
@@ -903,8 +972,8 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     {} %标题前没有额外的命令或内容
   \titlespacing{\paragraph}
     {2em} %标题左间距
-    {0.5ex \@plus 1ex \@minus.2ex} %标题上间距
-    {0.5ex \@plus .2ex} %标题下间距
+    {0.5ex plus 1ex minus 0.2ex} %标题上间距
+    {0.5ex plus 0.2ex} %标题下间距
 \else\if@dlmuthesis@MAmarxism %【硕士-马克思主义理论】
   \titleformat{\paragraph}
     {\normalsize\heiti} %字体
@@ -913,8 +982,8 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     {} %标题前没有额外的命令或内容
   \titlespacing{\paragraph}
     {2em} %标题左间距
-    {0.5ex \@plus 1ex \@minus.2ex} %标题上间距
-    {0.5ex \@plus .2ex} %标题下间距
+    {0.5ex plus 1ex minus 0.2ex} %标题上间距
+    {0.5ex plus 0.2ex} %标题下间距
 \else\if@dlmuthesis@DOC %【博士】
   \titleformat{\paragraph}
     {\normalsize\heiti} %字体
@@ -923,9 +992,19 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     {} %标题前没有额外的命令或内容
   \titlespacing{\paragraph}
     {0pt} %标题左间距
-    {0.5ex \@plus 1ex \@minus.2ex} %标题上间距
-    {0.5ex \@plus .2ex} %标题下间距
-\fi\fi\fi\fi\fi\fi
+    {0.5ex plus 1ex minus 0.2ex} %标题上间距
+    {0.5ex plus 0.2ex} %标题下间距
+\else\if@dlmuthesis@DOClaw %【博士-法学/法律】
+  \titleformat{\paragraph}
+    {\normalsize\heiti} %字体
+    {（{\theparagraph}）} %标题前的标签
+    {0bp} %标题和标签之间的间距
+    {} %标题前没有额外的命令或内容
+  \titlespacing{\paragraph}
+    {2em} %标题左间距
+    {0.5ex plus 1ex minus 0.2ex} %标题上间距
+    {0bp} %标题下间距
+\fi\fi\fi\fi\fi\fi\fi
 
 \newcommand{\fourthsection}[1]{\paragraph{#1}} %将命令\paragraph改名为四级标题
 % ============================================================ %
@@ -969,7 +1048,14 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   \captionsetup[figure][bi-second]{font=small, labelsep=doublespace, name={Fig}}
   \captionsetup[table][bi-first]{font=small, labelsep=doublespace}
   \captionsetup[table][bi-second]{font=small, labelsep=doublespace, name={Tab~}}
-\fi\fi\fi\fi\fi\fi
+\else\if@dlmuthesis@DOClaw %【博士-法学/法律】
+  \DeclareCaptionLabelSeparator{doublespace}{~~}
+  \captionsetup{font=small, labelsep=doublespace} %单标题模式
+  \captionsetup[figure][bi-first]{font=small, labelsep=doublespace}
+  \captionsetup[figure][bi-second]{font=small, labelsep=doublespace, name={Fig}}
+  \captionsetup[table][bi-first]{font=small, labelsep=doublespace}
+  \captionsetup[table][bi-second]{font=small, labelsep=doublespace, name={Tab~}}
+\fi\fi\fi\fi\fi\fi\fi
 
 \numberwithin{figure}{section} %numberwithin命令必须放在amsmath宏包之后
 \numberwithin{table}{section}
@@ -1046,83 +1132,93 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 
 % --------------- 结论环境 --------------- %
-\newenvironment{conclusion}[1]{
+\newenvironment{conclusion}{
   \vspace*{0pt}
   \if@dlmuthesis@BAstem %【本科-理工科】
-  \phantomsection
-  \addcontentsline{toc}{section}{结\hspace{2em}论}
-  \begin{flushleft}
-  \bfseries\zihao{3} 结论
-  \end{flushleft}
+    \phantomsection
+    \addcontentsline{toc}{section}{结\hspace{2em}论}
+    \begin{flushleft}
+    \bfseries\zihao{3} 结论
+    \end{flushleft}
   \else\if@dlmuthesis@BAhumanities %【本科-人文社科】
-  \phantomsection
-  \addcontentsline{toc}{section}{总\hspace{2em}结}
-  \begin{flushleft}
-  \bfseries\zihao{3} 总结
-  \end{flushleft}
+    \phantomsection
+    \addcontentsline{toc}{section}{总\hspace{2em}结}
+    \begin{flushleft}
+    \bfseries\zihao{3} 总结
+    \end{flushleft}
   \else\if@dlmuthesis@MA %【硕士】
-  \phantomsection
-  \addcontentsline{toc}{section}{结\hspace{2em}论}
-  \begin{center}
-  \heiti\zihao{-3} 结\hspace{2em}论
-  \end{center}
+    \phantomsection
+    \addcontentsline{toc}{section}{结\hspace{2em}论}
+    \begin{center}
+    \heiti\zihao{-3} 结\hspace{2em}论
+    \end{center}
   \else\if@dlmuthesis@MAlaw %【硕士-法学/法律】
-  \phantomsection
-  \addcontentsline{toc}{section}{结\hspace{2em}论}
-  \begin{center}
-  \heiti\zihao{-3} 结\hspace{2em}论
-  \end{center}
+    \phantomsection
+    \addcontentsline{toc}{section}{结\hspace{2em}论}
+    \begin{center}
+    \heiti\zihao{-3} 结\hspace{2em}论
+    \end{center}
   \else\if@dlmuthesis@MAmarxism %【硕士-马克思主义理论】
-  \phantomsection
-  \addcontentsline{toc}{section}{结\hspace{2em}论}
-  \begin{center}
-  \heiti\zihao{-3} 结\hspace{2em}论
-  \end{center}
+    \phantomsection
+    \addcontentsline{toc}{section}{结\hspace{2em}论}
+    \begin{center}
+    \heiti\zihao{-3} 结\hspace{2em}论
+    \end{center}
   \else\if@dlmuthesis@DOC %【博士】
-  \phantomsection
-  \addcontentsline{toc}{section}{结\hspace{2em}论}
-  \begin{center}
-  \heiti\zihao{-3} 结\hspace{2em}论
-  \end{center}
-  \fi\fi\fi\fi\fi\fi
+    \phantomsection
+    \addcontentsline{toc}{section}{结\hspace{2em}论}
+    \begin{center}
+    \heiti\zihao{-3} 结\hspace{2em}论
+    \end{center}
+  \else\if@dlmuthesis@DOClaw %【博士-法学/法律】
+    \phantomsection
+    \addcontentsline{toc}{section}{结\hspace{2em}论}
+    \begin{center}
+    \heiti\zihao{-3} 结\hspace{2em}论
+    \end{center}
+  \fi\fi\fi\fi\fi\fi\fi
   \par
 }{}
 % ======================================== %
 
 
 % --------------- 致谢环境 --------------- %
-\newenvironment{acknowledgment}[1]{
+\newenvironment{acknowledgment}{
   \phantomsection
   \addcontentsline{toc}{section}{致\hspace{2em}谢}
   \vspace*{0pt}
   \if@dlmuthesis@BAstem %【本科-理工科】
-  \begin{center}
-  \heiti\zihao{3} 致\hspace{2em}谢
-  \end{center}
+    \begin{center}
+    \heiti\zihao{3} 致\hspace{2em}谢
+    \end{center}
   \else\if@dlmuthesis@BAhumanities %【本科-人文社科】
-  \begin{center}
-  \bfseries\zihao{3} 致\hspace{2em}谢
-  \end{center}
+    \begin{center}
+    \bfseries\zihao{3} 致\hspace{2em}谢
+    \end{center}
   \else\if@dlmuthesis@MA %【硕士】
-  \begin{center}
-  \heiti\zihao{-3} 致\hspace{2em}谢
-  \end{center}
+    \begin{center}
+    \heiti\zihao{-3} 致\hspace{2em}谢
+    \end{center}
   \else\if@dlmuthesis@MAlaw %【硕士-法学/法律】
-  \begin{center}
-  \heiti\zihao{-3} 致\hspace{2em}谢
-  \end{center}
+    \begin{center}
+    \heiti\zihao{-3} 致\hspace{2em}谢
+    \end{center}
   \else\if@dlmuthesis@MAmarxism %【硕士-马克思主义理论】
-  \begin{center}
-  \heiti\zihao{-3} 致\hspace{2em}谢
-  \end{center}
+    \begin{center}
+    \heiti\zihao{-3} 致\hspace{2em}谢
+    \end{center}
   \else\if@dlmuthesis@DOC %【博士】
-  % 奇数页为该部分名称，偶数页为论文中文题目
-  \fancyhead[COH]{\zihao{5}致谢}
-  \fancyhead[CEH]{\zihao{5}\dlmuthesis@tokens@cntitle}
-  \begin{center}
-  \heiti\zihao{-3} 致\hspace{2em}谢
-  \end{center}
-  \fi\fi\fi\fi\fi\fi
+    % 奇数页为该部分名称，偶数页为论文中文题目
+    \fancyhead[COH]{\zihao{5}致谢}
+    \fancyhead[CEH]{\zihao{5}\dlmuthesis@tokens@cntitle}
+    \begin{center}
+    \heiti\zihao{-3} 致\hspace{2em}谢
+    \end{center}
+  \else\if@dlmuthesis@DOClaw %【博士-法学/法律】
+    \begin{center}
+    \heiti\zihao{-3} 致\hspace{2em}谢
+    \end{center}
+  \fi\fi\fi\fi\fi\fi\fi
   \par
 }{}
 % ======================================== %
@@ -1169,10 +1265,13 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \if@dlmuthesis@MAlaw %【硕士-法学/法律】
   \newcommand{\apdxcite}[1]{\citep[\chinese{section},~\hspace{-3bp}][]{#1}} %[硕士-法学/法律]中所使用，适用于“章节编号+文献序号”的格式
   \newcommand{\upapdxcite}[1]{$^{\mbox{\footnotesize\apdxcite{#1}}}${}} %[硕士-法学/法律]中所使用，动机与\upcite命令的类似
+\else\if@dlmuthesis@DOClaw %【博士-法学/法律】
+  \newcommand{\apdxcite}[1]{\citep[\chinese{section},~\hspace{-3bp}][]{#1}} %[博士-法学/法律]中所使用，适用于“章节编号+文献序号”的格式
+  \newcommand{\upapdxcite}[1]{$^{\mbox{\footnotesize\apdxcite{#1}}}${}} %[博士-法学/法律]中所使用，动机与\upcite命令的类似
 \else
   \newcommand{\apdxcite}[1]{\citep[\thesection\hspace{-3bp}][]{#1}} %硕士论文中所使用，适用于“章节编号+文献序号”的格式
   \newcommand{\upapdxcite}[1]{$^{\mbox{\footnotesize\apdxcite{#1}}}${}} %硕士论文中所使用，动机与\upcite命令的类似
-\fi
+\fi\fi
 
 \newcommand{\nextbibtype}{
   \makeatletter
@@ -1190,7 +1289,12 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   %\makeatletter
   \xapptocmd{\NAT@bibsetnum}{\setlength{\leftmargin}{0pt}\setlength{\itemindent}{\labelwidth}\addtolength{\itemindent}{\labelsep}}{}{}
   %\makeatother
-\fi\fi
+\else\if@dlmuthesis@DOClaw %【博士-法学/法律】
+  \renewcommand{\bibnumfmt}[1]{#1.}
+  %\makeatletter
+  \xapptocmd{\NAT@bibsetnum}{\setlength{\leftmargin}{0pt}\setlength{\itemindent}{\labelwidth}\addtolength{\itemindent}{\labelsep}}{}{}
+  %\makeatother
+\fi\fi\fi
 %% ============================================= %
 % ======================================================= %
 
@@ -1240,26 +1344,18 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     \fancyhead[CEH]{\zihao{5}\dlmuthesis@tokens@cntitle}
     \cfoot{~}
     \setcounter{abstractINNOVATIONbegin}{\value{page}} %涉及打印模式
-  \fi
+  \else\if@dlmuthesis@DOClaw %【博士-法学/法律】
+    \renewcommand\abstractname{\zihao{-3}\heiti 创\hspace{2em}新\hspace{2em}点\hspace{2em}摘\hspace{2em}要} %临时修改摘要名
+    \pagestyle{fancy}
+    \fancyhead[COH]{\zihao{5}大连海事大学{\headerinHEADER}学位论文}
+    \fancyhead[CEH]{\zihao{5}\dlmuthesis@tokens@cntitle}
+    \cfoot{~}
+    \setcounter{abstractINNOVATIONbegin}{\value{page}} %涉及打印模式
+  \fi\fi
 }
 %% ================================================== %
 
-%% ----- 打印模式下，博士论文的中文摘要部分需单面打印 ----- %
-\if@dlmuthesis@printed % 打印模式下才开启
-  \if@dlmuthesis@DOC %【博士】
-    \newif\ifInsertBlankPages
-    \global\InsertBlankPagesfalse
-    \AddToHook{shipout/after}{%
-      \ifInsertBlankPages
-        \RawShipout\null
-      \else
-    % no actions
-      \fi%
-    }
-  \fi
-\fi
-%% ======================================================= %
-
+%% ----- 打印模式下，博士论文的（中文）摘要部分需单面打印 ----- %
 %% ----- 从摘要页开始的页眉内容、目录书签设置 ----- %
 \newcommand{\presetupOFabstractCN}{
   \if@dlmuthesis@BAstem %【本科-理工科】
@@ -1308,12 +1404,21 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     \addcontentsline{toc}{section}{摘\hspace{2em}要}
     \if@dlmuthesis@printed % 打印模式下才操作
       %%% ----- 开始插入空白页 ----- %
-      \InsertBlankPagestrue
+      \AddToHook{shipout/after}[BlankPages]{\RawShipout\null}
+      %%% ========================= %
+    \fi
+  \else\if@dlmuthesis@DOClaw %【博士-法学/法律】
+    \renewcommand\abstractname{\zihao{-3}\heiti 摘\hspace{2em}要} %临时修改摘要名
+    \cfoot{\zihao{-5}--~\thepage~--}
+    \pagenumbering{Roman}
+    \if@dlmuthesis@printed % 打印模式下才操作
+      %%% ----- 开始插入空白页 ----- %
+      \AddToHook{shipout/after}[BlankPages]{\RawShipout\null}
       %%% ========================= %
     \fi
   \else
     \pagenumbering{Roman}
-  \fi\fi\fi\fi\fi\fi
+  \fi\fi\fi\fi\fi\fi\fi
 } %中文摘要
 
 \newcommand{\presetupOFabstractEN}{
@@ -1348,7 +1453,12 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     \fancyhead[CEH]{\zihao{5}\dlmuthesis@tokens@cntitle}
     \phantomsection
     \addcontentsline{toc}{section}{ABSTRACT}
-  \fi\fi\fi\fi\fi\fi
+  \else\if@dlmuthesis@DOClaw %【博士-法学/法律】
+    \renewcommand\abstractname{\large\rm Abstract} %临时修改摘要名
+    \begin{center}
+    \zihao{-3}\dlmuthesis@tokens@entitle %在英文摘要页开头打印英文版论文题目
+    \end{center}
+  \fi\fi\fi\fi\fi\fi\fi
 } %英文摘要
 %% ================================================== %
 
@@ -1408,8 +1518,10 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
         \if@dlmuthesis@DOC %【博士】
           \clearpage
           %%% ----- 停止插入空白页 ----- %
-          \InsertBlankPagesfalse
+          \RemoveFromHook{shipout/after}[BlankPages]
           %%% ========================= %
+        \else\if@dlmuthesis@DOClaw %【博士-法学/法律】
+          \clearpage
         \else
           \setcounter{abstractCNend}{\value{page}}
           \setcounter{abstractCNdif}{\numexpr\value{abstractCNend}-\value{abstractCNbegin}+1\relax}
@@ -1421,9 +1533,15 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
             \mbox{}
             \clearpage
           }{\clearpage}
-        \fi
+        \fi\fi
       }{}
       \ifthenelse{\equal{#1}{abstractEN}}{ %英文摘要页
+      \if@dlmuthesis@DOClaw %【博士-法学/法律】
+        \clearpage
+        %%% ----- 停止插入空白页 ----- %
+        \RemoveFromHook{shipout/after}[BlankPages]
+        %%% ========================= %
+      \else
         \setcounter{abstractENend}{\value{page}}
         \setcounter{abstractENdif}{\numexpr\value{abstractENend}-\value{abstractENbegin}+1\relax}
 %      【\theabstractENbegin】【\theabstractENend】【\theabstractENdif】%【脚手架：暂时添加】
@@ -1434,10 +1552,13 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
           \mbox{}
           \clearpage
         }{\clearpage}
+      \fi
       }{}
       \ifthenelse{\equal{#1}{tocs}}{ %目录组
         \if@dlmuthesis@MAlaw %【硕士-法学/法律】
           \clearpage %[硕士-法学/法律]中，从目录到致谢都是双面打印
+        \else\if@dlmuthesis@DOClaw %【博士-法学/法律】
+          \clearpage %[博士-法学/法律]中，从目录到致谢都是双面打印
         \else
           \setcounter{tocsend}{\value{page}}
           \setcounter{tocsdif}{\numexpr\value{tocsend}-\value{tocsbegin}+1\relax}
@@ -1449,7 +1570,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
             \mbox{}
             \clearpage
           }{\clearpage}
-        \fi
+        \fi\fi
       }{}
       \ifthenelse{\equal{#1}{achievement}}{ %作者简历页
         \ifthenelse{\isodd{\value{achievementlastpage}}}{
@@ -1673,7 +1794,9 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   \makecoverpageMA
 \else\if@dlmuthesis@DOC %【博士】
   \makecoverpageDOC
-\fi\fi\fi\fi\fi\fi
+\else\if@dlmuthesis@DOClaw %【博士-法学/法律】
+  \makecoverpageDOC
+\fi\fi\fi\fi\fi\fi\fi
 }
 % ======================================== %
 
@@ -1793,7 +1916,11 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   \thispagestyle{fancy}
   \fancyhead[C]{~}
   \fancyfoot{}
-\fi\fi
+\else\if@dlmuthesis@DOClaw %【博士-法学/法律】
+  \thispagestyle{fancy}
+  \fancyhead[C]{~}
+  \fancyfoot{}
+\fi\fi\fi
 ~\vspace{-30bp}
 \metaOriginalityStatement
 ~\vspace{-1em}
@@ -1851,7 +1978,11 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     \fancyhead[CEH]{\zihao{5}\dlmuthesis@tokens@cntitle}
     \pagenumbering{arabic} %《规范》要求：从正文开始设为阿拉伯数字页码，并且重新从1开始计数
   }{}{\ClassError{dlmuthesis}{Execution exception for\MessageBreak pesudo-hook '\protect\pesudohookOFpremainbody\space'.}{}}
-\fi\fi\fi\fi\fi\fi
+\else\if@dlmuthesis@DOClaw %【博士-法学/法律】
+  \pretocmd{\pesudohookOFpremainbody}{
+    \pagenumbering{arabic} %《规范》要求：从正文开始设为阿拉伯数字页码，并且重新从1开始计数
+  }{}{\ClassError{dlmuthesis}{Execution exception for\MessageBreak pesudo-hook '\protect\pesudohookOFpremainbody\space'.}{}}
+\fi\fi\fi\fi\fi\fi\fi
 %% ======================================================= %
 
 
