@@ -1059,7 +1059,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 % --------------- 图、表标题样式 --------------- %
 \RequirePackage{caption}
-\RequirePackage[labelformat=brace]{subcaption} %(与 subfigure 宏包冲突)也能提供 subfigure 环境（需设置宽度），并使环境中的标题变成副标题样式
+\RequirePackage[labelformat=brace]{subcaption} % 使子图环境中的标题变成副标题样式
 \RequirePackage[list=off]{bicaption} %同时含中英文的标题
 \if@dlmuthesis@BAstem %【本科-理工科】
   \DeclareCaptionLabelSeparator{doublespace}{~~}
@@ -1119,7 +1119,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 % --------------- 插图环境 --------------- %
 \RequirePackage{graphicx}
 \RequirePackage{float} %引入参数H
-\graphicspath{{figures/}{figures/STEM/}{figures/humanities/}} %可添加多个路径
+\graphicspath{{figures/}} %可添加多个路径
 % ======================================== %
 
 
@@ -2065,14 +2065,14 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     \pagestyle{fancy} %从第一章到致谢，设置为有页眉、有页脚的模式
     \fancyhead[C]{\zihao{-5}\dlmuthesis@tokens@cntitle}
     \pagenumbering{arabic} %《手册》要求：从正文开始设为阿拉伯数字页码，并且重新从1开始计数
-  }{}{\ClassError'{dlmuthesis}{Execution exception for\MessageBreak pesudo-hook '\protect\pesudohookOFpremainbody\space'.}{}}
+  }{}{\ClassError{dlmuthesis}{Execution exception for\MessageBreak pesudo-hook '\protect\pesudohookOFpremainbody\space'.}{}}
 \else\if@dlmuthesis@BAhumanities %【本科-人文社科】
   \pretocmd{\pesudohookOFpremainbody}{
     \cntitleinMAINBODY
     \pagestyle{fancy} %从第一章到致谢，设置为有页眉、有页脚的模式
     \fancyhead[C]{\zihao{-5}\dlmuthesis@tokens@cntitle}
     \pagenumbering{arabic} %《手册》要求：从正文开始设为阿拉伯数字页码，并且重新从1开始计数
-  }{}{\ClassError'{dlmuthesis}{Execution exception for\MessageBreak pesudo-hook '\protect\pesudohookOFpremainbody\space'.}{}}
+  }{}{\ClassError{dlmuthesis}{Execution exception for\MessageBreak pesudo-hook '\protect\pesudohookOFpremainbody\space'.}{}}
 \else\if@dlmuthesis@MA %【硕士】
   \pretocmd{\pesudohookOFpremainbody}{
     \pagenumbering{arabic} %《规范》要求：从正文开始设为阿拉伯数字页码，并且重新从1开始计数
@@ -2250,6 +2250,22 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \fi\fi\fi\fi\fi\fi\fi\fi
 %% ================================================================= %
 % ================================================================================ %
+
+
+% ---------- 宏包冲突检测 ---------- %
+\makeatletter
+\newcommand{\ConflictChecking}[2]{
+  \@ifpackageloaded{#1}{
+    \ClassError{dlmuthesis}{One CONFLICT between #2 and #1}{Do not upload package #1}}{}
+}
+\makeatother
+
+\AtBeginDocument{
+  \ConflictChecking{ntheorem}{amsthm}
+  \ConflictChecking{biblatex}{natbib}
+  \ConflictChecking{subfigure}{subcaption}
+}
+% =================================== %
 
 
 % --------------- 超链接与交叉引用 --------------- %
