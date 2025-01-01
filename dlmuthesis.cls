@@ -763,7 +763,8 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \fi\fi
 %% =================================== %
 %% ----- 硕博论文中，目录到图(/表)目录之间需翻页+添加大标题 ----- %
-\newcommand\toctolof{
+\newcommand\aftertoc{
+  % 在本科模式下不做任何操作
   \if@dlmuthesis@MA %【硕士】
     \clearpage
     \begin{center}\heiti\zihao{-3}图表目录\end{center}
@@ -785,8 +786,6 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   \else\if@dlmuthesis@DOCmarxism %【博士-马克思主义理论】
     \clearpage
     \begin{center}\heiti\zihao{-3}图表目录\end{center}
-  \else
-    \ClassError{dlmuthesis}{Do not use command '\protect\toctolof\space'\MessageBreak in this degree-type.}{}
   \fi\fi\fi\fi\fi\fi
 }
 %% ============================================================= %
@@ -1438,9 +1437,11 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   \if@dlmuthesis@BAstem %【本科-理工科】
     \pagestyle{plain}
     \cfoot{\zihao{-5} \thepage}
+    \pagenumbering{Roman}
   \else\if@dlmuthesis@BAhumanities %【本科-人文社科】
     \pagestyle{plain}
     \cfoot{\zihao{-5} \thepage}
+    \pagenumbering{Roman}
   \else\if@dlmuthesis@MA %【硕士】
     %奇数页为“大连海事大学硕士学位论文”，偶数页为论文中文题目：
     \pagestyle{fancy}
@@ -1510,7 +1511,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     \fi
   \else
     \pagenumbering{Roman}
-  \fi\fi\fi\fi\fi\fi\fi
+  \fi\fi\fi\fi\fi\fi\fi\fi
 } %中文摘要
 
 \newcommand{\presetupOFabstractEN}{
