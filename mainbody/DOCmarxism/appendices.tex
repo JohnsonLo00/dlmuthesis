@@ -1,0 +1,58 @@
+
+\section{附录内容说明}
+
+以下内容可放在附录之内：
+\begin{enumerate}[label=(\arabic*)]
+  \item{正文内过于冗长的公式推导；}
+  \item{方便他人阅读所需的辅助性数学工具或表格；}
+  \item{重复性数据和图表；}
+  \item{论文使用的主要符号的意义和单位；}
+  \item{程序说明和程序全文。}
+\end{enumerate}
+
+若无附录内容则可以省略。如果省略，则将文件\verb|main_MA.tex|中的附录部分全部注释掉（包括\verb|\clearpage|命令）。
+
+
+\section{企业信息表}
+
+\begin{longtable}{cccc}
+    \bicaption{企业信息表}{Enterprise Information Form} \label{tab:企业信息表} \\
+	\toprule
+	字段名称 & 中文描述 & 类型 & 长度 \\
+	\midrule
+    \endfirsthead %以上是首页表头
+    \caption{（续表）} \\ %续表对应的标题
+    \midrule
+    字段名称 & 中文描述 & 类型 & 长度 \\
+    \midrule
+    \endhead %以上是通用表头
+    \midrule
+    \endfoot %以上是通用表尾
+    \bottomrule
+    \endlastfoot %以上是末页表尾，以下是表格正文
+    ID & ID & NUMBER & 15 \\
+    COMPANY\_ID & 公司ID & VARCHAR2 & 60 \\
+    LOGISTER\_AGENT & 委托代理人 & VARCHAR2 & 60 \\
+    SHORT\_NAME & 物流商简称 & VARCHAR2 & 60 \\
+    BUSINESS\_FIELD & 行业类别 & VARCHAR2 & 10 \\
+    WAY\_VEHICLE & 公路运输 & VARCHAR2 & 10 \\
+    WAY\_TRAIN & 铁路运输 & VARCHAR2 & 10 \\
+    WAY\_SHIP & 船舶运输 & VARCHAR2 & 10 \\
+    WAY\_PIPELINE & 管道运输 & VARCHAR2 & 10 \\
+    WAY\_CONTAINER & 集装箱运输 & VARCHAR2 & 10 \\
+    WAY\_OTHERS & 其他运输方式 & VARCHAR2 & 60 \\
+    FAX & 传真 & DATE & \\
+    SETUP\_DATE & 成立日期 & VARCHAR2 & 60 \\
+    BUSINESS\_LICENSECODE & 营业执照号码 & DATE & \_\_ \\
+    BUSINESS\_LICENSEDATE & 营业执照有效期 & VARCHAR2 & 60 \\
+    GAS\_LICENSECODE & 许可证号码 & DATE & \_\_ \\
+    GAS\_LICENSEDATE & 许可证有效期 & VARCHAR2 & 60 \\
+    HAZARD\_LICENSECODE & \makecell{化学危险品经营 \\ 许可证号码} & DATE & \_\_ \\
+    HAZARD\_LICENSEDATE & \makecell{化学危险品经营 \\ 许可证有效期} & VARCHAR2 & 60 \\
+    STATE\_TAXACCOUNT & 国税税号 & VARCHAR2 & 60 \\
+    CREATE\_USERID & 创建人 & NUMBER & 15
+\end{longtable}
+
+\section{公开报文详情}
+
+

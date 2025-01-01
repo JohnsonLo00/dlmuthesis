@@ -38,6 +38,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \newif\if@dlmuthesis@MAmarxism %【[硕士-马克思主义理论]模式】
 \newif\if@dlmuthesis@DOC %【[博士]模式】
 \newif\if@dlmuthesis@DOClaw %【博士-法学/法律】
+\newif\if@dlmuthesis@DOCmarxism %【[博士-马克思主义理论]模式】
 
 \newif\if@dlmuthesis@printed %【打印模式】
 
@@ -75,6 +76,10 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 }
 \DeclareOption{DOClaw}{
 \@dlmuthesis@DOClawtrue
+\addtocounter{OptionOfDegree}{1}
+}
+\DeclareOption{DOCmarxism}{
+\@dlmuthesis@DOCmarxismtrue
 \addtocounter{OptionOfDegree}{1}
 }
 
@@ -370,7 +375,35 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     name = {附录,},
   }
 }
-\fi\fi\fi\fi\fi\fi\fi
+\else\if@dlmuthesis@DOCmarxism %【博士-马克思主义理论】
+\renewcommand\theparagraph{\arabic{paragraph}} %重设四级标题计数器格式
+\ctexset{
+  abstractname = {\zihao{-3}\heiti 摘\hspace{2em}要},
+  contentsname = \hfill{\heiti\zihao{-3}目\hspace{2em}录}\hfill,
+  listfigurename = \hfill{\songti\zihao{-3}图目录}\hfill,
+  listtablename = \hfill{\songti\zihao{-3}表目录}\hfill,
+  bibname = \hfill{\zihao{-3}参~ 考~ 文~ 献}\hfill,
+  section = {
+    format = {\zihao{-3}\heiti},
+    name = {第,章},
+    beforeskip=1em,
+    afterskip=1em,
+  },
+  subsection = {
+    format = {\zihao{4}\heiti},
+    beforeskip=0.5em,
+    afterskip=0.5em,
+  },
+  subsubsection = {
+    format = {\zihao{-4}\heiti},
+    beforeskip=0.5em,
+    afterskip=0.5em,
+  },
+  appendix={
+    name = {附录,},
+  }
+}
+\fi\fi\fi\fi\fi\fi\fi\fi
 % ======================================== %
 
 
@@ -470,7 +503,9 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   \newcommand{\headerinCOVERPAGE}{博~士~}
 \else\if@dlmuthesis@DOClaw %【博士-法学/法律】
   \newcommand{\headerinCOVERPAGE}{博~士~}
-\fi\fi\fi\fi\fi
+\else\if@dlmuthesis@DOCmarxism %【博士-马克思主义理论】
+  \newcommand{\headerinCOVERPAGE}{博~士~}
+\fi\fi\fi\fi\fi\fi
 %%%% 论文页眉的开头
 \if@dlmuthesis@MA %【硕士】
   \newcommand{\headerinHEADER}{硕士}
@@ -482,7 +517,9 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   \newcommand{\headerinHEADER}{博士}
 \else\if@dlmuthesis@DOClaw %【博士-法学/法律】
   \newcommand{\headerinHEADER}{博士}
-\fi\fi\fi\fi\fi
+\else\if@dlmuthesis@DOCmarxism %【博士-马克思主义理论】
+  \newcommand{\headerinHEADER}{博士}
+\fi\fi\fi\fi\fi\fi
 %%%% 学位类别命令\degree
 \if@dlmuthesis@MA %【硕士】
   \newcommand{\degree}[2]{
@@ -493,58 +530,48 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
       \ifthenelse{\equal{#2}{professional}}{
         \renewcommand{\headerinCOVERPAGE}{专~业~学~位~硕~士~}
         \renewcommand{\headerinHEADER}{专业学位硕士}
-      }{
-        % no commands
-      }
+      }{}
     }
   }
 \else\if@dlmuthesis@MAlaw %【硕士-法学/法律】
   \newcommand{\degree}[2]{
     \renewcommand{\dlmuthesis@tokens@degree}{#1}
-    \ifthenelse{\equal{#2}{academic}}{
-      % maintain original
-    }{
+    \ifthenelse{\equal{#2}{academic}}{}{
       \ifthenelse{\equal{#2}{professional}}{
         \renewcommand{\headerinCOVERPAGE}{专~业~学~位~硕~士~}
         \renewcommand{\headerinHEADER}{专业学位硕士}
-      }{
-        % no commands
-      }
+      }{}
     }
   }
 \else\if@dlmuthesis@MAmarxism %【硕士-马克思主义理论】
   \newcommand{\degree}[2]{
     \renewcommand{\dlmuthesis@tokens@degree}{#1}
-    \ifthenelse{\equal{#2}{academic}}{
-      % maintain original
-    }{
+    \ifthenelse{\equal{#2}{academic}}{}{
       \ifthenelse{\equal{#2}{professional}}{
         \renewcommand{\headerinCOVERPAGE}{专~业~学~位~硕~士~}
         \renewcommand{\headerinHEADER}{专业学位硕士}
-      }{
-        % no commands
-      }
+      }{}
     }
   }
 \else\if@dlmuthesis@DOC %【博士】
   \newcommand{\degree}[2]{
     \renewcommand{\dlmuthesis@tokens@degree}{#1}
-    \ifthenelse{\equal{#2}{academic}}{
-      % maintain original
-    }{
+    \ifthenelse{\equal{#2}{academic}}{}{
       \ifthenelse{\equal{#2}{engineering}}{
         \renewcommand{\headerinCOVERPAGE}{工~程~博~士~}
         \renewcommand{\headerinHEADER}{工程博士}
-      }{
-        % no commands
-      }
+      }{}
     }
   }
 \else\if@dlmuthesis@DOClaw %【博士-法学/法律】
   \newcommand{\degree}[2]{
     \renewcommand{\dlmuthesis@tokens@degree}{#1}
   }
-\fi\fi\fi\fi\fi
+\else\if@dlmuthesis@DOCmarxism %【博士-马克思主义理论】
+  \newcommand{\degree}[2]{
+    \renewcommand{\dlmuthesis@tokens@degree}{#1}
+  }
+\fi\fi\fi\fi\fi\fi
 %%% ======================================== %
 
 %%% ---------- 硕士论文专用 ---------- %
@@ -582,7 +609,9 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   \geometry{top=3.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm, headsep=24.0pt, headheight=2.5cm}
 \else\if@dlmuthesis@DOClaw %【博士-法学/法律】
   \geometry{top=3.0cm, bottom=3.0cm, left=3.0cm, right=3.0cm, headsep=24.0pt, headheight=2.5cm}
-\fi\fi\fi\fi\fi\fi\fi
+\else\if@dlmuthesis@DOCmarxism %【博士-马克思主义理论】
+  \geometry{top=3.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm, headsep=24.0pt, headheight=2.5cm}
+\fi\fi\fi\fi\fi\fi\fi\fi
 
 \lhead{} %在'heading=true'下，默认左页眉为当前二级标题名称，因此要赋值为空
 \rhead{} %'heading=true'下，默认右页眉为当前一级标题名称，因此要赋值为空
@@ -753,9 +782,12 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   \else\if@dlmuthesis@DOClaw %【博士-法学/法律】
     \clearpage
     \begin{center}\heiti\zihao{-3}图表目录\end{center}
+  \else\if@dlmuthesis@DOCmarxism %【博士-马克思主义理论】
+    \clearpage
+    \begin{center}\heiti\zihao{-3}图表目录\end{center}
   \else
     \ClassError{dlmuthesis}{Do not use command '\protect\toctolof\space'\MessageBreak in this degree-type.}{}
-  \fi\fi\fi\fi\fi
+  \fi\fi\fi\fi\fi\fi
 }
 %% ============================================================= %
 %% ---------- 图目录样式 ---------- %
@@ -797,7 +829,9 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     \vspace{\baselineskip}{}{\heiti 关键词}: #1
   \else\if@dlmuthesis@DOClaw %【博士-法学/法律】
     \vspace{\baselineskip}{}\heiti 关键词: #1
-\fi\fi\fi\fi\fi\fi\fi
+  \else\if@dlmuthesis@DOCmarxism %【博士-马克思主义理论】
+    \vspace{\baselineskip}{}{\heiti 关键词}: #1
+\fi\fi\fi\fi\fi\fi\fi\fi
 }
 %% ======================================== %
 %% ---------- 英文版摘要插入关键词 ---------- %
@@ -816,7 +850,9 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     \vspace{\baselineskip}{}{\bfseries Key Words}: #1
   \else\if@dlmuthesis@DOClaw %【博士-法学/法律】
     \vspace{\baselineskip}{}\bfseries Key Words: #1
-\fi\fi\fi\fi\fi\fi\fi
+  \else\if@dlmuthesis@DOCmarxism %【博士-马克思主义理论】
+    \vspace{\baselineskip}{\bfseries Key Words}: #1
+\fi\fi\fi\fi\fi\fi\fi\fi
 }
 %% ======================================== %
 % ================================================== %
@@ -838,7 +874,9 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   \setlist{leftmargin=0pt, itemindent=2\parindent, itemsep=0pt, parsep=0pt}
 \else\if@dlmuthesis@DOClaw %【博士-法学/法律】
   \setlist{leftmargin=0pt, itemindent=2\parindent, itemsep=0pt, nosep}
-\fi\fi\fi\fi\fi\fi\fi
+\else\if@dlmuthesis@DOCmarxism %【博士-马克思主义理论】
+  \setlist{leftmargin=0pt, itemindent=2\parindent, itemsep=0pt, nosep}
+\fi\fi\fi\fi\fi\fi\fi\fi
 % ======================================== %
 
 
@@ -1004,7 +1042,17 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     {2em} %标题左间距
     {0.5ex plus 1ex minus 0.2ex} %标题上间距
     {0bp} %标题下间距
-\fi\fi\fi\fi\fi\fi\fi
+\else\if@dlmuthesis@DOCmarxism %【博士-马克思主义理论】
+  \titleformat{\paragraph}
+    {\normalsize\heiti} %字体
+    {（\theparagraph）} %标题前的标签
+    {0pt} %标题和标签之间的间距
+    {} %标题前没有额外的命令或内容
+  \titlespacing{\paragraph}
+    {2em} %标题左间距
+    {0.5ex plus 1ex minus 0.2ex} %标题上间距
+    {0.5ex plus 0.2ex} %标题下间距
+\fi\fi\fi\fi\fi\fi\fi\fi
 
 \newcommand{\fourthsection}[1]{\paragraph{#1}} %将命令\paragraph改名为四级标题
 % ============================================================ %
@@ -1055,7 +1103,14 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   \captionsetup[figure][bi-second]{font=small, labelsep=doublespace, name={Fig}}
   \captionsetup[table][bi-first]{font=small, labelsep=doublespace}
   \captionsetup[table][bi-second]{font=small, labelsep=doublespace, name={Tab~}}
-\fi\fi\fi\fi\fi\fi\fi
+\else\if@dlmuthesis@DOCmarxism %【博士-马克思主义理论】
+  \DeclareCaptionLabelSeparator{doublespace}{~~}
+  \captionsetup{font=small, labelsep=doublespace} %单标题模式
+  \captionsetup[figure][bi-first]{font=small, labelsep=doublespace}
+  \captionsetup[figure][bi-second]{font=small, labelsep=doublespace, name={Fig}}
+  \captionsetup[table][bi-first]{font=small, labelsep=doublespace}
+  \captionsetup[table][bi-second]{font=small, labelsep=doublespace, name={Tab~}}
+\fi\fi\fi\fi\fi\fi\fi\fi
 
 \numberwithin{figure}{section} %numberwithin命令必须放在amsmath宏包之后
 \numberwithin{table}{section}
@@ -1176,7 +1231,13 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     \begin{center}
     \heiti\zihao{-3} 结\hspace{2em}论
     \end{center}
-  \fi\fi\fi\fi\fi\fi\fi
+  \else\if@dlmuthesis@DOCmarxism %【博士-马克思主义理论】
+    \phantomsection
+    \addcontentsline{toc}{section}{结\hspace{2em}论}
+    \begin{center}
+    \heiti\zihao{-3} 结\hspace{2em}论
+    \end{center}
+  \fi\fi\fi\fi\fi\fi\fi\fi
   \par
 }{}
 % ======================================== %
@@ -1218,7 +1279,11 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     \begin{center}
     \heiti\zihao{-3} 致\hspace{2em}谢
     \end{center}
-  \fi\fi\fi\fi\fi\fi\fi
+  \else\if@dlmuthesis@DOCmarxism %【博士-马克思主义理论】
+    \begin{center}
+    \heiti\zihao{-3} 致\hspace{2em}谢
+    \end{center}
+  \fi\fi\fi\fi\fi\fi\fi\fi
   \par
 }{}
 % ======================================== %
@@ -1294,7 +1359,12 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   %\makeatletter
   \xapptocmd{\NAT@bibsetnum}{\setlength{\leftmargin}{0pt}\setlength{\itemindent}{\labelwidth}\addtolength{\itemindent}{\labelsep}}{}{}
   %\makeatother
-\fi\fi\fi
+\else\if@dlmuthesis@DOCmarxism %【博士-马克思主义理论】
+  \renewcommand{\bibnumfmt}[1]{【#1】}
+  %\makeatletter
+  \xapptocmd{\NAT@bibsetnum}{\setlength{\leftmargin}{0pt}\setlength{\itemindent}{\labelwidth}\addtolength{\itemindent}{\labelsep}}{}{}
+  %\makeatother
+\fi\fi\fi\fi
 %% ============================================= %
 % ======================================================= %
 
@@ -1351,7 +1421,14 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     \fancyhead[CEH]{\zihao{5}\dlmuthesis@tokens@cntitle}
     \cfoot{~}
     \setcounter{abstractINNOVATIONbegin}{\value{page}} %涉及打印模式
-  \fi\fi
+  \else\if@dlmuthesis@DOCmarxism %【博士-马克思主义理论】
+    \renewcommand\abstractname{\zihao{-3}\heiti 创\hspace{2em}新\hspace{2em}点} %临时修改摘要名
+    \pagestyle{fancy}
+    \fancyhead[COH]{\zihao{5}大连海事大学{\headerinHEADER}学位论文}
+    \fancyhead[CEH]{\zihao{5}\dlmuthesis@tokens@cntitle}
+    \cfoot{~}
+    \setcounter{abstractINNOVATIONbegin}{\value{page}} %涉及打印模式
+  \fi\fi\fi
 }
 %% ================================================== %
 
@@ -1416,6 +1493,21 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
       \AddToHook{shipout/after}[BlankPages]{\RawShipout\null}
       %%% ========================= %
     \fi
+  \else\if@dlmuthesis@DOCmarxism %【博士-马克思主义理论】
+    \renewcommand\abstractname{\zihao{-3}\heiti 摘\hspace{2em}要} %临时修改摘要名
+    %奇数页为“大连海事大学博士学位论文”，偶数页为论文中文题目：
+    \pagestyle{fancy}
+    \fancyhead[COH]{\zihao{5}大连海事大学{\headerinHEADER}学位论文}
+    \fancyhead[CEH]{\zihao{5}\dlmuthesis@tokens@cntitle}
+    \cfoot{\zihao{-5}--~\thepage~--}
+    \pagenumbering{Roman}
+%    \phantomsection
+%    \addcontentsline{toc}{section}{摘\hspace{2em}要}
+    \if@dlmuthesis@printed % 打印模式下才操作
+      %%% ----- 开始插入空白页 ----- %
+      \AddToHook{shipout/after}[BlankPages]{\RawShipout\null}
+      %%% ========================= %
+    \fi
   \else
     \pagenumbering{Roman}
   \fi\fi\fi\fi\fi\fi\fi
@@ -1458,7 +1550,12 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     \begin{center}
     \zihao{-3}\dlmuthesis@tokens@entitle %在英文摘要页开头打印英文版论文题目
     \end{center}
-  \fi\fi\fi\fi\fi\fi\fi
+  \else\if@dlmuthesis@DOCmarxism %【博士-马克思主义理论】
+    \setcounter{abstractENbegin}{\value{page}} %涉及打印模式
+    \renewcommand\abstractname{\large ABSTRACT} %临时修改摘要名
+%    \phantomsection
+%    \addcontentsline{toc}{section}{ABSTRACT}
+  \fi\fi\fi\fi\fi\fi\fi\fi
 } %英文摘要
 %% ================================================== %
 
@@ -1475,7 +1572,9 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     % 同时，奇数页页眉为每部分的名称，偶数页为论文中文题目：
     \fancyhead[COH]{\zihao{5}目录}
     \fancyhead[CEH]{\zihao{5}\dlmuthesis@tokens@cntitle}
-  \fi\fi\fi\fi
+  \else\if@dlmuthesis@DOCmarxism %【博士-马克思主义理论】
+    \setcounter{tocsbegin}{\value{page}}
+  \fi\fi\fi\fi\fi
 }
 %% ======================================================= %
 
@@ -1522,6 +1621,11 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
           %%% ========================= %
         \else\if@dlmuthesis@DOClaw %【博士-法学/法律】
           \clearpage
+        \else\if@dlmuthesis@DOCmarxism %【博士-马克思主义理论】
+          \clearpage
+          %%% ----- 停止插入空白页 ----- %
+          \RemoveFromHook{shipout/after}[BlankPages]
+          %%% ========================= %
         \else
           \setcounter{abstractCNend}{\value{page}}
           \setcounter{abstractCNdif}{\numexpr\value{abstractCNend}-\value{abstractCNbegin}+1\relax}
@@ -1533,7 +1637,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
             \mbox{}
             \clearpage
           }{\clearpage}
-        \fi\fi
+        \fi\fi\fi
       }{}
       \ifthenelse{\equal{#1}{abstractEN}}{ %英文摘要页
       \if@dlmuthesis@DOClaw %【博士-法学/法律】
@@ -1796,7 +1900,9 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   \makecoverpageDOC
 \else\if@dlmuthesis@DOClaw %【博士-法学/法律】
   \makecoverpageDOC
-\fi\fi\fi\fi\fi\fi\fi
+\else\if@dlmuthesis@DOCmarxism %【博士-马克思主义理论】
+  \makecoverpageDOC
+\fi\fi\fi\fi\fi\fi\fi\fi
 }
 % ======================================== %
 
@@ -1835,10 +1941,13 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \if@dlmuthesis@MAmarxism %【硕士-马克思主义理论】
 \zihao{-2}\heiti 大连海事大学\\
 研究生学位论文原创性声明
+\else\if@dlmuthesis@DOCmarxism %【博士-马克思主义理论】
+\zihao{-2}\heiti 大连海事大学\\
+研究生学位论文原创性声明
 \else
 \zihao{-2} 大连海事大学\\
 研究生学位论文原创性声明
-\fi
+\fi\fi
 }
 \newcommand{\metaOriginalityStatement}{
 \begin{center}\begin{spacing}{1.5}
@@ -1920,7 +2029,11 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   \thispagestyle{fancy}
   \fancyhead[C]{~}
   \fancyfoot{}
-\fi\fi\fi
+\else\if@dlmuthesis@DOCmarxism %【博士-马克思主义理论】
+  \thispagestyle{fancy}
+  \fancyhead[C]{~}
+  \fancyfoot{}
+\fi\fi\fi\fi
 ~\vspace{-30bp}
 \metaOriginalityStatement
 ~\vspace{-1em}
@@ -1982,7 +2095,11 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   \pretocmd{\pesudohookOFpremainbody}{
     \pagenumbering{arabic} %《规范》要求：从正文开始设为阿拉伯数字页码，并且重新从1开始计数
   }{}{\ClassError{dlmuthesis}{Execution exception for\MessageBreak pesudo-hook '\protect\pesudohookOFpremainbody\space'.}{}}
-\fi\fi\fi\fi\fi\fi\fi
+\else\if@dlmuthesis@DOCmarxism %【博士-马克思主义理论】
+  \pretocmd{\pesudohookOFpremainbody}{
+    \pagenumbering{arabic} %《规范》要求：从正文开始设为阿拉伯数字页码，并且重新从1开始计数
+  }{}{\ClassError{dlmuthesis}{Execution exception for\MessageBreak pesudo-hook '\protect\pesudohookOFpremainbody\space'.}{}}
+\fi\fi\fi\fi\fi\fi\fi\fi
 %% ======================================================= %
 
 
@@ -2011,7 +2128,16 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
        }
     }
   }
-\fi\fi
+\else\if@dlmuthesis@DOCmarxism %【博士-马克思主义理论】
+  \AtBeginEnvironment{thebibliography}{
+    \ctexset{
+       subsubsection={
+         format = {\zihao{-4}\bfseries},
+         indent = {1em}
+       }
+    }
+  }
+\fi\fi\fi
 %% ======================================================= %
 
 %% ---------- 硕博论文中，附录章节标题需居中对齐，但全文是居左 ---------- %
@@ -2091,7 +2217,36 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     \fancyhead[CEH]{\zihao{5}\dlmuthesis@tokens@cntitle}
     \zihao{-4}
   }
-\fi\fi\fi\fi\fi\fi
+\else\if@dlmuthesis@DOClaw %【博士-法学/法律】
+  \AtBeginEnvironment{appendices}{
+    \ctexset{
+      section = {
+        format = \zihao{-3}\heiti\centering,
+        name = {附录~,~~},
+        number = {\arabic{section}},
+      }
+    }
+    \zihao{-4}
+  }
+\else\if@dlmuthesis@DOCmarxism %【博士-马克思主义理论】
+  \AtBeginEnvironment{appendices}{
+    \ctexset{
+      section = {
+        format = \zihao{-3}\heiti\centering,
+        name = {附录~,},
+        number = {\thesection},
+      }
+    }
+  \titlecontents{section}
+    [0pt]
+    {\addvspace{2bp}\filright}
+    {\thecontentslabel~~}
+    {}
+    {\titlerule*[8bp]{.}\contentspage}
+
+  \zihao{-4}
+  }
+\fi\fi\fi\fi\fi\fi\fi\fi
 %% ================================================================= %
 % ================================================================================ %
 
