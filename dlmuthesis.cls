@@ -930,19 +930,6 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 % ======================================== %
 
 
-% --------------- 部分学科高相关度宏包 --------------- %
-\RequirePackage{nicematrix} %解释型矩阵绘制
-\RequirePackage{extarrows} %解释型[长]箭头的生成
-\RequirePackage{braket} %量子力学算符
-\RequirePackage{qcircuit} %量子电路绘制
-\RequirePackage[version=4]{mhchem} %化学式、反应方程的书写
-\RequirePackage{chemfig} %结构式绘制
-\RequirePackage{tikz} %一般图绘制
-\RequirePackage{tikz-network} %神经网络图示绘制
-\RequirePackage{circuitikz} %数字电路绘制
-% ================================================== %
-
-
 % --------------- 代码环境 --------------- %
 \RequirePackage{verbatim} %简易代码环境（提供：verbatim 环境。缺点：不能解决断行问题。）
 \RequirePackage{listings} %定制代码环境
