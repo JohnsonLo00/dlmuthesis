@@ -15,7 +15,7 @@
 
 % --------------- 全局设置 --------------- %
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{dlmuthesis}[2024-07-10 v3.0.0 Unofficial Thesis LaTeX Template for DLMU]
+\ProvidesClass{dlmuthesis}[2025-01-15 v3.0.0 Unofficial Thesis LaTeX Template for DLMU]
 % ======================================== %
 
 
@@ -30,7 +30,6 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 
 % ---------- 文档类声明命令的可选参数初始化 ---------- %
-%\RequirePackage{zhnumber} %【中文数字】
 \newif\if@dlmuthesis@BAstem %【[本科-理工科]模式，初始值为真，下同】
 \newif\if@dlmuthesis@BAhumanities %【[本科-人文社科]模式】
 \newif\if@dlmuthesis@MA %【[硕士]模式】
@@ -109,8 +108,8 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 }
 
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{article}}
-\ProcessOptions\relax %【这句万万不可改动】
-\LoadClass[a4paper, 12pt]{article} %【导入正规文档类】
+\ProcessOptions\relax
+\LoadClass[a4paper]{article}
 % ======================================== %
 
 
@@ -459,12 +458,6 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 } %【英文题目】
 \newcommand{\aauthor}[1]{\renewcommand{\dlmuthesis@tokens@aauthor}{#1}} %【作者姓名】
 \newcommand{\sdtID}[1]{\renewcommand{\dlmuthesis@tokens@sdtID}{#1}} %【学号】
-%\newcommand{\majorinCOVERPAGE}[2]{
-%  \renewcommand{\dlmuthesis@tokens@majorinCOVERPAGE}{#1}
-%  \ifthenelse{\equal{#2}{MEng}}{
-%    \renewcommand{\dlmuthesis@tokens@headermajoir}{工\hfill 程\hfill 领\hfill 域}
-%  }{}
-%} %【专业年级班级(coverpage专用)】
 \NewDocumentCommand{\majorinCOVERPAGE}{o m}{
   \IfNoValueTF{#1}{}{
     \ifthenelse{\equal{#1}{MEng}}{
@@ -521,57 +514,40 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   \newcommand{\headerinHEADER}{博士}
 \fi\fi\fi\fi\fi\fi
 %%%% 学位类别命令\degree
-\if@dlmuthesis@MA %【硕士】
-  \newcommand{\degree}[2]{
-    \renewcommand{\dlmuthesis@tokens@degree}{#1}
-    \ifthenelse{\equal{#2}{academic}}{
-      % maintain original
-    }{
-      \ifthenelse{\equal{#2}{professional}}{
-        \renewcommand{\headerinCOVERPAGE}{专~业~学~位~硕~士~}
-        \renewcommand{\headerinHEADER}{专业学位硕士}
-      }{}
-    }
-  }
-\else\if@dlmuthesis@MAlaw %【硕士-法学/法律】
-  \newcommand{\degree}[2]{
-    \renewcommand{\dlmuthesis@tokens@degree}{#1}
+\newcommand{\degree}[2]{
+  \renewcommand{\dlmuthesis@tokens@degree}{#1}
+  \if@dlmuthesis@MA %【硕士】
     \ifthenelse{\equal{#2}{academic}}{}{
       \ifthenelse{\equal{#2}{professional}}{
         \renewcommand{\headerinCOVERPAGE}{专~业~学~位~硕~士~}
         \renewcommand{\headerinHEADER}{专业学位硕士}
       }{}
     }
-  }
-\else\if@dlmuthesis@MAmarxism %【硕士-马克思主义理论】
-  \newcommand{\degree}[2]{
-    \renewcommand{\dlmuthesis@tokens@degree}{#1}
+  \else\if@dlmuthesis@MAlaw %【硕士-法学/法律】
     \ifthenelse{\equal{#2}{academic}}{}{
       \ifthenelse{\equal{#2}{professional}}{
         \renewcommand{\headerinCOVERPAGE}{专~业~学~位~硕~士~}
         \renewcommand{\headerinHEADER}{专业学位硕士}
       }{}
     }
-  }
-\else\if@dlmuthesis@DOC %【博士】
-  \newcommand{\degree}[2]{
-    \renewcommand{\dlmuthesis@tokens@degree}{#1}
+  \else\if@dlmuthesis@MAmarxism %【硕士-马克思主义理论】
+    \ifthenelse{\equal{#2}{academic}}{}{
+      \ifthenelse{\equal{#2}{professional}}{
+        \renewcommand{\headerinCOVERPAGE}{专~业~学~位~硕~士~}
+        \renewcommand{\headerinHEADER}{专业学位硕士}
+      }{}
+    }
+  \else\if@dlmuthesis@DOC %【博士】
     \ifthenelse{\equal{#2}{academic}}{}{
       \ifthenelse{\equal{#2}{engineering}}{
         \renewcommand{\headerinCOVERPAGE}{工~程~博~士~}
         \renewcommand{\headerinHEADER}{工程博士}
       }{}
     }
-  }
-\else\if@dlmuthesis@DOClaw %【博士-法学/法律】
-  \newcommand{\degree}[2]{
-    \renewcommand{\dlmuthesis@tokens@degree}{#1}
-  }
-\else\if@dlmuthesis@DOCmarxism %【博士-马克思主义理论】
-  \newcommand{\degree}[2]{
-    \renewcommand{\dlmuthesis@tokens@degree}{#1}
-  }
-\fi\fi\fi\fi\fi\fi
+  %【博士-法学/法律】：no actions
+  %【博士-马克思主义理论】：no actions
+  \fi\fi\fi\fi
+} % \degree
 %%% ======================================== %
 
 %%% ---------- 硕士论文专用 ---------- %
@@ -592,7 +568,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 % --------------- 页面样式 --------------- %
 \RequirePackage[twoside]{fancyhdr} %定制页眉页脚
-\renewcommand{\sectionmark}[1]{\markboth{#1}{}}%
+\renewcommand{\sectionmark}[1]{\markboth{#1}{}} %打印模式相关
 \RequirePackage{geometry} %定制页面
 
 \if@dlmuthesis@BAstem %【本科-理工科】
@@ -623,6 +599,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 % --------------- 字体 --------------- %
 \RequirePackage{fontspec}
 %% ----- 中英字体设置 ----- %
+% 搜索顺序：先在本地字库找，再去模板文件夹中找；否则指定字体不存在
 \if@dlmuthesis@windows
   \IfFontExistsTF{SimSun}{
     \setCJKmainfont{SimSun}[AutoFakeBold=3.0, AutoFakeSlant=0.3]
@@ -630,7 +607,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     \IfFontExistsTF{./misc/SimSun.ttc}{
       \setCJKmainfont{SimSun}[Path={./misc/}, AutoFakeBold=3.0, AutoFakeSlant=0.3]
     }{
-      \ClassError{dlmuthesis}{The ZHONGYI fontset does not exists.}{}
+      \ClassError{dlmuthesis}{The ZHONGYI fontset does not exists}{}
     }
   }
   \IfFontExistsTF{Times New Roman}{
@@ -646,7 +623,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
         BoldItalicFont = timesbi,
       ]
     }{
-      \ClassError{dlmuthesis}{The Times New Roman font does not exists.}{}
+      \ClassError{dlmuthesis}{The Times New Roman font does not exists}{}
     }
   }
 \else\if@dlmuthesis@macos
@@ -656,7 +633,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     \IfFontExistsTF{./misc/STSong.ttf}{
       \setCJKmainfont{STSong}[Path={./misc/}, AutoFakeBold=3.0, AutoFakeSlant=0.3]
     }{
-      \ClassError{dlmuthesis}{The HUAWEN fontset does not exists.}{}
+      \ClassError{dlmuthesis}{The HUAWEN fontset does not exists}{}
     }
     %
   }
@@ -673,14 +650,14 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
         BoldItalicFont = timesbi,
       ]
     }{
-      \ClassError{dlmuthesis}{The Times New Roman font does not exists.}{}
+      \ClassError{dlmuthesis}{The Times New Roman font does not exists}{}
     }
   }
 \else\if@dlmuthesis@ubuntu
   \IfFontExistsTF{FandolSong}{
     \setCJKmainfont{FandolSong}[AutoFakeBold=3.0, AutoFakeSlant=0.3]
   }{
-    \ClassError{dlmuthesis}{The Fandol fontset does not exists.}{}
+    \ClassError{dlmuthesis}{The Fandol fontset does not exists}{}
   }
   \IfFontExistsTF{Times New Roman}{
     \setmainfont{Times New Roman}
@@ -702,7 +679,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   \IfFontExistsTF{FandolSong}{
     \setCJKmainfont{FandolSong}[AutoFakeBold=3.0, AutoFakeSlant=0.3]
   }{
-    \ClassError{dlmuthesis}{The Fandol fontset does not exists.}{}
+    \ClassError{dlmuthesis}{The Fandol fontset does not exists}{}
   }
   \IfFontExistsTF{Times New Roman}{
     \setmainfont{Times New Roman}
@@ -764,7 +741,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 %% =================================== %
 %% ----- 硕博论文中，目录到图(/表)目录之间需翻页+添加大标题 ----- %
 \newcommand\aftertoc{
-  % 在本科模式下不做任何操作
+  % 本科模式：no actions
   \if@dlmuthesis@MA %【硕士】
     \clearpage
     \begin{center}\heiti\zihao{-3}图表目录\end{center}
@@ -777,7 +754,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   \else\if@dlmuthesis@DOC %【博士】
     \clearpage
     \begin{center}\heiti\zihao{-3}图表目录\end{center}
-    % 同时，奇数页为每部分的名称，偶数页为论文中文题目：
+    % 同时，奇数页为“图表目录”，偶数页为论文中文题目：
     \fancyhead[COH]{\zihao{5}图表目录}
     \fancyhead[CEH]{\zihao{5}\dlmuthesis@tokens@cntitle}
   \else\if@dlmuthesis@DOClaw %【博士-法学/法律】
@@ -812,6 +789,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \RequirePackage{abstract}
 \setlength{\absleftindent}{0pt} %取消左自动缩进
 \setlength{\absrightindent}{0pt} %取消右自动缩进
+\renewcommand{\abstracttextfont}{\normalsize} %修改摘要内容的字号
 %% ---------- 中文版摘要插入关键词 ---------- %
 \newcommand{\keywordsCN}[1]{
   \if@dlmuthesis@BAstem %【本科-理工科】
@@ -830,7 +808,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     \vspace{\baselineskip}{}\heiti 关键词: #1
   \else\if@dlmuthesis@DOCmarxism %【博士-马克思主义理论】
     \vspace{\baselineskip}{}{\heiti 关键词}: #1
-\fi\fi\fi\fi\fi\fi\fi\fi
+  \fi\fi\fi\fi\fi\fi\fi\fi
 }
 %% ======================================== %
 %% ---------- 英文版摘要插入关键词 ---------- %
@@ -851,7 +829,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     \vspace{\baselineskip}{}\bfseries Key Words: #1
   \else\if@dlmuthesis@DOCmarxism %【博士-马克思主义理论】
     \vspace{\baselineskip}{\bfseries Key Words}: #1
-\fi\fi\fi\fi\fi\fi\fi\fi
+  \fi\fi\fi\fi\fi\fi\fi\fi
 }
 %% ======================================== %
 % ================================================== %
@@ -1151,12 +1129,12 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
       }{
         \ifthenelse{#1=5}{
           \renewcommand{\thefootnote}{【\arabic{footnote}】} %模式5
-        }
-      }
-    }
-  }
-} %第一个\ifthenelse
-} %\renewcommand
+        } %第5个\ifthenelse
+      } %第4个\ifthenelse
+    } %第3个\ifthenelse
+  } %第2个\ifthenelse
+} %第1个\ifthenelse
+} % \footnotemode
 % ============================================================ %
 
 
@@ -1276,7 +1254,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 
 % --------------- 作者简历环境 --------------- %
-\newcommand{\printmaintitle}{{\bfseries\color{red}标题创建失败！}}
+\newcommand{\printmaintitle}{{\bfseries\color{red}未创建标题！}}
 
 \newcommand{\maintitle}[2]{
   \renewcommand{\printmaintitle}{#1}
@@ -1304,7 +1282,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 % --------------- 杂项 --------------- %
 \RequirePackage{comment} % 提供注释环境
-\RequirePackage{lipsum, zhlipsum} %随机文本（用于调试）
+\RequirePackage{lipsum, zhlipsum} %随机文本
 % ======================================== %
 
 
@@ -1312,23 +1290,20 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \RequirePackage[numbers,square,comma]{natbib}
 \setlength{\bibsep}{0ex}
 \bibliographystyle{thuthesis-bachelor} %借鉴使用：清华大学(本科)学位论文模板bst样式文件
-\newcommand{\upcite}[1]{$^{\mbox{\footnotesize\cite{#1}}}${}} %《手册》《规范》要求：“当提及的参考文献为文中直接说明时，则用小4号字与正文排齐。”
+\renewcommand{\bibfont}{\zihao{5}} % 参考文献条目字号要求
+
+\newcommand{\upcite}[1]{$^{\mbox{\footnotesize\cite{#1}}}${}} %当提及的参考文献为文中直接说明时，则用小4号字与正文排齐
 \if@dlmuthesis@MAlaw %【硕士-法学/法律】
-  \newcommand{\apdxcite}[1]{\citep[\chinese{section},~\hspace{-3bp}][]{#1}} %[硕士-法学/法律]中所使用，适用于“章节编号+文献序号”的格式
-  \newcommand{\upapdxcite}[1]{$^{\mbox{\footnotesize\apdxcite{#1}}}${}} %[硕士-法学/法律]中所使用，动机与\upcite命令的类似
+  \newcommand{\apdxcite}[1]{\citep[\chinese{section},~\hspace{-3bp}][]{#1}} %附录中所使用，适用于“章节编号+文献序号”的格式
+  \newcommand{\upapdxcite}[1]{$^{\mbox{\footnotesize\apdxcite{#1}}}${}} %附录中所使用，动机与\upcite命令的类似
 \else\if@dlmuthesis@DOClaw %【博士-法学/法律】
-  \newcommand{\apdxcite}[1]{\citep[\chinese{section},~\hspace{-3bp}][]{#1}} %[博士-法学/法律]中所使用，适用于“章节编号+文献序号”的格式
-  \newcommand{\upapdxcite}[1]{$^{\mbox{\footnotesize\apdxcite{#1}}}${}} %[博士-法学/法律]中所使用，动机与\upcite命令的类似
+  \newcommand{\apdxcite}[1]{\citep[\chinese{section},~\hspace{-3bp}][]{#1}} %附录中所使用，适用于“章节编号+文献序号”的格式
+  \newcommand{\upapdxcite}[1]{$^{\mbox{\footnotesize\apdxcite{#1}}}${}} %附录中所使用，动机与\upcite命令的类似
 \else
-  \newcommand{\apdxcite}[1]{\citep[\thesection\hspace{-3bp}][]{#1}} %硕士论文中所使用，适用于“章节编号+文献序号”的格式
-  \newcommand{\upapdxcite}[1]{$^{\mbox{\footnotesize\apdxcite{#1}}}${}} %硕士论文中所使用，动机与\upcite命令的类似
+  \newcommand{\apdxcite}[1]{\citep[\thesection\hspace{-3bp}][]{#1}} %[硕士]的附录中所使用，适用于“章节编号+文献序号”的格式
+  \newcommand{\upapdxcite}[1]{$^{\mbox{\footnotesize\apdxcite{#1}}}${}} %[硕士]的附录中所使用，动机与\upcite命令的类似
 \fi\fi
 
-\newcommand{\nextbibtype}{
-  \makeatletter
-  \global\setcounter{NAT@ctr}{0}
-  \makeatother
-}
 %% ---------- 特殊参考文献规范 ---------- %
 \if@dlmuthesis@MAlaw %【硕士-法学/法律】
   \renewcommand{\bibnumfmt}[1]{#1.}
@@ -1388,9 +1363,12 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 % ============================================= %
 
 
-% -------------------- 封装的预设置 -------------------- %
-%% ----- 本科论文中，从摘要页到目录，有页眉无页脚 ----- %
+% --------------- 超链接与交叉引用 --------------- %
+\RequirePackage[hidelinks, bookmarksnumbered=true, breaklinks=true, bookmarksopen=true]{hyperref}
+% ======================================== %
 
+
+% -------------------- 封装的预设置 -------------------- %
 %% ----- 博士论文中，从创新点摘要页开始的页眉内容、目录书签设置 ----- %
 \newcommand{\presetupOFabstractINNOVATION}{
   \if@dlmuthesis@DOC %【博士】
@@ -1418,8 +1396,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 }
 %% ================================================== %
 
-%% ----- 打印模式下，博士论文的（中文）摘要部分需单面打印 ----- %
-%% ----- 从摘要页开始的页眉内容、目录书签设置 ----- %
+%% ----- 从摘要页开始的样式设置 ----- %
 \newcommand{\presetupOFabstractCN}{
   \if@dlmuthesis@BAstem %【本科-理工科】
     \pagestyle{plain}
@@ -1459,7 +1436,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     \addcontentsline{toc}{section}{摘\hspace{2em}要}
   \else\if@dlmuthesis@DOC %【博士】
     \renewcommand\abstractname{\zihao{-3}\heiti 摘\hspace{2em}要} %临时修改摘要名
-    % 奇数页为每部分的名称，偶数页为论文中文题目：
+    %%% 奇数页为每部分的名称，偶数页为论文中文题目：
     \fancyhead[COH]{\zihao{5}摘要}
     \fancyhead[CEH]{\zihao{5}\dlmuthesis@tokens@cntitle}
     \cfoot{\zihao{-5}--~\thepage~--}
@@ -1467,6 +1444,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     \setcounter{abstractCNbegin}{\value{page}} %涉及打印模式
     \phantomsection
     \addcontentsline{toc}{section}{摘\hspace{2em}要}
+    %%% 打印模式下，[博士]的（中文）摘要部分需单面打印
     \if@dlmuthesis@printed % 打印模式下才操作
       %%% ----- 开始插入空白页 ----- %
       \AddToHook{shipout/after}[BlankPages]{\RawShipout\null}
@@ -1489,8 +1467,6 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     \fancyhead[CEH]{\zihao{5}\dlmuthesis@tokens@cntitle}
     \cfoot{\zihao{-5}--~\thepage~--}
     \pagenumbering{Roman}
-%    \phantomsection
-%    \addcontentsline{toc}{section}{摘\hspace{2em}要}
     \if@dlmuthesis@printed % 打印模式下才操作
       %%% ----- 开始插入空白页 ----- %
       \AddToHook{shipout/after}[BlankPages]{\RawShipout\null}
@@ -1549,6 +1525,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 %% ----- 硕博论文中，为设置目录的打印模式而埋下计数器 ----- %
 \newcommand{\presetupOFtocs}{
+  % 本科模式：no actions
   \if@dlmuthesis@MA %【硕士】
     \setcounter{tocsbegin}{\value{page}}
   \else\if@dlmuthesis@MAlaw %【硕士-法学/法律】
@@ -1566,7 +1543,38 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 }
 %% ======================================================= %
 
-%% ----- 硕士论文中，要根据作者简历页最后一页奇偶来决定授权声明之后是否要加空页 ----- %
+%% --------------- 正文部分的样式设置 --------------- %
+\newcommand{\pesudohookOFpremainbody}{
+  \if@dlmuthesis@BAstem %【本科-理工科】
+    \cntitleinMAINBODY
+    \pagestyle{fancy} %从第一章到致谢，设置为有页眉、有页脚的模式
+    \fancyhead[C]{\zihao{-5}\dlmuthesis@tokens@cntitle}
+    \pagenumbering{arabic} %《手册》要求：从正文开始设为阿拉伯数字页码，并且重新从1开始计数  
+  \else\if@dlmuthesis@BAhumanities %【本科-人文社科】
+    \cntitleinMAINBODY
+    \pagestyle{fancy} %从第一章到致谢，设置为有页眉、有页脚的模式
+    \fancyhead[C]{\zihao{-5}\dlmuthesis@tokens@cntitle}
+    \pagenumbering{arabic} %《手册》要求：从正文开始设为阿拉伯数字页码，并且重新从1开始计数
+  \else\if@dlmuthesis@MA %【硕士】
+    \pagenumbering{arabic} %《规范》要求：从正文开始设为阿拉伯数字页码，并且重新从1开始计数
+  \else\if@dlmuthesis@MAlaw %【硕士-法学/法律】
+    \pagenumbering{arabic} %《规范》要求：从正文开始设为阿拉伯数字页码，并且重新从1开始计数
+  \else\if@dlmuthesis@MAmarxism %【硕士-马克思主义理论】
+    \pagenumbering{arabic} %《规范》要求：从正文开始设为阿拉伯数字页码，并且重新从1开始计数
+  \else\if@dlmuthesis@DOC %【博士】
+    \pagestyle{fancy}
+    \fancyhead[COH]{\zihao{5}\leftmark}
+    \fancyhead[CEH]{\zihao{5}\dlmuthesis@tokens@cntitle}
+    \pagenumbering{arabic} %《规范》要求：从正文开始设为阿拉伯数字页码，并且重新从1开始计数
+  \else\if@dlmuthesis@DOClaw %【博士-法学/法律】
+    \pagenumbering{arabic} %《规范》要求：从正文开始设为阿拉伯数字页码，并且重新从1开始计数
+  \else\if@dlmuthesis@DOCmarxism %【博士-马克思主义理论】
+    \pagenumbering{arabic} %《规范》要求：从正文开始设为阿拉伯数字页码，并且重新从1开始计数
+  \fi\fi\fi\fi\fi\fi\fi\fi
+}
+%% ======================================================= %
+
+%% ----- 硕博论文中，要根据作者简历页最后一页奇偶来决定授权声明之后是否要加空页 ----- %
 \newcommand{\presetupOFachievement}{
   \setcounter{achievementlastpage}{\value{page}}
 }
@@ -1654,7 +1662,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
         \else
           \setcounter{tocsend}{\value{page}}
           \setcounter{tocsdif}{\numexpr\value{tocsend}-\value{tocsbegin}+1\relax}
-%        【\thetocsbegin】【\thetocsend】【\thetocsdif】%【脚手架：暂时添加】%【脚手架：暂时添加】
+%        【\thetocsbegin】【\thetocsend】【\thetocsdif】%【脚手架：暂时添加】
           \ifthenelse{\isodd{\value{tocsdif}}}{
             \clearpage
             \addtocounter{page}{-1}
@@ -2029,13 +2037,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \nextpages{single}
 }
 %% ================================================== %
-
 % ============================================================ %
-
-
-% ---------- 伪钩子 ---------- %
-\newcommand{\pesudohookOFpremainbody}{{}} %实现正文开始前添加标题、设置样式
-% ================================================== %
 
 
 % --------------- 钩子 --------------- %
@@ -2045,87 +2047,166 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 }
 %% ==================== %
 
-%% --------------- 不同学位模式下，设置正文样式的时机不同 --------------- %
-\if@dlmuthesis@BAstem %【本科-理工科】
-  \pretocmd{\pesudohookOFpremainbody}{
-    \cntitleinMAINBODY
-    \pagestyle{fancy} %从第一章到致谢，设置为有页眉、有页脚的模式
-    \fancyhead[C]{\zihao{-5}\dlmuthesis@tokens@cntitle}
-    \pagenumbering{arabic} %《手册》要求：从正文开始设为阿拉伯数字页码，并且重新从1开始计数
-  }{}{\ClassError{dlmuthesis}{Execution exception for\MessageBreak pesudo-hook '\protect\pesudohookOFpremainbody\space'.}{}}
-\else\if@dlmuthesis@BAhumanities %【本科-人文社科】
-  \pretocmd{\pesudohookOFpremainbody}{
-    \cntitleinMAINBODY
-    \pagestyle{fancy} %从第一章到致谢，设置为有页眉、有页脚的模式
-    \fancyhead[C]{\zihao{-5}\dlmuthesis@tokens@cntitle}
-    \pagenumbering{arabic} %《手册》要求：从正文开始设为阿拉伯数字页码，并且重新从1开始计数
-  }{}{\ClassError{dlmuthesis}{Execution exception for\MessageBreak pesudo-hook '\protect\pesudohookOFpremainbody\space'.}{}}
-\else\if@dlmuthesis@MA %【硕士】
-  \pretocmd{\pesudohookOFpremainbody}{
-    \pagenumbering{arabic} %《规范》要求：从正文开始设为阿拉伯数字页码，并且重新从1开始计数
-  }{}{\ClassError{dlmuthesis}{Execution exception for\MessageBreak pesudo-hook '\protect\pesudohookOFpremainbody\space'.}{}}
-\else\if@dlmuthesis@MAlaw %【硕士-法学/法律】
-  \pretocmd{\pesudohookOFpremainbody}{
-    \pagenumbering{arabic} %《规范》要求：从正文开始设为阿拉伯数字页码，并且重新从1开始计数
-  }{}{\ClassError{dlmuthesis}{Execution exception for\MessageBreak pesudo-hook '\protect\pesudohookOFpremainbody\space'.}{}}
-\else\if@dlmuthesis@MAmarxism %【硕士-马克思主义理论】
-  \pretocmd{\pesudohookOFpremainbody}{
-    \pagenumbering{arabic} %《规范》要求：从正文开始设为阿拉伯数字页码，并且重新从1开始计数
-  }{}{\ClassError{dlmuthesis}{Execution exception for\MessageBreak pesudo-hook '\protect\pesudohookOFpremainbody\space'.}{}}
-\else\if@dlmuthesis@DOC %【博士】
-  \pretocmd{\pesudohookOFpremainbody}{
-    \pagestyle{fancy}
-    \fancyhead[COH]{\zihao{5}\leftmark}
-    \fancyhead[CEH]{\zihao{5}\dlmuthesis@tokens@cntitle}
-    \pagenumbering{arabic} %《规范》要求：从正文开始设为阿拉伯数字页码，并且重新从1开始计数
-  }{}{\ClassError{dlmuthesis}{Execution exception for\MessageBreak pesudo-hook '\protect\pesudohookOFpremainbody\space'.}{}}
-\else\if@dlmuthesis@DOClaw %【博士-法学/法律】
-  \pretocmd{\pesudohookOFpremainbody}{
-    \pagenumbering{arabic} %《规范》要求：从正文开始设为阿拉伯数字页码，并且重新从1开始计数
-  }{}{\ClassError{dlmuthesis}{Execution exception for\MessageBreak pesudo-hook '\protect\pesudohookOFpremainbody\space'.}{}}
-\else\if@dlmuthesis@DOCmarxism %【博士-马克思主义理论】
-  \pretocmd{\pesudohookOFpremainbody}{
-    \pagenumbering{arabic} %《规范》要求：从正文开始设为阿拉伯数字页码，并且重新从1开始计数
-  }{}{\ClassError{dlmuthesis}{Execution exception for\MessageBreak pesudo-hook '\protect\pesudohookOFpremainbody\space'.}{}}
-\fi\fi\fi\fi\fi\fi\fi\fi
-%% ======================================================= %
-
-
 %% --------------- 参考文献列表前后的样式设置 --------------- %
-\BeforeBeginEnvironment{thebibliography}{
-\phantomsection
-\addcontentsline{toc}{section}{参~ 考~ 文~ 献} %不能放在导言区
-\vspace*{0pt}
-}{\typeout{succeeds: pre-style of env thebibliography}}{\typeout{fails: pre-style of env thebibliography}}
+\AddToHook{env/thebibliography/before}{
+  \phantomsection
+  \addcontentsline{toc}{section}{参~ 考~ 文~ 献} %不能放在导言区
+  \vspace*{0pt}
+}
 
 \if@dlmuthesis@MAlaw %【硕士-法学/法律】
-  \AtBeginEnvironment{thebibliography}{
-    \ctexset{
-       subsubsection={
-         format = {\zihao{-4}\bfseries},
-         indent = {1em}
-       }
+  \AddToHook{env/thebibliography/begin}{
+    \AddToHook{cmd/subsection/before}[subsection_in_bib]{
+      \addtocontents{toc}{\protect\setcounter{tocdepth}{0}}
+      \ctexset{
+        subsection={
+          format = {\zihao{-4}\bfseries},
+          name={,、},
+          aftername={},
+          number={\chinese{subsection}},
+          indent = {1em}
+        }
+      }
+      \makeatletter
+      \global\setcounter{NAT@ctr}{0}
+      \makeatother
+      \addtocontents{toc}{\protect\setcounter{tocdepth}{1}}
+    }
+    \AddToHook{cmd/subsubsection/before}[subsubsection_in_bib]{
+      \addtocontents{toc}{\protect\setcounter{tocdepth}{0}}
+      \ctexset{
+        subsubsection={
+          format = {\zihao{-4}\bfseries},
+          name={（,）},
+          aftername={},
+          number={\chinese{subsubsection}},
+          indent = {1em}
+        }
+      }
+      \makeatletter
+      \global\setcounter{NAT@ctr}{0}
+      \makeatother
+      \addtocontents{toc}{\protect\setcounter{tocdepth}{1}}
     }
   }
 \else\if@dlmuthesis@MAmarxism %【硕士-马克思主义理论】
-  \AtBeginEnvironment{thebibliography}{
-    \ctexset{
-       subsubsection={
-         format = {\zihao{-4}\bfseries},
-         indent = {1em}
-       }
+  \AddToHook{env/thebibliography/begin}{
+      \AddToHook{cmd/subsection/before}[subsection_in_bib]{
+        \addtocontents{toc}{\protect\setcounter{tocdepth}{0}}
+        \ctexset{
+          subsection={
+            format = {\zihao{-4}\bfseries},
+            name={,、},
+            aftername={},
+            number={\chinese{subsection}},
+            indent = {1em}
+          }
+        }
+        \makeatletter
+        \global\setcounter{NAT@ctr}{0}
+        \makeatother
+        \addtocontents{toc}{\protect\setcounter{tocdepth}{1}}
+      }
+      \AddToHook{cmd/subsubsection/before}[subsubsection_in_bib]{
+        \addtocontents{toc}{\protect\setcounter{tocdepth}{0}}
+        \ctexset{
+          subsubsection={
+            format = {\zihao{-4}\bfseries},
+            name={（,）},
+            aftername={},
+            number={\chinese{subsubsection}},
+            indent = {1em}
+          }
+        }
+        \makeatletter
+        \global\setcounter{NAT@ctr}{0}
+        \makeatother
+        \addtocontents{toc}{\protect\setcounter{tocdepth}{1}}
+      }
+  }
+  \AddToHook{env/thebibliography/end}{
+    \RemoveFromHook{cmd/subsection/before}[subsection_in_bib]
+    \RemoveFromHook{cmd/subsubsection/before}[subsubsection_in_bib]
+  }
+\else\if@dlmuthesis@DOClaw %【博士-法学/法律】
+  \AddToHook{env/thebibliography/begin}{
+    \AddToHook{cmd/subsection/before}[subsection_in_bib]{
+      \addtocontents{toc}{\protect\setcounter{tocdepth}{0}}
+      \ctexset{
+        subsection={
+          format = {\zihao{-4}\bfseries},
+          name={,、},
+          aftername={},
+          number={\chinese{subsection}},
+          indent = {1em}
+        }
+      }
+      \makeatletter
+      \global\setcounter{NAT@ctr}{0}
+      \makeatother
+      \addtocontents{toc}{\protect\setcounter{tocdepth}{1}}
     }
+    \AddToHook{cmd/subsubsection/before}[subsubsection_in_bib]{
+      \addtocontents{toc}{\protect\setcounter{tocdepth}{0}}
+      \ctexset{
+        subsubsection={
+          format = {\zihao{-4}\bfseries},
+          name={（,）},
+          aftername={},
+          number={\chinese{subsubsection}},
+          indent = {1em}
+        }
+      }
+      \makeatletter
+      \global\setcounter{NAT@ctr}{0}
+      \makeatother
+      \addtocontents{toc}{\protect\setcounter{tocdepth}{1}}
+    }
+  }
+  \AddToHook{env/thebibliography/end}{
+  \RemoveFromHook{cmd/subsection/before}[subsection_in_bib]
+  \RemoveFromHook{cmd/subsubsection/before}[subsubsection_in_bib]
   }
 \else\if@dlmuthesis@DOCmarxism %【博士-马克思主义理论】
-  \AtBeginEnvironment{thebibliography}{
-    \ctexset{
-       subsubsection={
-         format = {\zihao{-4}\bfseries},
-         indent = {1em}
-       }
+  \AddToHook{env/thebibliography/begin}{
+    \AddToHook{cmd/subsection/before}[subsection_in_bib]{
+      \addtocontents{toc}{\protect\setcounter{tocdepth}{0}}
+      \ctexset{
+        subsection={
+          format = {\zihao{-4}\bfseries},
+          name={,、},
+          aftername={},
+          number={\chinese{subsection}},
+          indent = {1em}
+        }
+      }
+      \makeatletter
+      \global\setcounter{NAT@ctr}{0}
+      \makeatother
+      \addtocontents{toc}{\protect\setcounter{tocdepth}{1}}
+    }
+    \AddToHook{cmd/subsubsection/before}[subsubsection_in_bib]{
+      \addtocontents{toc}{\protect\setcounter{tocdepth}{0}}
+      \ctexset{
+        subsubsection={
+          format = {\zihao{-4}\bfseries},
+          name={（,）},
+          aftername={},
+          number={\chinese{subsubsection}},
+          indent = {1em}
+        }
+      }
+      \makeatletter
+      \global\setcounter{NAT@ctr}{0}
+      \makeatother
+      \addtocontents{toc}{\protect\setcounter{tocdepth}{1}}
     }
   }
-\fi\fi\fi
+  \AddToHook{env/thebibliography/end}{
+  \RemoveFromHook{cmd/subsection/before}[subsection_in_bib]
+  \RemoveFromHook{cmd/subsubsection/before}[subsubsection_in_bib]
+  }
+\fi\fi\fi\fi
 %% ======================================================= %
 
 %% ---------- 硕博论文中，附录章节标题需居中对齐，但全文是居左 ---------- %
@@ -2254,7 +2335,3 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 }
 % =================================== %
 
-
-% --------------- 超链接与交叉引用 --------------- %
-\RequirePackage[hidelinks, bookmarksnumbered=true, breaklinks=true, bookmarksopen=true]{hyperref}
-% ======================================== %
