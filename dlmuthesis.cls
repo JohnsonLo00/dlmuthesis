@@ -240,9 +240,9 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \renewcommand\theparagraph{\arabic{paragraph}} %重设四级标题计数器格式
 \ctexset{
   abstractname = {\zihao{-3}\heiti 摘\hspace{2em}要},
-  contentsname = \hfill{\heiti\zihao{-3}目\hspace{2em}录}\hfill,
-  listfigurename = \hfill{\songti\zihao{-3}图目录}\hfill,
-  listtablename = \hfill{\songti\zihao{-3}表目录}\hfill,
+  contentsname = \hfill{\heiti\zihao{-3}\hspace{-2em}目\hspace{2em}录}\hfill,
+  listfigurename = \hfill{\songti\zihao{-3}\hspace{-2em}图目录}\hfill,
+  listtablename = \hfill{\songti\zihao{-3}\hspace{-2em}表目录}\hfill,
   bibname = \hfill{\zihao{-3}参~ 考~ 文~ 献}\hfill,
   section = {
     format = {\zihao{-3}\heiti},
@@ -335,9 +335,9 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \renewcommand\theparagraph{\arabic{paragraph}} %重设四级标题计数器格式
 \ctexset{
   abstractname = {\zihao{-3}\heiti 摘\hspace{2em}要},
-  contentsname = \hfill{\heiti\zihao{-3}目\hspace{2em}录}\hfill,
-  listfigurename = \hfill{\songti\zihao{-3}图目录}\hfill,
-  listtablename = \hfill{\songti\zihao{-3}表目录}\hfill,
+  contentsname = \hfill{\heiti\zihao{-3}\hspace{-2em}目\hspace{2em}录}\hfill,
+  listfigurename = \hfill{\songti\zihao{-3}\hspace{-2em}图目录}\hfill,
+  listtablename = \hfill{\songti\zihao{-3}\hspace{-2em}表目录}\hfill,
   bibname = \hfill{\heiti\zihao{-3}参考文献}\hfill,
   section = {
     format = {\zihao{-3}\heiti},
@@ -740,30 +740,54 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \fi\fi
 %% =================================== %
 %% ----- 硕博论文中，目录到图(/表)目录之间需翻页+添加大标题 ----- %
-\newcommand\aftertoc{
-  % 本科模式：no actions
-  \if@dlmuthesis@MA %【硕士】
-    \clearpage
-    \begin{center}\heiti\zihao{-3}图表目录\end{center}
-  \else\if@dlmuthesis@MAlaw %【硕士-法学/法律】
-    \clearpage
-    \begin{center}\heiti\zihao{-3}图表目录\end{center}
-  \else\if@dlmuthesis@MAmarxism %【硕士-马克思主义理论】
-    \clearpage
-    \begin{center}\heiti\zihao{-3}图表目录\end{center}
-  \else\if@dlmuthesis@DOC %【博士】
-    \clearpage
-    \begin{center}\heiti\zihao{-3}图表目录\end{center}
-    % 同时，奇数页为“图表目录”，偶数页为论文中文题目：
-    \fancyhead[COH]{\zihao{5}图表目录}
-    \fancyhead[CEH]{\zihao{5}\dlmuthesis@tokens@cntitle}
-  \else\if@dlmuthesis@DOClaw %【博士-法学/法律】
-    \clearpage
-    \begin{center}\heiti\zihao{-3}图表目录\end{center}
-  \else\if@dlmuthesis@DOCmarxism %【博士-马克思主义理论】
-    \clearpage
-    \begin{center}\heiti\zihao{-3}图表目录\end{center}
-  \fi\fi\fi\fi\fi\fi
+\newcounter{bigtitle}
+\setcounter{bigtitle}{0}
+
+\AddToHook{cmd/listoffigures/before}[AddBigTitle]{
+  \ifnum\value{bigtitle}=0
+    \if@dlmuthesis@BAstem %【本科-理工科】
+      \typeout{BAstem: no list of figures or tables after toc}
+    \else\if@dlmuthesis@BAhumanities %【本科-人文社科】
+      \typeout{BAhumanities: no list of figures or tables after toc}
+    \else\if@dlmuthesis@DOC %【博士】%额外需要修改页眉样式
+      \clearpage
+      \begin{center}\heiti\zihao{-3}图表目录\end{center}
+      % 同时，奇数页为“图表目录”，偶数页为论文中文题目：
+      \fancyhead[COH]{\zihao{5}图表目录}
+      \fancyhead[CEH]{\zihao{5}\dlmuthesis@tokens@cntitle}
+    \else
+      \clearpage
+      \begin{center}\heiti\zihao{-3}图表目录\end{center}
+    \fi\fi\fi
+    \stepcounter{bigtitle}
+  \fi % bigtitle 数值判断
+}
+\AddToHook{cmd/listoftables/before}[AddBigTitle]{
+  \ifnum\value{bigtitle}=0
+    \if@dlmuthesis@BAstem %【本科-理工科】
+      \typeout{BAstem: no list of figures or tables after toc}
+    \else\if@dlmuthesis@BAhumanities %【本科-人文社科】
+      \typeout{BAhumanities: no list of figures or tables after toc}
+    \else\if@dlmuthesis@DOC %【博士】%额外需要修改页眉样式
+      \clearpage
+      \begin{center}\heiti\zihao{-3}图表目录\end{center}
+      % 同时，奇数页为“图表目录”，偶数页为论文中文题目：
+      \fancyhead[COH]{\zihao{5}图表目录}
+      \fancyhead[CEH]{\zihao{5}\dlmuthesis@tokens@cntitle}
+    \else
+      \clearpage
+      \begin{center}\heiti\zihao{-3}图表目录\end{center}
+    \fi\fi\fi
+    \stepcounter{bigtitle}
+  \else
+    \if@dlmuthesis@BAstem %【本科-理工科】
+      \typeout{BAstem: no list of figures or tables after toc}
+    \else\if@dlmuthesis@BAhumanities %【本科-人文社科】
+      \typeout{BAhumanities: no list of figures or tables after toc}
+    \else
+      ~\vspace{36pt} %图目录与表目录之间需要间隔些距离
+    \fi\fi
+  \fi % bigtitle 数值判断
 }
 %% ============================================================= %
 %% ---------- 图目录样式 ---------- %
@@ -1600,7 +1624,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
       \ifthenelse{\equal{#1}{abstractINNOVATION}}{ %创新点摘要页
         \setcounter{abstractINNOVATIONend}{\value{page}}
         \setcounter{abstractINNOVATIONdif}{\numexpr\value{abstractINNOVATIONend}-\value{abstractINNOVATIONbegin}+1\relax}
-%      【\theabstractCNbegin】【\theabstractCNend】【\theabstractCNdif】%【脚手架：暂时添加】
+%      【\theabstractCNbegin】【\theabstractCNend】【\theabstractCNdif】
         \ifthenelse{\isodd{\value{abstractINNOVATIONdif}}}{
           \clearpage
           \addtocounter{page}{-1}
@@ -1625,7 +1649,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
         \else
           \setcounter{abstractCNend}{\value{page}}
           \setcounter{abstractCNdif}{\numexpr\value{abstractCNend}-\value{abstractCNbegin}+1\relax}
-%        【\theabstractCNbegin】【\theabstractCNend】【\theabstractCNdif】%【脚手架：暂时添加】
+%        【\theabstractCNbegin】【\theabstractCNend】【\theabstractCNdif】
           \ifthenelse{\isodd{\value{abstractCNdif}}}{
             \clearpage
             \addtocounter{page}{-1}
@@ -1644,7 +1668,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
       \else
         \setcounter{abstractENend}{\value{page}}
         \setcounter{abstractENdif}{\numexpr\value{abstractENend}-\value{abstractENbegin}+1\relax}
-%      【\theabstractENbegin】【\theabstractENend】【\theabstractENdif】%【脚手架：暂时添加】
+%      【\theabstractENbegin】【\theabstractENend】【\theabstractENdif】
         \ifthenelse{\isodd{\value{abstractENdif}}}{
           \clearpage
           \addtocounter{page}{-1}
@@ -1662,7 +1686,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
         \else
           \setcounter{tocsend}{\value{page}}
           \setcounter{tocsdif}{\numexpr\value{tocsend}-\value{tocsbegin}+1\relax}
-%        【\thetocsbegin】【\thetocsend】【\thetocsdif】%【脚手架：暂时添加】
+%        【\thetocsbegin】【\thetocsend】【\thetocsdif】
           \ifthenelse{\isodd{\value{tocsdif}}}{
             \clearpage
             \addtocounter{page}{-1}
