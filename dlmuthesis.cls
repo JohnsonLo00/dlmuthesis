@@ -219,7 +219,6 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 }
 \else\if@dlmuthesis@MA %【硕士】
 \ctexset{
-  abstractname = {\zihao{-3}\heiti 摘\hspace{2em}要},
   contentsname = \hfill{\heiti\zihao{-3}目\hspace{2em}录}\hfill,
   listfigurename = \hfill{\songti\zihao{-3}图目录}\hfill,
   listtablename = \hfill{\songti\zihao{-3}表目录}\hfill,
@@ -227,18 +226,27 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   section = {
     format = {\zihao{-3}\heiti},
     name = {,},
+    aftername={\hspace{1em}},
     beforeskip=0pt,
     afterskip=1em,
   },
   subsection = {
     format = {\zihao{4}\heiti},
+    aftername={\hspace{1em}},
     beforeskip=0.5em,
     afterskip=0.5em,
   },
   subsubsection = {
     format = {\zihao{-4}\heiti},
+    aftername={\hspace{1em}},
     beforeskip=0.5em,
     afterskip=0.5em,
+  },
+  paragraph = {
+    format = {\zihao{-4}\heiti},
+    aftername={\hspace{1em}},
+    beforeskip={0.5ex plus 1ex minus 0.2ex},
+    afterskip={0.5ex plus 0.2ex},
   },
   appendix={
     name = {附录,},
@@ -466,12 +474,11 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \newcommand{\sdtID}[1]{\renewcommand{\dlmuthesis@tokens@sdtID}{#1}} %【学号】
 \NewDocumentCommand{\majorinCOVERPAGE}{o m}{
   \IfNoValueTF{#1}{}{
-    \ifthenelse{\equal{#1}{MEng}}{
+    \ifthenelse{\equal{#1}{engineering}}{
       \renewcommand{\dlmuthesis@tokens@headermajoir}{工\hfill 程\hfill 领\hfill 域}
       }{
-        \ClassError{Invalid option in command '\protect\majorinCOVERPAGE\space'.}{
-          Only 'MEng' is valid.
-        }
+        \ClassError{Invalid option in command '\protect\majorinCOVERPAGE\space'}{
+          Only 'engineering' is valid}
       }
     }
   \renewcommand{\dlmuthesis@tokens@majorinCOVERPAGE}{#2}
@@ -966,17 +973,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \RequirePackage{titlesec}
 \setcounter{secnumdepth}{4}
 
-\if@dlmuthesis@MA %【硕士】
-  \titleformat{\paragraph}
-    {\normalsize\heiti} %字体
-    {\theparagraph} %标题前的标签
-    {1em} %标题和标签之间的间距
-    {} %标题前没有额外的命令或内容
-  \titlespacing{\paragraph}
-    {0pt} %标题左间距
-    {0.5ex plus 1ex minus 0.2ex} %标题上间距
-    {0.5ex plus 0.2ex} %标题下间距
-\else\if@dlmuthesis@MAlaw %【硕士-法学/法律】
+\if@dlmuthesis@MAlaw %【硕士-法学/法律】
   \titleformat{\paragraph}
     {\normalsize\heiti} %字体
     {（\theparagraph）} %标题前的标签
@@ -1026,7 +1023,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     {2em} %标题左间距
     {0.5ex plus 1ex minus 0.2ex} %标题上间距
     {0.5ex plus 0.2ex} %标题下间距
-\fi\fi\fi\fi\fi\fi
+\fi\fi\fi\fi\fi
 
 \newcommand{\fourthsection}[1]{\paragraph{#1}} %将命令\paragraph改名为四级标题
 % ============================================================ %
@@ -1035,7 +1032,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 % --------------- 图、表标题样式 --------------- %
 \RequirePackage{caption}
 \RequirePackage[labelformat=brace]{subcaption} % 使子图环境中的标题变成副标题样式
-\RequirePackage[list=off]{bicaption} %同时含中英文的标题
+\RequirePackage[list=off]{bicaption} %同时含中英文的标题（同时取消英文标题在图标目录中的导入）
 \if@dlmuthesis@BAstem %【本科-理工科】
   \DeclareCaptionLabelSeparator{doublespace}{~~}
   \captionsetup{font=small, labelsep=doublespace, labelfont=bf, textfont=bf}
@@ -1298,22 +1295,22 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 % ------------------------- 参考文献 ------------------------- %
 \RequirePackage[numbers,square,comma]{natbib}
-\setlength{\bibsep}{0ex}
+\setlength{\bibsep}{0bp}
 \bibliographystyle{thuthesis-bachelor} %借鉴使用：清华大学(本科)学位论文模板bst样式文件
 \renewcommand{\bibfont}{\zihao{5}} % 参考文献条目字号要求
 
-\NewDocumentCommand{\upcite}{O{} m}{
-  $^{\mbox{\footnotesize\cite{#2}}#1}${}
-} %上标形式的引用（可选参数：页码）
+%% 上标形式的引用（可选参数：页码）
+\NewDocumentCommand{\upcite}{O{} m}{$^{\mbox{\footnotesize\cite{#2}}#1}${}}
+%% 附录中的文献引用格式
 \if@dlmuthesis@MAlaw %【硕士-法学/法律】
-  \newcommand{\apdxcite}[1]{\citep[\chinese{section},~\hspace{-3bp}][]{#1}} %附录中所使用，适用于“章节编号+文献序号”的格式
-  \newcommand{\upapdxcite}[1]{$^{\mbox{\footnotesize\apdxcite{#1}}}${}} %附录中所使用，动机与\upcite命令的类似
+  \newcommand{\apdxcite}[1]{\citep[\chinese{section},~\hspace{-3bp}][]{#1}} %适用于“章节编号+文献序号”的格式
+  \newcommand{\upapdxcite}[1]{$^{\mbox{\footnotesize\apdxcite{#1}}}${}} %动机与\upcite命令的类似
 \else\if@dlmuthesis@DOClaw %【博士-法学/法律】
-  \newcommand{\apdxcite}[1]{\citep[\chinese{section},~\hspace{-3bp}][]{#1}} %附录中所使用，适用于“章节编号+文献序号”的格式
-  \newcommand{\upapdxcite}[1]{$^{\mbox{\footnotesize\apdxcite{#1}}}${}} %附录中所使用，动机与\upcite命令的类似
-\else
-  \newcommand{\apdxcite}[1]{\citep[\thesection\hspace{-3bp}][]{#1}} %[硕士]的附录中所使用，适用于“章节编号+文献序号”的格式
-  \newcommand{\upapdxcite}[1]{$^{\mbox{\footnotesize\apdxcite{#1}}}${}} %[硕士]的附录中所使用，动机与\upcite命令的类似
+  \newcommand{\apdxcite}[1]{\citep[\chinese{section},~\hspace{-3bp}][]{#1}} %适用于“章节编号+文献序号”的格式
+  \newcommand{\upapdxcite}[1]{$^{\mbox{\footnotesize\apdxcite{#1}}}${}} %动机与\upcite命令的类似
+\else %【硕士】
+  \newcommand{\apdxcite}[1]{\citep[\thesection\hspace{-3bp}][]{#1}} %适用于“章节编号+文献序号”的格式
+  \newcommand{\upapdxcite}[1]{$^{\mbox{\footnotesize\apdxcite{#1}}}${}} %动机与\upcite命令的类似
 \fi\fi
 
 %% ---------- 特殊参考文献规范 ---------- %
@@ -1421,15 +1418,21 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     \cfoot{\zihao{-5} \thepage}
     \pagenumbering{Roman}
   \else\if@dlmuthesis@MA %【硕士】
+    \renewcommand\abstractname{\zihao{-3}\heiti 摘\hspace{2em}要}
     %奇数页为“大连海事大学硕士学位论文”，偶数页为论文中文题目：
     \pagestyle{fancy}
     \fancyhead[COH]{\zihao{5}大连海事大学{\headerinHEADER}学位论文}
     \fancyhead[CEH]{\zihao{5}\dlmuthesis@tokens@cntitle}
     \cfoot{\zihao{-5}--~\thepage~--}
     \pagenumbering{Roman}
-    \setcounter{abstractCNbegin}{\value{page}} %涉及打印模式
     \phantomsection
     \addcontentsline{toc}{section}{摘\hspace{2em}要}
+    %%% 打印模式下，[硕士]的（中文）摘要部分需单面打印
+    \if@dlmuthesis@printed % 打印模式下才操作
+      %%% ----- 开始插入空白页 ----- %
+      \AddToHook{shipout/after}[BlankPages]{\RawShipout\null}
+      %%% ========================= %
+    \fi
   \else\if@dlmuthesis@MAlaw %【硕士-法学/法律】
     %奇数页为“大连海事大学硕士学位论文”，偶数页为论文中文题目：
     \pagestyle{fancy}
@@ -1455,7 +1458,6 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     \fancyhead[CEH]{\zihao{5}\dlmuthesis@tokens@cntitle}
     \cfoot{\zihao{-5}--~\thepage~--}
     \pagenumbering{Roman}
-    \setcounter{abstractCNbegin}{\value{page}} %涉及打印模式
     \phantomsection
     \addcontentsline{toc}{section}{摘\hspace{2em}要}
     %%% 打印模式下，[博士]的（中文）摘要部分需单面打印
@@ -1588,9 +1590,9 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 }
 %% ======================================================= %
 
-%% ----- 硕博论文中，要根据作者简历页最后一页奇偶来决定授权声明之后是否要加空页 ----- %
+%% ----- 硕博论文中，要根据作者简历页最后一页奇偶来决定授权声明的[前后]是否要加空页 ----- %
 \newcommand{\presetupOFachievement}{
-  \setcounter{achievementlastpage}{\value{page}}
+  \setcounter{achievementlastpage}{\value{page}} %涉及打印模式
 }
 %% =========================================================================== %
 % ================================================== %
@@ -1624,7 +1626,12 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
         }{\clearpage}
       }{}
       \ifthenelse{\equal{#1}{abstractCN}}{ %中文摘要页
-        \if@dlmuthesis@DOC %【博士】
+        \if@dlmuthesis@MA %【硕士】
+          \clearpage
+          %%% ----- 停止插入空白页 ----- %
+          \RemoveFromHook{shipout/after}[BlankPages]
+          %%% ========================= %        
+        \else\if@dlmuthesis@DOC %【博士】
           \clearpage
           %%% ----- 停止插入空白页 ----- %
           \RemoveFromHook{shipout/after}[BlankPages]
@@ -1647,7 +1654,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
             \mbox{}
             \clearpage
           }{\clearpage}
-        \fi\fi\fi
+        \fi\fi\fi\fi
       }{}
       \ifthenelse{\equal{#1}{abstractEN}}{ %英文摘要页
       \if@dlmuthesis@DOClaw %【博士-法学/法律】
@@ -1802,7 +1809,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   \begin{center}
   {\zihao{2}\heiti\dlmuthesis@tokens@cntitle}\\
   {\zihao{3}\bfseries\dlmuthesis@tokens@entitle}
-  \end{center}{}\vspace{132.0bp}
+  \end{center}{}\vspace{132.0bp minus 38.0bp}
 
   \begin{table}[H]
     \centering
@@ -1826,7 +1833,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
       答\hfill 辩\hfill 时\hfill 间： & \dlmuthesis@tokens@completiondate \\
       \cline{2-2}
     \end{tabular}
-  \end{table}{}\vspace{24.0bp}
+  \end{table}{}\vspace{2em}
 
   \begin{figure}[H]
     \centering
@@ -1964,7 +1971,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \titleOFOriginalityStatement
 \end{spacing}\end{center}{}\vspace{-24bp}
 \begin{spacing}{1.5}
-本人郑重声明：所呈交的学位论文，是本人在导师的指导下进行研究工作所取得的成果。尽我所知，除文中已经注明引用内容和致谢的地方外，本论文不包含任何其他个人或集体已经发表或撰写过的研究成果。对论文所涉及的研究工作做出贡献的其他个人和集体，均已在论文中以明确的方式标明或致谢。\vspace{12.0bp}
+本人郑重声明：所呈交的学位论文，是本人在导师的指导下进行研究工作所取得的成果。尽我所知，除文中已经注明引用内容和致谢的地方外，本论文不包含任何其他个人或集体已经发表或撰写过的研究成果。对论文所涉及的研究工作做出贡献的其他个人和集体，均已在论文中以明确的方式标明或致谢。\vspace{1em}
 
 若有不实之处，本人愿意承担相关法律责任。
 \end{spacing}%
@@ -1980,7 +1987,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 %% ---------- 元内容 - 授权使用声明 ---------- %
 \newcommand{\titleOFAuthorizationStatement}{
-\zihao{-2}\heiti 大连海事大学学位论文授权使用声明
+\zihao{3}\heiti 大连海事大学学位论文授权使用声明
 }
 \newcommand{\metaAuthorizationStatement}{
 \begin{center}\begin{spacing}{1.5}
@@ -2021,7 +2028,13 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \fancyfoot{}
 ~\vspace{1em}
 \metaAuthorizationStatement
-\nextpages{single}
+\if@dlmuthesis@MA %【硕士】
+  \if@dlmuthesis@printed % [硕士]、打印模式下才要换页
+    \nextpages{single}
+  \fi
+\else
+  \nextpages{single}
+\fi
 }
 %% ================================================== %
 
@@ -2226,7 +2239,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 %% ---------- 硕博论文中，附录章节标题需居中对齐，但全文是居左 ---------- %
 %% ----- 特别的，博士论文中，奇数页页眉为每部分名称，偶数页为论文中文题目 ----- %
 \if@dlmuthesis@BAstem %【本科-理工科】
-  \AtBeginEnvironment{appendices}{
+  \AddToHook{env/appendices/begin}[title_fontzise_in_appendix]{
     \pagestyle{plain} %《手册》要求：从附录页开始，去掉页眉
     \ctexset{
       section = {
@@ -2240,8 +2253,11 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     \pagenumbering{arabic} %《手册》要求：摘要部分页码单独计数  
     \zihao{5}
   }
+  \AddToHook{env/appendices/end}{
+    \RemoveFromHook{env/appendices/begin}[title_fontzise_in_appendix]
+  }
 \else\if@dlmuthesis@BAhumanities %【本科-人文社科】
-  \AtBeginEnvironment{appendices}{
+  \AddToHook{env/appendices/begin}[title_fontzise_in_appendix]{
     \pagestyle{plain} %《手册》要求：从附录页开始，去掉页眉
     \ctexset{
       section = {
@@ -2255,16 +2271,24 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     \pagenumbering{arabic} %《手册》要求：摘要部分页码单独计数  
     \zihao{5}
   }
+  \AddToHook{env/appendices/end}{
+    \RemoveFromHook{env/appendices/begin}[title_fontzise_in_appendix]
+  }
 \else\if@dlmuthesis@MA %【硕士】
-  \AtBeginEnvironment{appendices}{
+  \AddToHook{env/appendices/begin}[title_fontzise_in_appendix]{
     \ctexset{
       section = {
         format = \zihao{-3}\heiti\centering,
         name = {附录~,},
         number = {\thesection},
+        beforeskip=1ex,
+        afterskip=1ex,
       }
     }
     \zihao{-4}
+  }
+  \AddToHook{env/appendices/end}{
+    \RemoveFromHook{env/appendices/begin}[title_fontzise_in_appendix]
   }
 \else\if@dlmuthesis@MAlaw %【硕士-法学/法律】
   \AtBeginEnvironment{appendices}{
