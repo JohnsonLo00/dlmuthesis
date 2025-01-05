@@ -146,9 +146,10 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \RequirePackage{totcount}
 
 \if@dlmuthesis@BAstem %【本科-理工科】
+\newcommand{\ValOfBibname}{参~ 考~ 文~ 献} %【脚手架：全部都要变】
 \ctexset{
   contentsname = \hfill{\zihao{3}目\hspace{2em}录}\hfill,
-  bibname = \hfill{\zihao{3}参~ 考~ 文~ 献}\hfill,
+  bibname = \hfill{\zihao{3}\ValOfBibname}\hfill,
   section = {
     format = {\zihao{3}\bfseries},
     name = {第,章},
@@ -168,7 +169,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 	  beforeskip=0.5ex,
     afterskip=0.5ex,
   },
-  paragraph = {
+  paragraph = { %【脚手架：全部都要变】
     format = {\zihao{-4}\bfseries},
     aftername={~},
     beforeskip={0.5ex plus 1ex minus 0.2ex},
@@ -176,12 +177,13 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   }
 }
 \else\if@dlmuthesis@BAhumanities %【本科-人文社科】
+\newcommand{\ValOfBibname}{参~ 考~ 文~ 献}
 \renewcommand\thesubsection{\arabic{subsection}} %重设二级标题计数器格式
 \renewcommand\thesubsubsection{\arabic{subsubsection}} %重设三级标题计数器格式
 \renewcommand\theparagraph{\arabic{paragraph}} %重设四级标题计数器格式
 \ctexset{
   contentsname = \hfill{\zihao{3}\hspace{-2em}目\hspace{2em}录}\hfill,
-  bibname = \hfill{\zihao{3}参~ 考~ 文~ 献}\hfill,
+  bibname = \hfill{\zihao{3}\ValOfBibname}\hfill,
   section = {
     format = {\zihao{3}\bfseries},
     name = {,、},
@@ -218,11 +220,12 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   }
 }
 \else\if@dlmuthesis@MA %【硕士】
+\newcommand{\ValOfBibname}{参~ 考~ 文~ 献}
 \ctexset{
   contentsname = \hfill{\heiti\zihao{-3}目\hspace{2em}录}\hfill,
   listfigurename = \hfill{\songti\zihao{-3}图目录}\hfill,
   listtablename = \hfill{\songti\zihao{-3}表目录}\hfill,
-  bibname = \hfill{\zihao{-3}参~ 考~ 文~ 献}\hfill,
+  bibname = \hfill{\zihao{-3}\ValOfBibname}\hfill,
   section = {
     format = {\zihao{-3}\heiti},
     name = {,},
@@ -253,17 +256,17 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   }
 }
 \else\if@dlmuthesis@MAlaw %【硕士-法学/法律】
+\newcommand{\ValOfBibname}{参考文献}
 \renewcommand\thesubsection{\arabic{subsection}} %重设二级标题计数器格式
 \renewcommand\thesubsubsection{\arabic{subsubsection}} %重设三级标题计数器格式
 \renewcommand\theparagraph{\arabic{paragraph}} %重设四级标题计数器格式
 \ctexset{
-  abstractname = {\zihao{-3}\heiti 摘\hspace{2em}要},
   contentsname = \hfill{\heiti\zihao{-3}\hspace{-2em}目\hspace{2em}录}\hfill,
   listfigurename = \hfill{\songti\zihao{-3}\hspace{-2em}图目录}\hfill,
   listtablename = \hfill{\songti\zihao{-3}\hspace{-2em}表目录}\hfill,
-  bibname = \hfill{\zihao{-3}参~ 考~ 文~ 献}\hfill,
+  bibname = \hfill{\zihao{-3}\ValOfBibname}\hfill,
   section = {
-    format = {\zihao{-3}\heiti},
+    format = {\zihao{-4}\heiti},
     name = {,、},
     number = \chinese{section},
     aftername = {},
@@ -273,7 +276,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     afterskip=0.5em,
   },
   subsection = {
-    format = {\zihao{4}\heiti},
+    format = {\zihao{-4}\heiti},
     name = {（,）},
     number = \chinese{subsection},
     aftername = {},
@@ -288,6 +291,14 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     indent = 2em,
     beforeskip=0.5em,
     afterskip=0.5em,
+  },
+  paragraph = {
+    format = {\zihao{-4}\heiti},
+    name = {（,）},
+    aftername = {},
+    indent = 2em,
+    beforeskip={0.5ex plus 1ex minus 0.2ex},
+    afterskip={0.5ex plus 0.2ex},
   },
   appendix={
     name = {附录,},
@@ -973,17 +984,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \RequirePackage{titlesec}
 \setcounter{secnumdepth}{4}
 
-\if@dlmuthesis@MAlaw %【硕士-法学/法律】
-  \titleformat{\paragraph}
-    {\normalsize\heiti} %字体
-    {（\theparagraph）} %标题前的标签
-    {0pt} %标题和标签之间的间距
-    {} %标题前没有额外的命令或内容
-  \titlespacing{\paragraph}
-    {2em} %标题左间距
-    {0.5ex plus 1ex minus 0.2ex} %标题上间距
-    {0.5ex plus 0.2ex} %标题下间距
-\else\if@dlmuthesis@MAmarxism %【硕士-马克思主义理论】
+\if@dlmuthesis@MAmarxism %【硕士-马克思主义理论】
   \titleformat{\paragraph}
     {\normalsize\heiti} %字体
     {（\theparagraph）} %标题前的标签
@@ -1023,7 +1024,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     {2em} %标题左间距
     {0.5ex plus 1ex minus 0.2ex} %标题上间距
     {0.5ex plus 0.2ex} %标题下间距
-\fi\fi\fi\fi\fi
+\fi\fi\fi\fi
 
 \newcommand{\fourthsection}[1]{\paragraph{#1}} %将命令\paragraph改名为四级标题
 % ============================================================ %
@@ -1434,13 +1435,18 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
       %%% ========================= %
     \fi
   \else\if@dlmuthesis@MAlaw %【硕士-法学/法律】
+    \renewcommand\abstractname{\zihao{-3}\heiti 摘\hspace{2em}要}
     %奇数页为“大连海事大学硕士学位论文”，偶数页为论文中文题目：
     \pagestyle{fancy}
     \fancyhead[COH]{\zihao{5}大连海事大学{\headerinHEADER}学位论文}
     \fancyhead[CEH]{\zihao{5}\dlmuthesis@tokens@cntitle}
     \cfoot{\zihao{-5}--~\thepage~--}
     \pagenumbering{Roman}
-    \setcounter{abstractCNbegin}{\value{page}} %涉及打印模式
+    \if@dlmuthesis@printed % 打印模式下才操作
+      %%% ----- 开始插入空白页 ----- %
+      \AddToHook{shipout/after}[BlankPages]{\RawShipout\null}
+      %%% ========================= %
+    \fi
   \else\if@dlmuthesis@MAmarxism %【硕士-马克思主义理论】
     %奇数页为“大连海事大学硕士学位论文”，偶数页为论文中文题目：
     \pagestyle{fancy}
@@ -1657,7 +1663,12 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
         \fi\fi\fi\fi
       }{}
       \ifthenelse{\equal{#1}{abstractEN}}{ %英文摘要页
-      \if@dlmuthesis@DOClaw %【博士-法学/法律】
+      \if@dlmuthesis@MAlaw %【硕士-法学/法律】
+        \clearpage
+        %%% ----- 停止插入空白页 ----- %
+        \RemoveFromHook{shipout/after}[BlankPages]
+        %%% ========================= %
+      \else\if@dlmuthesis@DOClaw %【博士-法学/法律】
         \clearpage
         %%% ----- 停止插入空白页 ----- %
         \RemoveFromHook{shipout/after}[BlankPages]
@@ -1673,7 +1684,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
           \mbox{}
           \clearpage
         }{\clearpage}
-      \fi
+      \fi\fi
       }{}
       \ifthenelse{\equal{#1}{tocs}}{ %目录组
         \if@dlmuthesis@MAlaw %【硕士-法学/法律】
@@ -2028,11 +2039,11 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \fancyfoot{}
 ~\vspace{1em}
 \metaAuthorizationStatement
-\if@dlmuthesis@MA %【硕士】
-  \if@dlmuthesis@printed % [硕士]、打印模式下才要换页
-    \nextpages{single}
-  \fi
-\else
+\if@dlmuthesis@MAlaw %【硕士-法学/法律】
+  \phantomsection
+  \addcontentsline{toc}{section}{大连海事大学学位论文授权使用声明}
+\fi
+\if@dlmuthesis@printed %打印模式下才要换页
   \nextpages{single}
 \fi
 }
@@ -2069,15 +2080,17 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 % --------------- 钩子 --------------- %
 %% ----- 行间距 ----- %
-\AtBeginDocument{
-  \renewcommand{\baselinestretch}{1.25}
-}
+\if@dlmuthesis@MAlaw %【硕士-法学/法律】
+  \AtBeginDocument{\renewcommand{\baselinestretch}{1.5}}
+\else
+  \AtBeginDocument{\renewcommand{\baselinestretch}{1.25}}
+\fi
 %% ==================== %
 
 %% --------------- 参考文献列表前后的样式设置 --------------- %
-\AddToHook{env/thebibliography/before}{
+\AddToHook{env/thebibliography/before}[add_to_toc]{
   \phantomsection
-  \addcontentsline{toc}{section}{参~ 考~ 文~ 献} %不能放在导言区
+  \addcontentsline{toc}{section}{\ValOfBibname}
   \vspace*{0pt}
 }
 
@@ -2191,8 +2204,8 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     }
   }
   \AddToHook{env/thebibliography/end}{
-  \RemoveFromHook{cmd/subsection/before}[subsection_in_bib]
-  \RemoveFromHook{cmd/subsubsection/before}[subsubsection_in_bib]
+    \RemoveFromHook{cmd/subsection/before}[subsection_in_bib]
+    \RemoveFromHook{cmd/subsubsection/before}[subsubsection_in_bib]
   }
 \else\if@dlmuthesis@DOCmarxism %【博士-马克思主义理论】
   \AddToHook{env/thebibliography/begin}{
@@ -2230,14 +2243,15 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     }
   }
   \AddToHook{env/thebibliography/end}{
-  \RemoveFromHook{cmd/subsection/before}[subsection_in_bib]
-  \RemoveFromHook{cmd/subsubsection/before}[subsubsection_in_bib]
+    \RemoveFromHook{cmd/subsection/before}[subsection_in_bib]
+    \RemoveFromHook{cmd/subsubsection/before}[subsubsection_in_bib]
   }
 \fi\fi\fi\fi
 %% ======================================================= %
 
 %% ---------- 硕博论文中，附录章节标题需居中对齐，但全文是居左 ---------- %
 %% ----- 特别的，博士论文中，奇数页页眉为每部分名称，偶数页为论文中文题目 ----- %
+%【脚手架：全体都变换的位置】
 \if@dlmuthesis@BAstem %【本科-理工科】
   \AddToHook{env/appendices/begin}[title_fontzise_in_appendix]{
     \pagestyle{plain} %《手册》要求：从附录页开始，去掉页眉
@@ -2291,7 +2305,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     \RemoveFromHook{env/appendices/begin}[title_fontzise_in_appendix]
   }
 \else\if@dlmuthesis@MAlaw %【硕士-法学/法律】
-  \AtBeginEnvironment{appendices}{
+  \AddToHook{env/appendices/begin}[title_fontzise_in_appendix]{
     \ctexset{
       section = {
         format = \zihao{-3}\heiti\centering,
@@ -2300,6 +2314,9 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
       }
     }
     \zihao{-4}
+  }
+  \AddToHook{env/appendices/end}{
+    \RemoveFromHook{env/appendices/begin}[title_fontzise_in_appendix]
   }
 \else\if@dlmuthesis@MAmarxism %【硕士-马克思主义理论】
   \AtBeginEnvironment{appendices}{
