@@ -142,29 +142,37 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 
 % --------------- ctex宏集设置 --------------- %
-\RequirePackage[UTF8, heading=true, zihao = -4]{ctex}
+\RequirePackage[UTF8, heading=true, zihao = -4,sub3section]{ctex}
 \RequirePackage{totcount}
 
 \if@dlmuthesis@BAstem %【本科-理工科】
 \ctexset{
-  abstractname = {\zihao{3}摘\hspace{2em}要},
   contentsname = \hfill{\zihao{3}目\hspace{2em}录}\hfill,
   bibname = \hfill{\zihao{3}参~ 考~ 文~ 献}\hfill,
   section = {
     format = {\zihao{3}\bfseries},
     name = {第,章},
+    aftername={~},
     beforeskip=20.0bp,
     afterskip=10.0bp,
   },
   subsection = {
     format={\zihao{4}\bfseries},
-    beforeskip=0.5em,
-    afterskip=0.5em,
+    aftername={~},
+    beforeskip=0.5ex,
+    afterskip=0.5ex,
   },
   subsubsection = {
     format={\zihao{-4}\bfseries},
-	beforeskip=0.5em,
-    afterskip=0.5em,
+    aftername={~},
+	  beforeskip=0.5ex,
+    afterskip=0.5ex,
+  },
+  paragraph = {
+    format = {\zihao{-4}\bfseries},
+    aftername={~},
+    beforeskip={0.5ex plus 1ex minus 0.2ex},
+    afterskip={0.5ex plus 1ex minus 0.2ex},
   }
 }
 \else\if@dlmuthesis@BAhumanities %【本科-人文社科】
@@ -172,14 +180,14 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \renewcommand\thesubsubsection{\arabic{subsubsection}} %重设三级标题计数器格式
 \renewcommand\theparagraph{\arabic{paragraph}} %重设四级标题计数器格式
 \ctexset{
-  abstractname = {\zihao{3}摘\hspace{2em}要},
-  contentsname = \hfill{\zihao{3}目\hspace{2em}录}\hfill,
+  contentsname = \hfill{\zihao{3}\hspace{-2em}目\hspace{2em}录}\hfill,
   bibname = \hfill{\zihao{3}参~ 考~ 文~ 献}\hfill,
   section = {
     format = {\zihao{3}\bfseries},
     name = {,、},
     number = {\chinese{section}},
     aftername = {},
+    indent = 2em,
     beforeskip=20.0bp,
     afterskip=10.0bp,
   },
@@ -188,23 +196,25 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     name = {（,）},
     number = {\chinese{subsection}},
     aftername = {},
-    beforeskip=0.5em,
-    afterskip=0.5em,
+    indent = 2em,
+    beforeskip=0.5ex,
+    afterskip=0.5ex,
   },
   subsubsection = {
     format = {\zihao{-4}\bfseries},
     name = {,.~},
     aftername = {},
-    beforeskip=0.5em,
-    afterskip=0.5em,
+    indent = 2em,
+    beforeskip=0.5ex,
+    afterskip=0.5ex,
   },
   paragraph={
     format = {\zihao{-4}\bfseries},
     name = {（,）},
     aftername = {},
-    aftertitle = \par,
-    beforeskip=6.75bp,
-    afterskip=6.75bp,
+    indent = 2em,
+    beforeskip={0.5ex plus 1ex minus 0.2ex},
+    afterskip={0.5ex plus 1ex minus 0.2ex},
   }
 }
 \else\if@dlmuthesis@MA %【硕士】
@@ -443,17 +453,13 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \newcounter{InputLineCn} %定义计数器：记录中文题目的预期行数
 \newcounter{InputLineEn} %定义计数器：记录英文题目的预期行数
 
-\NewDocumentCommand{\cntitle}{o m}{
-  \IfNoValueTF{#1}
-    {\setcounter{InputLineCn}{1}}  %设置[记录中文题目的预期行数的计数器]的默认值
-    {\setcounter{InputLineCn}{#1}} %替换成中文题目的预期行数
+\NewDocumentCommand{\cntitle}{O{1} m}{
+  \setcounter{InputLineCn}{#1} %替换成中文题目的预期行数（默认值为1）
   \renewcommand{\dlmuthesis@tokens@cntitle}{#2}
   \newcommand{\cntitleinMAINBODY}{\vspace*{1ex}{}\begin{center}{\zihao{3}\bfseries #2}\end{center}{}\vspace*{1ex}{}} %【正文第1页顶部的中文标题】
 } %【中文题目】
-\NewDocumentCommand{\entitle}{o m}{
-  \IfNoValueTF{#1}
-    {\setcounter{InputLineEn}{1}}  %设置[记录英文题目的预期行数的计数器]的默认值
-    {\setcounter{InputLineEn}{#1}} %替换成英文题目的预期行数
+\NewDocumentCommand{\entitle}{O{1} m}{
+  \setcounter{InputLineEn}{#1} %英文题目的预期行数（默认值为1）
   \renewcommand{\dlmuthesis@tokens@entitle}{#2}
 } %【英文题目】
 \newcommand{\aauthor}[1]{\renewcommand{\dlmuthesis@tokens@aauthor}{#1}} %【作者姓名】
@@ -960,27 +966,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \RequirePackage{titlesec}
 \setcounter{secnumdepth}{4}
 
-\if@dlmuthesis@BAstem %【本科-理工科】
-  \titleformat{\paragraph}
-    {\normalsize\bfseries} %字体
-    {\theparagraph} %标题前的标签
-    {1em} %标题和标签之间的间距
-    {} %标题前没有额外的命令或内容
-  \titlespacing{\paragraph}
-    {0pt} %标题左间距
-    {0.5ex plus 1ex minus 0.2ex} %标题上间距
-    {0.5ex plus 0.2ex} %标题下间距
-\else\if@dlmuthesis@BAhumanities %【本科-人文社科】
-  \titleformat{\paragraph}
-    {\normalsize\bfseries} %字体
-    {（\theparagraph）} %标题前的标签
-    {1em} %标题和标签之间的间距
-    {} %标题前没有额外的命令或内容
-  \titlespacing{\paragraph}
-    {0pt} %标题左间距
-    {0.5ex plus 1ex minus 0.2ex} %标题上间距
-    {0.5ex plus 0.2ex} %标题下间距
-\else\if@dlmuthesis@MA %【硕士】
+\if@dlmuthesis@MA %【硕士】
   \titleformat{\paragraph}
     {\normalsize\heiti} %字体
     {\theparagraph} %标题前的标签
@@ -1040,7 +1026,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     {2em} %标题左间距
     {0.5ex plus 1ex minus 0.2ex} %标题上间距
     {0.5ex plus 0.2ex} %标题下间距
-\fi\fi\fi\fi\fi\fi\fi\fi
+\fi\fi\fi\fi\fi\fi
 
 \newcommand{\fourthsection}[1]{\paragraph{#1}} %将命令\paragraph改名为四级标题
 % ============================================================ %
@@ -1316,7 +1302,9 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \bibliographystyle{thuthesis-bachelor} %借鉴使用：清华大学(本科)学位论文模板bst样式文件
 \renewcommand{\bibfont}{\zihao{5}} % 参考文献条目字号要求
 
-\newcommand{\upcite}[1]{$^{\mbox{\footnotesize\cite{#1}}}${}} %当提及的参考文献为文中直接说明时，则用小4号字与正文排齐
+\NewDocumentCommand{\upcite}{O{} m}{
+  $^{\mbox{\footnotesize\cite{#2}}#1}${}
+} %上标形式的引用（可选参数：页码）
 \if@dlmuthesis@MAlaw %【硕士-法学/法律】
   \newcommand{\apdxcite}[1]{\citep[\chinese{section},~\hspace{-3bp}][]{#1}} %附录中所使用，适用于“章节编号+文献序号”的格式
   \newcommand{\upapdxcite}[1]{$^{\mbox{\footnotesize\apdxcite{#1}}}${}} %附录中所使用，动机与\upcite命令的类似
@@ -1423,10 +1411,12 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 %% ----- 从摘要页开始的样式设置 ----- %
 \newcommand{\presetupOFabstractCN}{
   \if@dlmuthesis@BAstem %【本科-理工科】
+    \renewcommand\abstractname{\zihao{3}\bfseries 摘\hspace{2em}要} %临时修改摘要名
     \pagestyle{plain}
     \cfoot{\zihao{-5} \thepage}
     \pagenumbering{Roman}
   \else\if@dlmuthesis@BAhumanities %【本科-人文社科】
+    \renewcommand\abstractname{\zihao{3}\bfseries 摘\hspace{2em}要} %临时修改摘要名
     \pagestyle{plain}
     \cfoot{\zihao{-5} \thepage}
     \pagenumbering{Roman}
@@ -1754,7 +1744,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
         \AddCline
         \stepcounter{CounterOfAddClineCn}
       }
-      \bfseries\fontsize{16bp}{16bp}\selectfont Title: &
+      \bfseries\fontsize{15bp}{15bp}\selectfont Title: &
       \multirow[t]{2}{12.0cm}{\centering\arraybackslash\bfseries\fontsize{16bp}{16bp}\selectfont\dlmuthesis@tokens@entitle}
       \whiledo{\value{CounterOfAddClineEn}<\value{InputLineEn}}{
         \AddCline
@@ -1796,7 +1786,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   %%% ================================================================================ %
 
   \newpage %【起到将封面页与正文隔离开的正式作用】
-} %【\newcommand{\makecoverpageBA}】
+} %\makecoverpageBA
 %% ============================================================ %
 
 %% -------------------- 封面页-硕士论文 -------------------- %
@@ -1847,7 +1837,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   \setlength{\extrarowheight}{2bp}
   %%% ================================================== %
   \nextpages{single}
-}
+} %\makecoverpageMA
 %% ============================================================ %
 
 %% -------------------- 封面页-博士论文 -------------------- %
@@ -1898,7 +1888,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   \setlength{\extrarowheight}{2bp}
   %%% ================================================== %
   \nextpages{single}
-}
+} %\makecoverpageDOC
 %% ============================================================ %
 
 % ================================================================================ %
@@ -2240,10 +2230,14 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     \pagestyle{plain} %《手册》要求：从附录页开始，去掉页眉
     \ctexset{
       section = {
+        format = {\zihao{4}\bfseries},
         name = {附录~,},
         number = {\arabic{section}},
+        beforeskip=0.5ex,
+        afterskip=0.5ex,
       }
     }
+    \pagenumbering{arabic} %《手册》要求：摘要部分页码单独计数  
     \zihao{5}
   }
 \else\if@dlmuthesis@BAhumanities %【本科-人文社科】
@@ -2251,10 +2245,14 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     \pagestyle{plain} %《手册》要求：从附录页开始，去掉页眉
     \ctexset{
       section = {
+        format = {\zihao{4}\bfseries},
         name = {附录~,~~},
         number = {\arabic{section}},
+        beforeskip=0.5ex,
+        afterskip=0.5ex,
       }
     }
+    \pagenumbering{arabic} %《手册》要求：摘要部分页码单独计数  
     \zihao{5}
   }
 \else\if@dlmuthesis@MA %【硕士】
