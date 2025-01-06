@@ -84,27 +84,21 @@
 
 % ---------- 创新点摘要 ---------- %
 \presetupOFabstractINNOVATION%
-\begin{abstract}
 \input{mainbody/DOClaw/abstract_innovation}
-\end{abstract}%
 \nextpages{abstractINNOVATION}
 % =================================== %	
 
 
 % ---------- 中文摘要 ---------- %
 \presetupOFabstractCN%
-\begin{abstract}
 \input{mainbody/DOClaw/abstract_zh}
-\end{abstract}%
 \nextpages{abstractCN}
 % =================================== %	
 
 
 % ---------- 英文摘要 ---------- %
 \presetupOFabstractEN%
-\begin{abstract}
 \input{mainbody/DOClaw/abstract_en}
-\end{abstract}%
 \nextpages{abstractEN}
 % =================================== %	
 
@@ -133,18 +127,22 @@
 %% [硕士-法学/法律]中，参考文献需按照特定规则分类列举
 %\bibliography{refs/} %bib文件导入的形式生成参考文献列表
 \begin{thebibliography}{100}
-\input{refs/refs_DOClaw} %当文献数量较多时，也可通过单独的tex文件进行导入
+\input{refs/refs_DOClaw}
 \end{thebibliography}
 \clearpage
 % ============================== %
 
 
 % ---------- 附录 ---------- %
-\begin{appendices}
 \input{mainbody/DOClaw/appendices}
-\end{appendices}
 \clearpage
 % ========================= %
+
+
+% ----- 攻读学位期间公开发表论文 ----- %
+\input{mainbody/DOClaw/authorachievements}
+\clearpage
+% =================================== %	
 
 
 % ---------- 致谢 ---------- %
@@ -153,10 +151,10 @@
 % ============================== %
 
 
-% ----- 作者简历及攻读硕士学位期间的科研成果 ----- %
-\input{mainbody/DOClaw/achievements}
+% ----- 作者简介 ----- %
+\input{mainbody/DOClaw/authorintroduction}
 \presetupOFachievement
 \nextpages{achievement}
-% ================================================== %
+% ============================== %
 
 \end{document} 
