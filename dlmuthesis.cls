@@ -1143,55 +1143,65 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 % ============================================================ %
 
 
+% --------------- 符号说明环境 --------------- %
+\newcommand{\notationname}{符号说明表}
+\newenvironment{notation}{
+  \begin{center}\heiti\zihao{-3}\notationname\end{center}%
+  \par
+}{\par}
+% ======================================== %
+
+
 % --------------- 引言环境 --------------- %
+\newcommand{\introductionname}{引\hspace{2em}言}
 \newenvironment{introduction}{
-  \newcommand{\introductionname}{引\hspace{2em}言}
   \phantomsection
   \addcontentsline{toc}{section}{\introductionname}
   \begin{center}\heiti\zihao{-3}\introductionname\end{center}%
   \par
-}{}
+}{\par}
 % ======================================== %
 
 
 % --------------- 结论环境 --------------- %
+\newcommand{\conclusionname}{结论}
 \newenvironment{conclusion}{
   \vspace*{0pt}
   \if@dlmuthesis@BAstem %【本科-理工科】
-    \newcommand{\conclusionname}{结论}
+    \renewcommand{\conclusionname}{结论}
     \begin{flushleft}\bfseries\zihao{3}\conclusionname\end{flushleft}%
   \else\if@dlmuthesis@BAhumanities %【本科-人文社科】
-    \newcommand{\conclusionname}{总结}
+    \renewcommand{\conclusionname}{总结}
     \begin{flushleft}\bfseries\zihao{3}\conclusionname\end{flushleft}%
   \else\if@dlmuthesis@MA %【硕士】
-    \newcommand{\conclusionname}{结\hspace{2em}论}
+    \renewcommand{\conclusionname}{结\hspace{2em}论}
     \begin{center}\heiti\zihao{-3}\conclusionname\end{center}%
   \else\if@dlmuthesis@MAlaw %【硕士-法学/法律】
-    \newcommand{\conclusionname}{结\hspace{2em}论}
+    \renewcommand{\conclusionname}{结\hspace{2em}论}
     \begin{center}\heiti\zihao{-3}\conclusionname\end{center}%
   \else\if@dlmuthesis@MAmarxism %【硕士-马克思主义理论】
-    \newcommand{\conclusionname}{结\hspace{2em}论}
+    \renewcommand{\conclusionname}{结\hspace{2em}论}
     \begin{center}\heiti\zihao{-3}\conclusionname\end{center}%
   \else\if@dlmuthesis@DOC %【博士】%严格来说，[博士]不需要专门的结论环境
-    \newcommand{\conclusionname}{结\hspace{2em}论}
+    \renewcommand{\conclusionname}{结\hspace{2em}论}
     \begin{center}\heiti\zihao{-3}\conclusionname\end{center}%
   \else\if@dlmuthesis@DOClaw %【博士-法学/法律】
-    \newcommand{\conclusionname}{结\hspace{2em}论}
+    \renewcommand{\conclusionname}{结\hspace{2em}论}
     \begin{center}\heiti\zihao{-3}\conclusionname\end{center}%
   \else\if@dlmuthesis@DOCmarxism %【博士-马克思主义理论】
-    \newcommand{\conclusionname}{结\hspace{2em}论}
+    \renewcommand{\conclusionname}{结\hspace{2em}论}
     \begin{center}\heiti\zihao{-3}\conclusionname\end{center}%
   \fi\fi\fi\fi\fi\fi\fi\fi
   \phantomsection
   \addcontentsline{toc}{section}{\conclusionname}%
   \par
-}{}
+}{\par}
 % ======================================== %
 
 
 % --------------- 致谢环境 --------------- %
+\newcommand{\acknowledgmentname}{致\hspace{2em}谢}
 \newenvironment{acknowledgment}{
-  \newcommand{\acknowledgmentname}{致\hspace{2em}谢}
   \phantomsection
   \addcontentsline{toc}{section}{\acknowledgmentname}%
   \vspace*{0pt}
@@ -1216,7 +1226,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     \begin{center}\heiti\zihao{-3}\acknowledgmentname\end{center}%
   \fi\fi\fi\fi\fi\fi\fi\fi
   \par
-}{}
+}{\par}
 % ======================================== %
 
 
@@ -1241,7 +1251,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   \begin{center}\heiti\zihao{-3}\printmaintitle\end{center}%
   }{}{\ClassError{dlmuthesis}{Failed usage of environment 'achievement'}{}}
   \par
-}{\endgroup}
+}{\endgroup{}\par}
 % ======================================== %
 
 
