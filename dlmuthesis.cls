@@ -151,7 +151,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \RequirePackage{totcount}
 
 \if@dlmuthesis@BAstem %【本科-理工科】
-\newcommand{\ValOfBibname}{参~ 考~ 文~ 献} %【脚手架：全都要变】【本科-理工科、本科-人文社科、硕士、硕士-法学/法律、博士、博士-法学/法律】
+\newcommand{\ValOfBibname}{参~ 考~ 文~ 献}
 \ctexset{
   contentsname = \hfill{\zihao{3}目\hspace{2em}录}\hfill,
   bibname = \hfill{\zihao{3}\ValOfBibname}\hfill,
@@ -174,7 +174,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 	  beforeskip=0.5ex,
     afterskip=0.5ex,
   },
-  paragraph = { %【脚手架：全都要变】【本科-理工科、本科-人文社科、硕士、硕士-法学/法律、博士、博士-法学/法律】
+  paragraph = {
     format = {\zihao{-4}\bfseries},
     aftername={~},
     beforeskip={0.5ex plus 1ex minus 0.2ex},
@@ -310,28 +310,36 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   }
 }
 \else\if@dlmuthesis@MAmarxism %【硕士-马克思主义理论】
+\newcommand{\ValOfBibname}{参~ 考~ 文~ 献}
 \renewcommand\theparagraph{\arabic{paragraph}} %重设四级标题计数器格式
 \ctexset{
-  abstractname = {\zihao{-3}\heiti 摘\hspace{2em}要},
   contentsname = \hfill{\heiti\zihao{-3}目\hspace{2em}录}\hfill,
   listfigurename = \hfill{\songti\zihao{-3}图目录}\hfill,
   listtablename = \hfill{\songti\zihao{-3}表目录}\hfill,
-  bibname = \hfill{\zihao{-3}参~ 考~ 文~ 献}\hfill,
+  bibname = \hfill{\zihao{-3}\ValOfBibname}\hfill,
   section = {
     format = {\zihao{-3}\heiti},
     name = {第,章},
-    beforeskip=1em,
-    afterskip=1em,
+    beforeskip=1ex,
+    afterskip=1ex,
   },
   subsection = {
     format = {\zihao{4}\heiti},
-    beforeskip=0.5em,
-    afterskip=0.5em,
+    beforeskip=0.5ex,
+    afterskip=0.5ex,
   },
   subsubsection = {
     format = {\zihao{-4}\heiti},
     beforeskip=0.5em,
     afterskip=0.5em,
+  },
+  paragraph = {
+    format = {\zihao{-4}\heiti},
+    name = {（,）},
+    aftername = {},
+    indent = 2em,
+    beforeskip={0.5ex plus 1ex minus 0.2ex},
+    afterskip={0.5ex plus 1ex minus 0.2ex},
   },
   appendix={
     name = {附录,},
@@ -430,28 +438,37 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   }
 }
 \else\if@dlmuthesis@DOCmarxism %【博士-马克思主义理论】
+\newcommand{\ValOfBibname}{参~ 考~ 文~ 献}
 \renewcommand\theparagraph{\arabic{paragraph}} %重设四级标题计数器格式
 \ctexset{
   abstractname = {\zihao{-3}\heiti 摘\hspace{2em}要},
   contentsname = \hfill{\heiti\zihao{-3}目\hspace{2em}录}\hfill,
   listfigurename = \hfill{\songti\zihao{-3}图目录}\hfill,
   listtablename = \hfill{\songti\zihao{-3}表目录}\hfill,
-  bibname = \hfill{\zihao{-3}参~ 考~ 文~ 献}\hfill,
+  bibname = \hfill{\zihao{-3}\ValOfBibname}\hfill,
   section = {
     format = {\zihao{-3}\heiti},
     name = {第,章},
-    beforeskip=1em,
-    afterskip=1em,
+    beforeskip=1ex,
+    afterskip=1ex,
   },
   subsection = {
     format = {\zihao{4}\heiti},
-    beforeskip=0.5em,
-    afterskip=0.5em,
+    beforeskip=0.5ex,
+    afterskip=0.5ex,
   },
   subsubsection = {
     format = {\zihao{-4}\heiti},
     beforeskip=0.5em,
     afterskip=0.5em,
+  },
+  paragraph = {
+    format = {\zihao{-4}\heiti},
+    name = {（,）},
+    aftername = {},
+    indent = 2em,
+    beforeskip={0.5ex plus 1ex minus 0.2ex},
+    afterskip={0.5ex plus 1ex minus 0.2ex},
   },
   appendix={
     name = {附录,},
@@ -1013,28 +1030,6 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \else
   \setcounter{secnumdepth}{4}
 \fi
-
-\if@dlmuthesis@MAmarxism %【硕士-马克思主义理论】
-  \titleformat{\paragraph}
-    {\normalsize\heiti} %字体
-    {（\theparagraph）} %标题前的标签
-    {0pt} %标题和标签之间的间距
-    {} %标题前没有额外的命令或内容
-  \titlespacing{\paragraph}
-    {2em} %标题左间距
-    {0.5ex plus 1ex minus 0.2ex} %标题上间距
-    {0.5ex plus 0.2ex} %标题下间距
-\else\if@dlmuthesis@DOCmarxism %【博士-马克思主义理论】
-  \titleformat{\paragraph}
-    {\normalsize\heiti} %字体
-    {（\theparagraph）} %标题前的标签
-    {0pt} %标题和标签之间的间距
-    {} %标题前没有额外的命令或内容
-  \titlespacing{\paragraph}
-    {2em} %标题左间距
-    {0.5ex plus 1ex minus 0.2ex} %标题上间距
-    {0.5ex plus 0.2ex} %标题下间距
-\fi\fi
 % ============================================================ %
 
 
@@ -1043,6 +1038,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \RequirePackage[labelformat=brace]{subcaption} % 使子图环境中的标题变成副标题样式
 \RequirePackage[list=off]{bicaption} %同时含中英文的标题（同时取消英文标题在图标目录中的导入）
 \DeclareCaptionLabelSeparator{doublespace}{~~}
+\DeclareCaptionFont{NORMALSIZEandHEITI}{\normalsize\heiti} %小四、黑体
 \if@dlmuthesis@BAstem %【本科-理工科】
   \captionsetup{font=small, labelsep=doublespace, labelfont=bf, textfont=bf}
 \else\if@dlmuthesis@BAhumanities %【本科-人文社科】
@@ -1060,13 +1056,12 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   \captionsetup[table][bi-first]{font=small, labelsep=doublespace}
   \captionsetup[table][bi-second]{font=small, labelsep=doublespace, name={Tab~}}
 \else\if@dlmuthesis@MAmarxism %【硕士-马克思主义理论】
-  \captionsetup{font=small, labelsep=doublespace} %单标题模式
-  \captionsetup[figure][bi-first]{font=small, labelsep=doublespace}
-  \captionsetup[figure][bi-second]{font=small, labelsep=doublespace, name={Fig}}
-  \captionsetup[table][bi-first]{font=small, labelsep=doublespace}
-  \captionsetup[table][bi-second]{font=small, labelsep=doublespace, name={Tab~}}
+  \captionsetup{font=normalsize, labelsep=doublespace} %单标题模式
+  \captionsetup[figure][bi-first]{font=NORMALSIZEandHEITI, labelsep=doublespace}
+  \captionsetup[figure][bi-second]{font=normalsize, labelsep=doublespace, name={Fig.}}
+  \captionsetup[table][bi-first]{font=normalsize, labelsep=doublespace}
+  \captionsetup[table][bi-second]{font=normalsize, labelsep=doublespace, name={Tab.}}
 \else\if@dlmuthesis@DOC %【博士】
-  \DeclareCaptionFont{NORMALSIZEandHEITI}{\small\heiti}
   \captionsetup{font=normalsize, labelsep=doublespace} %单标题模式
   \captionsetup[figure][bi-first]{font=NORMALSIZEandHEITI, labelsep=doublespace}
   \captionsetup[figure][bi-second]{font=normalsize, labelsep=doublespace, name={Fig.}}
@@ -1079,11 +1074,11 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   \captionsetup[table][bi-first]{font=small, labelsep=doublespace}
   \captionsetup[table][bi-second]{font=small, labelsep=doublespace, name={Tab.}}
 \else\if@dlmuthesis@DOCmarxism %【博士-马克思主义理论】
-  \captionsetup{font=small, labelsep=doublespace} %单标题模式
-  \captionsetup[figure][bi-first]{font=small, labelsep=doublespace}
-  \captionsetup[figure][bi-second]{font=small, labelsep=doublespace, name={Fig.}}
-  \captionsetup[table][bi-first]{font=small, labelsep=doublespace}
-  \captionsetup[table][bi-second]{font=small, labelsep=doublespace, name={Tab.}}
+  \captionsetup{font=normalsize, labelsep=doublespace} %单标题模式
+  \captionsetup[figure][bi-first]{font=NORMALSIZEandHEITI, labelsep=doublespace}
+  \captionsetup[figure][bi-second]{font=normalsize, labelsep=doublespace, name={Fig.}}
+  \captionsetup[table][bi-first]{font=normalsize, labelsep=doublespace}
+  \captionsetup[table][bi-second]{font=normalsize, labelsep=doublespace, name={Tab.}}
 \fi\fi\fi\fi\fi\fi\fi\fi
 
 \numberwithin{figure}{section} %numberwithin命令必须放在amsmath宏包之后
@@ -1361,7 +1356,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     \cfoot{~}
     \setcounter{abstractINNOVATIONbegin}{\value{page}} %涉及打印模式
   \else\if@dlmuthesis@DOCmarxism %【博士-马克思主义理论】
-    \renewcommand\abstractname{\zihao{-3}\heiti 创\hspace{2em}新\hspace{2em}点} %临时修改摘要名
+    \renewcommand\abstractname{\zihao{-3}\heiti 创\hspace{1em}新\hspace{1em}点} %临时修改摘要名
     \pagestyle{fancy}
     \fancyhead[COH]{\zihao{5}大连海事大学{\headerinHEADER}学位论文}
     \fancyhead[CEH]{\zihao{5}\dlmuthesis@tokens@cntitle}
@@ -1374,7 +1369,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 %% ----- 从摘要页开始的样式设置 ----- %
 \newcommand{\presetupOFabstractCN}{
   \if@dlmuthesis@BAstem %【本科-理工科】
-    \renewcommand\abstractname{\zihao{3}\bfseries 摘\hspace{2em}要} %临时修改摘要名 %【脚手架：全都要变】【本科-理工科、本科-人文社科、硕士、硕士-法学/法律、博士、博士-法学/法律】
+    \renewcommand\abstractname{\zihao{3}\bfseries 摘\hspace{2em}要}
     \pagestyle{plain}
     \cfoot{\zihao{-5} \thepage}
     \pagenumbering{Roman}
@@ -1414,14 +1409,13 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     \fi
   \else\if@dlmuthesis@MAmarxism %【硕士-马克思主义理论】
     %奇数页为“大连海事大学硕士学位论文”，偶数页为论文中文题目：
+    \renewcommand{\abstractname}{\zihao{-3}\heiti 摘\hspace{2em}要}
     \pagestyle{fancy}
     \fancyhead[COH]{\zihao{5}大连海事大学{\headerinHEADER}学位论文}
     \fancyhead[CEH]{\zihao{5}\dlmuthesis@tokens@cntitle}
     \cfoot{\zihao{-5}--~\thepage~--}
     \pagenumbering{Roman}
     \setcounter{abstractCNbegin}{\value{page}} %涉及打印模式
-    \phantomsection
-    \addcontentsline{toc}{section}{摘\hspace{2em}要}
   \else\if@dlmuthesis@DOC %【博士】
     \renewcommand\abstractname{\zihao{-3}\heiti 摘\hspace{2em}要} %临时修改摘要名
     %%% 奇数页为每部分的名称，偶数页为论文中文题目：
@@ -1498,8 +1492,6 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   \else\if@dlmuthesis@DOCmarxism %【博士-马克思主义理论】
     \setcounter{abstractENbegin}{\value{page}} %涉及打印模式
     \renewcommand\abstractname{\large ABSTRACT} %临时修改摘要名
-%    \phantomsection
-%    \addcontentsline{toc}{section}{ABSTRACT}
   \fi\fi\fi\fi\fi\fi\fi\fi
 } %英文摘要
 %% ================================================== %
@@ -1933,22 +1925,16 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 %% ---------- 元内容 - 原创性声明 ---------- %
 \newcommand{\titleOFOriginalityStatement}{
-\if@dlmuthesis@MAmarxism %【硕士-马克思主义理论】%【脚手架：全都要变】【部分：博士、博士-法学/法律】
-\zihao{-2}\heiti 大连海事大学\\
-研究生学位论文原创性声明
-\else\if@dlmuthesis@DOC %【博士】
-\zihao{-2}\heiti 大连海事大学\\
-研究生学位论文原创性声明
-\else\if@dlmuthesis@DOClaw %【博士-法学/法律】
-\zihao{-2}\heiti 大连海事大学\\
-研究生学位论文原创性声明
-\else\if@dlmuthesis@DOCmarxism %【博士-马克思主义理论】
-\zihao{-2}\heiti 大连海事大学\\
-研究生学位论文原创性声明
-\else
+\if@dlmuthesis@MA %【硕士】
 \zihao{-2} 大连海事大学\\
 研究生学位论文原创性声明
-\fi\fi\fi\fi
+\else\if@dlmuthesis@MAlaw %【硕士-法学/法律】
+\zihao{-2} 大连海事大学\\
+研究生学位论文原创性声明
+\else %【博士、*-马克思主义理论、博士-法学/法律】
+\zihao{-2}\heiti 大连海事大学\\
+研究生学位论文原创性声明
+\fi\fi
 }
 \newcommand{\metaOriginalityStatement}{
 \begin{center}\begin{spacing}{1.5}
@@ -2226,7 +2212,6 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 %% ---------- 硕博论文中，附录章节标题需居中对齐，但全文是居左 ---------- %
 %% ----- 特别的，博士论文中，奇数页页眉为每部分名称，偶数页为论文中文题目 ----- %
-%【脚手架：全都要变】【本科-理工科、本科-人文社科、硕士、硕士-法学/法律、博士、博士-法学/法律】
 \if@dlmuthesis@BAstem %【本科-理工科】
   \AddToHook{env/appendices/begin}[title_fontzise_in_appendix]{
     \pagestyle{plain} %《手册》要求：从附录页开始，去掉页眉
@@ -2294,22 +2279,18 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     \RemoveFromHook{env/appendices/begin}[title_fontzise_in_appendix]
   }
 \else\if@dlmuthesis@MAmarxism %【硕士-马克思主义理论】
-  \AtBeginEnvironment{appendices}{
+  \AddToHook{env/appendices/begin}[title_fontzise_in_appendix]{
     \ctexset{
       section = {
         format = \zihao{-3}\heiti\centering,
-        name = {附录~,},
-        number = {\thesection},
+        name = {附录,},
+        aftername = {\hspace{1em}},
       }
     }
-  \titlecontents{section}
-    [0pt]
-    {\addvspace{2bp}\filright}
-    {\thecontentslabel~~}
-    {}
-    {\titlerule*[8bp]{.}\contentspage}
-
-  \zihao{-4}
+    \zihao{-4}
+  }
+  \AddToHook{env/appendices/end}{
+    \RemoveFromHook{env/appendices/begin}[title_fontzise_in_appendix]
   }
 \else\if@dlmuthesis@DOC %【博士】
   \AddToHook{env/appendices/begin}[title_fontzise_in_appendix]{
@@ -2342,22 +2323,18 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     \RemoveFromHook{env/appendices/begin}[title_fontzise_in_appendix]
   }
 \else\if@dlmuthesis@DOCmarxism %【博士-马克思主义理论】
-  \AtBeginEnvironment{appendices}{
+  \AddToHook{env/appendices/begin}[title_fontzise_in_appendix]{
     \ctexset{
       section = {
         format = \zihao{-3}\heiti\centering,
-        name = {附录~,},
-        number = {\thesection},
+        name = {附录,},
+        aftername = {\hspace{1em}},
       }
     }
-  \titlecontents{section}
-    [0pt]
-    {\addvspace{2bp}\filright}
-    {\thecontentslabel~~}
-    {}
-    {\titlerule*[8bp]{.}\contentspage}
-
-  \zihao{-4}
+    \zihao{-4}
+  }
+  \AddToHook{env/appendices/end}{
+    \RemoveFromHook{env/appendices/begin}[title_fontzise_in_appendix]
   }
 \fi\fi\fi\fi\fi\fi\fi\fi
 %% ================================================================= %
