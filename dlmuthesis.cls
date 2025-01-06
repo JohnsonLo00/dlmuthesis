@@ -1166,12 +1166,13 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 % --------------- 结论环境 --------------- %
 \newcommand{\conclusionname}{结论}
 \newenvironment{conclusion}{
-  \vspace*{0pt}
   \if@dlmuthesis@BAstem %【本科-理工科】
     \renewcommand{\conclusionname}{结论}
+    \vspace*{0pt}
     \begin{flushleft}\bfseries\zihao{3}\conclusionname\end{flushleft}%
   \else\if@dlmuthesis@BAhumanities %【本科-人文社科】
     \renewcommand{\conclusionname}{总结}
+    \vspace*{0pt}
     \begin{flushleft}\bfseries\zihao{3}\conclusionname\end{flushleft}%
   \else\if@dlmuthesis@MA %【硕士】
     \renewcommand{\conclusionname}{结\hspace{2em}论}
@@ -1204,10 +1205,11 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \newenvironment{acknowledgment}{
   \phantomsection
   \addcontentsline{toc}{section}{\acknowledgmentname}%
-  \vspace*{0pt}
   \if@dlmuthesis@BAstem %【本科-理工科】
+    \vspace*{0pt}
     \begin{center}\bfseries\zihao{3}\acknowledgmentname\end{center}%
   \else\if@dlmuthesis@BAhumanities %【本科-人文社科】
+    \vspace*{0pt}
     \begin{center}\bfseries\zihao{3}\acknowledgmentname\end{center}%
   \else\if@dlmuthesis@MA %【硕士】
     \begin{center}\heiti\zihao{-3}\acknowledgmentname\end{center}%
@@ -1216,9 +1218,6 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   \else\if@dlmuthesis@MAmarxism %【硕士-马克思主义理论】
     \begin{center}\heiti\zihao{-3}\acknowledgmentname\end{center}%
   \else\if@dlmuthesis@DOC %【博士】
-    % 奇数页为该部分名称，偶数页为论文中文题目
-    \fancyhead[COH]{\zihao{5}致谢}
-    \fancyhead[CEH]{\zihao{5}\dlmuthesis@tokens@cntitle}
     \begin{center}\heiti\zihao{-3}\acknowledgmentname\end{center}%
   \else\if@dlmuthesis@DOClaw %【博士-法学/法律】
     \begin{center}\heiti\zihao{-3}\acknowledgmentname\end{center}%
@@ -1227,31 +1226,33 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   \fi\fi\fi\fi\fi\fi\fi\fi
   \par
 }{\par}
+\if@dlmuthesis@DOC %【博士】
+  \AddToHook{env/acknowledgment/before}{
+    % 奇数页为该部分名称，偶数页为论文中文题目
+    \fancyhead[COH]{\zihao{5}致谢}
+    \fancyhead[CEH]{\zihao{5}\dlmuthesis@tokens@cntitle}
+  }
+\fi
 % ======================================== %
 
 
 % --------------- 作者简历环境 --------------- %
-\newcommand{\printmaintitle}{{\bfseries\color{red}未创建标题！}}
-
-\newcommand{\maintitle}[2]{
-  \renewcommand{\printmaintitle}{#1}
-  \ifthenelse{\equal{#2}{1}}{
+\NewDocumentEnvironment{personalcv}{m o}{
+  \global\newcommand{\personalcvname}{#1}
+  \ifthenelse{\equal{#2}{addtotoc}}{
     \phantomsection
-    \addcontentsline{toc}{section}{#1}
+    \addcontentsline{toc}{section}{\personalcvname}
   }{}
-}
-\newenvironment{achievement}{
-  \if@dlmuthesis@DOC %【博士】
-    % 在博士论文中，奇数页页眉为该部分名称，偶数页为论文中文题目
-    \fancyhead[COH]{\zihao{5}\printmaintitle}
-    \fancyhead[CEH]{\zihao{5}\dlmuthesis@tokens@cntitle}
-  \fi
-  \begingroup
-  \apptocmd{\maintitle}{
-  \begin{center}\heiti\zihao{-3}\printmaintitle\end{center}%
-  }{}{\ClassError{dlmuthesis}{Failed usage of environment 'achievement'}{}}
+  \begin{center}\heiti\zihao{-3}\personalcvname\end{center}%
   \par
-}{\endgroup{}\par}
+}{\par}
+\if@dlmuthesis@DOC %【博士】
+  \AddToHook{env/personalcv/before}{
+    %% 在[博士]中，奇数页页眉为该部分名称，偶数页为论文中文题目
+    \fancyhead[COH]{\zihao{5}\personalcvname}
+    \fancyhead[CEH]{\zihao{5}\dlmuthesis@tokens@cntitle}
+  }
+\fi
 % ======================================== %
 
 
@@ -1335,7 +1336,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \newcounter{tocsdif}
 %% =================================== %
 %% ----- 作者简历页 ----- %
-\newcounter{achievementlastpage}
+\newcounter{personalcvlastpage}
 %% ==================== %
 % ============================================= %
 
@@ -1557,8 +1558,8 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 %% ======================================================= %
 
 %% ----- 硕博论文中，要根据作者简历页最后一页奇偶来决定授权声明的[前后]是否要加空页 ----- %
-\newcommand{\presetupOFachievement}{
-  \setcounter{achievementlastpage}{\value{page}} %涉及打印模式
+\newcommand{\presetupOFpersonalcv}{
+  \setcounter{personalcvlastpage}{\value{page}} %涉及打印模式
 }
 %% =========================================================================== %
 % ================================================== %
@@ -1667,13 +1668,13 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
           }{\clearpage}
         \fi\fi
       }{}
-      \ifthenelse{\equal{#1}{achievement}}{ %作者简历页
+      \ifthenelse{\equal{#1}{personalcv}}{ %作者简历页
         \if@dlmuthesis@DOC %【博士】
           \clearpage %打印模式下也只是换个页
         \else\if@dlmuthesis@DOClaw %【博士-法学/法律】
-          \typeout{After achievements is the end of thesis} %no actions
+          \typeout{After personalcv is the end of thesis} %no actions
         \else
-          \ifthenelse{\isodd{\value{achievementlastpage}}}{
+          \ifthenelse{\isodd{\value{personalcvlastpage}}}{
             \clearpage
             \addtocounter{page}{-1}
             \thispagestyle{empty}
@@ -2303,6 +2304,10 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     \RemoveFromHook{env/appendices/begin}[title_fontzise_in_appendix]
   }
 \else\if@dlmuthesis@DOC %【博士】
+  \AddToHook{env/appendices/before}[header_in_appendix]{
+    \fancyhead[COH]{\zihao{5}附录}
+    \fancyhead[CEH]{\zihao{5}\dlmuthesis@tokens@cntitle}
+  }
   \AddToHook{env/appendices/begin}[title_fontzise_in_appendix]{
     \ctexset{
       section = {
@@ -2311,8 +2316,6 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
         number = {\thesection},
       }
     }
-    \fancyhead[COH]{\zihao{5}附录}
-    \fancyhead[CEH]{\zihao{5}\dlmuthesis@tokens@cntitle}
     \zihao{-4}
   }
   \AddToHook{env/appendices/end}{
