@@ -952,9 +952,6 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \RequirePackage{amsmath, amssymb, mathrsfs} %数学公式三件套
 \numberwithin{equation}{section} %将一级章节编号添加到公式编号
 \RequirePackage{siunitx} %SI制单位
-\newcommand\bk{\boldsymbol}
-\newcommand\lt{\left}
-\newcommand\rt{\right}
 \DeclareMathOperator{\diff}{\,\mathrm{d}\hspace{-1.5pt}} %微分算子
 
 \RequirePackage{amsthm}
