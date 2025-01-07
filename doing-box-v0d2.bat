@@ -105,6 +105,26 @@ if %Option% equ 1 (
   setlocal enabledelayedexpansion
   set /p "NewDegree=-->在这里输入："
   echo.
+  if !NewDegree! geq 1 (
+    if !NewDegree! leq 8 (
+      echo.
+    ) else (
+      echo.
+      echo ---------------------------
+      echo 无效的输入，请注意界面提示语！
+      echo ---------------------------
+      echo.
+      goto :ending
+    )
+  ) else (
+    echo.
+    echo ---------------------------
+    echo 无效的输入，请注意界面提示语！
+    echo ---------------------------
+    echo.
+    goto :ending
+  )
+  echo.
   echo -----------------------------
   echo 请输入新项目的[主文档]名称
   echo 注意：（1）不含文件后缀.tex
@@ -123,6 +143,26 @@ if %Option% equ 1 (
   echo ----------------------------
   echo.
   set /p "MyPlatform=-->在这里输入："
+  echo.
+  if !MyPlatform! geq 1 (
+    if !MyPlatform! leq 5 (
+      echo.
+    ) else (
+      echo.
+      echo ---------------------------
+      echo 无效的输入，请注意界面提示语！
+      echo ---------------------------
+      echo.
+      goto :ending
+    )
+  ) else (
+    echo.
+    echo ---------------------------
+    echo 无效的输入，请注意界面提示语！
+    echo ---------------------------
+    echo.
+    goto :ending
+  )
   echo.
   echo ---------------------------------------------
   echo 请输入新项目的[章节文件夹]名称（注：不要使用中文）
@@ -148,9 +188,10 @@ if %Option% equ 1 (
   CALL :TextProcess 2,!NewFolder!,13,"acknowledgment",!MyPlatform!
   endlocal
   echo.
-  echo ------------------------------
-  echo ---------- 创建完成！ ----------
-  echo ------------------------------
+  echo -----------------------------------------
+  echo --------------- 创建完成！ ---------------
+  echo ---- 请自行创建放置图片的文件夹（如需） ----
+  echo -----------------------------------------
   echo.
 ) else if %Option% equ 0 (
   echo.
@@ -166,6 +207,8 @@ if %Option% equ 1 (
   echo ------------------------------------------------------------
   echo.
 )
+
+:ending
 if %CarPoint% equ 0 (
   pause
   exit
@@ -241,6 +284,14 @@ REM 13#==#==#==#
 <致谢>
 
 REM 14#==#==#==#
+
+:RangeDecision
+if %~1 geq %~2 && %~1 leq %~3 (
+  set /a "%~4=1"
+) else (
+  set /a "%~4=0"
+)
+EXIT /B 0
 
 
 :TextProcess 
