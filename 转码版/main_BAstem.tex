@@ -1,0 +1,110 @@
+% !Mode:: "TeX:UTF-8"
+% !TeX program = xelatex
+
+% ---------- 声明文档类 ---------- %
+\documentclass[BAstem,windows]{dlmuthesis}
+% 有如下类型的可选参数：
+
+%% 1. 学位类别：
+%% 注：i.添加哪个参数即表示选择哪种模式；ii.只能添加一个
+%%% BAstem：本科-理工科
+%%% BAhumanities：本科-人文社科
+%%% MA：硕士
+%%% MAlaw：硕士-法学/法律
+%%% MAmarxism：硕士-马克思主义理论
+%%% DOC：博士
+%%% DOClaw：博士-法学/法律
+%%% DOCmarxism：博士-马克思主义理论
+
+%% 2. 输出模式：
+%% 注：默认为电子版模式，即不添加任何空白页
+%%% printed：打印模式（仅适用于硕博论文；打印时请采用双面打印）
+
+%% 3. 平台类别：
+%%% windows: Windows操作系统
+%%% macos: macOS操作系统
+%%% ubuntu: (Linux)Ubuntu操作系统
+%%% web: 在线平台(例如, Overleaf, TexPage, etc)
+%%% customization: 自定义平台
+% ================================================== %
+
+
+% -------------------- 填写论文信息 -------------------- %
+\cntitle{基于低分辨率视频的手势运动方向检测} %【中文题目(若横线数量超过1, 则在可选参数处填所需横线数量)】
+\entitle[2]{Detection of Gesture Motion Direction based on Low-Resolution Video} %【英文题目(若横线数量超过1, 则在可选参数处填所需横线数量)】
+\aauthor{阿海} %【作者姓名】
+\sdtID{222020xxxx} %【学号】
+\faculty{理学院} %【学院】
+\majorinCOVERPAGE{数学与应用数学2020-1} %【专业年级班级】
+\mentorONE{海老师（教授）} %【指导教师（职称）】
+\mentorTWO{无} %【第二指导教师（职称）】
+\completiondate{2024}{5} %【完成日期（年、月）】
+% ================================================== %
+
+
+% --------------- 添加批注 --------------- %
+\let\comment\undefined
+\usepackage[]{changes}
+\definechangesauthor[name={阿海}, color=blue]{阿海} %创建批注者信息
+\definechangesauthor[name={海老师}, color=red]{海老师} %创建批注者信息
+% ======================================== %
+
+
+% --------------- 可以在此处添加命令 --------------- %
+
+% ================================================== %
+
+
+\begin{document}
+
+\makepages %【封面页】
+
+% ---------- 中文摘要 ---------- %
+\presetupOFabstractCN%
+\input{mainbody/BAstem/abstract_zh}
+\nextpages{abstractCN}
+% =================================== %	
+
+
+% ---------- 英文摘要 ---------- %
+\presetupOFabstractEN%
+\input{mainbody/BAstem/abstract_en}
+\nextpages{abstractEN}
+% =================================== %	
+
+
+% ---------- 目录 ---------- %
+\presetupOFtocs%
+\tableofcontents
+\listofchanges
+\nextpages{tocs}
+% ============================== %
+
+
+% ----- 正文（划分为多个独立文件依次导入） ----- %
+\pesudohookOFpremainbody
+\input{mainbody/BAstem/ch1} \clearpage\vspace*{0pt}
+\input{mainbody/BAstem/ch2} \clearpage\vspace*{0pt}
+\input{mainbody/BAstem/ch3} \clearpage\vspace*{0pt}
+\input{mainbody/BAstem/ch4} \clearpage
+\input{mainbody/BAstem/conclusion} \clearpage % 结论
+% ================================================== %
+
+% ---------- 参考文献 ---------- %
+\bibliography{refs/refs_BAstem} %bib文件导入的形式生成参考文献列表
+%\begin{thebibliography}{100}
+%\bibitem{文献x的标签}{文献x的信息}
+%\end{thebibliography}
+\clearpage
+% =================================== %	
+
+% ---------- 致谢 ---------- %
+\input{mainbody/BAstem/acknowledgment}
+\clearpage
+% =================================== %	
+
+% ---------- 附录 ---------- %
+\input{mainbody/BAstem/appendices}
+% =================================== %	
+
+\end{document} 
