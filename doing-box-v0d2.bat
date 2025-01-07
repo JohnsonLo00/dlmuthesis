@@ -214,6 +214,7 @@ if %CarPoint% equ 0 (
   exit
 ) else (
 pause
+echo.
 set /a "Comments=2"
 goto :rounds
 )
