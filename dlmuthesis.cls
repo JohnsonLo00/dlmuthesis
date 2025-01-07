@@ -30,13 +30,13 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 
 % ---------- 文档类声明命令的可选参数初始化 ---------- %
-\newif\if@dlmuthesis@BAstem %【[本科-理工科]模式，初始值为真，下同】
+\newif\if@dlmuthesis@BAstem %【[本科-理工科]模式. 初始值为真.】
 \newif\if@dlmuthesis@BAhumanities %【[本科-人文社科]模式】
 \newif\if@dlmuthesis@MA %【[硕士]模式】
 \newif\if@dlmuthesis@MAlaw %【[硕士-法学/法律]模式】
 \newif\if@dlmuthesis@MAmarxism %【[硕士-马克思主义理论]模式】
 \newif\if@dlmuthesis@DOC %【[博士]模式】
-\newif\if@dlmuthesis@DOClaw %【博士-法学/法律】
+\newif\if@dlmuthesis@DOClaw %【[博士-法学/法律]模式】
 \newif\if@dlmuthesis@DOCmarxism %【[博士-马克思主义理论]模式】
 
 \newif\if@dlmuthesis@printed %【打印模式】
@@ -47,7 +47,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \newif\if@dlmuthesis@web %【平台为[在线编辑器]】
 \newif\if@dlmuthesis@customization %【自定义平台】
 
-\newcounter{OptionOfDegree} %【用于计算关于学位类别的可选参数用了多少个】
+\newcounter{OptionOfDegree} %【计数：关于学位类别的可选参数用了多少个】
 \setcounter{OptionOfDegree}{0}
 \DeclareOption{BAstem}{
 \@dlmuthesis@BAstemtrue
@@ -84,7 +84,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 \DeclareOption{printed}{\@dlmuthesis@printedtrue}
 
-\newcounter{OptionOfPlatform} %【用于计算关于平台类型的可选参数用了多少个】
+\newcounter{OptionOfPlatform} %【计数：关于平台类型的可选参数用了多少个】
 \setcounter{OptionOfPlatform}{0}
 \DeclareOption{windows}{
   \@dlmuthesis@windowstrue
@@ -516,9 +516,9 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \newcounter{InputLineEn} %定义计数器：记录英文题目的预期行数
 
 \NewDocumentCommand{\cntitle}{O{1} m}{
-  \setcounter{InputLineCn}{#1} %替换成中文题目的预期行数（默认值为1）
+  \setcounter{InputLineCn}{#1} %中文题目的预期行数（默认值为1）
   \renewcommand{\dlmuthesis@tokens@cntitle}{#2}
-  \newcommand{\cntitleinMAINBODY}{\vspace*{1ex}{}\begin{center}{\zihao{3}\bfseries #2}\end{center}{}\vspace*{1ex}{}} %【正文第1页顶部的中文标题】
+  \newcommand{\cntitleinMAINBODY}{\vspace*{1ex}{}\begin{center}{\zihao{3}\bfseries #2}\end{center}{}\vspace*{1ex}{}} %【[本科-*]正文第1页顶部的中文标题】
 } %【中文题目】
 \NewDocumentCommand{\entitle}{O{1} m}{
   \setcounter{InputLineEn}{#1} %英文题目的预期行数（默认值为1）
@@ -626,11 +626,11 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 % ================================================================================ %
 
 
-% --------------- 限定标题页三要素为空 --------------- %
+% ----- 限定标题页三要素为空 ----- %
 \title{}
 \author{}
 \date{}
-% ======================================== %
+% ============================== %
 
 
 % --------------- 页面样式 --------------- %
@@ -656,8 +656,11 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   \geometry{top=3.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm, headsep=24.0pt, headheight=2.5cm}
 \fi\fi\fi\fi\fi\fi\fi\fi
 
-\lhead{} %在'heading=true'下，默认左页眉为当前二级标题名称，因此要赋值为空
-\rhead{} %'heading=true'下，默认右页眉为当前一级标题名称，因此要赋值为空
+%% 在'heading=true'下，默认左、右页眉分别为
+%% 当前二、一级标题名称，因此要赋值为空 %
+\lhead{}
+\rhead{}
+%% =================================== %
 \renewcommand{\headrulewidth}{0.4bp}
 \renewcommand{\footrulewidth}{0pt}
 % ======================================== %
@@ -666,7 +669,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 % --------------- 字体 --------------- %
 \RequirePackage{fontspec}
 %% ----- 中英字体设置 ----- %
-% 搜索顺序：先在本地字库找，再去模板文件夹中找；否则指定字体不存在
+%%% 搜索顺序：先在本地字库找，再去模板文件夹中找；否则指定字体不存在
 \if@dlmuthesis@windows
   \IfFontExistsTF{SimSun}{
     \setCJKmainfont{SimSun}[AutoFakeBold=3.0, AutoFakeSlant=0.3]
@@ -878,8 +881,8 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 % -------------------- 摘要环境 -------------------- %
 \RequirePackage{abstract}
-\setlength{\absleftindent}{0pt} %取消左自动缩进
-\setlength{\absrightindent}{0pt} %取消右自动缩进
+\setlength{\absleftindent}{0pt} %取消左缩进
+\setlength{\absrightindent}{0pt} %取消右缩进
 \renewcommand{\abstracttextfont}{\normalsize} %修改摘要内容的字号
 %% ---------- 中文版摘要插入关键词 ---------- %
 \newcommand{\keywordsCN}[1]{
@@ -1109,7 +1112,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 % ======================================== %
 
 
-% --------------- 设置脚注样式（人文社科专业专用） --------------- %
+% -------------------- 设置脚注样式 -------------------- %
 \RequirePackage{circledtext}
 
 \RequirePackage[perpage]{footmisc} %设置简单的脚注样式
@@ -1251,8 +1254,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 % --------------- 作者简历环境 --------------- %
 \NewDocumentEnvironment{personalcv}{m o}{
-%  \global\newcommand{\personalcvname}{#1} %【脚手架：暂时注释】
-  \gdef\personalcvname{#1} %【脚手架：暂时添加】
+  \gdef\personalcvname{#1}
   \ifthenelse{\equal{#2}{addtotoc}}{
     \phantomsection
     \addcontentsline{toc}{section}{\personalcvname}
@@ -1286,14 +1288,14 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \NewDocumentCommand{\upcite}{O{} m}{$^{\mbox{\footnotesize\cite{#2}}#1}${}}
 %% 附录中的文献引用格式
 \if@dlmuthesis@MAlaw %【硕士-法学/法律】
-  \newcommand{\apdxcite}[1]{\citep[\chinese{section},~\hspace{-3bp}][]{#1}} %适用于“章节编号+文献序号”的格式
-  \newcommand{\upapdxcite}[1]{$^{\mbox{\footnotesize\apdxcite{#1}}}${}} %动机与\upcite命令的类似
+  \newcommand{\apdxcite}[1]{\citep[\chinese{section},~\hspace{-3bp}][]{#1}} %适用于“章节编号+文献序号”的格式. 下同
+  \newcommand{\upapdxcite}[1]{$^{\mbox{\footnotesize\apdxcite{#1}}}${}} %动机与\upcite命令的类似. 下同
 \else\if@dlmuthesis@DOClaw %【博士-法学/法律】
-  \newcommand{\apdxcite}[1]{\citep[\chinese{section},~\hspace{-3bp}][]{#1}} %适用于“章节编号+文献序号”的格式
-  \newcommand{\upapdxcite}[1]{$^{\mbox{\footnotesize\apdxcite{#1}}}${}} %动机与\upcite命令的类似
+  \newcommand{\apdxcite}[1]{\citep[\chinese{section},~\hspace{-3bp}][]{#1}}
+  \newcommand{\upapdxcite}[1]{$^{\mbox{\footnotesize\apdxcite{#1}}}${}}
 \else %【硕士、博士】
-  \newcommand{\apdxcite}[1]{\citep[\thesection\hspace{-3bp}][]{#1}} %适用于“章节编号+文献序号”的格式
-  \newcommand{\upapdxcite}[1]{$^{\mbox{\footnotesize\apdxcite{#1}}}${}} %动机与\upcite命令的类似
+  \newcommand{\apdxcite}[1]{\citep[\thesection\hspace{-3bp}][]{#1}}
+  \newcommand{\upapdxcite}[1]{$^{\mbox{\footnotesize\apdxcite{#1}}}${}}
 \fi\fi
 
 %% ---------- 特殊参考文献规范 ---------- %
@@ -1546,36 +1548,36 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     \cntitleinMAINBODY
     \pagestyle{fancy} %从第一章到致谢，设置为有页眉、有页脚的模式
     \fancyhead[C]{\zihao{-5}\dlmuthesis@tokens@cntitle}
-    \pagenumbering{arabic} %《手册》要求：从正文开始设为阿拉伯数字页码，并且重新从1开始计数  
+    \pagenumbering{arabic} %从正文开始设为阿拉伯数字页码，并且重新从1开始计数  
   \else\if@dlmuthesis@BAhumanities %【本科-人文社科】
     \cntitleinMAINBODY
     \pagestyle{fancy} %从第一章到致谢，设置为有页眉、有页脚的模式
     \fancyhead[C]{\zihao{-5}\dlmuthesis@tokens@cntitle}
-    \pagenumbering{arabic} %《手册》要求：从正文开始设为阿拉伯数字页码，并且重新从1开始计数
+    \pagenumbering{arabic} %从正文开始设为阿拉伯数字页码，并且重新从1开始计数
   \else\if@dlmuthesis@MA %【硕士】
-    \pagenumbering{arabic} %《规范》要求：从正文开始设为阿拉伯数字页码，并且重新从1开始计数
+    \pagenumbering{arabic} %从正文开始设为阿拉伯数字页码，并且重新从1开始计数
   \else\if@dlmuthesis@MAlaw %【硕士-法学/法律】
-    \pagenumbering{arabic} %《规范》要求：从正文开始设为阿拉伯数字页码，并且重新从1开始计数
+    \pagenumbering{arabic} %从正文开始设为阿拉伯数字页码，并且重新从1开始计数
   \else\if@dlmuthesis@MAmarxism %【硕士-马克思主义理论】
-    \pagenumbering{arabic} %《规范》要求：从正文开始设为阿拉伯数字页码，并且重新从1开始计数
+    \pagenumbering{arabic} %从正文开始设为阿拉伯数字页码，并且重新从1开始计数
   \else\if@dlmuthesis@DOC %【博士】
     \pagestyle{fancy}
     \fancyhead[COH]{\zihao{5}\leftmark}
     \fancyhead[CEH]{\zihao{5}\dlmuthesis@tokens@cntitle}
-    \pagenumbering{arabic} %《规范》要求：从正文开始设为阿拉伯数字页码，并且重新从1开始计数
+    \pagenumbering{arabic} %从正文开始设为阿拉伯数字页码，并且重新从1开始计数
   \else\if@dlmuthesis@DOClaw %【博士-法学/法律】
-    \pagenumbering{arabic} %《规范》要求：从正文开始设为阿拉伯数字页码，并且重新从1开始计数
+    \pagenumbering{arabic} %从正文开始设为阿拉伯数字页码，并且重新从1开始计数
   \else\if@dlmuthesis@DOCmarxism %【博士-马克思主义理论】
-    \pagenumbering{arabic} %《规范》要求：从正文开始设为阿拉伯数字页码，并且重新从1开始计数
+    \pagenumbering{arabic} %从正文开始设为阿拉伯数字页码，并且重新从1开始计数
   \fi\fi\fi\fi\fi\fi\fi\fi
 }
 %% ======================================================= %
 
-%% ----- 硕博论文中，要根据作者简历页最后一页奇偶来决定授权声明的[前后]是否要加空页 ----- %
+%% ----- 硕博论文中，要根据作者简历页最后一页页码奇偶来决定授权声明的[前后]是否要加空页 ----- %
 \newcommand{\presetupOFpersonalcv}{
   \setcounter{personalcvlastpage}{\value{page}} %涉及打印模式
 }
-%% =========================================================================== %
+%% ================================================================================ %
 % ================================================== %
 
 
@@ -1783,7 +1785,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   \end{textblock}
   %%% ================================================== %
 
-  %% ---------- 由于之前将\extrarowheight的值设为9bp，为保证往后正文表格的间距正常，需重新设置回来 ---------- %
+  %% ----- 由于之前将\extrarowheight的值设为9bp，为保证往后正文表格的间距正常，需重新设置回来 ----- %
   \setlength{\extrarowheight}{2bp}
   %%% ================================================================================ %
 
@@ -1837,7 +1839,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
   %%% ----- 由于之前将\extrarowheight的值设为9bp，为保证往后正文表格的间距正常，需重新设置回来 ----- %
   \setlength{\extrarowheight}{2bp}
-  %%% ================================================== %
+  %%% ================================================================================ %
   \nextpages{single}
 } %\makecoverpageMA
 %% ============================================================ %
@@ -1888,11 +1890,10 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
   %%% ----- 由于之前将\extrarowheight的值设为9bp，为保证往后正文表格的间距正常，需重新设置回来 ----- %
   \setlength{\extrarowheight}{2bp}
-  %%% ================================================== %
+  %%% ================================================================================ %
   \nextpages{single}
 } %\makecoverpageDOC
 %% ============================================================ %
-
 % ================================================================================ %
 
 
@@ -2246,7 +2247,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 %% ----- 特别的，博士论文中，奇数页页眉为每部分名称，偶数页为论文中文题目 ----- %
 \if@dlmuthesis@BAstem %【本科-理工科】
   \AddToHook{env/appendices/begin}[title_fontzise_in_appendix]{
-    \pagestyle{plain} %《手册》要求：从附录页开始，去掉页眉
+    \pagestyle{plain} %从附录页开始，去掉页眉
     \ctexset{
       section = {
         format = {\zihao{4}\bfseries},
@@ -2256,7 +2257,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
         afterskip=0.5ex,
       }
     }
-    \pagenumbering{arabic} %《手册》要求：摘要部分页码单独计数  
+    \pagenumbering{arabic} %摘要部分页码单独计数  
     \zihao{5}
   }
   \AddToHook{env/appendices/end}{
@@ -2264,7 +2265,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   }
 \else\if@dlmuthesis@BAhumanities %【本科-人文社科】
   \AddToHook{env/appendices/begin}[title_fontzise_in_appendix]{
-    \pagestyle{plain} %《手册》要求：从附录页开始，去掉页眉
+    \pagestyle{plain} %从附录页开始，去掉页眉
     \ctexset{
       section = {
         format = {\zihao{4}\bfseries},
@@ -2274,7 +2275,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
         afterskip=0.5ex,
       }
     }
-    \pagenumbering{arabic} %《手册》要求：摘要部分页码单独计数  
+    \pagenumbering{arabic} %摘要部分页码单独计数  
     \zihao{5}
   }
   \AddToHook{env/appendices/end}{
