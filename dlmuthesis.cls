@@ -1167,30 +1167,46 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \newcommand{\conclusionname}{结论}
 \newenvironment{conclusion}{
   \if@dlmuthesis@BAstem %【本科-理工科】
-    \renewcommand{\conclusionname}{结论}
+    \ifthenelse{\equal{\conclusionname}{结论}}{
+      \renewcommand{\conclusionname}{结论} %为真，则外部没做任何改动. 下同
+    }{} %为假，则说明在外部导言区被重定义，于是不做任何操作、优先接受外部重定义的结果. 下同
     \vspace*{0pt}
     \begin{flushleft}\bfseries\zihao{3}\conclusionname\end{flushleft}%
   \else\if@dlmuthesis@BAhumanities %【本科-人文社科】
-    \renewcommand{\conclusionname}{总结}
+    \ifthenelse{\equal{\conclusionname}{结论}}{
+      \renewcommand{\conclusionname}{总结} 
+    }{}
     \vspace*{0pt}
     \begin{flushleft}\bfseries\zihao{3}\conclusionname\end{flushleft}%
   \else\if@dlmuthesis@MA %【硕士】
-    \renewcommand{\conclusionname}{结\hspace{2em}论}
+    \ifthenelse{\equal{\conclusionname}{结论}}{
+        \renewcommand{\conclusionname}{结\hspace{2em}论} 
+    }{}
     \begin{center}\heiti\zihao{-3}\conclusionname\end{center}%
   \else\if@dlmuthesis@MAlaw %【硕士-法学/法律】
-    \renewcommand{\conclusionname}{结\hspace{2em}论}
+    \ifthenelse{\equal{\conclusionname}{结论}}{
+        \renewcommand{\conclusionname}{结\hspace{2em}论} 
+    }{}
     \begin{center}\heiti\zihao{-3}\conclusionname\end{center}%
   \else\if@dlmuthesis@MAmarxism %【硕士-马克思主义理论】
-    \renewcommand{\conclusionname}{结\hspace{2em}论}
+    \ifthenelse{\equal{\conclusionname}{结论}}{
+        \renewcommand{\conclusionname}{结\hspace{2em}论} 
+    }{}
     \begin{center}\heiti\zihao{-3}\conclusionname\end{center}%
   \else\if@dlmuthesis@DOC %【博士】%严格来说，[博士]不需要专门的结论环境
-    \renewcommand{\conclusionname}{结\hspace{2em}论}
-    \begin{center}\heiti\zihao{-3}\conclusionname\end{center}%
+    \ifthenelse{\equal{\conclusionname}{结论}}{
+        \renewcommand{\conclusionname}{结论与展望} 
+    }{}
+    \begin{flushleft}\heiti\zihao{-3}\conclusionname\end{flushleft}%
   \else\if@dlmuthesis@DOClaw %【博士-法学/法律】
-    \renewcommand{\conclusionname}{结\hspace{2em}论}
+    \ifthenelse{\equal{\conclusionname}{结论}}{
+        \renewcommand{\conclusionname}{结\hspace{2em}论} 
+    }{}
     \begin{center}\heiti\zihao{-3}\conclusionname\end{center}%
   \else\if@dlmuthesis@DOCmarxism %【博士-马克思主义理论】
-    \renewcommand{\conclusionname}{结\hspace{2em}论}
+    \ifthenelse{\equal{\conclusionname}{结论}}{
+        \renewcommand{\conclusionname}{结\hspace{2em}论} 
+    }{}
     \begin{center}\heiti\zihao{-3}\conclusionname\end{center}%
   \fi\fi\fi\fi\fi\fi\fi\fi
   \phantomsection
@@ -1238,7 +1254,8 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 % --------------- 作者简历环境 --------------- %
 \NewDocumentEnvironment{personalcv}{m o}{
-  \global\newcommand{\personalcvname}{#1}
+%  \global\newcommand{\personalcvname}{#1} %【脚手架：暂时注释】
+  \gdef\personalcvname{#1} %【脚手架：暂时添加】
   \ifthenelse{\equal{#2}{addtotoc}}{
     \phantomsection
     \addcontentsline{toc}{section}{\personalcvname}
@@ -2065,6 +2082,13 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   \addcontentsline{toc}{section}{\ValOfBibname}
   \vspace*{0pt}
 }
+
+\if@dlmuthesis@DOC %【博士】
+  \AddToHook{env/thebibliography/before}[header_in_bib]{
+    \fancyhead[COH]{\zihao{5}\ValOfBibname}
+    \fancyhead[CEH]{\zihao{5}\dlmuthesis@tokens@cntitle}
+  }
+\fi
 
 \if@dlmuthesis@MAlaw %【硕士-法学/法律】
   \AddToHook{env/thebibliography/begin}{
