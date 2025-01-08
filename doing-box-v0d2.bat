@@ -246,63 +246,945 @@ REM [12] - 结论
 REM [13] - 致谢
 
 REM 1#==#==#==#
-<BAstem：本科-理工科>
-\documentclass[BAstem,<platform>]{dlmuthesis}
+% !Mode:: "TeX:UTF-8"
+% !TeX program = xelatex
+
+% ---------- 声明文档类 ---------- %
+\documentclass[BAstem,<PLATFORM>]{dlmuthesis}
+%% 输出模式：
+%% 注：默认为电子版模式，即不添加任何空白页
+%%% printed：打印模式（仅适用于硕博论文；打印时请采用双面打印）
+% ================================================== %
+
+% -------------------- 填写论文信息 -------------------- %
+\cntitle{低分辨率视频基于的手势运动方向检测} %【中文题目(若横线数量超过1, 则在可选参数处填所需横线数量)】
+\entitle[2]{Detection of Gesture Motion Direction based on Low-Resolution Video} %【英文题目(若横线数量超过1, 则在可选参数处填所需横线数量)】
+\aauthor{阿海} %【作者姓名】
+\sdtID{222020xxxx} %【学号】
+\faculty{理学院} %【学院】
+\majorinCOVERPAGE{数学与应用数学2020-1} %【专业年级班级】
+\mentorONE{海老师（教授）} %【指导教师（职称）】
+\mentorTWO{无} %【第二指导教师（职称）】
+\completiondate{2024}{5} %【完成日期（年、月）】
+% ================================================== %
+
+% --------------- 可以在此处添加命令 --------------- %
+
+% ================================================== %
+
+\begin{document}
+
+\makepages %【封面页】
+
+
+% ---------- 中文摘要 ---------- %
+\presetupOFabstractCN%
+\input{mainbody/<FOLDER>/abstract_zh}
+\nextpages{abstractCN}
+% =================================== %	
+
+
+% ---------- 英文摘要 ---------- %
+\presetupOFabstractEN%
+\input{mainbody/<FOLDER>/abstract_en}
+\nextpages{abstractEN}
+% =================================== %	
+
+
+% ---------- 目录 ---------- %
+\presetupOFtocs%
+\tableofcontents
+\nextpages{tocs}
+% ============================== %
+
+
+% ----- 正文（划分为多个独立文件依次导入） ----- %
+\pesudohookOFpremainbody
+\input{mainbody/<FOLDER>/ch1} \clearpage\vspace*{0pt}
+\input{mainbody/<FOLDER>/conclusion} \clearpage % 结论
+% ================================================== %
+
+
+% ---------- 参考文献 ---------- %
+%% 方式一：
+%\bibliography{refs/} %bib文件导入的形式生成参考文献列表
+%% 方式二：
+%\begin{thebibliography}{100}
+%\bibitem{文献x的标签}{文献x的信息}
+%\end{thebibliography}
+%\clearpage
+% =================================== %	
+
+
+% ---------- 致谢 ---------- %
+\input{mainbody/<FOLDER>/acknowledgment}
+\clearpage
+% =================================== %	
+
+
+% ---------- 附录 ---------- %
+
+% =================================== %	
+
+\end{document} 
 
 REM 2#==#==#==#
-<BAhumanities：本科-人文社科>
-\documentclass[BAhumanities,<platform>]{dlmuthesis}
+% !Mode:: "TeX:UTF-8"
+% !TeX program = xelatex
+
+% ---------- 声明文档类 ---------- %
+\documentclass[BAhumanities,<PLATFORM>]{dlmuthesis}
+%% 输出模式：
+%% 注：默认为电子版模式，即不添加任何空白页
+%%% printed：打印模式（仅适用于硕博论文；打印时请采用双面打印）
+% ================================================== %
+
+% -------------------- 填写论文信息 -------------------- %
+\cntitle{提高我国医疗保障水平问题研究} %【中文题目(若横线数量超过1, 则在可选参数处填所需横线数量)】
+\entitle[2]{Study on the Issue of Improving the Level of Medical Insurance in China} %【英文题目(若横线数量超过1, 则在可选参数处填所需横线数量)】
+\aauthor{阿海} %【作者姓名】
+\sdtID{222020xxxx} %【学号】
+\faculty{公共管理与人文艺术学院} %【学院】
+\majorinCOVERPAGE{公共事业管理2020-1} %【专业年级班级】
+\mentorONE{海老师（教授）} %【指导教师（职称）】
+\mentorTWO{无} %【第二指导教师（职称）】
+\completiondate{2024}{5} %【完成日期（年、月）】
+% ================================================== %
+
+% ----- 脚注编号类型的选择 ----- %
+%% 填“1”：1, 2, ...
+%% 填“2”：[1], [2], ...
+%% 填“3”：(1), (2), ...
+%% 填“4”：带圈的阿拉伯数字
+%% 填“5”：【1】, 【2】, ...
+\footnotemode{4}
+% ============================== %
+
+% --------------- 可以在此处添加命令 --------------- %
+
+% ================================================== %
+
+\begin{document}
+
+\makepages %【封面页】
+
+
+% ---------- 中文摘要 ---------- %
+\presetupOFabstractCN%
+\input{mainbody/<FOLDER>/abstract_zh}
+\nextpages{abstractCN}
+% ============================== %	
+
+
+% ---------- 英文摘要 ---------- %
+\presetupOFabstractEN%
+\input{mainbody/<FOLDER>/abstract_en}
+\nextpages{abstractEN}
+% ============================== %
+
+
+% ---------- 目录 ---------- %
+\presetupOFtocs%
+\tableofcontents
+\nextpages{tocs}
+% ============================== %
+
+
+% ----- 正文（划分为多个独立文件依次导入） ----- %
+\pesudohookOFpremainbody
+\input{mainbody/<FOLDER>/ch1} \clearpage\vspace*{0pt}
+\input{mainbody/<FOLDER>/conclusion} \clearpage % 总结
+% ================================================== %
+
+
+% ---------- 参考文献 ---------- %
+%\begin{thebibliography}{100}
+%\input{refs/}
+%\end{thebibliography}
+%\clearpage
+% =================================== %	
+
+
+% ---------- 致谢 ---------- %
+\input{mainbody/<FOLDER>/acknowledgment}
+\clearpage
+% =================================== %	
+
+% ---------- 附录 ---------- %
+
+% =================================== %	
+
+\end{document} 
 
 REM 3#==#==#==#
-<MA：硕士>
-\documentclass[MA,<platform>]{dlmuthesis}
+% !Mode:: "TeX:UTF-8"
+% !TeX program = xelatex
+
+% ---------- 声明文档类 ---------- %
+\documentclass[MA,<PLATFORM>]{dlmuthesis}
+%% 输出模式：
+%% 注：默认为电子版模式，即不添加任何空白页
+%%% printed：打印模式（仅适用于硕博论文；打印时请采用双面打印）
+% ================================================== %
+
+% -------------------- 填写论文信息 -------------------- %
+%% ---------- 封面页 ---------- %
+\cntitle{基于低分辨率视频的手势运动方向检测} %【中文题目(若横线数量超过1, 则在可选参数处填所需横线数量)】
+\entitle{Detection of Gesture Motion Direction based on Low-Resolution Video} %【英文题目(若横线数量超过1, 则在可选参数处填所需横线数量)】
+\aauthor{阿海} %【作者姓名】
+\majorinCOVERPAGE{应用数学} %【学科专业（若为工程硕士，则可选参数填 “engineering”）】
+\sdtID{112020xxxx} %【学号】
+\mentorONE{海老师（教授）} %【指导教师（职称）】
+\degree{理学硕士}{academic} %【学位类别】
+% 第二个参数：学硕填“academic”，专硕（含工程硕士、MBA、EMBA、MPA等）填“professional”
+\faculty{理学院} %【培养单位】
+\completiondate{2024}{5} %【答辩时间（年、月）】
+%% ============================== %
+
+%% ---------- 原创性声明 & 授权使用声明 ---------- %
+\signofstudent{\includegraphics[width=0.2\textwidth]{signatures/阿海.png}} %【作者签名（将图片导入文件夹、修改此处文件名即可）】
+\dateforstudent{2024}{5}{21} %【作者签名日期（年、月、日）】
+\signofmentor{\includegraphics[width=0.2\textwidth]{signatures/海老师.png}} %【导师签名（将图片导入文件夹、修改此处文件名即可）】
+\dateformentor{2024}{5}{21} %【导师签名日期（年、月、日）】
+%% ======================================== %
+% ======================================================= %
+
+% --------------- 可以在此处添加命令 --------------- %
+
+% ================================================== %
+
+\begin{document}
+
+\makepages %【封面页】
+
+\OriginalityStatement %【原创性声明】
+
+
+% ---------- 中文摘要 ---------- %
+\presetupOFabstractCN%
+\input{mainbody/<FOLDER>/abstract_zh}
+\nextpages{abstractCN}
+% =================================== %	
+
+
+% ---------- 英文摘要 ---------- %
+\presetupOFabstractEN%
+\input{mainbody/<FOLDER>/abstract_en}
+\nextpages{abstractEN}
+% =================================== %	
+
+
+% -------------------- 目录 -------------------- %
+\presetupOFtocs%
+\tableofcontents
+\listoffigures %图目录
+\listoftables %表目录
+\nextpages{tocs}
+% ================================================== %	
+
+
+% ---------- 正文（划分为多个独立文件依次导入） ---------- %
+\pesudohookOFpremainbody
+\input{mainbody/<FOLDER>/ch1} \clearpage
+\input{mainbody/<FOLDER>/conclusion} \clearpage\vspace*{0pt} % 结论
+% ================================================== %
+
+
+% ---------- 参考文献 ---------- %
+%% 方式一：
+%\bibliography{refs/} %bib文件导入的形式生成参考文献列表
+%% 方式二：
+%\begin{thebibliography}{100}
+%\bibitem{文献x的标签}{文献x的信息}
+%\end{thebibliography}
+%\clearpage
+% ============================== %
+
+
+% ---------- 附录 ---------- %
+
+% ========================= %
+
+
+% ---------- 致谢 ---------- %
+\input{mainbody/<FOLDER>/acknowledgment}
+\clearpage
+% ============================== %
+
+
+% ----- 作者简历及攻读硕士学位期间的科研成果 ----- %
+%\input{mainbody/<FOLDER>/}
+\presetupOFpersonalcv
+%\nextpages{personalcv}
+% ================================================== %
+
+
+\AuthorizationStatement %【授权使用声明】
+
+\end{document} 
 
 REM 4#==#==#==#
-<MAlaw：硕士-法学/法律>
-\documentclass[MAlaw,<platform>]{dlmuthesis}
+% !Mode:: "TeX:UTF-8"
+% !TeX program = xelatex
+
+% ---------- 声明文档类 ---------- %
+\documentclass[MAlaw,<PLATFORM>]{dlmuthesis}
+%% 输出模式：
+%% 注：默认为电子版模式，即不添加任何空白页
+%%% printed：打印模式（仅适用于硕博论文；打印时请采用双面打印）
+% ================================================== %
+
+% -------------------- 填写论文信息 -------------------- %
+%% ---------- 封面页 ---------- %
+\cntitle{提高我国医疗保障水平问题研究} %【中文题目(若横线数量超过1, 则在可选参数处填所需横线数量)】
+\entitle{Study on the Issue of Improving the Level of Medical Insurance in China} %【英文题目(若横线数量超过1, 则在可选参数处填所需横线数量)】
+\aauthor{阿海} %【作者姓名】
+\majorinCOVERPAGE{法学} %【学科专业（若为工程硕士，则可选参数填 “engineering”）】
+\sdtID{112020xxxx} %【学号】
+\mentorONE{海老师（教授）} %【指导教师（职称）】
+\degree{法学硕士}{academic} %【学位类别】
+% 第二个参数：学硕填“academic”，专硕（含工程硕士、MBA、EMBA、MPA等）填“professional”
+\faculty{法学院} %【培养单位】
+\completiondate{2024}{5} %【答辩时间（年、月）】
+%% ============================== %
+
+%% ---------- 原创性声明 & 授权使用声明 ---------- %
+\signofstudent{\includegraphics[width=0.2\textwidth]{signatures/阿海.png}} %【作者签名（将图片导入文件夹、修改此处文件名即可）】
+\dateforstudent{2024}{5}{21} %【作者签名日期（年、月、日）】
+\signofmentor{\includegraphics[width=0.2\textwidth]{signatures/海老师.png}} %【导师签名（将图片导入文件夹、修改此处文件名即可）】
+\dateformentor{2024}{5}{21} %【导师签名日期（年、月、日）】
+%% ======================================== %
+% ======================================================= %
+
+% ----- 脚注编号类型的选择 ----- %
+%% 填“1”：1, 2, ...
+%% 填“2”：[1], [2], ...
+%% 填“3”：(1), (2), ...
+%% 填“4”：带圈的阿拉伯数字
+%% 填“5”：【1】, 【2】, ...
+\footnotemode{4}
+% ============================== %
+
+% --------------- 可以在此处添加命令 --------------- %
+
+% ================================================== %
+
+\begin{document}
+
+\makepages %【封面页】
+
+\OriginalityStatement %【原创性声明】
+
+
+% ---------- 中文摘要 ---------- %
+\presetupOFabstractCN%
+\input{mainbody/<FOLDER>/abstract_zh}
+\nextpages{abstractCN}
+% =================================== %	
+
+
+% ---------- 英文摘要 ---------- %
+\presetupOFabstractEN%
+\input{mainbody/<FOLDER>/abstract_en}
+\nextpages{abstractEN}
+% =================================== %	
+
+
+% -------------------- 目录 -------------------- %
+\presetupOFtocs%
+\tableofcontents
+\listoffigures %图目录
+\listoftables %表目录
+\nextpages{tocs}
+% ================================================== %	
+
+
+% ---------- 正文（划分为多个独立文件依次导入） ---------- %
+\pesudohookOFpremainbody
+\input{mainbody/<FOLDER>/ch1} \clearpage
+\input{mainbody/<FOLDER>/conclusion} \clearpage % 结论
+% ================================================== %
+
+
+% ---------- 参考文献 ---------- %
+%% [硕士-法学/法律]中，参考文献需按照特定规则分类列举
+%\begin{thebibliography}{100}
+%\input{refs/}
+%\end{thebibliography}
+%\clearpage
+% ============================== %
+
+
+% ---------- 附录 ---------- %
+
+% ========================= %
+
+
+% ----- 攻读学位期间公开发表论文 ----- %
+%\input{mainbody/<FOLDER>/}
+%\clearpage
+% =================================== %	
+
+
+% ---------- 致谢 ---------- %
+\input{mainbody/<FOLDER>/acknowledgment}
+\clearpage
+% ============================== %
+
+
+% ----- 作者简介 ----- %
+%\input{mainbody/<FOLDER>/}
+\presetupOFpersonalcv
+%\nextpages{personalcv}
+% ============================== %
+
+
+\AuthorizationStatement %【授权使用声明】
+
+\end{document} 
+
 
 REM 5#==#==#==#
-<MAmarxism：硕士-马克思主义理论>
-\documentclass[MAmarxism,<platform>]{dlmuthesis}
+% !Mode:: "TeX:UTF-8"
+% !TeX program = xelatex
+
+% ---------- 声明文档类 ---------- %
+\documentclass[MAmarxism,<PLATFORM>]{dlmuthesis}
+%% 输出模式：
+%% 注：默认为电子版模式，即不添加任何空白页
+%%% printed：打印模式（仅适用于硕博论文；打印时请采用双面打印）
+% ================================================== %
+
+% -------------------- 填写论文信息 -------------------- %
+%% ---------- 封面页 ---------- %
+\cntitle{提高我国医疗保障水平问题研究} %【中文题目(若横线数量超过1, 则在可选参数处填所需横线数量)】
+\entitle{Study on the Issue of Improving the Level of Medical Insurance in China} %【英文题目(若横线数量超过1, 则在可选参数处填所需横线数量)】
+\aauthor{阿海} %【作者姓名】
+\majorinCOVERPAGE{马克思主义理论} %【学科专业（若为工程硕士，则可选参数填 “engineering”）】
+\sdtID{112020xxxx} %【学号】
+\mentorONE{海老师（教授）} %【指导教师（职称）】
+\degree{法学硕士}{academic} %【学位类别】
+% 第二个参数：学硕填“academic”，专硕（含工程硕士、MBA、EMBA、MPA等）填“professional”
+\faculty{马克思主义学院} %【培养单位】
+\completiondate{2024}{5} %【答辩时间（年、月）】
+%% ============================== %
+
+%% ---------- 原创性声明 & 授权使用声明 ---------- %
+\signofstudent{\includegraphics[width=0.2\textwidth]{signatures/阿海.png}} %【作者签名（将图片导入文件夹、修改此处文件名即可）】
+\dateforstudent{2024}{5}{21} %【作者签名日期（年、月、日）】
+\signofmentor{\includegraphics[width=0.2\textwidth]{signatures/海老师.png}} %【导师签名（将图片导入文件夹、修改此处文件名即可）】
+\dateformentor{2024}{5}{21} %【导师签名日期（年、月、日）】
+%% ======================================== %
+% ======================================================= %
+
+% ----- 脚注编号类型的选择 ----- %
+%% 填“1”：1, 2, ...
+%% 填“2”：[1], [2], ...
+%% 填“3”：(1), (2), ...
+%% 填“4”：带圈的阿拉伯数字
+%% 填“5”：【1】, 【2】, ...
+\footnotemode{4}
+% ============================== %
+
+% --------------- 可以在此处添加命令 --------------- %
+
+% ================================================== %
+
+\begin{document}
+
+\makepages %【封面页】
+
+\OriginalityANDAuthorization %【原创性声明 + 授权使用声明】
+
+
+% ---------- 中文摘要 ---------- %
+\presetupOFabstractCN%
+\input{mainbody/<FOLDER>/abstract_zh}
+\nextpages{abstractCN}
+% =================================== %	
+
+
+% ---------- 英文摘要 ---------- %
+\presetupOFabstractEN%
+\input{mainbody/<FOLDER>/abstract_en}
+\nextpages{abstractEN}
+% =================================== %	
+
+
+% -------------------- 目录 -------------------- %
+\presetupOFtocs%
+\tableofcontents
+\listoffigures %图目录
+\listoftables %表目录
+\nextpages{tocs}
+% ================================================== %	
+
+
+% ---------- 正文（划分为多个独立文件依次导入） ---------- %
+\pesudohookOFpremainbody
+\input{mainbody/<FOLDER>/ch1} \clearpage
+\input{mainbody/<FOLDER>/conclusion} \clearpage % 结论
+% ================================================== %
+
+
+% ---------- 参考文献 ---------- %
+%% [硕士-马克思主义理论]中，参考文献需按照特定规则分类列举
+%\begin{thebibliography}{100}
+%\input{refs/}
+%\end{thebibliography}
+%\clearpage
+% ============================== %
+
+
+% ---------- 附录 ---------- %
+
+% ========================= %
+
+
+% ----- 科研成果 ----- %
+%\input{mainbody/<FOLDER>/}
+%\clearpage
+% =================================== %	
+
+
+% ---------- 致谢 ---------- %
+\input{mainbody/<FOLDER>/acknowledgment}
+\clearpage
+% ============================== %
+
+
+% ----- 作者简介 ----- %
+%\input{mainbody/<FOLDER>/}
+\presetupOFpersonalcv
+%\nextpages{personalcv}
+% =================================== %	
+
+\end{document}
 
 REM 6#==#==#==#
-<DOC：博士>
-\documentclass[DOC,<platform>]{dlmuthesis}
+% !Mode:: "TeX:UTF-8"
+% !TeX program = xelatex
+
+% ---------- 声明文档类 ---------- %
+\documentclass[DOC,<PLATFORM>]{dlmuthesis}
+%% 输出模式：
+%% 注：默认为电子版模式，即不添加任何空白页
+%%% printed：打印模式（仅适用于硕博论文；打印时请采用双面打印）
+% ================================================== %
+
+% -------------------- 填写论文信息 -------------------- %
+%% ---------- 封面页 ---------- %
+\cntitle{基于低分辨率视频的手势运动方向检测} %【中文题目(若横线数量超过1, 则在可选参数处填所需横线数量)】
+\entitle{Detection of Gesture Motion Direction based on Low-Resolution Video} %【英文题目(若横线数量超过1, 则在可选参数处填所需横线数量)】
+\aauthor{阿海} %【作者姓名】
+\majorinCOVERPAGE{数学} %【学科专业（若为工程硕士，则可选参数填 “MEng”）】
+\sdtID{112020xxxx} %【学号】
+\mentorONE{海老师（教授）} %【指导教师（职称）】
+\degree{理学博士}{academic} %【学位类别】
+% 第二个参数：研究型博士填“academic”，工程博士填“engineering”
+\faculty{理学院} %【培养单位】
+\completiondate{2024}{5} %【答辩时间（年、月）】
+%% ============================== %
+
+%% ---------- 原创性声明 & 授权使用声明 ---------- %
+\signofstudent{\includegraphics[width=0.2\textwidth]{signatures/阿海.png}} %【作者签名（将图片导入文件夹、修改此处文件名即可）】
+\dateforstudent{2024}{5}{21} %【作者签名日期（年、月、日）】
+\signofmentor{\includegraphics[width=0.2\textwidth]{signatures/海老师.png}} %【导师签名（将图片导入文件夹、修改此处文件名即可）】
+\dateformentor{2024}{5}{21} %【导师签名日期（年、月、日）】
+%% ======================================== %
+% ======================================================= %
+
+% --------------- 可以在此处添加命令 --------------- %
+
+% ================================================== %
+
+\begin{document}
+
+\makepages %【封面页】
+
+\OriginalityANDAuthorization %【原创性声明 + 授权使用声明】
+
+
+% ---------- 创新点摘要 ---------- %
+\presetupOFabstractINNOVATION%
+%\input{mainbody/<FOLDER>/}
+%\nextpages{abstractINNOVATION}
+% =================================== %	
+
+
+% ---------- 中文摘要 ---------- %
+\presetupOFabstractCN%
+\input{mainbody/<FOLDER>/abstract_zh}
+\nextpages{abstractCN}
+% =================================== %	
+
+
+% ---------- 英文摘要 ---------- %
+\presetupOFabstractEN%
+\input{mainbody/<FOLDER>/abstract_en}
+\nextpages{abstractEN}
+% =================================== %	
+
+
+% -------------------- 目录 -------------------- %
+\presetupOFtocs%
+\tableofcontents
+\listoffigures %图目录
+\listoftables %表目录
+\nextpages{tocs}
+% ================================================== %	
+
+
+% ---------- 正文（划分为多个独立文件依次导入） ---------- %
+\pesudohookOFpremainbody
+\input{mainbody/<FOLDER>/ch1} \clearpage
+\input{mainbody/<FOLDER>/conclusion} \clearpage\vspace*{0pt} % 结论
+% ================================================== %
+
+
+% ---------- 参考文献 ---------- %
+%% 参考文献的著录，按论文中引用顺序排列。
+%% 要求不少于120篇，其中英文参考文献不少于60%。采用数字序号标注法。
+%% 文献类型标志参考国家标准 GB/T 7714 - 2005。
+%% 方式一：
+%\bibliography{refs/} %bib文件导入的形式生成参考文献列表
+%% 方式二：
+%\begin{thebibliography}{100}
+%\bibitem{文献x的标签}{文献x的信息}
+%\end{thebibliography}
+%\clearpage
+% ============================== %
+
+
+% ---------- 附录 ---------- %
+
+% ========================= %
+
+
+% ----- 作者简历及攻读硕士学位期间的科研成果 ----- %
+%\input{mainbody/<FOLDER>/}
+\presetupOFpersonalcv
+%\nextpages{personalcv}
+% ================================================== %
+
+
+% ---------- 致谢 ---------- %
+\input{mainbody/<FOLDER>/acknowledgment}
+% ============================== %
+
+\end{document} 
+
 
 REM 7#==#==#==#
-<DOClaw：博士-法学/法律>
-\documentclass[DOClaw,<platform>]{dlmuthesis}
+% !Mode:: "TeX:UTF-8"
+% !TeX program = xelatex
+
+% ---------- 声明文档类 ---------- %
+\documentclass[DOClaw,<PLATFORM>]{dlmuthesis}
+%% 输出模式：
+%% 注：默认为电子版模式，即不添加任何空白页
+%%% printed：打印模式（仅适用于硕博论文；打印时请采用双面打印）
+% ================================================== %
+
+% -------------------- 填写论文信息 -------------------- %
+%% ---------- 封面页 ---------- %
+\cntitle{提高我国医疗保障水平问题研究} %【中文题目(若横线数量超过1, 则在可选参数处填所需横线数量)】
+\entitle{Study on the Issue of Improving the Level of Medical Insurance in China} %【英文题目(若横线数量超过1, 则在可选参数处填所需横线数量)】
+\aauthor{阿海} %【作者姓名】
+\majorinCOVERPAGE{法学} %【学科专业（若为工程硕士，则可选参数填 “MEng”）】
+\sdtID{112020xxxx} %【学号】
+\mentorONE{海老师（教授）} %【指导教师（职称）】
+\degree{法学博士}{} %【学位类别】
+\faculty{法学院} %【培养单位】
+\completiondate{2024}{5} %【答辩时间（年、月）】
+%% ============================== %
+
+%% ---------- 原创性声明 & 授权使用声明 ---------- %
+\signofstudent{\includegraphics[width=0.2\textwidth]{signatures/阿海.png}} %【作者签名（将图片导入文件夹、修改此处文件名即可）】
+\dateforstudent{2024}{5}{21} %【作者签名日期（年、月、日）】
+\signofmentor{\includegraphics[width=0.2\textwidth]{signatures/海老师.png}} %【导师签名（将图片导入文件夹、修改此处文件名即可）】
+\dateformentor{2024}{5}{21} %【导师签名日期（年、月、日）】
+%% ======================================== %
+% ======================================================= %
+
+% ----- 脚注编号类型的选择 ----- %
+%% 填“1”：1, 2, ...
+%% 填“2”：[1], [2], ...
+%% 填“3”：(1), (2), ...
+%% 填“4”：带圈的阿拉伯数字
+%% 填“5”：【1】, 【2】, ...
+\footnotemode{4}
+% ============================== %
+
+% --------------- 可以在此处添加命令 --------------- %
+
+% ================================================== %
+
+\begin{document}
+
+\makepages %【封面页】
+
+\OriginalityANDAuthorization %【原创性声明 + 授权使用声明】
+
+
+% ---------- 创新点摘要 ---------- %
+\presetupOFabstractINNOVATION%
+%\input{mainbody/<FOLDER>/}
+%\nextpages{abstractINNOVATION}
+% =================================== %	
+
+
+% ---------- 中文摘要 ---------- %
+\presetupOFabstractCN%
+\input{mainbody/<FOLDER>/abstract_zh}
+\nextpages{abstractCN}
+% =================================== %	
+
+
+% ---------- 英文摘要 ---------- %
+\presetupOFabstractEN%
+\input{mainbody/<FOLDER>/abstract_en}
+\nextpages{abstractEN}
+% =================================== %	
+
+
+
+% -------------------- 目录 -------------------- %
+\presetupOFtocs%
+\tableofcontents
+\listoffigures %图目录
+\listoftables %表目录
+\nextpages{tocs}
+% ================================================== %	
+
+
+% ---------- 正文（划分为多个独立文件依次导入） ---------- %
+\pesudohookOFpremainbody
+\input{mainbody/<FOLDER>/ch1} \clearpage
+\input{mainbody/<FOLDER>/conclusion} \clearpage % 结论
+% ================================================== %
+
+
+% ---------- 参考文献 ---------- %
+%% [博士-法学/法律]中，参考文献需按照特定规则分类列举
+%\begin{thebibliography}{100}
+%\input{refs/}
+%\end{thebibliography}
+%\clearpage
+% ============================== %
+
+
+% ---------- 附录 ---------- %
+
+% ========================= %
+
+
+% ----- 攻读学位期间公开发表论文 ----- %
+%\input{mainbody/<FOLDER>/}
+%\clearpage
+% =================================== %	
+
+
+% ---------- 致谢 ---------- %
+\input{mainbody/<FOLDER>/acknowledgment}
+\clearpage
+% ============================== %
+
+
+% ----- 作者简介 ----- %
+%\input{mainbody/<FOLDER>/}
+\presetupOFpersonalcv
+%\nextpages{personalcv}
+% ============================== %
+
+\end{document} 
 
 REM 8#==#==#==#
-<DOCmarxism：博士-马克思主义理论>
-\documentclass[DOCmarxism,<platform>]{dlmuthesis}
+% !Mode:: "TeX:UTF-8"
+% !TeX program = xelatex
+
+% ---------- 声明文档类 ---------- %
+\documentclass[DOCmarxism,<PLATFORM>]{dlmuthesis}
+%% 输出模式：
+%% 注：默认为电子版模式，即不添加任何空白页
+%%% printed：打印模式（仅适用于硕博论文；打印时请采用双面打印）
+% ================================================== %
+
+% -------------------- 填写论文信息 -------------------- %
+%% ---------- 封面页 ---------- %
+\cntitle{提高我国医疗保障水平问题研究} %【中文题目(若横线数量超过1, 则在可选参数处填所需横线数量)】
+\entitle{Study on the Issue of Improving the Level of Medical Insurance in China} %【英文题目(若横线数量超过1, 则在可选参数处填所需横线数量)】
+\aauthor{阿海} %【作者姓名】
+\majorinCOVERPAGE{马克思主义理论} %【学科专业（若为工程硕士，则可选参数填 “MEng”）】
+\sdtID{112020xxxx} %【学号】
+\mentorONE{海老师（教授）} %【指导教师（职称）】
+\degree{法学博士}{academic} %【学位类别】
+% 第二个参数：学硕填“academic”，专硕（含工程硕士、MBA、EMBA、MPA等）填“professional”
+\faculty{马克思主义学院} %【培养单位】
+\completiondate{2024}{5} %【答辩时间（年、月）】
+%% ============================== %
+
+%% ---------- 原创性声明 & 授权使用声明 ---------- %
+\signofstudent{\includegraphics[width=0.2\textwidth]{signatures/阿海.png}} %【作者签名（将图片导入文件夹、修改此处文件名即可）】
+\dateforstudent{2024}{5}{21} %【作者签名日期（年、月、日）】
+\signofmentor{\includegraphics[width=0.2\textwidth]{signatures/海老师.png}} %【导师签名（将图片导入文件夹、修改此处文件名即可）】
+\dateformentor{2024}{5}{21} %【导师签名日期（年、月、日）】
+%% ======================================== %
+% ======================================================= %
+
+% ----- 脚注编号类型的选择 ----- %
+%% 填“1”：1, 2, ...
+%% 填“2”：[1], [2], ...
+%% 填“3”：(1), (2), ...
+%% 填“4”：带圈的阿拉伯数字
+%% 填“5”：【1】, 【2】, ...
+\footnotemode{4}
+% ============================== %
+
+% --------------- 可以在此处添加命令 --------------- %
+
+% ================================================== %
+
+\begin{document}
+
+\makepages %【封面页】
+
+\OriginalityANDAuthorization %【原创性声明 + 授权使用声明】
+
+
+% ---------- 创新点摘要 ---------- %
+\presetupOFabstractINNOVATION%
+%\input{mainbody/<FOLDER>/}
+%\nextpages{abstractINNOVATION}
+% =================================== %	
+
+
+% ---------- 中文摘要 ---------- %
+\presetupOFabstractCN%
+\input{mainbody/<FOLDER>/abstract_zh}
+\nextpages{abstractCN}
+% =================================== %	
+
+
+% ---------- 英文摘要 ---------- %
+\presetupOFabstractEN%
+\input{mainbody/<FOLDER>/abstract_en}
+\nextpages{abstractEN}
+% =================================== %	
+
+
+% -------------------- 目录 -------------------- %
+\presetupOFtocs%
+\tableofcontents
+\listoffigures %图目录
+\listoftables %表目录
+\nextpages{tocs}
+% ================================================== %	
+
+
+% ---------- 正文（划分为多个独立文件依次导入） ---------- %
+\pesudohookOFpremainbody
+\input{mainbody/<FOLDER>/ch1} \clearpage
+\input{mainbody/<FOLDER>/conclusion} \clearpage % 结论
+% ================================================== %
+
+
+% ---------- 参考文献 ---------- %
+%% [博士-马克思主义理论]中，参考文献需按照特定规则分类列举
+%\begin{thebibliography}{100}
+%\input{refs/}
+%\end{thebibliography}
+%\clearpage
+% ============================== %
+
+
+% ---------- 附录 ---------- %
+
+% ========================= %
+
+
+% ----- 科研成果 ----- %
+%\input{mainbody/<FOLDER>/}
+%\clearpage
+% =================================== %	
+
+
+% ---------- 致谢 ---------- %
+\input{mainbody/<FOLDER>/acknowledgment}
+\clearpage
+% ============================== %
+
+
+% ----- 作者简介 ----- %
+%\input{mainbody/<FOLDER>/}
+\presetupOFpersonalcv
+%\nextpages{personalcv}
+% =================================== %	
+
+\end{document}
 
 REM 9#==#==#==#
-<中文摘要页>
-<platform>
+% ---------- 中文摘要内容 ---------- %
+\begin{abstract}
+
+\zhlipsum[1-2]
+
+\keywordsCN{词一；词二；词三}
+
+\end{abstract}%
 
 REM 10#==#==#==#
-<英文摘要页>
+% ---------- 英文摘要内容 ---------- %
+\begin{abstract}
+
+\lipsum[1-2]
+
+\keywordsEN{Word One; Word Two; Word Three}
+
+\end{abstract}%
 
 REM 11#==#==#==#
-<第1章>
-<platform>
+\section{绪论}
+
+\subsection{研究背景}
+
+\subsection{国内外相关研究现状及进展}
+
+\subsection{本文主要研究思路（工作设想，可附技术路线图）}
+
+\subsection{研究目的和研究意义}
+
+\subsection{本章小结}
+
+\zhlipsum[1-2]
 
 REM 12#==#==#==#
-<结论>
+% 学位类别为【博士】的，使用如下被注释的结构：
+%\section{结论与展望}
+%
+%\subsection{结论}
+%
+%\zhlipsum[1]
+%
+%\subsection{展望}
+%
+%\zhlipsum[2]
+
+% 否则，使用如下结构：
+\begin{conclusion}
+
+\lipsum[1-2]
+
+\end{conclusion}
 
 REM 13#==#==#==#
-<致谢>
+\begin{acknowledgment}
+
+\zhlipsum[1-2]
+
+\end{acknowledgment}
 
 REM 14#==#==#==#
-
-:RangeDecision
-if %~1 geq %~2 && %~1 leq %~3 (
-  set /a "%~4=1"
-) else (
-  set /a "%~4=0"
-)
-EXIT /B 0
 
 
 :TextProcess 
@@ -318,6 +1200,7 @@ if %~1 equ 1 (
 echo,sFilePath = WScript.Arguments.Item^(1^)
 echo,ContentMode=WScript.Arguments.Item^(2^)
 echo,PlatformMode=WScript.Arguments.Item^(3^)
+echo,ProjectFolder=WScript.Arguments.Item^(4^)
 echo,sWriteStr = ReadFile^(sFile, "GB2312"^) 
 echo,set reg=new regexp
 echo,reg.ignorecase=True 
@@ -341,17 +1224,18 @@ echo,    Astream.CharSet = CodePage
 echo,    Assp=Astream.size
 echo,    Astream.Position = 0
 echo,    If int^(ContentMode^) ^> 0 And int^(ContentMode^) ^< 9 Then
+echo,    sWriteStr = Replace^(sWriteStr,"<FOLDER>",ProjectFolder^)
 echo,    Select Case PlatformMode
 echo,    Case "1"
-echo,    sWriteStr = Replace^(sWriteStr,"<platform>","windows"^)
+echo,    sWriteStr = Replace^(sWriteStr,"<PLATFORM>","windows"^)
 echo,    Case "2"
-echo,    sWriteStr = Replace^(sWriteStr,"<platform>","macos"^)
+echo,    sWriteStr = Replace^(sWriteStr,"<PLATFORM>","macos"^)
 echo,    Case "3"
-echo,    sWriteStr = Replace^(sWriteStr,"<platform>","ubuntu"^)
+echo,    sWriteStr = Replace^(sWriteStr,"<PLATFORM>","ubuntu"^)
 echo,    Case "4"
-echo,    sWriteStr = Replace^(sWriteStr,"<platform>","web"^)
+echo,    sWriteStr = Replace^(sWriteStr,"<PLATFORM>","web"^)
 echo,    Case "5"
-echo,    sWriteStr = Replace^(sWriteStr,"<platform>","customization"^)
+echo,    sWriteStr = Replace^(sWriteStr,"<PLATFORM>","customization"^)
 echo,    End Select
 echo,    End If
 echo,    Astream.Writetext sWriteStr,0 
@@ -397,6 +1281,6 @@ echo,       Set stm = Nothing
 echo,       ReadFile = Str 
 echo,End Function
 )>".\_TempVbsCode.vbs"
-cscript.exe /nologo ".\_TempVbsCode.vbs" "%~dpnx0" "%_OutPath%" "%~3" "%~5"
+cscript.exe /nologo ".\_TempVbsCode.vbs" "%~dpnx0" "%_OutPath%" "%~3" "%~5" "%~2"
 del /f /q ".\_TempVbsCode.vbs" >nul 2>nul
 EXIT /B 0

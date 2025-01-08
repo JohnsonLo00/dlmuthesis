@@ -1504,8 +1504,6 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   \else\if@dlmuthesis@MAmarxism %【硕士-马克思主义理论】
     \setcounter{abstractENbegin}{\value{page}} %涉及打印模式
     \renewcommand\abstractname{\large ABSTRACT} %临时修改摘要名
-    \phantomsection
-    \addcontentsline{toc}{section}{ABSTRACT}
   \else\if@dlmuthesis@DOC %【博士】
     \setcounter{abstractENbegin}{\value{page}} %涉及打印模式
     \renewcommand\abstractname{\large\bfseries ABSTRACT} %临时修改摘要名
