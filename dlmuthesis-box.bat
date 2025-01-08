@@ -1,11 +1,20 @@
 @echo off
 chcp 936
-title dlmuthesis box
+title dlmuthesis-box
 
-REM ------------------------------
-REM dlmuthesis box v1.0.0 2025-1-15
-REM <JL, yhlaozero2@163.com>
-REM ------------------------------
+REM
+REM This is file "dlmuthesis-box.bat"
+REM
+REM Copyright (C) 2023-2024 by JL <yhlaozero2@163.com>
+REM
+REM This work may be distributed and/or modified under the
+REM conditions of the LaTeX Project Public License, either version 1.3
+REM of this license or (at your option) any later version.
+REM The latest version of this license is in
+REM   https://www.latex-project.org/lppl.txt
+REM and version 1.3c or later is part of all distributions of LaTeX
+REM version 2008 or later.
+REM
 
 set /a "Comments=1"
 
@@ -131,7 +140,15 @@ if %Option% equ 1 (
   echo       （2）不要使用中文
   echo -----------------------------
   echo.
-  set /p "NewMainFile=-->在这里输入："
+  set /p "NewMainFile=-->在这里输入（如需中止创建请输入0）："
+  if !NewMainFile! equ 0 (
+    echo.
+    echo -----------------------
+    echo ----- 创建已中止！-----
+    echo -----------------------
+    echo.
+    goto :ending
+  )
   echo.
   echo 请输入当前使用LaTeX的[平台]名称（输入选项前的数字）
   echo ----------------------------
@@ -168,7 +185,15 @@ if %Option% equ 1 (
   echo 请输入新项目的[章节文件夹]名称（注：不要使用中文）
   echo ---------------------------------------------
   echo.
-  set /p "NewFolder=-->在这里输入："
+  set /p "NewFolder=-->在这里输入（如需中止创建请输入0）："
+  if !NewFolder! equ 0 (
+    echo.
+    echo -----------------------
+    echo ----- 创建已中止！-----
+    echo -----------------------
+    echo.
+    goto :ending
+  )
   echo.
   echo ------------------------------
   echo ---------- 正在创建 ----------
