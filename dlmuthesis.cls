@@ -698,10 +698,10 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   }
 \else\if@dlmuthesis@macos
   \IfFontExistsTF{STSong}{
-    \setCJKmainfont{STSong}[AutoFakeBold=3.0, AutoFakeSlant=0.3]
+    \setCJKmainfont{STSong}[AutoFakeBold=5.0, AutoFakeSlant=0.3]
   }{
     \IfFontExistsTF{./misc/STSong.ttf}{
-      \setCJKmainfont{STSong}[Path={./misc/}, AutoFakeBold=3.0, AutoFakeSlant=0.3]
+      \setCJKmainfont{STSong}[Path={./misc/}, AutoFakeBold=5.0, AutoFakeSlant=0.3]
     }{
       \ClassError{dlmuthesis}{The HUAWEN fontset does not exists}{}
     }
@@ -774,6 +774,28 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 %% ----- macOS下的黑体需要做加粗处理 ----- %
 \if@dlmuthesis@macos
   \AddToHook{cmd/heiti/after}[heiti_with_bold]{\bfseries}
+\fi
+%% =================================== %
+%% ----- Windows以外的平台，都需对lof,lot下的\songti命令进行处理 ----- %
+\if@dlmuthesis@windows
+  \typeout{dlmuthesis: original \protect\songti\space}
+\else
+  \typeout{dlmuthesis: temporarily redefine \protect\songti\space in lof}
+  \AddToHook{cmd/listoffigures/before}[redefine_songti_in_lof]{
+    \let\oldsongti\songti
+    \renewcommand{\songti}{\oldsongti\rm}
+  }
+  \AddToHook{cmd/listoffigures/after}[back_to_orisongti_in_lof]{
+    \let\songti\oldsongti
+  }
+  \typeout{dlmuthesis: temporarily redefine \protect\songti\space in lot}
+  \AddToHook{cmd/listoftables/before}[redefine_songti_in_lot]{
+    \let\oldsongti\songti
+    \renewcommand{\songti}{\oldsongti\rm}
+  }
+  \AddToHook{cmd/listoftables/after}[back_to_orisongti_in_lot]{
+    \let\songti\oldsongti
+  }
 \fi
 %% =================================== %
 % ======================================== %

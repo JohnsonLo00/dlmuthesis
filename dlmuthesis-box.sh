@@ -30,6 +30,9 @@ then
     echo "gnome-terminal could not be found, please install it first."
     exit 1
   fi
+elif [[ "$(uname -o)" == "Msys" || "$(uname -o)" == "Cygwin" ]]
+then
+    echo "----- Windows 系统 (Bash) 下的 dlmuthesis-box -----"
 else
     echo "未知的操作系统"
 fi
@@ -309,6 +312,7 @@ mainfile_MA=$(cat <<EOL
 
 % ---------- 正文（划分为多个独立文件依次导入） ---------- %
 \pesudohookOFpremainbody
+\input{mainbody/<FOLDER>/introduction} \clearpage %引言
 \input{mainbody/<FOLDER>/ch1} \clearpage
 \input{mainbody/<FOLDER>/conclusion} \clearpage\vspace*{0pt} % 结论
 % ================================================== %
@@ -428,6 +432,7 @@ mainfile_MAlaw=$(cat <<EOL
 
 % ---------- 正文（划分为多个独立文件依次导入） ---------- %
 \pesudohookOFpremainbody
+\input{mainbody/<FOLDER>/introduction} \clearpage %引言
 \input{mainbody/<FOLDER>/ch1} \clearpage
 \input{mainbody/<FOLDER>/conclusion} \clearpage % 结论
 % ================================================== %
@@ -792,6 +797,7 @@ mainfile_DOClaw=$(cat <<EOL
 
 % ---------- 正文（划分为多个独立文件依次导入） ---------- %
 \pesudohookOFpremainbody
+\input{mainbody/<FOLDER>/introduction} \clearpage %引言
 \input{mainbody/<FOLDER>/ch1} \clearpage
 \input{mainbody/<FOLDER>/conclusion} \clearpage % 结论
 % ================================================== %
@@ -1256,6 +1262,15 @@ subfile_texref=$(cat <<EOL
 EOL
 )
 
+subfile_introduction=$(cat <<EOL
+\begin{introduction}
+
+\zhlipsum[1-2]
+
+\end{introduction}
+EOL
+)
+
 #############################
 # 数组：平台类型、待生成的文本
 #############################
@@ -1479,12 +1494,14 @@ do
       echo "$subfile_texref_BAhumanities" >> ./refs/ref_$NewMainFile.tex
       ;;
     3)
-      ### [硕士]：bib类型的ref文件、personalcvs
+      ### [硕士]：引言、bib类型的ref文件、personalcvs
+      echo "$subfile_introduction" >> ./mainbody/$NewFolder/introduction.tex
       echo "$subfile_bibref" >> ./refs/ref_$NewMainFile.bib
       echo "$subfile_personalcvs" >> ./mainbody/$NewFolder/personalcvs.tex
       ;;
     4)
-      ### [硕士-法学/法律]：tex类型的ref文件、作者简介、科研成果
+      ### [硕士-法学/法律]：引言、tex类型的ref文件、作者简介、科研成果
+      echo "$subfile_introduction" >> ./mainbody/$NewFolder/introduction.tex
       echo "$subfile_texref" >> ./refs/ref_$NewMainFile.tex
       echo "$subfile_authorintroduction" >> ./mainbody/$NewFolder/authorintroduction.tex
       echo "$subfile_authorachievements" >> ./mainbody/$NewFolder/authorachievements.tex
@@ -1502,8 +1519,9 @@ do
       echo "$subfile_personalcvs" >> ./mainbody/$NewFolder/personalcvs.tex
       ;;
     7)
-      ### [博士-法学/法律]：创新点摘要、tex类型的ref文件、作者简介、科研成果
+      ### [博士-法学/法律]：创新点摘要、引言、tex类型的ref文件、作者简介、科研成果
       echo "$subfile_abstractINNOVATION" >> ./mainbody/$NewFolder/abstract_innovation.tex
+      echo "$subfile_introduction" >> ./mainbody/$NewFolder/introduction.tex
       echo "$subfile_texref" >> ./refs/ref_$NewMainFile.tex
       echo "$subfile_authorintroduction" >> ./mainbody/$NewFolder/authorintroduction.tex
       echo "$subfile_authorachievements" >> ./mainbody/$NewFolder/authorachievements.tex
@@ -1522,12 +1540,13 @@ do
     echo "- 创新点摘要"
     echo "- 中文摘要"
     echo "- 英文摘要"
+    echo "- 引言"
     echo "- 第1章"
     echo "- 结论"
     echo "- 参考文献"
     echo "- 作者简历及攻读【硕/博】士学位期间的科研成果"
     echo "- 致谢"
-    echo "其余的独立文件（引言，正文其他，附录，etc）请自行按需创建。"
+    echo "其余独立文件（符号说明，正文其他，附录，etc）请自行按需创建。"
     echo "（2）请自行创建放置图片的文件夹。"
     echo "--------------------------------------------------"
     echo " "

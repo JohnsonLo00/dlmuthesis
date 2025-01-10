@@ -134,22 +134,6 @@ if %Option% equ 1 (
     goto :ending
   )
   echo.
-  echo -----------------------------
-  echo 请输入新项目的[主文档]名称
-  echo 注意：（1）不含文件后缀.tex
-  echo       （2）不要使用中文
-  echo -----------------------------
-  echo.
-  set /p "NewMainFile=-->在这里输入（如需中止创建请输入0）："
-  if !NewMainFile! equ 0 (
-    echo.
-    echo -----------------------
-    echo ----- 创建已中止！-----
-    echo -----------------------
-    echo.
-    goto :ending
-  )
-  echo.
   echo 请输入当前使用LaTeX的[平台]名称（输入选项前的数字）
   echo ----------------------------
   echo [1]: Windows
@@ -181,6 +165,36 @@ if %Option% equ 1 (
     goto :ending
   )
   echo.
+  echo -----------------------------
+  echo 请输入新项目的[主文档]名称
+  echo 注意：（1）不含文件后缀.tex
+  echo       （2）不要使用中文
+  echo -----------------------------
+  echo.
+  set /p "NewMainFile=-->在这里输入（如需中止创建请输入0）："
+  if !NewMainFile! equ 0 (
+    echo.
+    echo -----------------------
+    echo ----- 创建已中止！-----
+    echo -----------------------
+    echo.
+    goto :ending
+  ) else if exist .\!NewMainFile!.* (
+    echo.
+    echo ---------------------------------------------------------------
+    echo 主文档路径下存在同名文件!NewMainFile!，请更换一个新的主文档名称！
+    echo ---------------------------------------------------------------
+    echo.
+    goto :ending
+  ) else if exist .\refs\ref_!NewMainFile!.* (
+    echo.
+    echo ---------------------------------------------------------------
+    echo 文件夹refs下存在同名文件ref_!NewMainFile!，请更换一个新的文件名称！
+    echo ---------------------------------------------------------------
+    echo.
+    goto :ending
+  )
+  echo.
   echo ---------------------------------------------
   echo 请输入新项目的[章节文件夹]名称（注：不要使用中文）
   echo ---------------------------------------------
@@ -193,43 +207,102 @@ if %Option% equ 1 (
     echo -----------------------
     echo.
     goto :ending
+  ) else if exist .\mainbody\!NewFolder! (
+    echo.
+    echo ---------------------------------------------------------------
+    echo 文件夹mainbody下存在同名文件夹!NewFolder!，请更换一个新的文件夹名称！
+    echo ---------------------------------------------------------------
+    echo.
+    goto :ending
   )
   echo.
   echo ------------------------------
   echo ---------- 正在创建 ----------
   echo ------------------------------
   echo.
+  REM --- 第一个参数的映射：---
+  REM 1 - 与bat脚本同一路径
+  REM 2 - mainbody下的文件路径
+  REM 3 - refs下的文件路径(bib)
+  REM 4 - refs下的文件路径(tex)
+  REM --- 公共项目 ---
   REM 创建[主文档]
-  CALL :TextProcess 1,!NewFolder!,!NewDegree!,!NewMainFile!,!MyPlatform!
+  CALL :TextProcess 1,!NewFolder!,!NewDegree!,!NewMainFile!,!MyPlatform!,!NewMainFile!
   REM 创建[中文摘要页]
-  CALL :TextProcess 2,!NewFolder!,9,"abstract_zh",!MyPlatform!
+  CALL :TextProcess 2,!NewFolder!,9,"abstract_zh",!MyPlatform!,!NewMainFile!
   REM 创建[英文摘要页]
-  CALL :TextProcess 2,!NewFolder!,10,"abstract_en",!MyPlatform!
+  CALL :TextProcess 2,!NewFolder!,10,"abstract_en",!MyPlatform!,!NewMainFile!
   REM 创建[第1章]
-  CALL :TextProcess 2,!NewFolder!,11,"ch1",!MyPlatform!
+  CALL :TextProcess 2,!NewFolder!,11,"ch1",!MyPlatform!,!NewMainFile!
   REM 创建[结论]
-  CALL :TextProcess 2,!NewFolder!,12,"conclusion",!MyPlatform!
+  CALL :TextProcess 2,!NewFolder!,12,"conclusion",!MyPlatform!,!NewMainFile!
   REM 创建[致谢]
-  CALL :TextProcess 2,!NewFolder!,13,"acknowledgment",!MyPlatform!
+  CALL :TextProcess 2,!NewFolder!,13,"acknowledgement",!MyPlatform!,!NewMainFile!
+  REM --- 单独项目 ---
+  if !NewDegree! equ 1 (
+    REM ----- [本科-理工科]：bib类型的ref文件
+    CALL :TextProcess 3,!NewFolder!,18,"ref_!NewMainFile!",!MyPlatform!,!NewMainFile!
+  ) else if !NewDegree! equ 2 (
+    REM ----- [本科-人文社科]：tex类型的ref文件
+    CALL :TextProcess 4,!NewFolder!,20,"ref_!NewMainFile!",!MyPlatform!,!NewMainFile!
+  ) else if !NewDegree! equ 3 (
+    REM ----- [硕士]：引言、bib类型的ref文件、personalcvs
+    CALL :TextProcess 2,!NewFolder!,21,"introduction",!MyPlatform!,!NewMainFile!
+    CALL :TextProcess 3,!NewFolder!,18,"ref_!NewMainFile!",!MyPlatform!,!NewMainFile!
+    CALL :TextProcess 2,!NewFolder!,15,"personalcvs",!MyPlatform!,!NewMainFile!
+  ) else if !NewDegree! equ 4 (
+    REM ----- [硕士-法学/法律]：引言、tex类型的ref文件、作者简介、科研成果
+    CALL :TextProcess 2,!NewFolder!,21,"introduction",!MyPlatform!,!NewMainFile!
+    CALL :TextProcess 4,!NewFolder!,19,"ref_!NewMainFile!",!MyPlatform!,!NewMainFile!
+    CALL :TextProcess 2,!NewFolder!,16,"authorintroduction",!MyPlatform!,!NewMainFile!
+    CALL :TextProcess 2,!NewFolder!,17,"authorachievements",!MyPlatform!,!NewMainFile!
+  ) else if !NewDegree! equ 5 (
+    REM ----- [硕士-马克思主义理论]：tex类型的ref文件、作者简介、科研成果
+    CALL :TextProcess 4,!NewFolder!,19,"ref_!NewMainFile!",!MyPlatform!,!NewMainFile!
+    CALL :TextProcess 2,!NewFolder!,16,"authorintroduction",!MyPlatform!,!NewMainFile!
+    CALL :TextProcess 2,!NewFolder!,17,"authorachievements",!MyPlatform!,!NewMainFile!
+  ) else if !NewDegree! equ 6 (
+    REM ----- [博士]：创新点摘要、bib类型的ref文件、personalcvs
+    CALL :TextProcess 2,!NewFolder!,14,"abstract_innovation",!MyPlatform!,!NewMainFile!
+    CALL :TextProcess 3,!NewFolder!,18,"ref_!NewMainFile!",!MyPlatform!,!NewMainFile!
+    CALL :TextProcess 2,!NewFolder!,15,"personalcvs",!MyPlatform!,!NewMainFile!
+  ) else if !NewDegree! equ 7 (
+    REM ----- [博士-法学/法律]：创新点摘要、引言、tex类型的ref文件、作者简介、科研成果
+    CALL :TextProcess 2,!NewFolder!,14,"abstract_innovation",!MyPlatform!,!NewMainFile!
+    CALL :TextProcess 2,!NewFolder!,21,"introduction",!MyPlatform!,!NewMainFile!
+    CALL :TextProcess 4,!NewFolder!,19,"ref_!NewMainFile!",!MyPlatform!,!NewMainFile!
+    CALL :TextProcess 2,!NewFolder!,16,"authorintroduction",!MyPlatform!,!NewMainFile!
+    CALL :TextProcess 2,!NewFolder!,17,"authorachievements",!MyPlatform!,!NewMainFile!
+  ) else if !NewDegree! equ 8 (
+    REM ----- [博士-马克思主义理论]：创新点摘要、tex类型的ref文件、作者简介、科研成果
+    CALL :TextProcess 2,!NewFolder!,14,"abstract_innovation",!MyPlatform!,!NewMainFile!
+    CALL :TextProcess 4,!NewFolder!,19,"ref_!NewMainFile!",!MyPlatform!,!NewMainFile!
+    CALL :TextProcess 2,!NewFolder!,16,"authorintroduction",!MyPlatform!,!NewMainFile!
+    CALL :TextProcess 2,!NewFolder!,17,"authorachievements",!MyPlatform!,!NewMainFile!
+  )
   endlocal
   echo.
-  echo -----------------------------------------
-  echo --------------- 创建完成！ ---------------
-  echo （1）当前新项目，在独立文件方面只生成了：
-  echo - 主文档
+  echo --------------------------------------------------
+  echo -------------------- 创建完成！--------------------
+  echo （1）当前新项目，在独立文件方面只生成了必要部分的文件：
+  echo - 创新点摘要
   echo - 中文摘要
   echo - 英文摘要
+  echo - 引言
   echo - 第1章
   echo - 结论
+  echo - 参考文献
+  echo - 作者简历及攻读【硕/博】士学位期间的科研成果
+  echo - 作者简历及攻读【硕/博】士学位期间的科研成果
   echo - 致谢
-  echo 其余的独立文件请自行按需创建。
-  echo （2）请自行创建放置图片的文件夹（如需）。
-  echo -----------------------------------------
+  echo 其余独立文件（符号说明，正文其他，附录，etc）请自行按需创建。
+  echo （2）请自行创建放置图片的文件夹。
+  echo --------------------------------------------------
   echo.
 ) else if %Option% equ 0 (
   echo.
   echo ------------------------------------------------
-  echo ---------- 程序已结束，祝写作顺利！ ----------
+  echo ---------- box 已关闭，祝写作顺利！ ----------
   echo ------------------------------------------------
   echo.
   set /a "CarPoint=0"
@@ -269,6 +342,15 @@ REM [10] - 英文摘要页
 REM [11] - 第1章
 REM [12] - 结论
 REM [13] - 致谢
+REM --- 单独项目：
+REM [14] - 创新点摘要
+REM [15] - 作者简历及攻读【硕/博】士学位期间的科研成果
+REM [16] - 作者简介
+REM [17] - 攻读学位期间公开发表论文
+REM [18] - bib型ref文件
+REM [19] - tex型ref文件（[*-法学/法律][*-马克思主义理论]）
+REM [20] - tex型ref文件（[本科-人文社科]）
+REM [21] - 引言
 
 REM 1#==#==#==#
 % !Mode:: "TeX:UTF-8"
@@ -332,17 +414,18 @@ REM 1#==#==#==#
 
 % ---------- 参考文献 ---------- %
 %% 方式一：
-%\bibliography{refs/} %bib文件导入的形式生成参考文献列表
+\nocite{*} %注：当添加上自己的引用之后，务必删除该行
+\bibliography{refs/ref_<MAINFILENAME>} %bib文件导入的形式生成参考文献列表
 %% 方式二：
 %\begin{thebibliography}{100}
 %\bibitem{文献x的标签}{文献x的信息}
 %\end{thebibliography}
-%\clearpage
+\clearpage
 % =================================== %	
 
 
 % ---------- 致谢 ---------- %
-\input{mainbody/<FOLDER>/acknowledgment}
+\input{mainbody/<FOLDER>/acknowledgement}
 \clearpage
 % =================================== %	
 
@@ -352,6 +435,7 @@ REM 1#==#==#==#
 % =================================== %	
 
 \end{document} 
+
 
 REM 2#==#==#==#
 % !Mode:: "TeX:UTF-8"
@@ -423,15 +507,15 @@ REM 2#==#==#==#
 
 
 % ---------- 参考文献 ---------- %
-%\begin{thebibliography}{100}
-%\input{refs/}
-%\end{thebibliography}
-%\clearpage
+\begin{thebibliography}{100}
+\input{refs/ref_<MAINFILENAME>}
+\end{thebibliography}
+\clearpage
 % =================================== %	
 
 
 % ---------- 致谢 ---------- %
-\input{mainbody/<FOLDER>/acknowledgment}
+\input{mainbody/<FOLDER>/acknowledgement}
 \clearpage
 % =================================== %	
 
@@ -440,6 +524,7 @@ REM 2#==#==#==#
 % =================================== %	
 
 \end{document} 
+
 
 REM 3#==#==#==#
 % !Mode:: "TeX:UTF-8"
@@ -510,6 +595,7 @@ REM 3#==#==#==#
 
 % ---------- 正文（划分为多个独立文件依次导入） ---------- %
 \pesudohookOFpremainbody
+\input{mainbody/<FOLDER>/introduction} \clearpage %引言
 \input{mainbody/<FOLDER>/ch1} \clearpage
 \input{mainbody/<FOLDER>/conclusion} \clearpage\vspace*{0pt} % 结论
 % ================================================== %
@@ -517,12 +603,13 @@ REM 3#==#==#==#
 
 % ---------- 参考文献 ---------- %
 %% 方式一：
-%\bibliography{refs/} %bib文件导入的形式生成参考文献列表
+\nocite{*} %注：当添加上自己的引用之后，务必删除该行
+\bibliography{refs/ref_<MAINFILENAME>} %bib文件导入的形式生成参考文献列表
 %% 方式二：
 %\begin{thebibliography}{100}
 %\bibitem{文献x的标签}{文献x的信息}
 %\end{thebibliography}
-%\clearpage
+\clearpage
 % ============================== %
 
 
@@ -532,21 +619,22 @@ REM 3#==#==#==#
 
 
 % ---------- 致谢 ---------- %
-\input{mainbody/<FOLDER>/acknowledgment}
+\input{mainbody/<FOLDER>/acknowledgement}
 \clearpage
 % ============================== %
 
 
 % ----- 作者简历及攻读硕士学位期间的科研成果 ----- %
-%\input{mainbody/<FOLDER>/}
+\input{mainbody/<FOLDER>/personalcvs}
 \presetupOFpersonalcv
-%\nextpages{personalcv}
+\nextpages{personalcv}
 % ================================================== %
 
 
 \AuthorizationStatement %【授权使用声明】
 
 \end{document} 
+
 
 REM 4#==#==#==#
 % !Mode:: "TeX:UTF-8"
@@ -626,6 +714,7 @@ REM 4#==#==#==#
 
 % ---------- 正文（划分为多个独立文件依次导入） ---------- %
 \pesudohookOFpremainbody
+\input{mainbody/<FOLDER>/introduction} \clearpage %引言
 \input{mainbody/<FOLDER>/ch1} \clearpage
 \input{mainbody/<FOLDER>/conclusion} \clearpage % 结论
 % ================================================== %
@@ -633,10 +722,10 @@ REM 4#==#==#==#
 
 % ---------- 参考文献 ---------- %
 %% [硕士-法学/法律]中，参考文献需按照特定规则分类列举
-%\begin{thebibliography}{100}
-%\input{refs/}
-%\end{thebibliography}
-%\clearpage
+\begin{thebibliography}{100}
+\input{refs/ref_<MAINFILENAME>}
+\end{thebibliography}
+\clearpage
 % ============================== %
 
 
@@ -646,27 +735,27 @@ REM 4#==#==#==#
 
 
 % ----- 攻读学位期间公开发表论文 ----- %
-%\input{mainbody/<FOLDER>/}
-%\clearpage
+\input{mainbody/<FOLDER>/authorachievements}
+\clearpage
 % =================================== %	
 
 
 % ---------- 致谢 ---------- %
-\input{mainbody/<FOLDER>/acknowledgment}
+\input{mainbody/<FOLDER>/acknowledgement}
 \clearpage
 % ============================== %
 
 
 % ----- 作者简介 ----- %
-%\input{mainbody/<FOLDER>/}
+\input{mainbody/<FOLDER>/authorintroduction}
 \presetupOFpersonalcv
-%\nextpages{personalcv}
+\nextpages{personalcv}
 % ============================== %
 
 
 \AuthorizationStatement %【授权使用声明】
 
-\end{document} 
+\end{document}
 
 
 REM 5#==#==#==#
@@ -754,10 +843,10 @@ REM 5#==#==#==#
 
 % ---------- 参考文献 ---------- %
 %% [硕士-马克思主义理论]中，参考文献需按照特定规则分类列举
-%\begin{thebibliography}{100}
-%\input{refs/}
-%\end{thebibliography}
-%\clearpage
+\begin{thebibliography}{100}
+\input{refs/ref_<MAINFILENAME>}
+\end{thebibliography}
+\clearpage
 % ============================== %
 
 
@@ -767,24 +856,25 @@ REM 5#==#==#==#
 
 
 % ----- 科研成果 ----- %
-%\input{mainbody/<FOLDER>/}
-%\clearpage
+\input{mainbody/<FOLDER>/authorachievements}
+\clearpage
 % =================================== %	
 
 
 % ---------- 致谢 ---------- %
-\input{mainbody/<FOLDER>/acknowledgment}
+\input{mainbody/<FOLDER>/acknowledgement}
 \clearpage
 % ============================== %
 
 
 % ----- 作者简介 ----- %
-%\input{mainbody/<FOLDER>/}
+\input{mainbody/<FOLDER>/authorintroduction}
 \presetupOFpersonalcv
-%\nextpages{personalcv}
+\nextpages{personalcv}
 % =================================== %	
 
 \end{document}
+
 
 REM 6#==#==#==#
 % !Mode:: "TeX:UTF-8"
@@ -832,8 +922,8 @@ REM 6#==#==#==#
 
 % ---------- 创新点摘要 ---------- %
 \presetupOFabstractINNOVATION%
-%\input{mainbody/<FOLDER>/}
-%\nextpages{abstractINNOVATION}
+\input{mainbody/<FOLDER>/abstract_innovation}
+\nextpages{abstractINNOVATION}
 % =================================== %	
 
 
@@ -872,12 +962,13 @@ REM 6#==#==#==#
 %% 要求不少于120篇，其中英文参考文献不少于60%。采用数字序号标注法。
 %% 文献类型标志参考国家标准 GB/T 7714 - 2005。
 %% 方式一：
-%\bibliography{refs/} %bib文件导入的形式生成参考文献列表
+\nocite{*} %注：当添加上自己的引用之后，务必删除该行
+\bibliography{refs/ref_<MAINFILENAME>} %bib文件导入的形式生成参考文献列表
 %% 方式二：
 %\begin{thebibliography}{100}
 %\bibitem{文献x的标签}{文献x的信息}
 %\end{thebibliography}
-%\clearpage
+\clearpage
 % ============================== %
 
 
@@ -887,17 +978,17 @@ REM 6#==#==#==#
 
 
 % ----- 作者简历及攻读硕士学位期间的科研成果 ----- %
-%\input{mainbody/<FOLDER>/}
+\input{mainbody/<FOLDER>/personalcvs}
 \presetupOFpersonalcv
-%\nextpages{personalcv}
+\nextpages{personalcv}
 % ================================================== %
 
 
 % ---------- 致谢 ---------- %
-\input{mainbody/<FOLDER>/acknowledgment}
+\input{mainbody/<FOLDER>/acknowledgement}
 % ============================== %
 
-\end{document} 
+\end{document}
 
 
 REM 7#==#==#==#
@@ -954,8 +1045,8 @@ REM 7#==#==#==#
 
 % ---------- 创新点摘要 ---------- %
 \presetupOFabstractINNOVATION%
-%\input{mainbody/<FOLDER>/}
-%\nextpages{abstractINNOVATION}
+\input{mainbody/<FOLDER>/abstract_innovation}
+\nextpages{abstractINNOVATION}
 % =================================== %	
 
 
@@ -985,6 +1076,7 @@ REM 7#==#==#==#
 
 % ---------- 正文（划分为多个独立文件依次导入） ---------- %
 \pesudohookOFpremainbody
+\input{mainbody/<FOLDER>/introduction} \clearpage %引言
 \input{mainbody/<FOLDER>/ch1} \clearpage
 \input{mainbody/<FOLDER>/conclusion} \clearpage % 结论
 % ================================================== %
@@ -992,10 +1084,10 @@ REM 7#==#==#==#
 
 % ---------- 参考文献 ---------- %
 %% [博士-法学/法律]中，参考文献需按照特定规则分类列举
-%\begin{thebibliography}{100}
-%\input{refs/}
-%\end{thebibliography}
-%\clearpage
+\begin{thebibliography}{100}
+\input{refs/ref_<MAINFILENAME>}
+\end{thebibliography}
+\clearpage
 % ============================== %
 
 
@@ -1005,24 +1097,25 @@ REM 7#==#==#==#
 
 
 % ----- 攻读学位期间公开发表论文 ----- %
-%\input{mainbody/<FOLDER>/}
-%\clearpage
+\input{mainbody/<FOLDER>/authorachievements}
+\clearpage
 % =================================== %	
 
 
 % ---------- 致谢 ---------- %
-\input{mainbody/<FOLDER>/acknowledgment}
+\input{mainbody/<FOLDER>/acknowledgement}
 \clearpage
 % ============================== %
 
 
 % ----- 作者简介 ----- %
-%\input{mainbody/<FOLDER>/}
+\input{mainbody/<FOLDER>/authorintroduction}
 \presetupOFpersonalcv
-%\nextpages{personalcv}
+\nextpages{personalcv}
 % ============================== %
 
 \end{document} 
+
 
 REM 8#==#==#==#
 % !Mode:: "TeX:UTF-8"
@@ -1079,8 +1172,8 @@ REM 8#==#==#==#
 
 % ---------- 创新点摘要 ---------- %
 \presetupOFabstractINNOVATION%
-%\input{mainbody/<FOLDER>/}
-%\nextpages{abstractINNOVATION}
+\input{mainbody/<FOLDER>/abstract_innovation}
+\nextpages{abstractINNOVATION}
 % =================================== %	
 
 
@@ -1116,10 +1209,10 @@ REM 8#==#==#==#
 
 % ---------- 参考文献 ---------- %
 %% [博士-马克思主义理论]中，参考文献需按照特定规则分类列举
-%\begin{thebibliography}{100}
-%\input{refs/}
-%\end{thebibliography}
-%\clearpage
+\begin{thebibliography}{100}
+\input{refs/ref_<MAINFILENAME>}
+\end{thebibliography}
+\clearpage
 % ============================== %
 
 
@@ -1129,24 +1222,25 @@ REM 8#==#==#==#
 
 
 % ----- 科研成果 ----- %
-%\input{mainbody/<FOLDER>/}
-%\clearpage
+\input{mainbody/<FOLDER>/authorachievements}
+\clearpage
 % =================================== %	
 
 
 % ---------- 致谢 ---------- %
-\input{mainbody/<FOLDER>/acknowledgment}
+\input{mainbody/<FOLDER>/acknowledgement}
 \clearpage
 % ============================== %
 
 
 % ----- 作者简介 ----- %
-%\input{mainbody/<FOLDER>/}
+\input{mainbody/<FOLDER>/authorintroduction}
 \presetupOFpersonalcv
-%\nextpages{personalcv}
+\nextpages{personalcv}
 % =================================== %	
 
 \end{document}
+
 
 REM 9#==#==#==#
 % ---------- 中文摘要内容 ---------- %
@@ -1158,6 +1252,7 @@ REM 9#==#==#==#
 
 \end{abstract}%
 
+
 REM 10#==#==#==#
 % ---------- 英文摘要内容 ---------- %
 \begin{abstract}
@@ -1167,6 +1262,7 @@ REM 10#==#==#==#
 \keywordsEN{Word One; Word Two; Word Three}
 
 \end{abstract}%
+
 
 REM 11#==#==#==#
 \section{绪论}
@@ -1183,6 +1279,7 @@ REM 11#==#==#==#
 
 \zhlipsum[1-2]
 
+
 REM 12#==#==#==#
 % 学位类别为【博士】的，使用如下被注释的结构：
 %\section{结论与展望}
@@ -1198,34 +1295,270 @@ REM 12#==#==#==#
 % 否则，使用如下结构：
 \begin{conclusion}
 
-\lipsum[1-2]
+\zhlipsum[1-2]
 
 \end{conclusion}
 
+
 REM 13#==#==#==#
-\begin{acknowledgment}
+\begin{acknowledgement}
 
 \zhlipsum[1-2]
 
-\end{acknowledgment}
+\end{acknowledgement}
+
 
 REM 14#==#==#==#
+% ---------- 创新点摘要内容 ---------- %
+\begin{abstract}
+
+\zhlipsum[1-2]
+
+\end{abstract}%
+
+
+REM 15#==#==#==#
+\begin{personalcv}{作者简历及攻读【硕/博】士学位期间的科研成果}[addtotoc]
+
+{\bf 作者简介}
+
+姓名：
+
+性别：
+
+出生年月：XXXX 年 XX 月
+
+民族：
+
+籍贯：
+
+研究方向：
+
+{\bf 主要教育经历}
+
+(从大学起)
+
+{\bf 工作经历}
+
+（工作经历内容）
+
+{\bf 攻读【硕/博】士学位期间的科研成果}
+
+首先，列出在攻读【硕/博】士学位期间发表与学位论文有关的学术论文（含已录用），并注明属于学位论文内容的部分（章节），作者（最多三个）、论文题目、刊物名称、时间、卷期号、页码以及检索信息、与学位论文相关章节。{\bf\itshape 在攻读【硕/博】士学位期间以外的时间或与学位论文内容(章节)无关的论文不得列出。}
+
+其次，列出在攻读【硕/博】士学位期间参加学术会议发表的会议论文，参与的科研项目（如国家自然科学基金或国家“863”计划等），发明专利、科研奖励等。
+
+书写格式说明：
+
+本人的姓名应加粗和标记下划线。每段落首行缩进2字（即：将每个成果作为一个独立的段落）。
+
+例：
+
+1. 发表学术论文
+\begin{enumerate}[nosep, label=$\lbrack$\arabic*$\rbrack$]
+  \item{\underline{\bf Xiaoming Zhang}, Yi Li, John R. E., et al. Carbon isotope evidence for the stepwise oxidation of the Proterozoic environment [J]. Nature, 1992,359(1):605-609. (SCI检索号：123DX) （本学位论文第一章）.}
+\end{enumerate}{}\vspace{1em}
+
+2. 会议论文
+\begin{enumerate}[nosep, label=$\lbrack$\arabic*$\rbrack$]
+  \item{\underline{\bf 张晓明}，会议论文题目，会议名称，口头报告或墙报，会议地点，时间。}
+  \item{\underline{\bf Xiaoming Zhang}, Development of cellular biology. Proceedings of the Fifth Canadian Mathematical Congress (oral presentation), Tokyo, 2018.}
+\end{enumerate}{}\vspace{1em}
+
+3. 参与科研项目
+\begin{enumerate}[nosep, label=$\lbrack$\arabic*$\rbrack$]
+  \item{国家自然科学基金项目(51276055)：西南喀斯特山区土地利用和土地覆被变化及其对土地资源可持续性影响研究，2013.1 – 2016.12，负责人：李文。} %负责人一般应为指导教师
+\end{enumerate}{}\vspace{1em}
+
+4. 发明专利
+\begin{enumerate}[nosep, label=$\lbrack$\arabic*$\rbrack$]
+  \item{\underline{\bf 张晓明}，发明人2，发明人3. 多功能一次性压舌板:中国,92214985.2[P]. 发明类别：发明专利，公开（或授权）日期：1993,04,14。}
+\end{enumerate}{}\vspace{1em}
+
+5. 获得奖励情况
+\begin{enumerate}[nosep, label=$\lbrack$\arabic*$\rbrack$]
+  \item{“大型C/E复合材料构件高质高效加工关键技术及其工艺装备”，机械工业科学技术奖-科技进步一等奖，2013.10，本人排序第1。}
+\end{enumerate}
+
+\end{personalcv}
+
+
+REM 16#==#==#==#
+\begin{personalcv}{作者简介}[addtotoc]
+
+姓名：
+
+性别：
+
+出生年月：XXXX 年 XX 月
+
+民族：
+
+籍贯：
+
+研究方向：
+
+{\bf 主要教育经历：}
+
+(从大学起)
+
+{\bf 工作经历：}
+
+（工作经历内容）
+
+\end{personalcv}
+
+
+REM 17#==#==#==#
+\begin{personalcv}{攻读学位期间公开发表论文}[addtotoc]
+
+首先，列出在攻读【硕/博】学位期间发表与学位论文有关的学术论文（含已录用），并注明属于学位论文内容的部分（章节），作者（最多三个）、论文题目、刊物名称、时间、卷期号、页码以及检索信息、与学位论文相关章节。{\bf\itshape 在攻读【硕/博】士学位期间以外的时间或与学位论文内容(章节)无关的论文不得列出。}
+
+其次，列出在攻读【硕/博】士学位期间参加学术会议发表的会议论文，参与的科研项目（如国家自然科学基金或国家“863”计划等），发明专利、科研奖励等。
+
+书写格式说明：
+
+本人的姓名应加粗和标记下划线。每段落首行缩进2字（即：将每个成果作为一个独立的段落）。
+
+例：
+
+1. 发表学术论文
+\begin{enumerate}[nosep, label=$\lbrack$\arabic*$\rbrack$]
+  \item{\underline{\bf Xiaoming Zhang}, Yi Li, John R. E., et al. Carbon isotope evidence for the stepwise oxidation of the Proterozoic environment [J]. Nature, 1992,359(1):605-609. (SCI检索号：123DX) （本学位论文第一章）.}
+\end{enumerate}{}\vspace{1em}
+
+2. 会议论文
+\begin{enumerate}[nosep, label=$\lbrack$\arabic*$\rbrack$]
+  \item{\underline{\bf 张晓明}，会议论文题目，会议名称，口头报告或墙报，会议地点，时间。}
+  \item{\underline{\bf Xiaoming Zhang}, Development of cellular biology. Proceedings of the Fifth Canadian Mathematical Congress (oral presentation), Tokyo, 2018.}
+\end{enumerate}{}\vspace{1em}
+
+3. 参与科研项目
+\begin{enumerate}[nosep, label=$\lbrack$\arabic*$\rbrack$]
+  \item{国家自然科学基金项目(51276055)：西南喀斯特山区土地利用和土地覆被变化及其对土地资源可持续性影响研究，2013.1 – 2016.12，负责人：李文。} %负责人一般应为指导教师
+\end{enumerate}{}\vspace{1em}
+
+4. 发明专利
+\begin{enumerate}[nosep, label=$\lbrack$\arabic*$\rbrack$]
+  \item{\underline{\bf 张晓明}，发明人2，发明人3. 多功能一次性压舌板:中国,92214985.2[P]. 发明类别：发明专利，公开（或授权）日期：1993,04,14。}
+\end{enumerate}{}\vspace{1em}
+
+5. 获得奖励情况
+\begin{enumerate}[nosep, label=$\lbrack$\arabic*$\rbrack$]
+  \item{“大型C/E复合材料构件高质高效加工关键技术及其工艺装备”，机械工业科学技术奖-科技进步一等奖，2013.10，本人排序第1。}
+\end{enumerate}
+
+\end{personalcv}
+
+
+REM 18#==#==#==#
+@book{图书2025,
+  title={图书题目},
+  author={作者1 and 作者2 and 作者3},
+  publisher={所在省市：出版社名称},
+  year={2025},
+  page={x-y}
+}
+
+@phdthesis{学位论文2025,
+  author = {作者},
+  title = {学位论文题目},
+  school = {XX大学},
+  year = {2025}
+}
+
+@article{期刊论文2025,
+  author = {作者1 and 作者2 and 作者3 and 作者4 and 作者5},
+  title = {期刊论文题目},
+  journal = {期刊名称},
+  volume = {25},
+  number = {01},
+  pages = {x-y},
+  year = {2025},
+  issn = {xxxx-yyyy}
+}
+
+
+REM 19#==#==#==#
+% 每一类文献的排列方式：
+%% 对于中文文献，按照作者名字拼音的首字母顺序
+%% 对于外文文献，先按照国别首字母顺序、再按照作者名字拼音的首字母顺序
+\subsection{中文文献}
+\subsubsection{著作类}
+  \bibitem{}{康晓光、冯利主编：《2012中国第三部门观察报告》，社会科学文献出版社2012年版。}
+  \bibitem{}{资中筠：《财富的归宿——美国现代公益基金会述评》，三联书店2011年版。}
+\subsubsection{译著类}
+  \bibitem{}{[德]卡尔·拉伦茨：《法学方法论》，陈爱娥译，商务印书馆2003年版。}
+  \bibitem{}{[德]柯武刚、史漫飞：《制度经济学：社会秩序与公共政策》，韩朝华译，商务印书馆2000年版。}
+\subsubsection{期刊论文类}
+  \bibitem{}{高丙中：“社会团体的合法性问题”，载《中国社会科学》2000年第2期。}
+  \bibitem{}{税兵：“非营利法人解释”，载《法学研究》2007年第5期。}
+\subsubsection{学位论文类}
+  \bibitem{}{李韬：《美国的慈善基金会与美国政治》，中国社会科学院2003年博士学位论文。}
+  \bibitem{}{刘春湘：《非营利组织治理结构研究》，中南大学2006年博士学位论文。}
+\subsubsection{报刊文献类}
+  \bibitem{}{陈小路：《河南宋庆龄基金会：“慈善集资”——中国最“富”慈善组织的钱从哪来》，《南方周末》2011年9月8日C14版。}
+  \bibitem{}{朱卫国：《基金会管理条例评析》，《中国社会报》2004年3月20日第1版。}
+\subsubsection{电子文献类}
+  \bibitem{}{《基金会数据在线》，基金会中心网：\url{http://www.foundationcenter.org.cn/search/orders}. 最后访问日期：2015年10月1日。}
+  \bibitem{}{《李连杰壹基金的黑与白》，腾讯网：\url{http://view.news.qq.com/zt2010/1foundation/index.htm}. 最后访问日期：2015年10月1日。}
+  \bibitem{}{《全国民政事业统计数据》，民政部官网：\url{http://cws.mca.gov.cn/article/tjsj/qgsj/}.最后访问日期：2015年10月1日。}
+\subsubsection{案例类}
+  \bibitem{}{包郑照诉苍南县人民政府强制拆除房屋案，浙江省高级人民法院（1988）浙法民上字 7 号民事判决书。}
+  \bibitem{}{陆红霞诉南通市发改委政府信息公开案，《最高人民法院公报》2015年第 11 期。}
+\subsection{外文文献}
+\subsubsection{著作类}
+  \bibitem{}{Dennis Young, If Not for Profit, for What? D.C. Heath and Company Lexington, 2013.}
+  \bibitem{}{Peter  Frumkin, On Being Nonprofit, Harvard University Press, 2002.}
+  \bibitem{}{ Rrichard P. Chait, Governance as Leadership: Reforming the Work of Nonprofit Boards, John Wiley \& Sons Inc., 2005.}
+\subsubsection{英文论文}
+  \bibitem{}{Melanie B. Leslie, ‘The Wisdom of Crows? Groupthink and Nonprofit Governance’, 62 Florida Law Review 1179（2010）}
+  \bibitem{}{Rebecca Lee, ‘Modernizing Charity Law in China’, 18 Pacific Rim Law \& Policy Journal 347 (2009).}
+  \bibitem{}{Terri Lynn Helge, ‘Policing The Good Guys: Regulation of The Charitable Sector Through A Federal Charity Oversight Board’, 19 Cornell Journal of Law \& Public Policy 1 (2009).}
+\subsubsection{案例类}
+  \bibitem{}{Brown v. Board of Education, 347 U.S. 483 (1954).}
+  \bibitem{}{Davis v. Johnson [1978] 2 WLR 182.}
+  \bibitem{}{Knuller v. DPP [1973] AC 435.}
+  \bibitem{}{ Runyon v. McCrary, 427 U.S. 160 (1976).}
+
+
+REM 20#==#==#==#
+\bibitem{图书2025}{作者.图书题目[M].所在省市：出版社名称,2025.}
+\bibitem{学位论文2025}{作者.学位论文题目[D].XX大学,2025.}
+
+
+REM 21#==#==#==#
+\begin{introduction}
+
+\zhlipsum[1-2]
+
+\end{introduction}
+
+
+REM 22#==#==#==#
 
 
 :TextProcess 
 if %~1 equ 1 (
   REM 与bat脚本同一路径
   set "_OutPath=%~dp0%~4.tex"
-) else (
-  REM 创建文件下的文件路径
+) else if %~1 equ 2 (
+  REM mainbody下的文件路径
   md "%~dp0mainbody\%~2"
   set "_OutPath=%~dp0mainbody\%~2\%~4.tex"
+) else if %~1 equ 3 (
+  REM refs下的文件路径(bib)
+  set "_OutPath=%~dp0refs\%~4.bib"
+) else if %~1 equ 4 (
+  REM refs下的文件路径(tex)
+  set "_OutPath=%~dp0refs\%~4.tex"
 )
 (echo,sFile = WScript.Arguments.Item^(0^)
 echo,sFilePath = WScript.Arguments.Item^(1^)
 echo,ContentMode=WScript.Arguments.Item^(2^)
 echo,PlatformMode=WScript.Arguments.Item^(3^)
 echo,ProjectFolder=WScript.Arguments.Item^(4^)
+echo,MainFileName=WScript.Arguments.Item^(5^)
 echo,sWriteStr = ReadFile^(sFile, "GB2312"^) 
 echo,set reg=new regexp
 echo,reg.ignorecase=True 
@@ -1250,6 +1583,7 @@ echo,    Assp=Astream.size
 echo,    Astream.Position = 0
 echo,    If int^(ContentMode^) ^> 0 And int^(ContentMode^) ^< 9 Then
 echo,    sWriteStr = Replace^(sWriteStr,"<FOLDER>",ProjectFolder^)
+echo,    sWriteStr = Replace^(sWriteStr,"<MAINFILENAME>",MainFileName^)
 echo,    Select Case PlatformMode
 echo,    Case "1"
 echo,    sWriteStr = Replace^(sWriteStr,"<PLATFORM>","windows"^)
@@ -1306,6 +1640,6 @@ echo,       Set stm = Nothing
 echo,       ReadFile = Str 
 echo,End Function
 )>".\_TempVbsCode.vbs"
-cscript.exe /nologo ".\_TempVbsCode.vbs" "%~dpnx0" "%_OutPath%" "%~3" "%~5" "%~2"
+cscript.exe /nologo ".\_TempVbsCode.vbs" "%~dpnx0" "%_OutPath%" "%~3" "%~5" "%~2" "%~6"
 del /f /q ".\_TempVbsCode.vbs" >nul 2>nul
 EXIT /B 0
