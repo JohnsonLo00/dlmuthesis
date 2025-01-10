@@ -771,6 +771,11 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   \typeout{This is customization mode. All fonts used are customized.}
 \fi\fi\fi\fi\fi
 %% ============================== %
+%% ----- macOS下的黑体需要做加粗处理 ----- %
+\if@dlmuthesis@macos
+  \AddToHook{cmd/heiti/after}[heiti_with_bold]{\bfseries}
+\fi
+%% =================================== %
 % ======================================== %
 
 
@@ -884,6 +889,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \setlength{\absleftindent}{0pt} %取消左缩进
 \setlength{\absrightindent}{0pt} %取消右缩进
 \renewcommand{\abstracttextfont}{\normalsize} %修改摘要内容的字号
+\renewcommand{\abstractnamefont}{\normalfont} %取消摘要标题的默认加粗
 %% ---------- 中文版摘要插入关键词 ---------- %
 \newcommand{\keywordsCN}[1]{
   \if@dlmuthesis@BAstem %【本科-理工科】
@@ -1217,33 +1223,33 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 
 % --------------- 致谢环境 --------------- %
-\newcommand{\acknowledgmentname}{致\hspace{2em}谢}
-\newenvironment{acknowledgment}{
+\newcommand{\acknowledgementname}{致\hspace{2em}谢}
+\newenvironment{acknowledgement}{
   \phantomsection
-  \addcontentsline{toc}{section}{\acknowledgmentname}%
+  \addcontentsline{toc}{section}{\acknowledgementname}%
   \if@dlmuthesis@BAstem %【本科-理工科】
     \vspace*{0pt}
-    \begin{center}\bfseries\zihao{3}\acknowledgmentname\end{center}%
+    \begin{center}\bfseries\zihao{3}\acknowledgementname\end{center}%
   \else\if@dlmuthesis@BAhumanities %【本科-人文社科】
     \vspace*{0pt}
-    \begin{center}\bfseries\zihao{3}\acknowledgmentname\end{center}%
+    \begin{center}\bfseries\zihao{3}\acknowledgementname\end{center}%
   \else\if@dlmuthesis@MA %【硕士】
-    \begin{center}\heiti\zihao{-3}\acknowledgmentname\end{center}%
+    \begin{center}\heiti\zihao{-3}\acknowledgementname\end{center}%
   \else\if@dlmuthesis@MAlaw %【硕士-法学/法律】
-    \begin{center}\heiti\zihao{-3}\acknowledgmentname\end{center}%
+    \begin{center}\heiti\zihao{-3}\acknowledgementname\end{center}%
   \else\if@dlmuthesis@MAmarxism %【硕士-马克思主义理论】
-    \begin{center}\heiti\zihao{-3}\acknowledgmentname\end{center}%
+    \begin{center}\heiti\zihao{-3}\acknowledgementname\end{center}%
   \else\if@dlmuthesis@DOC %【博士】
-    \begin{center}\heiti\zihao{-3}\acknowledgmentname\end{center}%
+    \begin{center}\heiti\zihao{-3}\acknowledgementname\end{center}%
   \else\if@dlmuthesis@DOClaw %【博士-法学/法律】
-    \begin{center}\heiti\zihao{-3}\acknowledgmentname\end{center}%
+    \begin{center}\heiti\zihao{-3}\acknowledgementname\end{center}%
   \else\if@dlmuthesis@DOCmarxism %【博士-马克思主义理论】
-    \begin{center}\heiti\zihao{-3}\acknowledgmentname\end{center}%
+    \begin{center}\heiti\zihao{-3}\acknowledgementname\end{center}%
   \fi\fi\fi\fi\fi\fi\fi\fi
   \par
 }{\par}
 \if@dlmuthesis@DOC %【博士】
-  \AddToHook{env/acknowledgment/before}{
+  \AddToHook{env/acknowledgement/before}{
     % 奇数页为该部分名称，偶数页为论文中文题目
     \fancyhead[COH]{\zihao{5}致谢}
     \fancyhead[CEH]{\zihao{5}\dlmuthesis@tokens@cntitle}
@@ -2088,6 +2094,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 \if@dlmuthesis@MAlaw %【硕士-法学/法律】
   \AddToHook{env/thebibliography/begin}{
+    \setcounter{subsection}{0}
     \AddToHook{cmd/subsection/before}[subsection_in_bib]{
       \addtocontents{toc}{\protect\setcounter{tocdepth}{0}}
       \ctexset{
@@ -2123,6 +2130,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   }
 \else\if@dlmuthesis@MAmarxism %【硕士-马克思主义理论】
   \AddToHook{env/thebibliography/begin}{
+      \setcounter{subsection}{0}
       \AddToHook{cmd/subsection/before}[subsection_in_bib]{
         \addtocontents{toc}{\protect\setcounter{tocdepth}{0}}
         \ctexset{
@@ -2162,6 +2170,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   }
 \else\if@dlmuthesis@DOClaw %【博士-法学/法律】
   \AddToHook{env/thebibliography/begin}{
+    \setcounter{subsection}{0}
     \AddToHook{cmd/subsection/before}[subsection_in_bib]{
       \addtocontents{toc}{\protect\setcounter{tocdepth}{0}}
       \ctexset{
@@ -2201,6 +2210,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   }
 \else\if@dlmuthesis@DOCmarxism %【博士-马克思主义理论】
   \AddToHook{env/thebibliography/begin}{
+    \setcounter{subsection}{0}
     \AddToHook{cmd/subsection/before}[subsection_in_bib]{
       \addtocontents{toc}{\protect\setcounter{tocdepth}{0}}
       \ctexset{

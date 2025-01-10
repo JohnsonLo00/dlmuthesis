@@ -90,7 +90,7 @@ JL已通过电脑本地、OverLeaf、TeXPage成功实现了本模板的使用：
 |-- abstract_en.tex：摘要英文版
 |-- chx.tex：第x章
 |-- conclusions.tex：结论
-|-- acknowledgments.tex：致谢
+|-- acknowledgements.tex：致谢
 |-- appendiceS.tex：附录
 |- packages/ 用于放置第三方宏包文件. 一部分宏包不跟随LaTeX 发行版下载到
 |            本地，因此需要另外导入
