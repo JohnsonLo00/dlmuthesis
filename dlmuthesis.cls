@@ -1493,9 +1493,9 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 \newcommand{\presetupOFabstractEN}{
   \if@dlmuthesis@BAstem %【本科-理工科】
-    \renewcommand\abstractname{\large ABSTRACT} %临时修改摘要名
+    \renewcommand\abstractname{\large\bfseries ABSTRACT} %临时修改摘要名
   \else\if@dlmuthesis@BAhumanities %【本科-人文社科】
-    \renewcommand\abstractname{\large ABSTRACT} %临时修改摘要名
+    \renewcommand\abstractname{\large\bfseries ABSTRACT} %临时修改摘要名
   \else\if@dlmuthesis@MA %【硕士】
     \setcounter{abstractENbegin}{\value{page}} %涉及打印模式
     \renewcommand\abstractname{\large\rm Abstract} %临时修改摘要名
@@ -1509,7 +1509,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     \renewcommand\abstractname{\large\rm Abstract} %临时修改摘要名
   \else\if@dlmuthesis@MAmarxism %【硕士-马克思主义理论】
     \setcounter{abstractENbegin}{\value{page}} %涉及打印模式
-    \renewcommand\abstractname{\large ABSTRACT} %临时修改摘要名
+    \renewcommand\abstractname{\large\bfseries ABSTRACT} %临时修改摘要名
   \else\if@dlmuthesis@DOC %【博士】
     \setcounter{abstractENbegin}{\value{page}} %涉及打印模式
     \renewcommand\abstractname{\large\bfseries ABSTRACT} %临时修改摘要名
@@ -1522,7 +1522,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     \renewcommand\abstractname{\large\bfseries ABSTRACT} %临时修改摘要名
   \else\if@dlmuthesis@DOCmarxism %【博士-马克思主义理论】
     \setcounter{abstractENbegin}{\value{page}} %涉及打印模式
-    \renewcommand\abstractname{\large ABSTRACT} %临时修改摘要名
+    \renewcommand\abstractname{\large\bfseries ABSTRACT} %临时修改摘要名
   \fi\fi\fi\fi\fi\fi\fi\fi
 } %英文摘要
 %% ================================================== %

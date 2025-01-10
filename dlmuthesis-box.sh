@@ -1015,7 +1015,7 @@ subfile_conclusion=$(cat <<EOL
 % 否则，使用如下结构：
 \begin{conclusion}
 
-\lipsum[1-2]
+\zhlipsum[1-2]
 
 \end{conclusion}
 EOL
@@ -1516,9 +1516,20 @@ do
       echo "$subfile_authorachievements" >> ./mainbody/$NewFolder/authorachievements.tex
       ;;
     esac
-    echo "--------------------"
-    echo "----- 创建完成！-----"
-    echo "--------------------"
+    echo "--------------------------------------------------"
+    echo "-------------------- 创建完成！--------------------"
+    echo "（1）当前新项目，在独立文件方面只生成了必要部分的文件："
+    echo "- 创新点摘要"
+    echo "- 中文摘要"
+    echo "- 英文摘要"
+    echo "- 第1章"
+    echo "- 结论"
+    echo "- 参考文献"
+    echo "- 作者简历及攻读【硕/博】士学位期间的科研成果"
+    echo "- 致谢"
+    echo "其余的独立文件（引言，正文其他，附录，etc）请自行按需创建。"
+    echo "（2）请自行创建放置图片的文件夹。"
+    echo "--------------------------------------------------"
     echo " "
   else
     echo " "
