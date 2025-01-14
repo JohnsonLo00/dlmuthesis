@@ -1,0 +1,70 @@
+
+\begin{appendices}
+
+\section{企业信息表}
+
+\begin{longtable}{cccc}
+    \caption{企业信息表} \label{tab:企业信息表} \\
+	\toprule
+	字段名称 & 中文描述 & 类型 & 长度 \\
+	\midrule
+    \endfirsthead %以上是首页表头
+    \caption{（续表）} \\ %续表对应的标题
+    \midrule
+    字段名称 & 中文描述 & 类型 & 长度 \\
+    \midrule
+    \endhead %以上是通用表头
+    \midrule
+    \endfoot %以上是通用表尾
+    \bottomrule
+    \endlastfoot %以上是末页表尾，以下是表格正文
+    ID & ID & NUMBER & 15 \\
+    COMPANY\_ID & 公司ID & VARCHAR2 & 60 \\
+    LOGISTER\_AGENT & 委托代理人 & VARCHAR2 & 60 \\
+    SHORT\_NAME & 物流商简称 & VARCHAR2 & 60 \\
+    BUSINESS\_FIELD & 行业类别 & VARCHAR2 & 10 \\
+    WAY\_VEHICLE & 公路运输 & VARCHAR2 & 10 \\
+    WAY\_TRAIN & 铁路运输 & VARCHAR2 & 10 \\
+    WAY\_SHIP & 船舶运输 & VARCHAR2 & 10 \\
+    WAY\_PIPELINE & 管道运输 & VARCHAR2 & 10 \\
+    WAY\_CONTAINER & 集装箱运输 & VARCHAR2 & 10 \\
+    WAY\_OTHERS & 其他运输方式 & VARCHAR2 & 60 \\
+    FAX & 传真 & DATE & \\
+    SETUP\_DATE & 成立日期 & VARCHAR2 & 60 \\
+    BUSINESS\_LICENSECODE & 营业执照号码 & DATE & \_\_ \\
+    BUSINESS\_LICENSEDATE & 营业执照有效期 & VARCHAR2 & 60 \\
+    GAS\_LICENSECODE & 许可证号码 & DATE & \_\_ \\
+    GAS\_LICENSEDATE & 许可证有效期 & VARCHAR2 & 60 \\
+    HAZARD\_LICENSECODE & \makecell{化学危险品经营 \\ 许可证号码} & DATE & \_\_ \\
+    HAZARD\_LICENSEDATE & \makecell{化学危险品经营 \\ 许可证有效期} & VARCHAR2 & 60 \\
+    STATE\_TAXACCOUNT & 国税税号 & VARCHAR2 & 60 \\
+    CREATE\_USERID & 创建人 & NUMBER & 15
+\end{longtable}
+
+\section{相关定理证明}
+
+\section{程序代码}
+
+% 直接输入的形式插入代码
+
+\begin{lstlisting}[language=C++]
+int main(){
+    int i;
+    printf("hello latex!\n");
+    return 0;
+}
+\end{lstlisting}
+
+
+% 以文件形式插入代码
+
+\lstinputlisting[ language=C++, title={\raggedright\normalsize 计算$\boldsymbol{n}$的阶乘（C++）：} ]{codes/funfactorial.cpp} %C++
+
+\lstinputlisting[ language=Java, title={\raggedright\normalsize 计算$\boldsymbol{n}$的阶乘（Java）：} ]{codes/funfactorial.java} %Java
+
+\lstinputlisting[ language=Python, title={\raggedright\normalsize 计算$\boldsymbol{n}$的阶乘（Python）：} ]{codes/funfactorial.py} %Python
+
+\lstinputlisting[style=Matlab-editor, title={\raggedright\normalsize 计算$\boldsymbol{n}$的阶乘（MATLAB）：}]{codes/funfactorial.m} %MATLAB（如果不想要这种风格，则把该行命令的可选参数style=Matlab-editor改为language=Matlab
+
+%
+\end{appendices}%
