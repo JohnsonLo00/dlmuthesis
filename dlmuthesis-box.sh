@@ -122,7 +122,7 @@ mainfile_BAstem=$(cat <<EOL
 
 % ----- 正文（划分为多个独立文件依次导入） ----- %
 \pesudohookOFpremainbody
-\input{mainbody/<FOLDER>/ch1} \clearpage\vspace*{0pt}
+\input{mainbody/<FOLDER>/ch1} \clearpage
 \input{mainbody/<FOLDER>/conclusion} \clearpage % 结论
 % ================================================== %
 
@@ -217,7 +217,7 @@ mainfile_BAhumanities=$(cat <<EOL
 
 % ----- 正文（划分为多个独立文件依次导入） ----- %
 \pesudohookOFpremainbody
-\input{mainbody/<FOLDER>/ch1} \clearpage\vspace*{0pt}
+\input{mainbody/<FOLDER>/ch1} \clearpage
 \input{mainbody/<FOLDER>/conclusion} \clearpage % 总结
 % ================================================== %
 
@@ -314,7 +314,7 @@ mainfile_MA=$(cat <<EOL
 \pesudohookOFpremainbody
 \input{mainbody/<FOLDER>/introduction} \clearpage %引言
 \input{mainbody/<FOLDER>/ch1} \clearpage
-\input{mainbody/<FOLDER>/conclusion} \clearpage\vspace*{0pt} % 结论
+\input{mainbody/<FOLDER>/conclusion} \clearpage % 结论
 % ================================================== %
 
 
@@ -673,7 +673,7 @@ mainfile_DOC=$(cat <<EOL
 % ---------- 正文（划分为多个独立文件依次导入） ---------- %
 \pesudohookOFpremainbody
 \input{mainbody/<FOLDER>/ch1} \clearpage
-\input{mainbody/<FOLDER>/conclusion} \clearpage\vspace*{0pt} % 结论
+\input{mainbody/<FOLDER>/conclusion} \clearpage % 结论
 % ================================================== %
 
 

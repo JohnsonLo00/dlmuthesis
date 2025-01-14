@@ -159,20 +159,20 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     format = {\zihao{3}\bfseries},
     name = {第,章},
     aftername={~},
-    beforeskip=20.0bp,
-    afterskip=10.0bp,
+    beforeskip={20.0bp},
+    afterskip={\dimexpr 10.0bp+\baselineskip-\f@size bp\relax},
   },
   subsection = {
     format={\zihao{4}\bfseries},
     aftername={~},
-    beforeskip=0.5ex,
-    afterskip=0.5ex,
+    beforeskip={\dimexpr 0.5ex+\baselineskip-\f@size bp\relax},
+    afterskip={\dimexpr 0.5ex+\baselineskip-\f@size bp\relax},
   },
   subsubsection = {
     format={\zihao{-4}\bfseries},
     aftername={~},
-	  beforeskip=0.5ex,
-    afterskip=0.5ex,
+	  beforeskip={\dimexpr 0.5ex+\baselineskip-\f@size bp\relax},
+    afterskip={\dimexpr 0.5ex+\baselineskip-\f@size bp\relax},
   },
   paragraph = {
     format = {\zihao{-4}\bfseries},
@@ -195,8 +195,8 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     number = {\chinese{section}},
     aftername = {},
     indent = 2em,
-    beforeskip=20.0bp,
-    afterskip=10.0bp,
+    beforeskip={20.0bp},
+    afterskip={\dimexpr 10.0bp+\baselineskip-\f@size bp\relax},
   },
   subsection = {
     format = {\zihao{4}\bfseries},
@@ -204,16 +204,16 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     number = {\chinese{subsection}},
     aftername = {},
     indent = 2em,
-    beforeskip=0.5ex,
-    afterskip=0.5ex,
+    beforeskip={\dimexpr 0.5ex+\baselineskip-\f@size bp\relax},
+    afterskip={\dimexpr 0.5ex+\baselineskip-\f@size bp\relax},
   },
   subsubsection = {
     format = {\zihao{-4}\bfseries},
     name = {,.~},
     aftername = {},
     indent = 2em,
-    beforeskip=0.5ex,
-    afterskip=0.5ex,
+    beforeskip={\dimexpr 0.5ex+\baselineskip-\f@size bp\relax},
+    afterskip={\dimexpr 0.5ex+\baselineskip-\f@size bp\relax},
   },
   paragraph={
     format = {\zihao{-4}\bfseries},
@@ -235,20 +235,20 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     format = {\zihao{-3}\heiti},
     name = {,},
     aftername={\hspace{1em}},
-    beforeskip=0pt,
-    afterskip=1ex,
+    beforeskip={0bp},
+    afterskip={\dimexpr 1ex+\baselineskip-\f@size bp\relax},
   },
   subsection = {
     format = {\zihao{4}\heiti},
     aftername={\hspace{1em}},
-    beforeskip=0.5ex,
-    afterskip=0.5ex,
+    beforeskip={\dimexpr 0.5ex+\baselineskip-\f@size bp\relax},
+    afterskip={\dimexpr 0.5ex+\baselineskip-\f@size bp\relax},
   },
   subsubsection = {
     format = {\zihao{-4}\heiti},
     aftername={\hspace{1em}},
-    beforeskip=0.5ex,
-    afterskip=0.5ex,
+    beforeskip={\dimexpr 0.5ex+\baselineskip-\f@size bp\relax},
+    afterskip={\dimexpr 0.5ex+\baselineskip-\f@size bp\relax},
   },
   paragraph = {
     format = {\zihao{-4}\heiti},
@@ -277,8 +277,8 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     aftername = {},
     indent = 2em,
     aftername = {},
-    beforeskip=0.5ex,
-    afterskip=0.5ex,
+    beforeskip={0.5ex},
+    afterskip={\dimexpr 0.5ex+\baselineskip-\f@size bp\relax},
   },
   subsection = {
     format = {\zihao{-4}\heiti},
@@ -286,16 +286,16 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     number = \chinese{subsection},
     aftername = {},
     indent = 2em,
-    beforeskip=0.5ex,
-    afterskip=0.5ex,
+    beforeskip={\dimexpr 0.5ex+\baselineskip-\f@size bp\relax},
+    afterskip={\dimexpr 0.5ex+\baselineskip-\f@size bp\relax},
   },
   subsubsection = {
     format = {\zihao{-4}\heiti},
     name = {,.~},
     aftername = {},
     indent = 2em,
-    beforeskip=0.5ex,
-    afterskip=0.5ex,
+    beforeskip={\dimexpr 0.5ex+\baselineskip-\f@size bp\relax},
+    afterskip={\dimexpr 0.5ex+\baselineskip-\f@size bp\relax},
   },
   paragraph = {
     format = {\zihao{-4}\heiti},
@@ -320,18 +320,18 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   section = {
     format = {\zihao{-3}\heiti},
     name = {第,章},
-    beforeskip=1ex,
-    afterskip=1ex,
+    beforeskip={1ex},
+    afterskip={\dimexpr 1ex+\baselineskip-\f@size bp\relax},
   },
   subsection = {
     format = {\zihao{4}\heiti},
-    beforeskip=0.5ex,
-    afterskip=0.5ex,
+    beforeskip={\dimexpr 0.5ex+\baselineskip-\f@size bp\relax},
+    afterskip={\dimexpr 0.5ex+\baselineskip-\f@size bp\relax},
   },
   subsubsection = {
     format = {\zihao{-4}\heiti},
-    beforeskip=0.5em,
-    afterskip=0.5em,
+    beforeskip={\dimexpr 0.5ex+\baselineskip-\f@size bp\relax},
+    afterskip={\dimexpr 0.5ex+\baselineskip-\f@size bp\relax},
   },
   paragraph = {
     format = {\zihao{-4}\heiti},
@@ -356,19 +356,19 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     format = {\zihao{-3}\heiti},
     name = {,},
     aftername = {\hspace{1em}},
-    beforeskip=1ex,
-    afterskip=1ex,
+    beforeskip={0bp},
+    afterskip={\dimexpr 1ex+\baselineskip-\f@size bp\relax},
   },
   subsection = {
     format = {\zihao{4}\heiti},
     aftername = {\hspace{1em}},
-    beforeskip=0.5ex,
-    afterskip=0.5ex,
+    beforeskip={\dimexpr 0.5ex+\baselineskip-\f@size bp\relax},
+    afterskip={\dimexpr 0.5ex+\baselineskip-\f@size bp\relax},
   },
   subsubsection = {
     format = {\zihao{-4}\heiti},
-    beforeskip=0.5ex,
-    afterskip=0.5ex,
+    beforeskip={\dimexpr 0.5ex+\baselineskip-\f@size bp\relax},
+    afterskip={\dimexpr 0.5ex+\baselineskip-\f@size bp\relax},
   },
   paragraph = {
     format = {\zihao{-4}\heiti},
@@ -396,16 +396,16 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     name = {第,章},
     number = {\chinese{section}},
     aftername = {\hspace{1em}},
-    beforeskip=11bp,
-    afterskip=11bp,
+    beforeskip={11bp},
+    afterskip={\dimexpr 11bp+\baselineskip-\f@size bp\relax},
   },
   subsection = {
     format = {\zihao{4}\heiti\centering},
     name = {第,节},
     number = {\chinese{subsection}},
     aftername = {\hspace{1em}},
-    beforeskip=0.5ex,
-    afterskip=0.5ex,
+    beforeskip={\dimexpr 0.5ex+\baselineskip-\f@size bp\relax},
+    afterskip={\dimexpr 0.5ex+\baselineskip-\f@size bp\relax},
   },
   subsubsection = {
     format = {\zihao{-4}\heiti},
@@ -413,8 +413,8 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     number = \chinese{subsection},
     aftername = {},
     indent = 2em,
-    beforeskip=0.5ex,
-    afterskip=0.5ex,
+    beforeskip={\dimexpr 0.5ex+\baselineskip-\f@size bp\relax},
+    afterskip={\dimexpr 0.5ex+\baselineskip-\f@size bp\relax},
   },
   paragraph = {
     format = {\zihao{-4}\heiti},
@@ -422,16 +422,16 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     number = {\chinese{paragraph}},
     aftername = {},
     indent = 2em,
-    beforeskip=0.5ex,
-    afterskip=0.5ex,
+    beforeskip={\dimexpr 0.5ex+\baselineskip-\f@size bp\relax},
+    afterskip={\dimexpr 0.5ex+\baselineskip-\f@size bp\relax},
   },
   subparagraph = {
     format = {\zihao{-4}\heiti},
     name = {,.~},
     aftername = {},
     indent = 2em,
-    beforeskip=0.5em,
-    afterskip=0.5em,
+    beforeskip={\dimexpr 0.5ex+\baselineskip-\f@size bp\relax},
+    afterskip={\dimexpr 0.5ex+\baselineskip-\f@size bp\relax},
   },
   appendix={
     name = {附录,},
@@ -449,18 +449,18 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   section = {
     format = {\zihao{-3}\heiti},
     name = {第,章},
-    beforeskip=1ex,
-    afterskip=1ex,
+    beforeskip={1ex},
+    afterskip={\dimexpr 1ex+\baselineskip-\f@size bp\relax},
   },
   subsection = {
     format = {\zihao{4}\heiti},
-    beforeskip=0.5ex,
-    afterskip=0.5ex,
+    beforeskip={\dimexpr 0.5ex+\baselineskip-\f@size bp\relax},
+    afterskip={\dimexpr 0.5ex+\baselineskip-\f@size bp\relax},
   },
   subsubsection = {
     format = {\zihao{-4}\heiti},
-    beforeskip=0.5em,
-    afterskip=0.5em,
+    beforeskip={\dimexpr 0.5ex+\baselineskip-\f@size bp\relax},
+    afterskip={\dimexpr 0.5ex+\baselineskip-\f@size bp\relax},
   },
   paragraph = {
     format = {\zihao{-4}\heiti},
@@ -960,21 +960,83 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 % --------------- 列表环境 --------------- %
 \RequirePackage[inline]{enumitem}
 \if@dlmuthesis@BAstem %【本科-理工科】
-  \setlist{leftmargin=0pt, itemindent=2\parindent, itemsep=0pt, parsep=0pt}
+  \setlist[enumerate,itemize,description]{
+  align=left,
+  leftmargin=0pt,
+  labelindent=\parindent,
+  labelsep=0pt,
+  listparindent=\parindent,
+  itemindent=\dimexpr\parindent+\labelwidth+\labelsep\relax,
+  itemsep=0pt,
+  parsep=0pt,
+  topsep=0.2ex}
 \else\if@dlmuthesis@BAhumanities %【本科-人文社科】
-  \setlist{leftmargin=0pt, itemindent=2\parindent, itemsep=0pt, nosep}
+  \setlist[enumerate,itemize,description]{
+  align=left,
+  leftmargin=0pt,
+  labelindent=\parindent,
+  labelsep=0pt,
+  listparindent=\parindent,
+  itemindent=\dimexpr\parindent+\labelwidth+\labelsep\relax,
+  nosep}
 \else\if@dlmuthesis@MA %【硕士】
-  \setlist{leftmargin=0pt, itemindent=2\parindent, itemsep=0pt, parsep=0pt}
+  \setlist[enumerate,itemize,description]{
+  align=left,
+  leftmargin=0pt,
+  labelindent=\parindent,
+  labelsep=0pt,
+  listparindent=\parindent,
+  itemindent=\dimexpr\parindent+\labelwidth+\labelsep\relax,
+  itemsep=0pt,
+  parsep=0pt,
+  topsep=0.2ex}
 \else\if@dlmuthesis@MAlaw %【硕士-法学/法律】
-  \setlist{leftmargin=0pt, itemindent=2\parindent, itemsep=0pt, nosep}
+  \setlist[enumerate,itemize,description]{
+  align=left,
+  leftmargin=0pt,
+  labelindent=\parindent,
+  labelsep=0pt,
+  listparindent=\parindent,
+  itemindent=\dimexpr\parindent+\labelwidth+\labelsep\relax,
+  nosep}
 \else\if@dlmuthesis@MAmarxism %【硕士-马克思主义理论】
-  \setlist{leftmargin=0pt, itemindent=2\parindent, itemsep=0pt, nosep}
+  \setlist[enumerate,itemize,description]{
+  align=left,
+  leftmargin=0pt,
+  labelindent=\parindent,
+  labelsep=0pt,
+  listparindent=\parindent,
+  itemindent=\dimexpr\parindent+\labelwidth+\labelsep\relax,
+  nosep}
 \else\if@dlmuthesis@DOC %【博士】
-  \setlist{leftmargin=0pt, itemindent=2\parindent, itemsep=0pt, parsep=0pt}
+  \setlist[enumerate,itemize,description]{
+  align=left,
+  leftmargin=0pt,
+  labelindent=\parindent,
+  labelsep=0pt,
+  listparindent=\parindent,
+  itemindent=\dimexpr\parindent+\labelwidth+\labelsep\relax,
+  itemsep=0pt,
+  parsep=0pt,
+  topsep=0.2ex}
 \else\if@dlmuthesis@DOClaw %【博士-法学/法律】
-  \setlist{leftmargin=0pt, itemindent=2\parindent, itemsep=0pt, nosep}
+  \setlist[enumerate,itemize,description]{
+  align=left,
+  leftmargin=0pt,
+  labelindent=\parindent,
+  labelsep=0pt,
+  listparindent=\parindent,
+  itemindent=\dimexpr\parindent+\labelwidth+\labelsep\relax,
+  nosep}
 \else\if@dlmuthesis@DOCmarxism %【博士-马克思主义理论】
-  \setlist{leftmargin=0pt, itemindent=2\parindent, itemsep=0pt, nosep}
+  \setlist[enumerate,itemize,description]{
+  align=left,
+  leftmargin=0pt,
+  labelindent=\parindent,
+  labelsep=0pt,
+  listparindent=\parindent,
+  itemindent=\dimexpr\parindent+\labelwidth+\labelsep\relax,
+  nosep}
 \fi\fi\fi\fi\fi\fi\fi\fi
 % ======================================== %
 
@@ -1329,24 +1391,16 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 %% ---------- 特殊参考文献规范 ---------- %
 \if@dlmuthesis@MAlaw %【硕士-法学/法律】
   \renewcommand{\bibnumfmt}[1]{#1.}
-  %\makeatletter
   \xapptocmd{\NAT@bibsetnum}{\setlength{\leftmargin}{0pt}\setlength{\itemindent}{\labelwidth}\addtolength{\itemindent}{\labelsep}}{}{}
-  %\makeatother
 \else\if@dlmuthesis@MAmarxism %【硕士-马克思主义理论】
   \renewcommand{\bibnumfmt}[1]{【#1】}
-  %\makeatletter
   \xapptocmd{\NAT@bibsetnum}{\setlength{\leftmargin}{0pt}\setlength{\itemindent}{\labelwidth}\addtolength{\itemindent}{\labelsep}}{}{}
-  %\makeatother
 \else\if@dlmuthesis@DOClaw %【博士-法学/法律】
   \renewcommand{\bibnumfmt}[1]{#1.}
-  %\makeatletter
   \xapptocmd{\NAT@bibsetnum}{\setlength{\leftmargin}{0pt}\setlength{\itemindent}{\labelwidth}\addtolength{\itemindent}{\labelsep}}{}{}
-  %\makeatother
 \else\if@dlmuthesis@DOCmarxism %【博士-马克思主义理论】
   \renewcommand{\bibnumfmt}[1]{【#1】}
-  %\makeatletter
   \xapptocmd{\NAT@bibsetnum}{\setlength{\leftmargin}{0pt}\setlength{\itemindent}{\labelwidth}\addtolength{\itemindent}{\labelsep}}{}{}
-  %\makeatother
 \fi\fi\fi\fi
 %% ============================================= %
 % ======================================================= %
@@ -1570,6 +1624,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 %% --------------- 正文部分的样式设置 --------------- %
 \newcommand{\pesudohookOFpremainbody}{
+  \AddToHook{cmd/section/before}[keep_preskip_of_sectitle]{\vspace*{0pt}}
   \if@dlmuthesis@BAstem %【本科-理工科】
     \cntitleinMAINBODY
     \pagestyle{fancy} %从第一章到致谢，设置为有页眉、有页脚的模式
@@ -2102,6 +2157,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 %% --------------- 参考文献列表前后的样式设置 --------------- %
 \AddToHook{env/thebibliography/before}[add_to_toc]{
+  \RemoveFromHook{cmd/section/before}[keep_preskip_of_sectitle]
   \phantomsection
   \addcontentsline{toc}{section}{\ValOfBibname}
   \vspace*{0pt}
