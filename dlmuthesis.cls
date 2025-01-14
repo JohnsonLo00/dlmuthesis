@@ -2328,46 +2328,55 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \fi\fi\fi\fi
 %% ======================================================= %
 
-%% ---------- 硕博论文中，附录章节标题需居中对齐，但全文是居左 ---------- %
-%% ----- 特别的，博士论文中，奇数页页眉为每部分名称，偶数页为论文中文题目 ----- %
+%% -------------------- 附录样式 -------------------- %
+%%% 硕博论文中，附录章节标题需居中对齐，但全文是居左
+%%% 特别的，博士论文中，奇数页页眉为每部分名称，偶数页为论文中文题目
 \if@dlmuthesis@BAstem %【本科-理工科】
-  \AddToHook{env/appendices/begin}[title_fontzise_in_appendix]{
+  \AddToHook{env/appendices/before}[pagestyle_appendix]{
     \pagestyle{plain} %从附录页开始，去掉页眉
+    \cfoot{\zihao{-5} \thepage}
+    \pagenumbering{arabic} %摘要部分页码单独计数
+  }
+  \AddToHook{env/appendices/begin}[style_in_appendix]{
     \ctexset{
       section = {
         format = {\zihao{4}\bfseries},
         name = {附录~,},
         number = {\arabic{section}},
+        aftername = {\hspace{1em}},
         beforeskip=0.5ex,
         afterskip=0.5ex,
       }
     }
-    \pagenumbering{arabic} %摘要部分页码单独计数  
     \zihao{5}
   }
-  \AddToHook{env/appendices/end}{
-    \RemoveFromHook{env/appendices/begin}[title_fontzise_in_appendix]
+  \AddToHook{env/appendices/after}{
+    \RemoveFromHook{env/appendices/begin}[style_in_appendix]
   }
 \else\if@dlmuthesis@BAhumanities %【本科-人文社科】
-  \AddToHook{env/appendices/begin}[title_fontzise_in_appendix]{
+  \AddToHook{env/appendices/before}[pagestyle_appendix]{
     \pagestyle{plain} %从附录页开始，去掉页眉
+    \cfoot{\zihao{-5} \thepage}
+    \pagenumbering{arabic} %摘要部分页码单独计数
+  }
+  \AddToHook{env/appendices/begin}[style_in_appendix]{
     \ctexset{
       section = {
         format = {\zihao{4}\bfseries},
         name = {附录~,~~},
         number = {\arabic{section}},
+        aftername = {\hspace{1em}},
         beforeskip=0.5ex,
         afterskip=0.5ex,
       }
-    }
-    \pagenumbering{arabic} %摘要部分页码单独计数  
+    }  
     \zihao{5}
   }
-  \AddToHook{env/appendices/end}{
-    \RemoveFromHook{env/appendices/begin}[title_fontzise_in_appendix]
+  \AddToHook{env/appendices/after}{
+    \RemoveFromHook{env/appendices/begin}[style_in_appendix]
   }
 \else\if@dlmuthesis@MA %【硕士】
-  \AddToHook{env/appendices/begin}[title_fontzise_in_appendix]{
+  \AddToHook{env/appendices/begin}[style_in_appendix]{
     \ctexset{
       section = {
         format = \zihao{-3}\heiti\centering,
@@ -2379,11 +2388,11 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     }
     \zihao{-4}
   }
-  \AddToHook{env/appendices/end}{
-    \RemoveFromHook{env/appendices/begin}[title_fontzise_in_appendix]
+  \AddToHook{env/appendices/after}{
+    \RemoveFromHook{env/appendices/begin}[style_in_appendix]
   }
 \else\if@dlmuthesis@MAlaw %【硕士-法学/法律】
-  \AddToHook{env/appendices/begin}[title_fontzise_in_appendix]{
+  \AddToHook{env/appendices/begin}[style_in_appendix]{
     \ctexset{
       section = {
         format = \zihao{-3}\heiti\centering,
@@ -2393,11 +2402,11 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     }
     \zihao{-4}
   }
-  \AddToHook{env/appendices/end}{
-    \RemoveFromHook{env/appendices/begin}[title_fontzise_in_appendix]
+  \AddToHook{env/appendices/after}{
+    \RemoveFromHook{env/appendices/begin}[style_in_appendix]
   }
 \else\if@dlmuthesis@MAmarxism %【硕士-马克思主义理论】
-  \AddToHook{env/appendices/begin}[title_fontzise_in_appendix]{
+  \AddToHook{env/appendices/begin}[style_in_appendix]{
     \ctexset{
       section = {
         format = \zihao{-3}\heiti\centering,
@@ -2407,15 +2416,15 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     }
     \zihao{-4}
   }
-  \AddToHook{env/appendices/end}{
-    \RemoveFromHook{env/appendices/begin}[title_fontzise_in_appendix]
+  \AddToHook{env/appendices/after}{
+    \RemoveFromHook{env/appendices/begin}[style_in_appendix]
   }
 \else\if@dlmuthesis@DOC %【博士】
   \AddToHook{env/appendices/before}[header_in_appendix]{
     \fancyhead[COH]{\zihao{5}附录}
     \fancyhead[CEH]{\zihao{5}\dlmuthesis@tokens@cntitle}
   }
-  \AddToHook{env/appendices/begin}[title_fontzise_in_appendix]{
+  \AddToHook{env/appendices/begin}[style_in_appendix]{
     \ctexset{
       section = {
         format = \zihao{-3}\heiti\centering,
@@ -2425,11 +2434,12 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     }
     \zihao{-4}
   }
-  \AddToHook{env/appendices/end}{
-    \RemoveFromHook{env/appendices/begin}[title_fontzise_in_appendix]
+  \AddToHook{env/appendices/after}{
+    \RemoveFromHook{env/appendices/begin}[style_in_appendix]
+    \RemoveFromHook{env/appendices/before}[header_in_appendix]
   }
 \else\if@dlmuthesis@DOClaw %【博士-法学/法律】
-  \AddToHook{env/appendices/begin}[title_fontzise_in_appendix]{
+  \AddToHook{env/appendices/begin}[style_in_appendix]{
     \ctexset{
       section = {
         format = \zihao{-3}\heiti\centering,
@@ -2439,11 +2449,11 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     }
     \zihao{-4}
   }
-  \AddToHook{env/appendices/end}{
-    \RemoveFromHook{env/appendices/begin}[title_fontzise_in_appendix]
+  \AddToHook{env/appendices/after}{
+    \RemoveFromHook{env/appendices/begin}[style_in_appendix]
   }
 \else\if@dlmuthesis@DOCmarxism %【博士-马克思主义理论】
-  \AddToHook{env/appendices/begin}[title_fontzise_in_appendix]{
+  \AddToHook{env/appendices/begin}[style_in_appendix]{
     \ctexset{
       section = {
         format = \zihao{-3}\heiti\centering,
@@ -2453,8 +2463,8 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     }
     \zihao{-4}
   }
-  \AddToHook{env/appendices/end}{
-    \RemoveFromHook{env/appendices/begin}[title_fontzise_in_appendix]
+  \AddToHook{env/appendices/after}{
+    \RemoveFromHook{env/appendices/begin}[style_in_appendix]
   }
 \fi\fi\fi\fi\fi\fi\fi\fi
 %% ================================================================= %
