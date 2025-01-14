@@ -256,8 +256,8 @@ mainfile_MA=$(cat <<EOL
 
 % -------------------- 填写论文信息 -------------------- %
 %% ---------- 封面页 ---------- %
-\cntitle{基于低分辨率视频的手势运动方向检测} %【中文题目(若横线数量超过1, 则在可选参数处填所需横线数量)】
-\entitle{Detection of Gesture Motion Direction based on Low-Resolution Video} %【英文题目(若横线数量超过1, 则在可选参数处填所需横线数量)】
+\cntitle{基于低分辨率视频的手势运动方向检测} %【中文题目】
+\entitle{Detection of Gesture Motion Direction based on Low-Resolution Video} %【英文题目】
 \aauthor{阿海} %【作者姓名】
 \majorinCOVERPAGE{应用数学} %【学科专业（若为工程硕士，则可选参数填 “engineering”）】
 \sdtID{112020xxxx} %【学号】
@@ -367,8 +367,8 @@ mainfile_MAlaw=$(cat <<EOL
 
 % -------------------- 填写论文信息 -------------------- %
 %% ---------- 封面页 ---------- %
-\cntitle{提高我国医疗保障水平问题研究} %【中文题目(若横线数量超过1, 则在可选参数处填所需横线数量)】
-\entitle{Study on the Issue of Improving the Level of Medical Insurance in China} %【英文题目(若横线数量超过1, 则在可选参数处填所需横线数量)】
+\cntitle{提高我国医疗保障水平问题研究} %【中文题目】
+\entitle{Study on the Issue of Improving the Level of Medical Insurance in China} %【英文题目】
 \aauthor{阿海} %【作者姓名】
 \majorinCOVERPAGE{法学} %【学科专业（若为工程硕士，则可选参数填 “engineering”）】
 \sdtID{112020xxxx} %【学号】
@@ -490,8 +490,8 @@ mainfile_MAmarxism=$(cat <<EOL
 
 % -------------------- 填写论文信息 -------------------- %
 %% ---------- 封面页 ---------- %
-\cntitle{提高我国医疗保障水平问题研究} %【中文题目(若横线数量超过1, 则在可选参数处填所需横线数量)】
-\entitle{Study on the Issue of Improving the Level of Medical Insurance in China} %【英文题目(若横线数量超过1, 则在可选参数处填所需横线数量)】
+\cntitle{提高我国医疗保障水平问题研究} %【中文题目】
+\entitle{Study on the Issue of Improving the Level of Medical Insurance in China} %【英文题目】
 \aauthor{阿海} %【作者姓名】
 \majorinCOVERPAGE{马克思主义理论} %【学科专业（若为工程硕士，则可选参数填 “engineering”）】
 \sdtID{112020xxxx} %【学号】
@@ -609,8 +609,8 @@ mainfile_DOC=$(cat <<EOL
 
 % -------------------- 填写论文信息 -------------------- %
 %% ---------- 封面页 ---------- %
-\cntitle{基于低分辨率视频的手势运动方向检测} %【中文题目(若横线数量超过1, 则在可选参数处填所需横线数量)】
-\entitle{Detection of Gesture Motion Direction based on Low-Resolution Video} %【英文题目(若横线数量超过1, 则在可选参数处填所需横线数量)】
+\cntitle{基于低分辨率视频的手势运动方向检测} %【中文题目】
+\entitle{Detection of Gesture Motion Direction based on Low-Resolution Video} %【英文题目】
 \aauthor{阿海} %【作者姓名】
 \majorinCOVERPAGE{数学} %【学科专业（若为工程硕士，则可选参数填 “MEng”）】
 \sdtID{112020xxxx} %【学号】
@@ -725,8 +725,8 @@ mainfile_DOClaw=$(cat <<EOL
 
 % -------------------- 填写论文信息 -------------------- %
 %% ---------- 封面页 ---------- %
-\cntitle{提高我国医疗保障水平问题研究} %【中文题目(若横线数量超过1, 则在可选参数处填所需横线数量)】
-\entitle{Study on the Issue of Improving the Level of Medical Insurance in China} %【英文题目(若横线数量超过1, 则在可选参数处填所需横线数量)】
+\cntitle{提高我国医疗保障水平问题研究} %【中文题目】
+\entitle{Study on the Issue of Improving the Level of Medical Insurance in China} %【英文题目】
 \aauthor{阿海} %【作者姓名】
 \majorinCOVERPAGE{法学} %【学科专业（若为工程硕士，则可选参数填 “MEng”）】
 \sdtID{112020xxxx} %【学号】
@@ -852,8 +852,8 @@ mainfile_DOCmarxism=$(cat <<EOL
 
 % -------------------- 填写论文信息 -------------------- %
 %% ---------- 封面页 ---------- %
-\cntitle{提高我国医疗保障水平问题研究} %【中文题目(若横线数量超过1, 则在可选参数处填所需横线数量)】
-\entitle{Study on the Issue of Improving the Level of Medical Insurance in China} %【英文题目(若横线数量超过1, 则在可选参数处填所需横线数量)】
+\cntitle{提高我国医疗保障水平问题研究} %【中文题目】
+\entitle{Study on the Issue of Improving the Level of Medical Insurance in China} %【英文题目】
 \aauthor{阿海} %【作者姓名】
 \majorinCOVERPAGE{马克思主义理论} %【学科专业（若为工程硕士，则可选参数填 “MEng”）】
 \sdtID{112020xxxx} %【学号】

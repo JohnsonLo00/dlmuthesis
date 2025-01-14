@@ -1795,54 +1795,51 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \newcommand{\makecoverpageBA}{
   \thispagestyle{empty} %【无页眉页脚】
   \setlength{\extrarowheight}{9bp} %【设置表格行间距】
-  \setlength{\TPHorizModule}{1cm} % 设置textblock环境的水平单位
-  \setlength{\TPVertModule}{1cm} % 设置textblock环境的垂直单位
 
-  ~\newline %【起到将封面页与正文隔离的预作用(该文件最后是正式作用)，少了这句不行】
+  ~\vspace{24bp}
 
   %%% ---------- 封面顶部LOGO ---------- %
-  \begin{textblock}{15}(3,5)
+  \begin{figure}[H]
     \centering
     \includegraphics[width=11.11cm, height=2.4cm]{figures/logo/LogoBA.png}
-  \end{textblock}
+  \end{figure}{}\vspace{12bp}
   %%% ======================================== %
 
   %%% ---------- LOGO下方的大字号标题 ---------- %
-  \begin{textblock}{10}(5.5,9.85)
-    \centering
-    \fontsize{40bp}{26bp}\selectfont{\heiti 本科毕业论文}\\
-  \end{textblock}
+  \begin{center}
+  {\fontsize{40bp}{26bp}\selectfont\heiti 本科毕业论文}
+  \end{center}{}\vspace{36bp minus 12bp}
   %%% ======================================== %
 
   %%% ---------- 大字号标题下方的中、英论文题目 ---------- %
-  \begin{textblock}{15}(3.3,13.0)
+  \begin{table}[H]
     \centering
-    \renewcommand{\arraystretch}{0.75} %【调整表格行间距】
+    \renewcommand{\arraystretch}{1.0} %【调整表格行间距】
     \begin{tabular}
       {
       >{\vspace{-0.3\baselineskip}}m{1.4cm}
       >{\vspace{-0.3\baselineskip}}m{12.0cm}
       }
       \bfseries\fontsize{16bp}{16bp}\selectfont 题\hfil 目: &
-      \multirow[t]{2}{12.0cm}{\centering\arraybackslash\bfseries\fontsize{16bp}{16bp}\selectfont\dlmuthesis@tokens@cntitle}
+      \multirow[t]{2}{12.0cm}{\centering\arraybackslash\bfseries\fontsize{16bp}{24bp}\selectfont\dlmuthesis@tokens@cntitle}
       \whiledo{\value{CounterOfAddClineCn}<\value{InputLineCn}}{
         \AddCline
         \stepcounter{CounterOfAddClineCn}
       }
       \bfseries\fontsize{15bp}{15bp}\selectfont Title: &
-      \multirow[t]{2}{12.0cm}{\centering\arraybackslash\bfseries\fontsize{16bp}{16bp}\selectfont\dlmuthesis@tokens@entitle}
+      \multirow[t]{2}{12.0cm}{\centering\arraybackslash\bfseries\fontsize{16bp}{24bp}\selectfont\dlmuthesis@tokens@entitle}
       \whiledo{\value{CounterOfAddClineEn}<\value{InputLineEn}}{
         \AddCline
         \stepcounter{CounterOfAddClineEn}
       }
     \end{tabular}
-  \end{textblock}
+  \end{table}{}\vspace{12.0bp}
   %%% ================================================== %
 
   %%% -------------------- 封面信息栏 -------------------- %
-  \begin{textblock}{16}(3.3,16.9)
+  \begin{table}[H]
     \centering
-    \renewcommand{\arraystretch}{1.2}
+    \renewcommand{\arraystretch}{1.5}
     \begin{tabular}
       {
       >{\fontsize{16bp}{16bp}\selectfont}m{3.8cm}
@@ -1863,7 +1860,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
       \selectfont\fangsong 完\hfill 成\hfill 日\hfill 期: & \selectfont\fangsong\dlmuthesis@tokens@completiondate \\
       \cline{2-2}
     \end{tabular}
-  \end{textblock}
+  \end{table}
   %%% ================================================== %
 
   %% ----- 由于之前将\extrarowheight的值设为9bp，为保证往后正文表格的间距正常，需重新设置回来 ----- %
@@ -1880,6 +1877,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   \setlength{\extrarowheight}{18bp} %【设置表格行间距】
 
   ~\vspace{24bp}
+  
   \begin{center}{\bfseries\zihao{-1}
   \headerinCOVERPAGE 学~位~论~文}
   \end{center}{}\vspace{24.0bp}
@@ -1887,7 +1885,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   \begin{center}
   {\zihao{2}\heiti\dlmuthesis@tokens@cntitle}\\[1ex]
   {\zihao{3}\bfseries\dlmuthesis@tokens@entitle}
-  \end{center}{}\vspace{132.0bp minus 38.0bp}
+  \end{center}{}\vspace{132.0bp minus 64.0bp}
 
   \begin{table}[H]
     \centering
@@ -1911,7 +1909,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
       答\hfill 辩\hfill 时\hfill 间： & \dlmuthesis@tokens@completiondate \\
       \cline{2-2}
     \end{tabular}
-  \end{table}{}\vspace{2em}
+  \end{table}{}\vspace{2ex}
 
   \begin{figure}[H]
     \centering
@@ -1931,14 +1929,15 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   \setlength{\extrarowheight}{18bp} %【设置表格行间距】
 
   ~\vspace{24bp}
+
   \begin{center}{\bfseries\zihao{-1}
   \headerinCOVERPAGE 学~位~论~文}
-  \end{center}{}\vspace{24.0bp}
+  \end{center}{}\vspace{24bp}
 
   \begin{center}
   {\zihao{2}\heiti\dlmuthesis@tokens@cntitle}\\[1ex]
   {\zihao{3}\bfseries\dlmuthesis@tokens@entitle}
-  \end{center}{}\vspace{132.0bp}
+  \end{center}{}\vspace{132.0bp minus 64.0bp}
 
   \begin{table}[H]
     \centering
@@ -1962,7 +1961,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
       答\hfill 辩\hfill 时\hfill 间： & \dlmuthesis@tokens@completiondate \\
       \cline{2-2}
     \end{tabular}
-  \end{table}{}\vspace{24.0bp}
+  \end{table}{}\vspace{2ex}
 
   \begin{figure}[H]
     \centering

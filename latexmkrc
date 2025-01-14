@@ -8,6 +8,6 @@ $recorder = 1;
 
 $bibtex_use = 1.5; # tex -> pdf
 
-$clean_ext = "loc soc synctex.gz";
+$clean_ext = "loc soc synctex.gz synctex";
 
 # JL <yhlaozero2@163.com>
