@@ -1,20 +1,6 @@
 
 \begin{appendices}
 
-\section{附录内容说明}
-
-以下内容可放在附录之内：
-\begin{enumerate}[label=(\arabic*)]
-  \item{正文内过于冗长的公式推导；}
-  \item{方便他人阅读所需的辅助性数学工具或表格；}
-  \item{重复性数据和图表；}
-  \item{论文使用的主要符号的意义和单位；}
-  \item{程序说明和程序全文。}
-\end{enumerate}
-
-若无附录内容则可以省略。如果省略，则将文件\verb|main_MA.tex|中的附录部分全部注释掉（包括\verb|\clearpage|命令）。
-
-
 \section{企业信息表}
 
 \begin{longtable}{cccc}
@@ -55,32 +41,11 @@
     CREATE\_USERID & 创建人 & NUMBER & 15
 \end{longtable}
 
-\section{相关定理证明}
+\newpage
 
-此处展示附录下参考文献引用的序号格式：正文类型\apdxcite{张旭明2005}，上标类型\upapdxcite{张中祥2023}。
+\section{公开报文详情}
 
-\section{程序代码}
-
-% 直接输入的形式插入代码
-
-\begin{lstlisting}[language=C++]
-int main(){
-    int i;
-    printf("hello latex!\n");
-    return 0;
-}
-\end{lstlisting}
-
-
-% 以文件形式插入代码
-
-\lstinputlisting[ language=C++, title={\raggedright\normalsize 计算$\boldsymbol{n}$的阶乘（C++）：} ]{codes/funfactorial.cpp} %C++
-
-\lstinputlisting[ language=Java, title={\raggedright\normalsize 计算$\boldsymbol{n}$的阶乘（Java）：} ]{codes/funfactorial.java} %Java
-
-\lstinputlisting[ language=Python, title={\raggedright\normalsize 计算$\boldsymbol{n}$的阶乘（Python）：} ]{codes/funfactorial.py} %Python
-
-\lstinputlisting[style=Matlab-editor, title={\raggedright\normalsize 计算$\boldsymbol{n}$的阶乘（MATLAB）：}]{codes/funfactorial.m} %MATLAB（如果不想要这种风格，则把该行命令的可选参数style=Matlab-editor改为language=Matlab
+\zhlipsum[1]
 
 %
-\end{appendices}
+\end{appendices}%

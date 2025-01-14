@@ -482,7 +482,6 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \RequirePackage{etoolbox}
 \RequirePackage{xpatch}
 \RequirePackage{xparse}
-\RequirePackage[absolute,overlay]{textpos} %【提供基于坐标的文本框环境，其中overlay为绝对坐标】
 \RequirePackage{array} %【与表格相关】
 
 %% -------------------- 变量预定义 -------------------- %
@@ -1371,7 +1370,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 % ------------------------- 参考文献 ------------------------- %
 \RequirePackage[numbers,square,comma]{natbib}
 \setlength{\bibsep}{0bp}
-\bibliographystyle{thuthesis-bachelor} %借鉴使用：清华大学(本科)学位论文模板bst样式文件
+\bibliographystyle{dlmuthesis-bachelor} %参考文献样式文件
 \renewcommand{\bibfont}{\zihao{5}} % 参考文献条目字号要求
 
 %% 上标形式的引用（可选参数：页码）

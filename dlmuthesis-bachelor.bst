@@ -1,4 +1,6 @@
 %%
+%% dlmuthesis: 该文件为对thuthesis-bachelor.bst的整体借用
+%%
 %% This is file `variants/thu/thuthesis-bachelor.bst',
 %% generated with the docstrip utility.
 %%
