@@ -53,7 +53,7 @@ dlmuthesis(LaTeX **Thesis** Template for **D**a**l**ian **M**aritime
 > 对单独备案的论文规范的开发将长期作为本模板的更新计划之一。如有个别学科专业单独备案的论文规范希望被引进开发，欢迎联系JL。
 
 软件配置要求如下：
--   发行版：2022年版及以上
+- LaTeX 发行版：2022年版及以上
 
 可能产生错误的宏包、环境或命令如下：
 - `ntheorem` 宏包：与 `amsthm` 宏包冲突，切勿导入
@@ -68,7 +68,6 @@ dlmuthesis(LaTeX **Thesis** Template for **D**a**l**ian **M**aritime
   > ```
   > 然后在正文中的指定位置使用：
   > ```latex
-  > tcolorbox
   > \begin{<新环境名称>}
   > \item{}
   >   %...
@@ -91,26 +90,27 @@ dlmuthesis(LaTeX **Thesis** Template for **D**a**l**ian **M**aritime
 ## 文件组成
 
 ```
-+ ./codes/ 放置源[代码]文件. 需写入论文中的代码可以通过文件导入的命令来实现写入          
-+ ./figures/ 放置[图片]文件. 需插入论文中的图片可以通过文件导入的命令来实现插入
-+----------- /logo/ 放置论文封面页的[logo]图片，切勿挪动
-+----------- /signatures/ 放置硕博论文中作者与导师的[签名]图片
-+----------- /<type>/ 放置各学位模式下的图片
-+ ./mainbody/ 放置[正文各章节]的子tex文件. 论文的每个章节均可分为不同的
-+             tex文件进行编写，最后再汇总导入一个tex文件中(即文件
-+             main_<x>.tex)
-+ ./misc/ 放置闲置文件. 特别地，部分[学院单独备案规范]下的
-+         学位论文示例保存于此处
-+./ refs/ 放置[参考文献数据库文件]. 参考文献列表可以通过bib/tex文件导入的命令来生成
+./codes/ 放置源[代码]文件. 需写入论文中的代码可以通过文件导入的命令来实现写入
+./figures/ 放置[图片]文件. 需插入论文中的图片可以通过文件导入的命令来实现插入
+|
+└───/logo/ 放置论文封面页的[logo]图片，切勿挪动
+    /signatures/ 放置硕博论文中作者与导师的[签名]图片
+    /<type>/ 放置各学位模式下的图片
+./mainbody/ 放置[正文各章节]的子tex文件. 论文的每个章节均可分为不同的
+            tex文件进行编写，最后再汇总导入一个tex文件中(即文件
+            main_<x>.tex)
+./misc/ 放置闲置文件. 特别地，部分[学院单独备案规范]下的
+        学位论文示例保存于此处
+./ refs/ 放置[参考文献数据库文件]. 参考文献列表可以通过bib/tex文件导入的命令来生成
 ====================================================================
-+ guidebook_of_dlmuthesis.pdf 本模板的[使用手册]
-+ dlmuthesis.cls 本模板的[文档类]文件
-+ main_<type>.tex 各学位模式下的论文示例[主文档]
-+ latexmkrc latexmk配置文件
-+ dlmuthesis-box.bat 模板使用辅助程序(Windows)
-+ dlmuthesis-box.sh 模板使用辅助程序(macOS, Ubuntu)
-+ LICENSE 开源协议文件 The LaTeX Project Public License（LPPL）
-+ dlmuthesis-bachelor.bst：参考文献样式文件. 用于控制参考文献列表的格式
+guidebook_of_dlmuthesis.pdf 本模板的[使用手册]
+dlmuthesis.cls 本模板的[文档类]文件
+main_<type>.tex 各学位模式下的论文示例[主文档]
+latexmkrc latexmk 配置文件
+dlmuthesis-box.bat 模板使用辅助程序(Windows)
+dlmuthesis-box.sh 模板使用辅助程序(macOS, Ubuntu)
+LICENSE 开源协议文件 The LaTeX Project Public License（LPPL）
+dlmuthesis-bachelor.bst：参考文献样式文件. 用于控制参考文献列表的格式
 ```
 
 ## 更新日志
