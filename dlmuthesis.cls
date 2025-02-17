@@ -1047,6 +1047,9 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \DeclareMathOperator{\diff}{\,\mathrm{d}\hspace{-1.5pt}} %微分算子
 
 \RequirePackage{amsthm}
+
+\AddToHook{cmd/proofname/before}{\hspace{\parindent}}
+
 \newtheoremstyle{newthmstyle}
   {3bp} %Space above
   {3bp} %Space below
@@ -1135,15 +1138,15 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \else\if@dlmuthesis@MA %【硕士】
   \captionsetup{font=small, labelsep=doublespace} %单标题模式
   \captionsetup[figure][bi-first]{font=small, labelsep=doublespace}
-  \captionsetup[figure][bi-second]{font=small, labelsep=doublespace, name={Fig}}
+  \captionsetup[figure][bi-second]{font=small, labelsep=doublespace, name={Fig.}}
   \captionsetup[table][bi-first]{font=small, labelsep=doublespace}
-  \captionsetup[table][bi-second]{font=small, labelsep=doublespace, name={Tab~}}
+  \captionsetup[table][bi-second]{font=small, labelsep=doublespace, name={Tab.~}}
 \else\if@dlmuthesis@MAlaw %【硕士-法学/法律】
   \captionsetup{font=small, labelsep=doublespace} %单标题模式
   \captionsetup[figure][bi-first]{font=small, labelsep=doublespace}
-  \captionsetup[figure][bi-second]{font=small, labelsep=doublespace, name={Fig}}
+  \captionsetup[figure][bi-second]{font=small, labelsep=doublespace, name={Fig.}}
   \captionsetup[table][bi-first]{font=small, labelsep=doublespace}
-  \captionsetup[table][bi-second]{font=small, labelsep=doublespace, name={Tab~}}
+  \captionsetup[table][bi-second]{font=small, labelsep=doublespace, name={Tab.~}}
 \else\if@dlmuthesis@MAmarxism %【硕士-马克思主义理论】
   \captionsetup{font=normalsize, labelsep=doublespace} %单标题模式
   \captionsetup[figure][bi-first]{font=NORMALSIZEandHEITI, labelsep=doublespace}
@@ -1368,7 +1371,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 
 % ------------------------- 参考文献 ------------------------- %
-\RequirePackage[numbers,square,comma]{natbib}
+\RequirePackage[numbers,square,comma,sort&compress]{natbib}
 \setlength{\bibsep}{0bp}
 \bibliographystyle{dlmuthesis-bachelor} %参考文献样式文件
 \renewcommand{\bibfont}{\zihao{5}} % 参考文献条目字号要求
