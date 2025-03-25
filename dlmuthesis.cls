@@ -15,7 +15,7 @@
 
 % --------------- 全局设置 --------------- %
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{dlmuthesis}[2025-01-15 v3.0.0 Unofficial LaTeX Thesis Template for Dalian Maritime University]
+\ProvidesClass{dlmuthesis}[2025-03-30 v3.0.0.beta.2 Unofficial LaTeX Thesis Template for Dalian Maritime University]
 % ======================================== %
 
 
@@ -410,7 +410,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   subsubsection = {
     format = {\zihao{-4}\heiti},
     name = {,、},
-    number = \chinese{subsection},
+    number = \chinese{subsubsection},
     aftername = {},
     indent = 2em,
     beforeskip={\dimexpr 0.5ex+\baselineskip-\f@size bp\relax},
@@ -810,30 +810,27 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 % --------------- 目录样式 --------------- %
 \RequirePackage{titletoc}
-%% ---------- 一级标题样式 ---------- %
+
+%% ---------- 各级标题样式 ---------- %
+\contentsmargin{0pt}
 \titlecontents{section}
 [0pt]
-{\addvspace{2bp}\filright}
+{\filright}
 {\contentspush{\thecontentslabel}~~}
 {}
-{\titlerule*[8bp]{.}\contentspage}
-%% =================================== %
-%% ---------- 三级标题样式 ---------- %
-\if@dlmuthesis@BAhumanities %【本科-人文社科】
-  \titlecontents{subsubsection}
-    [5em]
-    {}
-    {\contentslabel{1em}}
-    {\hspace*{5bp}}
-    {\titlerule*[8bp]{.}\contentspage}
-\else\if@dlmuthesis@MAlaw %【硕士-法学/法律】
-  \titlecontents{subsubsection}
-    [5em]
-    {}
-    {\contentslabel{1em}}
-    {\hspace*{5bp}}
-    {\titlerule*[8bp]{.}\contentspage}
-\fi\fi
+{\titlerule*[4bp]{.}\thecontentspage}
+\titlecontents{subsection}
+[2em]
+{\filright}
+{\contentspush{\thecontentslabel}~~}
+{}
+{\titlerule*[4bp]{.}\thecontentspage}
+\titlecontents{subsubsection}
+[4em]
+{\filright}
+{\contentspush{\thecontentslabel}~~}
+{}
+{\titlerule*[4bp]{.}\thecontentspage}
 %% =================================== %
 %% ----- 硕博论文中，目录到图(/表)目录之间需翻页+添加大标题 ----- %
 \newcounter{bigtitle}
@@ -891,16 +888,16 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   [0pt] %左边缩进为0
   {\addvspace{0pt}} %每一行之间的垂直间距
   {\figurename{~~}\thecontentslabel\quad} %条目样式
-  {\hfill} %填充对齐
-  {\titlerule*[6bp]{.}\contentspage} % 用点线间隔，并显示页面号
+  {}
+  {\titlerule*[4bp]{.}\thecontentspage} % 用点线间隔，并显示页面号
 %% =================================== %
 %% ---------- 表目录样式 ---------- %
 \titlecontents{table}
   [0pt] %左边缩进为0
   {\addvspace{0pt}} %每一行之间的垂直间距
   {\tablename{~~}\thecontentslabel\quad} %条目样式
-  {\hfill} %填充对齐
-  {\titlerule*[6bp]{.}\contentspage} % 用点线间隔，并显示页面号
+  {}
+  {\titlerule*[4bp]{.}\thecontentspage} % 用点线间隔，并显示页面号
 %% =================================== %
 % ======================================== %
 
@@ -1377,17 +1374,17 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \renewcommand{\bibfont}{\zihao{5}} % 参考文献条目字号要求
 
 %% 上标形式的引用（可选参数：页码）
-\NewDocumentCommand{\upcite}{O{} m}{$^{\mbox{\footnotesize\cite{#2}}#1}${}}
+\NewDocumentCommand{\upcite}{O{} m}{\textsuperscript{\cite{#2}#1}}
 %% 附录中的文献引用格式
 \if@dlmuthesis@MAlaw %【硕士-法学/法律】
   \newcommand{\apdxcite}[1]{\citep[\chinese{section},~\hspace{-3bp}][]{#1}} %适用于“章节编号+文献序号”的格式. 下同
-  \newcommand{\upapdxcite}[1]{$^{\mbox{\footnotesize\apdxcite{#1}}}${}} %动机与\upcite命令的类似. 下同
+  \newcommand{\upapdxcite}[1]{\textsuperscript{\apdxcite{#1}}} %动机与\upcite命令的类似. 下同
 \else\if@dlmuthesis@DOClaw %【博士-法学/法律】
   \newcommand{\apdxcite}[1]{\citep[\chinese{section},~\hspace{-3bp}][]{#1}}
-  \newcommand{\upapdxcite}[1]{$^{\mbox{\footnotesize\apdxcite{#1}}}${}}
+  \newcommand{\upapdxcite}[1]{\textsuperscript{\apdxcite{#1}}}
 \else %【硕士、博士】
   \newcommand{\apdxcite}[1]{\citep[\thesection\hspace{-3bp}][]{#1}}
-  \newcommand{\upapdxcite}[1]{$^{\mbox{\footnotesize\apdxcite{#1}}}${}}
+  \newcommand{\upapdxcite}[1]{\textsuperscript{\apdxcite{#1}}}
 \fi\fi
 
 %% ---------- 特殊参考文献规范 ---------- %
