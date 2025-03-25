@@ -1323,7 +1323,17 @@ do
     echo "--------------------------------------"
     echo " "
     read -p "-->在这里输入：" CurrentMainFile
-    if [ -f "$CurrentMainFile.tex" ]
+    if [[ $CurrentMainFile == *.tex ]]
+    then
+      echo " "
+      echo "----------------------------------------------------"
+      echo "----- 所输入的文件名称含有后缀 .tex，请重新输入！-----"
+      echo "----------------------------------------------------"
+      echo " "
+      read -rsn1 -p "按任意键继续："
+      echo $'\n'
+      continue
+    elif [ -f "$CurrentMainFile.tex" ]
     then
       echo " "
       echo "----------------------------------------"
@@ -1415,7 +1425,17 @@ do
     echo "------------------------"
     echo " "
     read -p "-->在这里输入（如需中止创建请输入0）：" NewMainFile
-    if [ $NewMainFile = "0" ] #主动中止
+    if [[ $NewMainFile == *.tex ]]
+    then
+      echo " "
+      echo "----------------------------------------------------"
+      echo "----- 所输入的文件名称含有后缀 .tex，请重新输入！-----"
+      echo "----------------------------------------------------"
+      echo " "
+      read -rsn1 -p "按任意键继续："
+      echo $'\n'
+      continue
+    elif [ $NewMainFile = "0" ] #主动中止
     then
       echo " "
       echo "---------------------"

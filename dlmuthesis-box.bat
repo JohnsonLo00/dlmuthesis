@@ -66,6 +66,14 @@ if %Option% equ 1 (
   echo.
   set /p "CurrentMainFile=-->在这里输入："
   setlocal enabledelayedexpansion
+  if "!CurrentMainFile:~-4!"==".tex" (
+    echo.
+    echo ---------------------------------------------
+    echo 所输入的文件名称含有后缀 .tex，请重新输入！
+    echo ---------------------------------------------
+    echo.
+    goto :ending
+  )
   if exist !CurrentMainFile!.tex (
     echo.
     echo ----------------------------------------------------
@@ -172,7 +180,14 @@ if %Option% equ 1 (
   echo -----------------------------
   echo.
   set /p "NewMainFile=-->在这里输入（如需中止创建请输入0）："
-  if !NewMainFile! equ 0 (
+  if "!NewMainFile:~-4!"==".tex" (
+    echo.
+    echo ---------------------------------------------
+    echo 所输入的文件名称含有后缀 .tex，请重新输入！
+    echo ---------------------------------------------
+    echo.
+    goto :ending
+  ) else if !NewMainFile! equ 0 (
     echo.
     echo -----------------------
     echo ----- 创建已中止！-----
