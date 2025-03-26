@@ -15,7 +15,7 @@
 
 % --------------- 全局设置 --------------- %
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{dlmuthesis}[2025-03-30 v3.0.0.beta.2 Unofficial LaTeX Thesis Template for Dalian Maritime University]
+\ProvidesClass{dlmuthesis}[2025-03-30 v3.0.0-beta.2 Unofficial LaTeX Thesis Template for Dalian Maritime University]
 % ======================================== %
 
 
