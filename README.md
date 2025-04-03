@@ -80,9 +80,9 @@ dlmuthesis(LaTeX **Thesis** Template for **D**a**l**ian **M**aritime
 
 目前可从以下平台获取本模板：
 -   [GitHub](https://github.com/JohnsonLo00/dlmuthesis)
--   [Gitee](https://gitee.com/jhonson-lo/dlmuthesis)
--   [Overleaf]()：可在模板库中搜索"dlmuthesis"(作者为JohnsonLo)
--   [TeXPage]()：可在模板库中搜索"dlmuthesis"(作者为JohnsonLo)
+-   [Gitee](https://gitee.com/jhonson-lo/dlmuthesis-backuped)
+-   [Overleaf](https://cn.overleaf.com/latex/templates/dlmuthesis-latex-thesis-template-for-dalian-maritime-university/rmstrjjrthwf)：可在模板库中搜索"dlmuthesis"(作者为JohnsonLo)
+-   [TeXPage](https://www.texpage.com/zh/template/b32e0cb4-ef09-4ee2-b4ff-ca92b2ed3665)：可在模板库中搜索"dlmuthesis"(作者为JohnsonLo)
 
 其中，GitHub与Gitee上可在**Release**板块获取各版本模板的下载路径。
 
