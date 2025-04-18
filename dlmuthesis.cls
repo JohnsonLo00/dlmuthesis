@@ -1045,7 +1045,16 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 \RequirePackage{amsthm}
 
-\AddToHook{cmd/proofname/before}{\hspace{\parindent}}
+\renewcommand{\proofname}{证明}
+\renewenvironment{proof}[1][\proofname]{\par
+\pushQED{\qed}%
+\normalfont \topsep6\p@\@plus6\p@\relax
+\trivlist
+\item\relax
+{\hspace{\parindent}\rmfamily\bfseries #1\@addpunct{:}}\hspace\labelsep\ignorespaces
+}{%
+\popQED\endtrivlist\@endpefalse
+}
 
 \newtheoremstyle{newthmstyle}
   {3bp} %Space above
@@ -1065,7 +1074,6 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \newtheorem{Problem}{问题}[section]
 \newtheorem{Corollary}{推论}[section]
 \newtheorem{Remark}{注}[section]
-\renewcommand{\proofname}{\zihao{-4}\bfseries 证明}
 
 \newtheoremstyle{newthmstyle-cited} %带文献引用的定理环境样式
   {3bp} %Space above
