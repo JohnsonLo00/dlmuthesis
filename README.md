@@ -4,7 +4,7 @@
 **大连海事大学学位论文 LaTeX 模板**
 
 **JL**, [yhlaozero2@163.com](yhlaozero2@163.com)
-**v3.0.0-beta.2 (2025/03/30)**
+**v3.0.0-beta.3 (2025/04/20)**
 
 QQ交流群：976053605
 
@@ -90,31 +90,34 @@ dlmuthesis(LaTeX **Thesis** Template for **D**a**l**ian **M**aritime
 ## 文件组成
 
 ```
-./codes/ 放置源[代码]文件. 需写入论文中的代码可以通过文件导入的命令来实现写入
-./figures/ 放置[图片]文件. 需插入论文中的图片可以通过文件导入的命令来实现插入
-|
-└───/logo/ 放置论文封面页的[logo]图片，切勿挪动
-    /signatures/ 放置硕博论文中作者与导师的[签名]图片
-    /<type>/ 放置各学位模式下的图片
-./mainbody/ 放置[正文各章节]的子tex文件. 论文的每个章节均可分为不同的
-            tex文件进行编写，最后再汇总导入一个tex文件中(即文件
-            main_<x>.tex)
-./misc/ 放置闲置文件. 特别地，部分[学院单独备案规范]下的
-        学位论文示例保存于此处
-./ refs/ 放置[参考文献数据库文件]. 参考文献列表可以通过bib/tex文件导入的命令来生成
+dlmuthesis/
+├────────── codes/ 放置源[代码]文件. 需写入论文中的代码可以通过文件导入的命令来实现写入
+├────────── figures/ 放置[图片]文件. 需插入论文中的图片可以通过文件导入的命令来实现插入
+            ├────────── logo/ 放置论文封面页的[logo]图片，切勿挪动
+            ├────────── signatures/ 放置硕博论文中作者与导师的[签名]图片
+            ├────────── <type>/ 放置各学位模式下的图片
+├────────── mainbody/ 放置[正文各章节]的子tex文件. 论文的每个章节均可分为不同的tex文件进行编写，最后再汇总导入一个tex文件中(即文件main_<x>.tex)
+├────────── misc/ 放置闲置文件. 特别地，部分[学院单独备案规范]下的学位论文示例保存于此处
+├────────── refs/ 放置[参考文献数据库文件]. 参考文献列表可以通过bib/tex文件导入的命令来生成
 ====================================================================
-guidebook_of_dlmuthesis.pdf 本模板的[使用手册]
-dlmuthesis.cls 本模板的[文档类]文件
-main_<type>.tex 各学位模式下的论文示例[主文档]
-latexmkrc latexmk 配置文件
-dlmuthesis-box.bat 模板使用辅助程序(Windows)
-dlmuthesis-box.sh 模板使用辅助程序(macOS, Ubuntu)
-LICENSE 开源协议文件 The LaTeX Project Public License（LPPL）
-dlmuthesis-bachelor.bst：参考文献样式文件. 用于控制参考文献列表的格式
+├ guidebook_of_dlmuthesis.pdf 本模板的[使用手册]
+├ dlmuthesis.cls 本模板的[文档类]文件
+├ main_<type>.tex 各学位模式下的论文示例[主文档]
+├ latexmkrc latexmk 配置文件
+├ dlmuthesis-box.bat 模板使用辅助程序(Windows)
+├ dlmuthesis-box.sh 模板使用辅助程序(macOS, Ubuntu)
+├ LICENSE 开源协议文件 The LaTeX Project Public License（LPPL）
+├ dlmuthesis-bachelor.bst：参考文献样式文件. 用于控制参考文献列表的格式
 ```
 
 ## 更新日志
 
+- **v3.0.0-beta.3 (变更类型：问题修正), 2025-04-20**
+  - **Added**:
+    - 在手册中添加了关于脚注缩进方式设置的说明
+  - **Fixed**:
+    - 解决了证明环境中因修改环境名称而导致预设格式失效（首行缩进、正体、粗体）的问题 ([#3]( https://github.com/JohnsonLo00/dlmuthesis/issues/3))
+    - 解决了其他一些已知问题
 - **v3.0.0-beta.2 (变更类型：功能性新增), 2025-03-30**
   - **Changed**:
     - 修改目录中章节标题的样式 ([#1](https://github.com/JohnsonLo00/dlmuthesis/issues/1))
