@@ -2151,13 +2151,17 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 
 % --------------- 钩子 --------------- %
-%% ----- 全文行间距 ----- %
+%% ----- 全文行距 ----- %
+% 关键系数k(基础行距换算系数)：1.296875/1.2
+% 实际的伸缩因子：
+% 1.25倍行距: 1.25*k =[approximately]= 1.35
+% 1.5倍行距: 1.5*k =[approximately]= 1.62
 \if@dlmuthesis@MAlaw %【硕士-法学/法律】
-  \AtBeginDocument{\renewcommand{\baselinestretch}{1.5}}
+  \linespread{1.62}\selectfont
 \else\if@dlmuthesis@DOClaw %【博士-法学/法律】
-  \AtBeginDocument{\renewcommand{\baselinestretch}{1.5}}
+  \linespread{1.62}\selectfont
 \else
-  \AtBeginDocument{\renewcommand{\baselinestretch}{1.25}}
+  \linespread{1.35}\selectfont
 \fi\fi
 %% ==================== %
 
