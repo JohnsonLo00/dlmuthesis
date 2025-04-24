@@ -4,7 +4,7 @@
 **大连海事大学学位论文 LaTeX 模板**
 
 **JL**, [yhlaozero2@163.com](yhlaozero2@163.com)
-**v3.0.0-beta.3 (2025/04/20)**
+**v3.0.0-beta.4 (2025/04/25)**
 
 QQ交流群：976053605
 
@@ -112,13 +112,16 @@ dlmuthesis/
 
 ## 更新日志
 
+- **v3.0.0-beta.4 (变更类型：功能变更), 2025-04-25**
+  - **Changed**:
+    - 去除了目录中部分标题的字间距 ([#4]( https://github.com/JohnsonLo00/dlmuthesis/issues/4))
 - **v3.0.0-beta.3 (变更类型：问题修正), 2025-04-20**
   - **Added**:
     - 在手册中添加了关于脚注缩进方式设置的说明
   - **Fixed**:
     - 解决了证明环境中因修改环境名称而导致预设格式失效（首行缩进、正体、粗体）的问题 ([#3]( https://github.com/JohnsonLo00/dlmuthesis/issues/3))
     - 解决了其他一些已知问题
-- **v3.0.0-beta.2 (变更类型：功能性新增), 2025-03-30**
+- **v3.0.0-beta.2 (变更类型：功能变更), 2025-03-30**
   - **Changed**:
     - 修改目录中章节标题的样式 ([#1](https://github.com/JohnsonLo00/dlmuthesis/issues/1))
     - 设置证明环境为首行缩进两字符
