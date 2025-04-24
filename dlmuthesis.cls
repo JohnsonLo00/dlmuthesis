@@ -150,8 +150,10 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \RequirePackage[UTF8, heading=true, zihao = -4]{ctex}
 \RequirePackage{totcount}
 
-\if@dlmuthesis@BAstem %【本科-理工科】
 \newcommand{\ValOfBibname}{参~ 考~ 文~ 献}
+\newcommand{\ValOfNoSkipBibname}{参考文献}
+
+\if@dlmuthesis@BAstem %【本科-理工科】
 \ctexset{
   contentsname = \hfill{\zihao{3}目\hspace{2em}录}\hfill,
   bibname = \hfill{\zihao{3}\ValOfBibname}\hfill,
@@ -182,7 +184,6 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   }
 }
 \else\if@dlmuthesis@BAhumanities %【本科-人文社科】
-\newcommand{\ValOfBibname}{参~ 考~ 文~ 献}
 \renewcommand\thesubsection{\arabic{subsection}} %重设二级标题计数器格式
 \renewcommand\thesubsubsection{\arabic{subsubsection}} %重设三级标题计数器格式
 \renewcommand\theparagraph{\arabic{paragraph}} %重设四级标题计数器格式
@@ -225,7 +226,6 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   }
 }
 \else\if@dlmuthesis@MA %【硕士】
-\newcommand{\ValOfBibname}{参~ 考~ 文~ 献}
 \ctexset{
   contentsname = \hfill{\heiti\zihao{-3}目\hspace{2em}录}\hfill,
   listfigurename = \hfill{\songti\zihao{-3}图目录}\hfill,
@@ -261,7 +261,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   }
 }
 \else\if@dlmuthesis@MAlaw %【硕士-法学/法律】
-\newcommand{\ValOfBibname}{参考文献}
+\renewcommand{\ValOfBibname}{参考文献}
 \renewcommand\thesubsection{\arabic{subsection}} %重设二级标题计数器格式
 \renewcommand\thesubsubsection{\arabic{subsubsection}} %重设三级标题计数器格式
 \renewcommand\theparagraph{\arabic{paragraph}} %重设四级标题计数器格式
@@ -310,7 +310,6 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   }
 }
 \else\if@dlmuthesis@MAmarxism %【硕士-马克思主义理论】
-\newcommand{\ValOfBibname}{参~ 考~ 文~ 献}
 \renewcommand\theparagraph{\arabic{paragraph}} %重设四级标题计数器格式
 \ctexset{
   contentsname = \hfill{\heiti\zihao{-3}目\hspace{2em}录}\hfill,
@@ -346,7 +345,6 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   }
 }
 \else\if@dlmuthesis@DOC %【博士】
-\newcommand{\ValOfBibname}{参~ 考~ 文~ 献}
 \ctexset{
   contentsname = \hfill{\heiti\zihao{-3}目\hspace{2em}录}\hfill,
   listfigurename = \hfill{\heiti\zihao{-3}图目录}\hfill,
@@ -381,7 +379,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   }
 }
 \else\if@dlmuthesis@DOClaw %【博士-法学/法律】
-\newcommand{\ValOfBibname}{参考文献}
+\renewcommand{\ValOfBibname}{参考文献}
 \renewcommand\thesubsection{\arabic{subsection}} %重设二级标题计数器格式
 \renewcommand\thesubsubsection{\arabic{subsubsection}} %重设三级标题计数器格式
 \renewcommand\theparagraph{\arabic{paragraph}} %重设四级标题计数器格式
@@ -438,7 +436,6 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   }
 }
 \else\if@dlmuthesis@DOCmarxism %【博士-马克思主义理论】
-\newcommand{\ValOfBibname}{参~ 考~ 文~ 献}
 \renewcommand\theparagraph{\arabic{paragraph}} %重设四级标题计数器格式
 \ctexset{
   abstractname = {\zihao{-3}\heiti 摘\hspace{2em}要},
@@ -1245,23 +1242,29 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \newenvironment{notation}{
   \begin{center}\heiti\zihao{-3}\notationname\end{center}%
   \par
-}{\par}
+}{%
+  \par
+}
 % ======================================== %
 
 
 % --------------- 引言环境 --------------- %
 \newcommand{\introductionname}{引\hspace{2em}言}
+\newcommand{\NoSkipintroductionname}{引言}
 \newenvironment{introduction}{
   \phantomsection
-  \addcontentsline{toc}{section}{\introductionname}
+  \addcontentsline{toc}{section}{\NoSkipintroductionname}
   \begin{center}\heiti\zihao{-3}\introductionname\end{center}%
   \par
-}{\par}
+}{%
+  \par
+}
 % ======================================== %
 
 
 % --------------- 结论环境 --------------- %
 \newcommand{\conclusionname}{结论}
+\newcommand{\NoSkipconclusionname}{结论}
 \newenvironment{conclusion}{
   \if@dlmuthesis@BAstem %【本科-理工科】
     \ifthenelse{\equal{\conclusionname}{结论}}{
@@ -1271,7 +1274,8 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     \begin{flushleft}\bfseries\zihao{3}\conclusionname\end{flushleft}%
   \else\if@dlmuthesis@BAhumanities %【本科-人文社科】
     \ifthenelse{\equal{\conclusionname}{结论}}{
-      \renewcommand{\conclusionname}{总结} 
+      \renewcommand{\conclusionname}{总结}
+      \renewcommand{\NoSkipconclusionname}{总结} 
     }{}
     \vspace*{0pt}
     \begin{flushleft}\bfseries\zihao{3}\conclusionname\end{flushleft}%
@@ -1307,17 +1311,18 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     \begin{center}\heiti\zihao{-3}\conclusionname\end{center}%
   \fi\fi\fi\fi\fi\fi\fi\fi
   \phantomsection
-  \addcontentsline{toc}{section}{\conclusionname}%
+  \addcontentsline{toc}{section}{\NoSkipconclusionname}%
   \par
-}{\par}
+}{%
+  \par
+}
 % ======================================== %
 
 
 % --------------- 致谢环境 --------------- %
 \newcommand{\acknowledgementname}{致\hspace{2em}谢}
+\newcommand{\NoSkipacknowledgementname}{致谢}
 \newenvironment{acknowledgement}{
-  \phantomsection
-  \addcontentsline{toc}{section}{\acknowledgementname}%
   \if@dlmuthesis@BAstem %【本科-理工科】
     \vspace*{0pt}
     \begin{center}\bfseries\zihao{3}\acknowledgementname\end{center}%
@@ -1337,8 +1342,12 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   \else\if@dlmuthesis@DOCmarxism %【博士-马克思主义理论】
     \begin{center}\heiti\zihao{-3}\acknowledgementname\end{center}%
   \fi\fi\fi\fi\fi\fi\fi\fi
+  \phantomsection
+  \addcontentsline{toc}{section}{\NoSkipacknowledgementname}%
   \par
-}{\par}
+}{%
+  \par
+}
 \if@dlmuthesis@DOC %【博士】
   \AddToHook{env/acknowledgement/before}{
     % 奇数页为该部分名称，偶数页为论文中文题目
@@ -1358,7 +1367,9 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   }{}
   \begin{center}\heiti\zihao{-3}\personalcvname\end{center}%
   \par
-}{\par}
+}{%
+  \par
+}
 \if@dlmuthesis@DOC %【博士】
   \AddToHook{env/personalcv/before}{
     %% 在[博士]中，奇数页页眉为该部分名称，偶数页为论文中文题目
@@ -1483,6 +1494,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 %% ================================================== %
 
 %% ----- 从摘要页开始的样式设置 ----- %
+\newcommand{\NoSkipabstractname}{摘要}
 \newcommand{\presetupOFabstractCN}{
   \if@dlmuthesis@BAstem %【本科-理工科】
     \renewcommand\abstractname{\zihao{3}\bfseries 摘\hspace{2em}要}
@@ -1503,7 +1515,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     \cfoot{\zihao{-5}--~\thepage~--}
     \pagenumbering{Roman}
     \phantomsection
-    \addcontentsline{toc}{section}{摘\hspace{2em}要}
+    \addcontentsline{toc}{section}{\NoSkipabstractname}
     %%% 打印模式下，[硕士]的（中文）摘要部分需单面打印
     \if@dlmuthesis@printed % 打印模式下才操作
       %%% ----- 开始插入空白页 ----- %
@@ -1540,7 +1552,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     \cfoot{\zihao{-5}--~\thepage~--}
     \pagenumbering{Roman}
     \phantomsection
-    \addcontentsline{toc}{section}{摘\hspace{2em}要}
+    \addcontentsline{toc}{section}{\NoSkipabstractname}
     %%% 打印模式下，[博士]的（中文）摘要部分需单面打印
     \if@dlmuthesis@printed % 打印模式下才操作
       %%% ----- 开始插入空白页 ----- %
@@ -2169,7 +2181,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \AddToHook{env/thebibliography/before}[add_to_toc]{
   \RemoveFromHook{cmd/section/before}[keep_preskip_of_sectitle]
   \phantomsection
-  \addcontentsline{toc}{section}{\ValOfBibname}
+  \addcontentsline{toc}{section}{\ValOfNoSkipBibname}
   \vspace*{0pt}
 }
 
