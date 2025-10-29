@@ -521,7 +521,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   \renewcommand{\dlmuthesis@tokens@entitle}{#2}
 } %【英文题目】
 \newcommand{\aauthor}[1]{\renewcommand{\dlmuthesis@tokens@aauthor}{#1}} %【作者姓名】
-\newcommand{\sdtID}[1]{\renewcommand{\dlmuthesis@tokens@sdtID}{#1}} %【学号】
+\newcommand{\stuid}[1]{\renewcommand{\dlmuthesis@tokens@sdtID}{#1}} %【学号】
 \NewDocumentCommand{\majorinCOVERPAGE}{o m}{
   \IfNoValueTF{#1}{}{
     \ifthenelse{\equal{#1}{engineering}}{

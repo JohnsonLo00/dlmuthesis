@@ -382,7 +382,7 @@ REM 1#==#==#==#
 \cntitle{低分辨率视频基于的手势运动方向检测} %【中文题目(若横线数量超过1, 则在可选参数处填所需横线数量)】
 \entitle[2]{Detection of Gesture Motion Direction based on Low-Resolution Video} %【英文题目(若横线数量超过1, 则在可选参数处填所需横线数量)】
 \aauthor{阿海} %【作者姓名】
-\sdtID{222020xxxx} %【学号】
+\stuid{222020xxxx} %【学号】
 \faculty{理学院} %【学院】
 \majorinCOVERPAGE{数学与应用数学2020-1} %【专业年级班级】
 \mentorONE{海老师（教授）} %【指导教师（职称）】
@@ -467,7 +467,7 @@ REM 2#==#==#==#
 \cntitle{提高我国医疗保障水平问题研究} %【中文题目(若横线数量超过1, 则在可选参数处填所需横线数量)】
 \entitle[2]{Study on the Issue of Improving the Level of Medical Insurance in China} %【英文题目(若横线数量超过1, 则在可选参数处填所需横线数量)】
 \aauthor{阿海} %【作者姓名】
-\sdtID{222020xxxx} %【学号】
+\stuid{222020xxxx} %【学号】
 \faculty{公共管理与人文艺术学院} %【学院】
 \majorinCOVERPAGE{公共事业管理2020-1} %【专业年级班级】
 \mentorONE{海老师（教授）} %【指导教师（职称）】
@@ -558,7 +558,7 @@ REM 3#==#==#==#
 \entitle{Detection of Gesture Motion Direction based on Low-Resolution Video} %【英文题目】
 \aauthor{阿海} %【作者姓名】
 \majorinCOVERPAGE{应用数学} %【学科专业（若为工程硕士，则可选参数填 “engineering”）】
-\sdtID{112020xxxx} %【学号】
+\stuid{112020xxxx} %【学号】
 \mentorONE{海老师（教授）} %【指导教师（职称）】
 \degree{理学硕士}{academic} %【学位类别】
 % 第二个参数：学硕填“academic”，专硕（含工程硕士、MBA、EMBA、MPA等）填“professional”
@@ -668,7 +668,7 @@ REM 4#==#==#==#
 \entitle{Study on the Issue of Improving the Level of Medical Insurance in China} %【英文题目】
 \aauthor{阿海} %【作者姓名】
 \majorinCOVERPAGE{法学} %【学科专业（若为工程硕士，则可选参数填 “engineering”）】
-\sdtID{112020xxxx} %【学号】
+\stuid{112020xxxx} %【学号】
 \mentorONE{海老师（教授）} %【指导教师（职称）】
 \degree{法学硕士}{academic} %【学位类别】
 % 第二个参数：学硕填“academic”，专硕（含工程硕士、MBA、EMBA、MPA等）填“professional”
@@ -790,7 +790,7 @@ REM 5#==#==#==#
 \entitle{Study on the Issue of Improving the Level of Medical Insurance in China} %【英文题目】
 \aauthor{阿海} %【作者姓名】
 \majorinCOVERPAGE{马克思主义理论} %【学科专业（若为工程硕士，则可选参数填 “engineering”）】
-\sdtID{112020xxxx} %【学号】
+\stuid{112020xxxx} %【学号】
 \mentorONE{海老师（教授）} %【指导教师（职称）】
 \degree{法学硕士}{academic} %【学位类别】
 % 第二个参数：学硕填“academic”，专硕（含工程硕士、MBA、EMBA、MPA等）填“professional”
@@ -908,7 +908,7 @@ REM 6#==#==#==#
 \entitle{Detection of Gesture Motion Direction based on Low-Resolution Video} %【英文题目】
 \aauthor{阿海} %【作者姓名】
 \majorinCOVERPAGE{数学} %【学科专业（若为工程硕士，则可选参数填 “MEng”）】
-\sdtID{112020xxxx} %【学号】
+\stuid{112020xxxx} %【学号】
 \mentorONE{海老师（教授）} %【指导教师（职称）】
 \degree{理学博士}{academic} %【学位类别】
 % 第二个参数：研究型博士填“academic”，工程博士填“engineering”
@@ -1023,7 +1023,7 @@ REM 7#==#==#==#
 \entitle{Study on the Issue of Improving the Level of Medical Insurance in China} %【英文题目】
 \aauthor{阿海} %【作者姓名】
 \majorinCOVERPAGE{法学} %【学科专业（若为工程硕士，则可选参数填 “MEng”）】
-\sdtID{112020xxxx} %【学号】
+\stuid{112020xxxx} %【学号】
 \mentorONE{海老师（教授）} %【指导教师（职称）】
 \degree{法学博士}{} %【学位类别】
 \faculty{法学院} %【培养单位】
@@ -1149,7 +1149,7 @@ REM 8#==#==#==#
 \entitle{Study on the Issue of Improving the Level of Medical Insurance in China} %【英文题目】
 \aauthor{阿海} %【作者姓名】
 \majorinCOVERPAGE{马克思主义理论} %【学科专业（若为工程硕士，则可选参数填 “MEng”）】
-\sdtID{112020xxxx} %【学号】
+\stuid{112020xxxx} %【学号】
 \mentorONE{海老师（教授）} %【指导教师（职称）】
 \degree{法学博士}{academic} %【学位类别】
 % 第二个参数：学硕填“academic”，专硕（含工程硕士、MBA、EMBA、MPA等）填“professional”
