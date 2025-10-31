@@ -1248,6 +1248,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
       \renewcommand{\thefootnote}{(\arabic{footnote})} %模式3
     }{
       \ifthenelse{#1=4}{
+        \@ifpackagelater{circledtext}{2024/09/08}{\typeout{package circledtext: version checked.}}{\ClassError{dlmuthesis}{problematic version of package circledtext.}{you have to update package circledtext to version v1.1.1(2024/09/09) at least.}}
         \renewcommand{\thefootnote}{\circledtext[resize=real,charf=\scriptsize]{\arabic{footnote}}~} %模式4
       }{
         \ifthenelse{#1=5}{
