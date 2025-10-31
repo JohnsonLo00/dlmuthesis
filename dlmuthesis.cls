@@ -41,6 +41,8 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 \newif\if@dlmuthesis@printed %【打印模式】
 
+\newif\if@dlmuthesis@BAtranslation %【本科专用：[文献翻译]模式】
+
 \newif\if@dlmuthesis@windows %【平台为[Windows]】
 \newif\if@dlmuthesis@macos %【平台为[macOS]】
 \newif\if@dlmuthesis@ubuntu %【平台为[Ubuntu]】
@@ -80,6 +82,17 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \DeclareOption{DOCmarxism}{
 \@dlmuthesis@DOCmarxismtrue
 \addtocounter{OptionOfDegree}{1}
+}
+
+\DeclareOption{BAtranslation}{
+\if@dlmuthesis@BAstem
+  \@dlmuthesis@BAtranslationtrue
+\else\if@dlmuthesis@BAhumanities
+  \@dlmuthesis@BAtranslationtrue
+\else
+  \ClassError{Invalid usage of in BAtranslation}{
+          It can only be used in BAstem or BAhumanities.}{}
+\fi\fi
 }
 
 \DeclareOption{printed}{\@dlmuthesis@printedtrue}
@@ -514,13 +527,21 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \NewDocumentCommand{\cntitle}{O{1} m}{
   \setcounter{InputLineCn}{#1} %中文题目的预期行数（默认值为1）
   \renewcommand{\dlmuthesis@tokens@cntitle}{#2}
+  \if@dlmuthesis@BAtranslation
+    \title{#2}
+  \fi
   \newcommand{\cntitleinMAINBODY}{\vspace*{1ex}{}\begin{center}{\zihao{3}\bfseries #2}\end{center}{}\vspace*{1ex}{}} %【[本科-*]正文第1页顶部的中文标题】
 } %【中文题目】
 \NewDocumentCommand{\entitle}{O{1} m}{
   \setcounter{InputLineEn}{#1} %英文题目的预期行数（默认值为1）
   \renewcommand{\dlmuthesis@tokens@entitle}{#2}
 } %【英文题目】
-\newcommand{\aauthor}[1]{\renewcommand{\dlmuthesis@tokens@aauthor}{#1}} %【作者姓名】
+\newcommand{\aauthor}[1]{
+  \renewcommand{\dlmuthesis@tokens@aauthor}{#1} %【作者姓名】
+  \if@dlmuthesis@BAtranslation
+    \author{#1}
+  \fi
+}
 \newcommand{\stuid}[1]{\renewcommand{\dlmuthesis@tokens@sdtID}{#1}} %【学号】
 \NewDocumentCommand{\majorinCOVERPAGE}{o m}{
   \IfNoValueTF{#1}{}{
@@ -1642,15 +1663,15 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 %% ======================================================= %
 
 %% --------------- 正文部分的样式设置 --------------- %
-\newcommand{\pesudohookOFpremainbody}{
+\NewDocumentCommand{\pesudohookOFpremainbody}{o}{
   \AddToHook{cmd/section/before}[keep_preskip_of_sectitle]{\vspace*{0pt}}
   \if@dlmuthesis@BAstem %【本科-理工科】
-    \cntitleinMAINBODY
+    \IfNoValueT{#1}{\cntitleinMAINBODY}
     \pagestyle{fancy} %从第一章到致谢，设置为有页眉、有页脚的模式
     \fancyhead[C]{\zihao{-5}\dlmuthesis@tokens@cntitle}
     \pagenumbering{arabic} %从正文开始设为阿拉伯数字页码，并且重新从1开始计数  
   \else\if@dlmuthesis@BAhumanities %【本科-人文社科】
-    \cntitleinMAINBODY
+    \IfNoValueT{#1}{\cntitleinMAINBODY}
     \pagestyle{fancy} %从第一章到致谢，设置为有页眉、有页脚的模式
     \fancyhead[C]{\zihao{-5}\dlmuthesis@tokens@cntitle}
     \pagenumbering{arabic} %从正文开始设为阿拉伯数字页码，并且重新从1开始计数
@@ -1997,11 +2018,22 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 
 % --------------- 封面页的导入 --------------- %
+\if@dlmuthesis@BAtranslation
+  \date{}
+\fi
 \newcommand{\makepages}{
 \if@dlmuthesis@BAstem %【本科-理工科】
-  \makecoverpageBA
+  \if@dlmuthesis@BAtranslation
+    \maketitle
+  \else
+    \makecoverpageBA
+  \fi
 \else\if@dlmuthesis@BAhumanities %【本科-人文社科】
-  \makecoverpageBA
+  \if@dlmuthesis@BAtranslation
+    \maketitle
+  \else
+    \makecoverpageBA
+  \fi
 \else\if@dlmuthesis@MA %【硕士】
   \makecoverpageMA
 \else\if@dlmuthesis@MAlaw %【硕士-法学/法律】
