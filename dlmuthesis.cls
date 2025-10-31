@@ -684,7 +684,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 
 % --------------- 字体 --------------- %
-\RequirePackage{fontspec}
+\RequirePackage[quiet]{fontspec}
 %% ----- 中英字体设置 ----- %
 %%% 搜索顺序：先在本地字库找，再去模板文件夹中找；否则指定字体不存在
 \if@dlmuthesis@windows
@@ -814,6 +814,9 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     \let\songti\oldsongti
   }
 \fi
+%% =================================== %
+%% ----- 本科论文封面“本科毕业论文”字样字体 ----- %
+\newCJKfontfamily[titlefandolsong]\titlesong{FandolSong-Bold}[Extension=.otf]
 %% =================================== %
 % ======================================== %
 
@@ -1847,7 +1850,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
   %%% ---------- LOGO下方的大字号标题 ---------- %
   \begin{center}
-  {\fontsize{40bp}{26bp}\selectfont\heiti 本科毕业论文}
+  {\fontsize{40bp}{26bp}\selectfont\titlesong 本科毕业论文}
   \end{center}{}\vspace{36bp minus 12bp}
   %%% ======================================== %
 
