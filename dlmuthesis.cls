@@ -15,7 +15,7 @@
 
 % --------------- 全局设置 --------------- %
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{dlmuthesis}[2025-04-25 v3.0.0-beta.4 Unofficial LaTeX Thesis Template for Dalian Maritime University]
+\ProvidesClass{dlmuthesis}[2025-11-01 v3.0.0-beta.5 Unofficial LaTeX Thesis Template for Dalian Maritime University]
 % ======================================== %
 
 
@@ -1408,6 +1408,30 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 % --------------- 杂项 --------------- %
 \RequirePackage{comment} % 提供注释环境
 \RequirePackage{lipsum, zhlipsum} %随机文本
+
+\DeclareRobustCommand{\DlmuThesis}{%
+    \sbox\z@ T%
+    D%
+    {\hbox{\check@mathfonts
+    \fontsize\sf@size\z@
+    \math@fontsfalse\selectfont
+    L}}%
+    \kern-.2em%
+    {\vbox to\ht\z@{\hbox{\check@mathfonts
+    \fontsize\sf@size\z@
+    \math@fontsfalse\selectfont
+    M}
+    \vss}}%
+    {\hbox{\check@mathfonts
+    \fontsize\sf@size\z@
+    \math@fontsfalse\selectfont
+    U}}%
+    T%
+    \hbox{\check@mathfonts
+    \fontsize\sf@size\z@
+    \math@fontsfalse\selectfont
+    HESIS}%
+}
 % ======================================== %
 
 

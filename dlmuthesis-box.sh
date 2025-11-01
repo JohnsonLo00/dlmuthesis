@@ -44,12 +44,12 @@ fi
 welcometext(){
   echo "----------------------------------------------------------------------------------------------"
   echo "                                                                                              "
-  echo " oooooooo.       oooo       oooo           oooooooo                                           "
-  echo " '88'  'Y8boooo  '888.     d'88'oooo   oooo8' 88 '8oooo oooooooooooo .oooooo. oooo .ooooo..o  "
-  echo "  88     88'88'   88 Y8. .P  88 '88'   '88'   88   '88' '88''88'  '8d8P'   'Y8'88'd8P'   'Y8  "
-  echo "  88     88 88    88    Y    88  88     88    88    88ooo88  88oo8   ''Y888o.  88  ''Y888o.   "
-  echo " o88bod8P'  88  oo88o       o88o 88.   .88    88    88   88  88    ooo    .d8P 88 oo    .d8P  "
-  echo "           o888ood8              'YPbodPP'   o88o  o88o o88oo88oood88''8888P' o88o8''8888P'   "
+  echo "oooooooo.       oooo       oooo           oooooooo                                            "
+  echo "'88'  'Y8boooo  '888.     d'88'oooo   oooo8' 88 '8oooo oooooooooooo .oooooo. oooo .ooooo..o   "
+  echo " 88     88'88'   88 Y8. .P  88 '88'   '88'   88   '88' '88''88'  '8d8P'   'Y8'88'd8P'   'Y8   "
+  echo " 88     88 88    88    Y    88  88     88    88    88ooo88  88oo8   ''Y888o.  88  ''Y888o.    "
+  echo " 88    Y88 oo    88o       o88o 88.   .88    88    88   88  88    ooo    .d8P 88 oo    .d8P   "
+  echo "o88bod8P' o888ood8              'YPbodPP'   o88o  o88o o88oo88oood88''8888P' o88o8''8888P'    "
   echo "                                                                                              "
   echo "----------------------------------------------------------------------------------------------"
   if [ $1 == 1 ]; then

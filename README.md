@@ -1,12 +1,17 @@
 
-# DLMUTHESIS
+<p align="center">
+  <img src="./.github/dlmuthesis-logo.png" alt="<experimental content>" width="70%" />
+</p>
 
-**大连海事大学学位论文 LaTeX 模板**
+<p align="center"><strong>DLMUTHESIS: 大连海事大学学位论文 LaTeX 模板</strong></p>
 
-**JL**, [yhlaozero2@163.com](yhlaozero2@163.com)
-**v3.0.0-beta.4 (2025/04/25)**
+<p align="center"><strong>v3.0.0-beta.5 (2025/11/01)</strong></p>
 
-QQ交流群：976053605
+<p align="center">
+  Hank Lo, <a href="mailto:yhlaozero2@163.com">yhlaozero2@163.com</a>
+</p>
+
+<p align="center">QQ交流群：976053605</p>
 
 > 点击 [此处](https://github.com/JohnsonLo00/dlmubachelorthesis/) 跳转至前驱版本dlmubachelorthesis.
 
@@ -29,7 +34,7 @@ QQ交流群：976053605
 dlmuthesis(LaTeX **Thesis** Template for **D**a**l**ian **M**aritime
 **U**niversity)，即大连海事大学学位论文LaTeX模板，起源于2024年初首次发布的dlmubachelorthesis，现如今初步成为集本、硕、博一体的较为完整的（毕业或）学位论文写作解决方案。
 
-模板创始人JL已使用本模板的初代版本顺利完成了毕业论文的编写、通过了毕业设计。历经不断的改进优化，dlmuthesis致力于让海大学子**省去繁琐的格式调试、专注于论文内容的编写**.
+模板创始人Hank已使用本模板的初代版本顺利完成了毕业论文的编写、通过了毕业设计。历经不断的改进优化，dlmuthesis致力于让海大学子**省去繁琐的格式调试、专注于论文内容的编写**.
 
 当读者在使用模板的过程中遇到bug或者发现与相关论文规范不符的地方，建议按照如下顺序逐步尝试、直到解决为止：
 
@@ -48,32 +53,12 @@ dlmuthesis(LaTeX **Thesis** Template for **D**a**l**ian **M**aritime
 - 外语类专业
 - 学院内部有单独备案的论文规范、但未被涵盖在本模板学位模式中的专业
 
-> 有单独备案但未被本模板覆盖，或是因为JL没能获取到该论文规范文件，又或是因为该论文规范的格式要求较为独特、无法与现有已覆盖到的学位模式进行统一管理。
+> 有单独备案但未被本模板覆盖，或是因为Hank没能获取到该论文规范文件，又或是因为该论文规范的格式要求较为独特、无法与现有已覆盖到的学位模式进行统一管理。
 > 
-> 对单独备案的论文规范的开发将长期作为本模板的更新计划之一。如有个别学科专业单独备案的论文规范希望被引进开发，欢迎联系JL。
+> 对单独备案的论文规范的开发将长期作为本模板的更新计划之一。如有个别学科专业单独备案的论文规范希望被引进开发，欢迎联系Hank。
 
 软件配置要求如下：
 - LaTeX 发行版：2022年版及以上
-
-可能产生错误的宏包、环境或命令如下：
-- `ntheorem` 宏包：与 `amsthm` 宏包冲突，切勿导入
-- `biblatex` 宏包：与 `natbib` 宏包冲突，切勿导入
-- `subfigure` 宏包：与 `subcaption` 宏包冲突，切勿导入
-- `circledtext` 宏包：如使用了脚注模式设定命令 `\footnotemode` 中的模式4(即:带圈数字型脚注)，或者其他位置使用了 `\circledtext` 命令，则需要确保该宏包的版本为v1.1.1及以上，否则需要手动更新。上述两种情况均未涉及的可忽略
-- `enumerate*,itemize*,description*` 环境：在条目字数较少的情况下，会在标签与文本之间产生多余空白
-  > 要想使用行内列表环境，则在导言区中定义新的行内列表环境即可：
-  > ```latex
-  > \newlist{<新环境名称>}{enumerate*}{<序号层次的最大深度值>}
-  > % 可自行按需添加itemize*,description*类型下的定义
-  > ```
-  > 然后在正文中的指定位置使用：
-  > ```latex
-  > \begin{<新环境名称>}
-  > \item{}
-  >   %...
-  > \item{}
-  > \end{<新环境名称>}
-  > ```
 
 
 ## 模板获取方式
@@ -81,11 +66,10 @@ dlmuthesis(LaTeX **Thesis** Template for **D**a**l**ian **M**aritime
 目前可从以下平台获取本模板：
 -   [GitHub](https://github.com/JohnsonLo00/dlmuthesis)
 -   [Gitee](https://gitee.com/jhonson-lo/dlmuthesis-backuped)
--   [Overleaf](https://cn.overleaf.com/latex/templates/dlmuthesis-latex-thesis-template-for-dalian-maritime-university/rmstrjjrthwf)：可在模板库中搜索"dlmuthesis"(作者为JohnsonLo)
--   [TeXPage](https://www.texpage.com/zh/template/b32e0cb4-ef09-4ee2-b4ff-ca92b2ed3665)：可在模板库中搜索"dlmuthesis"(作者为JohnsonLo)
+-   [Overleaf](https://cn.overleaf.com/latex/templates/dlmuthesis-latex-thesis-template-for-dalian-maritime-university/rmstrjjrthwf)：可在模板库中搜索"dlmuthesis"(作者为Hank Lo)
+-   [TeXPage](https://www.texpage.com/zh/template/b32e0cb4-ef09-4ee2-b4ff-ca92b2ed3665)：可在模板库中搜索"dlmuthesis"(作者为HankLo)
 
-其中，GitHub与Gitee上可在**Release**板块获取各版本模板的下载路径。
-
+其中，GitHub 与 Gitee 上可在 **Release 板块**获取各版本模板的下载路径；Overleaf 与 TeXPage 上可通过在模板库中搜索“dlmuthesis”(作者为 Hank Lo) 来获取模板。另外，Overleaf 与 TeXPage 存在审核机制，新模板上线时间一般晚于所声明的时间。
 
 ## 文件组成
 
@@ -112,6 +96,16 @@ dlmuthesis/
 
 ## 更新日志
 
+- **v3.0.0-beta.5 (变更类型：功能变更), 2025-11-01**
+  - **Added**:
+    - 引入了本科专用的文献翻译的配置
+    - 新增了模板专用 logo 命令`\DlmuThesis`，供各位读者把玩
+  - **Changed**:
+    - 修改了论文信息中输入学号的命令
+    - 调整了本科论文封面中“本科毕业论文”字样的字体
+    - 取消了 changes 宏包的介绍与预使用
+  - **Fixed**:
+    - 解决了其他一些已知问题
 - **v3.0.0-beta.4 (变更类型：功能变更), 2025-04-25**
   - **Changed**:
     - 去除了目录中部分标题的字间距 ([#4]( https://github.com/JohnsonLo00/dlmuthesis/issues/4))
