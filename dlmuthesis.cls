@@ -651,7 +651,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 
 % --------------- 页面样式 --------------- %
-\RequirePackage[twoside]{fancyhdr} %定制页眉页脚
+\RequirePackage[twoside, nocheck]{fancyhdr} %定制页眉页脚
 \renewcommand{\sectionmark}[1]{\markboth{#1}{}} %打印模式相关
 \RequirePackage{geometry} %定制页面
 
