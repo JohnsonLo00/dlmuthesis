@@ -1152,6 +1152,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 
 % --------------- 图、表标题样式 --------------- %
+\PassOptionsToPackage{justification=centerlast}{caption} % 共享选项
 \RequirePackage{caption}
 \RequirePackage[labelformat=brace]{subcaption} % 使子图环境中的标题变成副标题样式
 \RequirePackage[list=off]{bicaption} %同时含中英文的标题（同时取消英文标题在图标目录中的导入）
