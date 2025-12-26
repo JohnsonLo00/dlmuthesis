@@ -1752,7 +1752,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
         \fi
         \setcounter{abstractINNOVATIONend}{\value{page}}
         \setcounter{abstractINNOVATIONdif}{\numexpr\value{abstractINNOVATIONend}-\value{abstractINNOVATIONbegin}+1\relax}
-%      【\theabstractCNbegin】【\theabstractCNend】【\theabstractCNdif】
+        % 【\theabstractCNbegin】【\theabstractCNend】【\theabstractCNdif】
         \ifthenelse{\isodd{\value{abstractINNOVATIONdif}}}{
           \clearpage
           \addtocounter{page}{-1}
@@ -1782,7 +1782,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
         \else
           \setcounter{abstractCNend}{\value{page}}
           \setcounter{abstractCNdif}{\numexpr\value{abstractCNend}-\value{abstractCNbegin}+1\relax}
-%        【\theabstractCNbegin】【\theabstractCNend】【\theabstractCNdif】
+          % 【\theabstractCNbegin】【\theabstractCNend】【\theabstractCNdif】
           \ifthenelse{\isodd{\value{abstractCNdif}}}{
             \clearpage
             \addtocounter{page}{-1}
@@ -1806,7 +1806,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
       \else
         \setcounter{abstractENend}{\value{page}}
         \setcounter{abstractENdif}{\numexpr\value{abstractENend}-\value{abstractENbegin}+1\relax}
-%      【\theabstractENbegin】【\theabstractENend】【\theabstractENdif】
+        % 【\theabstractENbegin】【\theabstractENend】【\theabstractENdif】
         \ifthenelse{\isodd{\value{abstractENdif}}}{
           \clearpage
           \addtocounter{page}{-1}
@@ -1822,9 +1822,10 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
         \else\if@dlmuthesis@DOClaw %【博士-法学/法律】
           \clearpage %[博士-法学/法律]中，从目录到致谢都是双面打印
         \else
+          \hbox{}\par\hbox{}\par % 使前面的盒子完全结束
           \setcounter{tocsend}{\value{page}}
           \setcounter{tocsdif}{\numexpr\value{tocsend}-\value{tocsbegin}+1\relax}
-%        【\thetocsbegin】【\thetocsend】【\thetocsdif】
+          % 【\thetocsbegin】【\thetocsend】【\thetocsdif】
           \ifthenelse{\isodd{\value{tocsdif}}}{
             \clearpage
             \addtocounter{page}{-1}
