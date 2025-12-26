@@ -1822,7 +1822,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
         \else\if@dlmuthesis@DOClaw %【博士-法学/法律】
           \clearpage %[博士-法学/法律]中，从目录到致谢都是双面打印
         \else
-          \hbox{}\par\hbox{}\par % 使前面的盒子完全结束
+          \goodbreak
           \setcounter{tocsend}{\value{page}}
           \setcounter{tocsdif}{\numexpr\value{tocsend}-\value{tocsbegin}+1\relax}
           % 【\thetocsbegin】【\thetocsend】【\thetocsdif】
