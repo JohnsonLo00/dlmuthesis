@@ -5,7 +5,7 @@
 
 <p align="center"><strong>DLMUTHESIS: 大连海事大学学位论文 LaTeX 模板</strong></p>
 
-<p align="center"><strong>v3.0.0-beta.5 (2025/11/01)</strong></p>
+<p align="center"><strong>v3.0.0-beta.6 (2026/01/03)</strong></p>
 
 <p align="center">
   Hank Lo, <a href="mailto:yhlaozero2@163.com">yhlaozero2@163.com</a>
@@ -15,87 +15,118 @@
 
 > 点击 [此处](https://github.com/JohnsonLo00/dlmubachelorthesis/) 跳转至前驱版本dlmubachelorthesis.
 
-***
+## 许可说明
 
-## 摘要
+本模板遵守[The LaTeX Project Public License](https://www.latex-project.org/lppl/lppl-1-3c/)。未经允许，禁止任何人将本模板用于商业用途。
 
-非官方版大连海事大学(本硕博)学位论文LaTeX模板dlmuthesis是dlmubachelorthesis的后继版本，严格按照大连海事大学学位论文相关规范完成开发，适用于海大学子学位论文的编写，也供各位读者研究使用. 
-
-## 模板许可说明
-
-本模板的发布遵守[The LaTeX Project Public License(LPPL)](https://www.latex-project.org/lppl/lppl-1-3c/)。未经允许，禁止任何人将本模板用于商业用途。
 
 ## 免责声明
 
-在将本模板用于学位论文的写作与提交之前，请务必与导师或相关负责人做好沟通，以免产生不必要的麻烦。
-
-## 模板概述
-
-dlmuthesis(LaTeX **Thesis** Template for **D**a**l**ian **M**aritime
-**U**niversity)，即大连海事大学学位论文LaTeX模板，起源于2024年初首次发布的dlmubachelorthesis，现如今初步成为集本、硕、博一体的较为完整的（毕业或）学位论文写作解决方案。
-
-模板创始人Hank已使用本模板的初代版本顺利完成了毕业论文的编写、通过了毕业设计。历经不断的改进优化，dlmuthesis致力于让海大学子**省去繁琐的格式调试、专注于论文内容的编写**.
-
-当读者在使用模板的过程中遇到bug或者发现与相关论文规范不符的地方，建议按照如下顺序逐步尝试、直到解决为止：
-
-1.  自己动手排查；
-
-2.  查阅 `guidebook_of_dlmuthesis.pdf`；
-
-3.  将模板升级到最新版本；
-
-4.  将具体情况说明提交到Github/Gitee的Issues。
+在将本模板用于学位论文的写作之前，请务必与导师或相关负责人做好沟通（例如，师生间协作的接受程度，提交与存档时的格式许可），以免产生不必要的麻烦。
 
 
-## 模板兼容性说明
+---
 
-目前(可能)不适用的学科专业如下：
-- 外语类专业
-- 学院内部有单独备案的论文规范、但未被涵盖在本模板学位模式中的专业
+## 概述
 
-> 有单独备案但未被本模板覆盖，或是因为Hank没能获取到该论文规范文件，又或是因为该论文规范的格式要求较为独特、无法与现有已覆盖到的学位模式进行统一管理。
-> 
-> 对单独备案的论文规范的开发将长期作为本模板的更新计划之一。如有个别学科专业单独备案的论文规范希望被引进开发，欢迎联系Hank。
+DLMUTHESIS 是非官方版大连海事大学 (本硕博) 学位论文 LaTeX 模板。其严格按照大连海事大学学位论文相关规范进行开发与维护，适用于海大学子学位论文的编写，也供各位用户研究使用。
 
-软件配置要求如下：
-- LaTeX 发行版：2022年版及以上
+
+## 特点
+
+- **格式与内容分离**
+  - 格式已预设，让用户投入到论文内容本身
+  - 让论文编写简化为文本的增删查改
+- **各类编号自动化**
+  - 省去手动编号繁琐/方法难、“删一个动全文”等麻烦
+  - 解决各类交叉引用的“方法难”
+- **完备的数学公式生态**
+- **跨平台（操作系统、网络端）兼容**
+- **具备较友好的高阶工具适配性**
+  - 对科学软件、AI Agent 的导出内容的迁移友好
 
 
 ## 模板获取方式
 
 目前可从以下平台获取本模板：
--   [GitHub](https://github.com/JohnsonLo00/dlmuthesis)
--   [Gitee](https://gitee.com/jhonson-lo/dlmuthesis-backuped)
--   [Overleaf](https://cn.overleaf.com/latex/templates/dlmuthesis-latex-thesis-template-for-dalian-maritime-university/rmstrjjrthwf)：可在模板库中搜索"dlmuthesis"(作者为Hank Lo)
--   [TeXPage](https://www.texpage.com/zh/template/b32e0cb4-ef09-4ee2-b4ff-ca92b2ed3665)：可在模板库中搜索"dlmuthesis"(作者为HankLo)
+- [GitHub](https://github.com/JohnsonLo00/dlmuthesis) (当前版本：v3.0.0-beta.6[最新])
+- [Gitee](https://gitee.com/jhonson-lo/dlmuthesis-backuped) (当前版本：v3.0.0-beta.6[最新])
+- [Overleaf](https://cn.overleaf.com/latex/templates/dlmuthesis-latex-thesis-template-for-dalian-maritime-university/rmstrjjrthwf) (当前版本：v3.0.0-beta.6[最新])
+- [TeXPage](https://www.texpage.com/zh/template/b32e0cb4-ef09-4ee2-b4ff-ca92b2ed3665) (当前版本：v3.0.0-beta.6[最新])
 
-其中，GitHub 与 Gitee 上可在 **Release 板块**获取各版本模板的下载路径；Overleaf 与 TeXPage 上可通过在模板库中搜索“dlmuthesis”(作者为 Hank Lo) 来获取模板。另外，Overleaf 与 TeXPage 存在审核机制，新模板上线时间一般晚于所声明的时间。
+其中，可在[GitHub Releases](https://github.com/JohnsonLo00/dlmuthesis/releases)或[Gitee Releases](https://gitee.com/jhonson-lo/dlmuthesis-backuped/releases)板块下载模板；Overleaf 与 TeXPage 上可通过在模板库中搜索“`dlmuthesis`”(作者为 `HankLo`) 来获取模板。特别的，Overleaf 与 TeXPage 存在审核机制，新模板上线时间一般晚于所声明的时间。
+
 
 ## 文件组成
 
 ```
 dlmuthesis/
-├────────── codes/ 放置源[代码]文件. 需写入论文中的代码可以通过文件导入的命令来实现写入
-├────────── figures/ 放置[图片]文件. 需插入论文中的图片可以通过文件导入的命令来实现插入
-            ├────────── logo/ 放置论文封面页的[logo]图片，切勿挪动
-            ├────────── signatures/ 放置硕博论文中作者与导师的[签名]图片
-            ├────────── <type>/ 放置各学位模式下的图片
-├────────── mainbody/ 放置[正文各章节]的子tex文件. 论文的每个章节均可分为不同的tex文件进行编写，最后再汇总导入一个tex文件中(即文件main_<x>.tex)
-├────────── misc/ 放置闲置文件. 特别地，部分[学院单独备案规范]下的学位论文示例保存于此处
-├────────── refs/ 放置[参考文献数据库文件]. 参考文献列表可以通过bib/tex文件导入的命令来生成
-====================================================================
-├ guidebook_of_dlmuthesis.pdf 本模板的[使用手册]
-├ dlmuthesis.cls 本模板的[文档类]文件
-├ main_<type>.tex 各学位模式下的论文示例[主文档]
-├ latexmkrc latexmk 配置文件
-├ dlmuthesis-box.bat 模板使用辅助程序(Windows)
-├ dlmuthesis-box.sh 模板使用辅助程序(macOS, Ubuntu)
-├ LICENSE 开源协议文件 The LaTeX Project Public License（LPPL）
-├ dlmuthesis-bachelor.bst：参考文献样式文件. 用于控制参考文献列表的格式
+├─codes/            存放[程序代码]文件. 需写入论文中的代码可以通过文件导入的命令来实现写入
+├─figures/          存放[插图]文件. 需添加到论文中的图片可以通过文件导入的命令来实现写入
+│  ├─<各项目的插图文件夹>/
+│  ├─logo/          存放论文封面页的[logo]图片，切勿挪动
+│  └─signatures/    存放硕博论文中作者与导师的[签名]图片
+├─mainbody/         存放[正文各章节]对应的tex文件. 论文的每个章节均可分为不同的tex文件进行编写，然后在主tex文件(即 main_<x>.tex)中统一导入
+├─misc/             存放闲置文件. 特别地，部分[学院单独备案规范]下的学位论文示例保存于此处
+├─refs/             存放[参考文献数据库文件]. 参考文献列表可以通过bib/tex文件导入的命令来生成
+│
+│
+├─guidebook_of_dlmuthesis.pdf   [使用手册]
+├─dlmuthesis.cls                [文档类]文件
+├─main_<type>.tex               各学位模式示例的[主文档]
+├─latexmkrc                     [latexmk配置]文件
+├─dlmuthesis-box.bat            模板使用辅助程序(Windows)
+├─dlmuthesis-box.sh             模板使用辅助程序(macOS, Ubuntu)
+├─LICENSE                       开源协议文件（The LaTeX Project Public License）
+└─dlmuthesis-bachelor.bst       [参考文献样式]文件. 用于控制参考文献列表的格式
 ```
+
+
+## 兼容性说明
+
+目前 (可能) 不适用的学科专业如下：
+- 面向来华留学生的所有学科专业
+- 外语类专业
+- 学院内部有单独备案的论文规范、但未被涵盖在本模板学位模式中的专业
+
+> 有单独备案但未被本模板覆盖，或是因为 Hank 没能获取到对应的论文规范文件，又或是因为该论文规范的格式要求较为独特、无法与现有已覆盖到的学位模式进行统一管理。
+> 
+> **对单独备案的论文规范的开发将长期作为本模板的更新计划之一**。如有个别学科专业单独备案的论文规范希望被引进开发，欢迎联系 Hank。
+
+软件配置要求如下：
+- LaTeX 发行版：2022年版及以上
+
+
+## 快速开始
+
+可直接选择文件夹中的一个主文档 `main_<type>.tex`进行编译，可选择的编译方案为：
+- XeLaTeX - XeLaTeX (仅针对学位模式 `BAhumanities`)
+- XeLaTeX - BiBTeX - XeLaTeX - XeLaTeX
+- Latexmk
+
+特别的，可以使用 **dlmuthesis-box** 新建空白项目、进行编译。运行脚本即可进行交互。
+
+
+## 如何处理错误
+
+当用户在使用模板的过程中遇到 bug 或者发现与相关论文规范不符的地方，可按照如下
+顺序逐步尝试：
+1. 手动排查；
+2. 查阅 [guidebook_of_dlmuthesis.pdf](https://github.com/JohnsonLo00/dlmuthesis/blob/main/guidebook_of_dlmuthesis.pdf)；
+3. 将模板升级到最新版本；
+4. 在 QQ 群中发起提问；
+5. 将情况说明提交到[Github Issues](https://github.com/JohnsonLo00/dlmuthesis/issues)或[Gitee Issues](https://gitee.com/jhonson-lo/dlmuthesis-backuped/issues)。
+
 
 ## 更新日志
 
+- **3.0.0-beta.6 (变更类型：问题修正), 2026-01-03**
+  - **Changed**:
+    - 将定理环境的前后间距设为弹性距离，使定理内容与前后正文分开、避免两者混淆
+  - **Fixed**:
+    - 更正图表标题的对齐方式 ([#5](https://github.com/JohnsonLo00/dlmuthesis/issues/5))
+    - 解决打印模式下目录部分可能会出现多余空白页的问题
+    - 解决了通用列表环境（即：`enumerate(*)`,`itemize(*)`,`description(*)`）中标签与条目文本间距不规律的问题
 - **v3.0.0-beta.5 (变更类型：功能变更), 2025-11-01**
   - **Added**:
     - 引入了本科专用的文献翻译的配置
