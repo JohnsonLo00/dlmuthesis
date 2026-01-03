@@ -976,85 +976,16 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 % --------------- 列表环境 --------------- %
 \RequirePackage[inline]{enumitem}
-\if@dlmuthesis@BAstem %【本科-理工科】
-  \setlist[enumerate,itemize,description]{
-  align=left,
-  leftmargin=0pt,
-  labelindent=\parindent,
-  labelsep=0pt,
-  listparindent=\parindent,
-  itemindent=\dimexpr\parindent+\labelwidth+\labelsep\relax,
-  itemsep=0pt,
-  parsep=0pt,
-  topsep=0.2ex}
-\else\if@dlmuthesis@BAhumanities %【本科-人文社科】
-  \setlist[enumerate,itemize,description]{
-  align=left,
-  leftmargin=0pt,
-  labelindent=\parindent,
-  labelsep=0pt,
-  listparindent=\parindent,
-  itemindent=\dimexpr\parindent+\labelwidth+\labelsep\relax,
-  nosep}
-\else\if@dlmuthesis@MA %【硕士】
-  \setlist[enumerate,itemize,description]{
-  align=left,
-  leftmargin=0pt,
-  labelindent=\parindent,
-  labelsep=0pt,
-  listparindent=\parindent,
-  itemindent=\dimexpr\parindent+\labelwidth+\labelsep\relax,
-  itemsep=0pt,
-  parsep=0pt,
-  topsep=0.2ex}
-\else\if@dlmuthesis@MAlaw %【硕士-法学/法律】
-  \setlist[enumerate,itemize,description]{
-  align=left,
-  leftmargin=0pt,
-  labelindent=\parindent,
-  labelsep=0pt,
-  listparindent=\parindent,
-  itemindent=\dimexpr\parindent+\labelwidth+\labelsep\relax,
-  nosep}
-\else\if@dlmuthesis@MAmarxism %【硕士-马克思主义理论】
-  \setlist[enumerate,itemize,description]{
-  align=left,
-  leftmargin=0pt,
-  labelindent=\parindent,
-  labelsep=0pt,
-  listparindent=\parindent,
-  itemindent=\dimexpr\parindent+\labelwidth+\labelsep\relax,
-  nosep}
-\else\if@dlmuthesis@DOC %【博士】
-  \setlist[enumerate,itemize,description]{
-  align=left,
-  leftmargin=0pt,
-  labelindent=\parindent,
-  labelsep=0pt,
-  listparindent=\parindent,
-  itemindent=\dimexpr\parindent+\labelwidth+\labelsep\relax,
-  itemsep=0pt,
-  parsep=0pt,
-  topsep=0.2ex}
-\else\if@dlmuthesis@DOClaw %【博士-法学/法律】
-  \setlist[enumerate,itemize,description]{
-  align=left,
-  leftmargin=0pt,
-  labelindent=\parindent,
-  labelsep=0pt,
-  listparindent=\parindent,
-  itemindent=\dimexpr\parindent+\labelwidth+\labelsep\relax,
-  nosep}
-\else\if@dlmuthesis@DOCmarxism %【博士-马克思主义理论】
-  \setlist[enumerate,itemize,description]{
-  align=left,
-  leftmargin=0pt,
-  labelindent=\parindent,
-  labelsep=0pt,
-  listparindent=\parindent,
-  itemindent=\dimexpr\parindent+\labelwidth+\labelsep\relax,
-  nosep}
-\fi\fi\fi\fi\fi\fi\fi\fi
+\setlist[enumerate,itemize,description]{
+align=left,
+leftmargin=0pt,
+labelindent=\parindent,
+listparindent=\parindent,
+labelwidth=0pt,
+itemindent=!,
+noitemsep,
+topsep=\parskip
+}
 % ======================================== %
 
 
@@ -1078,8 +1009,8 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 }
 
 \newtheoremstyle{newthmstyle}
-  {3bp} %Space above
-  {3bp} %Space below
+  {} %Space above
+  {} %Space below
   {\rm} %Body font
   {\parindent} %Indent amount
   {\bfseries} %Theorem head font
@@ -1097,8 +1028,8 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \newtheorem{Remark}{注}[section]
 
 \newtheoremstyle{newthmstyle-cited} %带文献引用的定理环境样式
-  {3bp} %Space above
-  {3bp} %Space below
+  {} %Space above
+  {} %Space below
   {\rm} %Body font
   {\parindent} %Indent amount
   {\bfseries} %Theorem head font
