@@ -113,9 +113,10 @@ dlmuthesis/
 顺序逐步尝试：
 1. 手动排查；
 2. 查阅 [guidebook_of_dlmuthesis.pdf](https://github.com/JohnsonLo00/dlmuthesis/blob/main/guidebook_of_dlmuthesis.pdf)；
-3. 将模板升级到最新版本；
-4. 在 QQ 群中发起提问；
-5. 将情况说明提交到[Github Issues](https://github.com/JohnsonLo00/dlmuthesis/issues)或[Gitee Issues](https://gitee.com/jhonson-lo/dlmuthesis-backuped/issues)。
+3. 查阅 [wiki](https://github.com/JohnsonLo00/dlmuthesis/wiki)（或 [wiki](https://gitee.com/jhonson-lo/dlmuthesis-backuped/wikis)）；
+4. 将模板升级到最新版本；
+5. 在 QQ 群中发起提问；
+6. 将情况说明提交到[Github Issues](https://github.com/JohnsonLo00/dlmuthesis/issues)或[Gitee Issues](https://gitee.com/jhonson-lo/dlmuthesis-backuped/issues)。
 
 
 ## 更新日志
